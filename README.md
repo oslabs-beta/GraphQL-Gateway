@@ -1,0 +1,1 @@
+# graphql-beaver-view
