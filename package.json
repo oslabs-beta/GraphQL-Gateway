@@ -64,5 +64,9 @@
         "ts-loader": "^9.3.0",
         "typescript": "^4.6.4",
         "webpack-dev-server": "^4.7.4"
+    },
+    "lint-staged": {
+        "*.{js, ts}": "eslint --cache --fix",
+        "*.{js,ts,css,md}": "prettier --write --ignore-unknown"
     }
 }
