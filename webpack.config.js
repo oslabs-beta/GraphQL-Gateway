@@ -61,6 +61,7 @@ module.exports = {
       },
     ],
   },
+
   plugins: [
     new HTMLWebPackPlugin({ template: "./public/index.html" }),
     new MiniCssExtractPlugin(),
@@ -68,8 +69,7 @@ module.exports = {
 
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-  }
-  ,
+  },
 
   devServer: {
     // add all routes here
