@@ -1,18 +1,13 @@
-import { Request, Response } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
-import { CrudController } from "./CrudController";
+import { Request, Response, NextFunction } from "express";
 
-export class UserController extends CrudController {
-  public create(req: Request<ParamsDictionary>, res: Response): void {
-    throw new Error("Method not implemented.");
-  }
-  public read(req: Request<ParamsDictionary>, res: Response): void {
-    throw new Error("Method not implemented.");
-  }
-  public update(req: Request<ParamsDictionary>, res: Response): void {
-    throw new Error("Method not implemented.");
-  }
-  public delete(req: Request<ParamsDictionary>, res: Response): void {
-    throw new Error("Method not implemented.");
-  }
+export class UserController {
+  getUser(req: Request, res: Response, next: NextFunction) {}
+
+  getUsers(req: Request, res: Response, next: NextFunction) {}
+
+  createUser(req: Request, res: Response, next: NextFunction) {}
+
+  updateUser(req: Request, res: Response, next: NextFunction) {}
+
+  deleteUser(req: Request, res: Response, next: NextFunction) {}
 }

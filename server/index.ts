@@ -13,8 +13,8 @@ import { resolvers } from "./models/Resolvers";
 
 import { userRouter } from "./routes/User";
 
-const app = express();
-const PORT = process.env.port || 3000;
+const app: express.Application = express();
+const PORT: number = (process.env.port as any as number) || 3000;
 
 const server = new ApolloServer({
   typeDefs,

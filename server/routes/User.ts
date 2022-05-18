@@ -1,22 +1,44 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { userController } from "../controllers";
 
 export const userRouter = express.Router({
   strict: true,
 });
 
-userRouter.post("/", (req: Request, res: Response) => {
-  userController.create(req, res);
-});
+userRouter.post(
+  "/",
+  userController.createUser,
+  (req: Request, res: Response, next: NextFunction) => {
+    return next();
+  }
+);
 
-userRouter.get("/", (req: Request, res: Response) => {
-  userController.read(req, res);
-});
+userRouter.get(
+  "/",
+  userController.getUsers,
+  (req: Request, res: Response, next: NextFunction) => {
+    return next();
+  }
+);
 
-userRouter.put("/", (req: Request, res: Response) => {
-  userController.update(req, res);
-});
+userRouter.get(
+  "/:userID",
+  userController.getUser,
+  (req: Request, res: Response, next: NextFunction) => {
+    return next();
+  }
+);
 
-userRouter.delete("/", (req: Request, res: Response) => {
-  userController.delete(req, res);
-});
+userRouter.put(
+  "/:userID",
+  (req: Request, res: Response, next: NextFunction) => {
+    return next();
+  }
+);
+
+userRouter.delete(
+  "/:userID",
+  (req: Request, res: Response, next: NextFunction) => {
+    return next();
+  }
+);
