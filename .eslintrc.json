@@ -4,12 +4,19 @@
         "commonjs": true,
         "es2021": true
     },
-    "extends": ["eslint:recommended", "airbnb-base"],
+    "extends": [
+        "eslint:recommended", 
+        "airbnb", 
+        "airbnb/hooks", 
+        "airbnb-typescript", 
+        "prettier"
+    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "project": "tsconfig.json"
     },
-    "plugins": ["@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "prettier"],
     "rules": {
         "indent": [
             "warn",
@@ -17,6 +24,8 @@
             {
                 "SwitchCase": 2
             }
-        ]
-    }
+        ],
+        "prettier/prettier": ["error"]
+    },
+    "ignorePatterns": ["webpack.config.js"]
 }
