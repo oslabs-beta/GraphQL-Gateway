@@ -16,29 +16,29 @@ userRouter.post(
 userRouter.get(
   "/",
   userController.getUsers,
-  (req: Request, res: Response, next: NextFunction) => {
-    return next();
+  (req: Request, res: Response) => {
+    return res.status(200).json(res.locals.users);
   }
 );
 
 userRouter.get(
   "/:userID",
   userController.getUser,
-  (req: Request, res: Response, next: NextFunction) => {
-    return next();
+  (req: Request, res: Response) => {
+    return res.status(200).json(res.locals.user);
   }
 );
 
 userRouter.put(
   "/:userID",
-  (req: Request, res: Response, next: NextFunction) => {
-    return next();
+  (req: Request, res: Response) => {
+    return res.status(200).json(res.locals.user);
   }
 );
 
 userRouter.delete(
   "/:userID",
-  (req: Request, res: Response, next: NextFunction) => {
-    return next();
+  (req: Request, res: Response) => {
+    return res.status(200).json(`User ${req.params.userID} deleted from DB.`);
   }
 );
