@@ -26,7 +26,7 @@ app.use(cors());
 app.use(compression());
 app.use(bodyParser.json());
 
-app.use("/user", userRouter);
+app.use("/api/user", userRouter);
 
 // go to localhost:3000/gql to use apollo playground
 server.start().then((): void => {
