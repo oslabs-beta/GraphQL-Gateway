@@ -63,5 +63,9 @@
         "react-router": "^6.3.0",
         "react-router-dom": "^6.3.0",
         "webpack": "^5.72.1"
+    },
+    "lint-staged": {
+        "*.{js, ts}": "eslint --cache --fix",
+        "*.{js,ts,css,md}": "prettier --write --ignore-unknown"
     }
 }
