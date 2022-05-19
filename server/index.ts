@@ -12,6 +12,7 @@ import { typeDefs } from "./models/TypeDefs";
 import { resolvers } from "./models/Resolvers";
 
 import { userRouter } from "./routes/User";
+import { extendSchemaImpl } from "graphql/utilities/extendSchema";
 
 const app: express.Application = express();
 const PORT: number = (process.env.port as any as number) || 3000;
@@ -19,7 +20,7 @@ const PORT: number = (process.env.port as any as number) || 3000;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  validationRules: [depthLimit(7)],
+  validationRules: [depthLimit(6)],
 });
 
 app.use(cors());

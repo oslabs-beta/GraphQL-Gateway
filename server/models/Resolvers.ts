@@ -4,7 +4,7 @@ export const resolvers: IResolvers = {
   Query: {
     users: async (parent, args, context) => {
       // try-catch db query here
-      
+
       // placeholder
       return [
         { id: "1", email: "1" },
