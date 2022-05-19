@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
+const mongoose = require('mongoose');
+const MONGODB_URI =
+    'mongodb+srv://graphql-beaver:catsnake@cluster0.pwsfs.mongodb.net/?retryWrites=true&w=majority';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
@@ -33,3 +35,14 @@ server.start().then((): void => {
         console.log(`Server started on port ${PORT}`);
     });
 });
+
+mongoose
+    .connect(MONGODB_URI)
+    .then(() => {
+        app.listen(4000, () => {
+            console.log('listening on 4000');
+        });
+    })
+    .catch((err: string) => {
+        console.log(err);
+    });
