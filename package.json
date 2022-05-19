@@ -5,9 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "cross-env NODE_ENV=production nodemon ./server/server.js",
+        "start": "cross-env NODE_ENV=production nodemon ./server/index.ts",
         "build": "cross-env NODE_ENV=production webpack",
-        "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon ./server/server.js\" ",
+        "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon ./server/index.ts\" ",
         "dev-client": "cross-env NODE_ENV=development webpack serve --open",
         "lint": "eslint client",
         "lint:fix": "eslint --fix client",
@@ -26,6 +26,8 @@
     },
     "homepage": "https://github.com/oslabs-beta/graphql-beaver-view#readme",
     "dependencies": {
+        "apollo-server-express": "^3.7.0",
+        "cors": "^2.8.5",
         "react": "^18.1.0",
         "react-dom": "^18.1.0",
         "react-router": "^6.3.0",
@@ -35,6 +37,7 @@
         "@babel/core": "^7.17.7",
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.16.7",
+        "@types/compression": "^1.7.2",
         "@types/react": "^18.0.9",
         "@types/react-dom": "^18.0.4",
         "@typescript-eslint/eslint-plugin": "^5.23.0",
