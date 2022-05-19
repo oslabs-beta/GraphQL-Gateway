@@ -1,44 +1,44 @@
-  {
+{
     "name": "graphql-gateway",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "cross-env NODE_ENV=production nodemon --exec ts-node ./server/index.ts",
-      "build": "cross-env NODE_ENV=production webpack",
-      "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon --exec ts-node ./server/index.ts\" ",
-      "dev-client": "cross-env NODE_ENV=development webpack serve --open",
-      "lint": "eslint client",
-      "lint:fix": "eslint --fix client",
-      "prettier": "prettier --write .",
-      "prepare": "husky install"
-  },
-  "repository": {
-      "type": "git",
-      "url": "git+https://github.com/oslabs-beta/graphql-beaver-view.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-      "url": "https://github.com/oslabs-beta/graphql-beaver-view/issues"
-  },
-  "homepage": "https://github.com/oslabs-beta/graphql-beaver-view#readme",
-  "dependencies": {
-    "@graphql-tools/utils": "^8.6.10",
-    "apollo-server-express": "^3.7.0",
-    "body-parser": "^1.20.0",
-    "compression": "^1.7.4",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "graphql": "^16.5.0",
-    "http": "^0.0.1-security",
-    "ncp": "^2.0.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
-  },
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "cross-env NODE_ENV=production nodemon --exec ts-node ./server/index.ts",
+        "build": "cross-env NODE_ENV=production webpack",
+        "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon --exec ts-node ./server/index.ts\" ",
+        "dev-client": "cross-env NODE_ENV=development webpack serve --open",
+        "lint": "eslint client",
+        "lint:fix": "eslint --fix client",
+        "prettier": "prettier --write .",
+        "prepare": "husky install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/oslabs-beta/graphql-beaver-view.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/oslabs-beta/graphql-beaver-view/issues"
+    },
+    "homepage": "https://github.com/oslabs-beta/graphql-beaver-view#readme",
+    "dependencies": {
+        "@graphql-tools/utils": "^8.6.10",
+        "apollo-server-express": "^3.7.0",
+        "body-parser": "^1.20.0",
+        "compression": "^1.7.4",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "graphql": "^16.5.0",
+        "http": "^0.0.1-security",
+        "ncp": "^2.0.0",
+        "react": "^18.1.0",
+        "react-dom": "^18.1.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.17.7",
         "@babel/preset-env": "^7.16.11",
@@ -56,8 +56,6 @@
         "concurrently": "^7.0.0",
         "cross-env": "^7.0.3",
         "css-loader": "^6.7.1",
-        "dotenv": "^16.0.1",
-        "dotenv-webpack": "^7.1.0",
         "eslint": "^8.15.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-airbnb-typescript": "^17.0.0",
@@ -71,7 +69,6 @@
         "html-webpack-plugin": "^5.5.0",
         "husky": "^8.0.1",
         "lint-staged": "^12.4.1",
-        "mini-css-extract-plugin": "^2.6.0",
         "nodemon": "^2.0.15",
         "prettier": "2.6.2",
         "react-router": "^6.3.0",
@@ -80,12 +77,10 @@
         "sass-loader": "^12.6.0",
         "ts-loader": "^9.3.0",
         "typescript": "^4.6.4",
-        "webpack": "^5.72.1",
-        "webpack-cli": "^4.9.2",
         "webpack-dev-server": "^4.7.4"
     },
     "lint-staged": {
-        "*.{js, ts, .jsx, .tsx}": "eslint --cache --fix",
-        "*.{js,ts,css,md,jsx,tsx}": "prettier --write --ignore-unknown"
+        "*.{js, ts}": "eslint --cache --fix",
+        "*.{js,ts,css,md}": "prettier --write --ignore-unknown"
     }
-  }
+}
