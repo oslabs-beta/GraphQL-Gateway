@@ -1,5 +1,5 @@
-import { UserController } from "./UserController";
+import { UserController } from './UserController';
 
 const userController = new UserController();
 
-export { userController, };
+export { userController };
