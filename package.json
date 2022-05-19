@@ -1,44 +1,44 @@
-  {
+{
     "name": "graphql-gateway",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "cross-env NODE_ENV=production nodemon ./server/server.js",
-      "build": "cross-env NODE_ENV=production webpack",
-      "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon ./server/server.js\" ",
-      "dev-client": "cross-env NODE_ENV=development webpack serve --open",
-      "lint": "eslint client",
-      "lint:fix": "eslint --fix client",
-      "prettier": "prettier --write .",
-      "prepare": "husky install"
-  },
-  "repository": {
-      "type": "git",
-      "url": "git+https://github.com/oslabs-beta/graphql-beaver-view.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-      "url": "https://github.com/oslabs-beta/graphql-beaver-view/issues"
-  },
-  "homepage": "https://github.com/oslabs-beta/graphql-beaver-view#readme",
-  "dependencies": {
-    "@graphql-tools/utils": "^8.6.10",
-    "apollo-server-express": "^3.7.0",
-    "body-parser": "^1.20.0",
-    "compression": "^1.7.4",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "graphql": "^16.5.0",
-    "http": "^0.0.1-security",
-    "ncp": "^2.0.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
-  },
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "cross-env NODE_ENV=production nodemon ./server/index.ts",
+        "build": "cross-env NODE_ENV=production webpack",
+        "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon ./server/index.ts\" ",
+        "dev-client": "cross-env NODE_ENV=development webpack serve --open",
+        "lint": "eslint client",
+        "lint:fix": "eslint --fix client",
+        "prettier": "prettier --write .",
+        "prepare": "husky install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/oslabs-beta/graphql-beaver-view.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/oslabs-beta/graphql-beaver-view/issues"
+    },
+    "homepage": "https://github.com/oslabs-beta/graphql-beaver-view#readme",
+    "dependencies": {
+        "@graphql-tools/utils": "^8.6.10",
+        "apollo-server-express": "^3.7.0",
+        "body-parser": "^1.20.0",
+        "compression": "^1.7.4",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "graphql": "^16.5.0",
+        "http": "^0.0.1-security",
+        "ncp": "^2.0.0",
+        "react": "^18.1.0",
+        "react-dom": "^18.1.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.17.7",
         "@babel/preset-env": "^7.16.11",
@@ -83,4 +83,4 @@
         "*.{js, ts}": "eslint --cache --fix",
         "*.{js,ts,css,md}": "prettier --write --ignore-unknown"
     }
-  }
+}
