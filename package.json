@@ -35,6 +35,7 @@
         "express": "^4.18.1",
         "graphql": "^16.5.0",
         "http": "^0.0.1-security",
+        "mongoose": "^6.3.3",
         "ncp": "^2.0.0",
         "react": "^18.1.0",
         "react-dom": "^18.1.0"
