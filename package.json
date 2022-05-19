@@ -68,6 +68,7 @@
         "html-webpack-plugin": "^5.5.0",
         "husky": "^8.0.1",
         "lint-staged": "^12.4.1",
+        "mini-css-extract-plugin": "^2.6.0",
         "nodemon": "^2.0.15",
         "prettier": "2.6.2",
         "react-router": "^6.3.0",
