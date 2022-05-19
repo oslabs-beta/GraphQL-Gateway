@@ -12,7 +12,6 @@ import { typeDefs } from './models/TypeDefs';
 import { resolvers } from './models/Resolvers';
 
 import { userRouter } from './routes/User';
-import { extendSchemaImpl } from 'graphql/utilities/extendSchema';
 
 const app: express.Application = express();
 const PORT: number = (process.env.port as any as number) || 3000;
