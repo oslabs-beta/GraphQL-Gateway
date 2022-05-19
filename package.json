@@ -48,6 +48,7 @@
         "@babel/core": "^7.17.7",
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.16.7",
+        "@types/compression": "^1.7.2",
         "@typescript-eslint/eslint-plugin": "^5.23.0",
         "@typescript-eslint/parser": "^5.23.0",
         "babel-loader": "^8.2.3",

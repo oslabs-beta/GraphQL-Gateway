@@ -4,7 +4,6 @@ dotenv.config();
 import express from 'express';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
-import depthLimit from 'graphql-depth-limit';
 import compression from 'compression';
 import cors from 'cors';
 
@@ -19,7 +18,6 @@ const PORT: number = (process.env.port as any as number) || 3000;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    validationRules: [depthLimit(6)],
 });
 
 app.use(cors());
