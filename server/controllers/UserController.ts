@@ -8,15 +8,12 @@ export class UserController {
         return next();
     }
 
-    getUsers(req: Request, res: Response, next: NextFunction) {
-        // try-catch db query here
-
-        // placeholder
+    async getUsers(req: Request, res: Response, next: NextFunction) {
+        //placeholder
         res.locals.users = [
             { id: '1', email: '1' },
             { id: '2', email: '2' },
         ];
-
         return next();
     }
 
