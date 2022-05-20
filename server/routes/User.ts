@@ -27,7 +27,13 @@ userRouter.post('/', userController.createUser);
 // userRouter.put('/:userID', userController.updateUser, (req: Request, res: Response) => {
 //     return res.status(200).json(res.locals.user);
 // });
-userRouter.put('/:id', userController.updateUser);
+userRouter.put(
+    '/:id',
+    userController.updateUser,
+    (req: Request, res: Response, next: NextFunction) => {
+        return res.status(200).json(res.locals.user);
+    }
+);
 
 // userRouter.delete('/:userID', userController.deleteUser, (req: Request, res: Response) => {
 //     return res.status(200).json(`User ${req.params.userID} deleted from DB.`);

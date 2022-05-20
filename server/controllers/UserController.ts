@@ -82,26 +82,26 @@ export class UserController {
         // return next();
     }
 
-    updateUser(req: Request, res: Response, next: NextFunction) {
+    async updateUser(req: Request, res: Response, next: NextFunction) {
         //I will write a code to update email/pass not the apps, since we still have to figure out out apps object property for user model
         const passInside = req.body.password;
-        function hashing(pass: string) {
-            return bcrypt.hash(pass, 12);
-        }
         const id = req.params.id;
+
         console.log('this is id', id);
 
-        async function findAndUpdate() {
-            let pass = await hashing(passInside);
-            User.findByIdAndUpdate(id, { email: req.body.email, password: pass })
-                .then((student: object) => {
-                    console.log('final', student);
-                    return student; //student here returns pre updated student, but it is nicely updated in the DB
-                })
-                .catch((err: string) => console.log(err));
-        }
-        findAndUpdate();
-        res.sendStatus(200);
+        const pass = await bcrypt.hash(passInside, 12);
+
+        return await User.findByIdAndUpdate(
+            id,
+            { email: req.body.email, password: pass },
+            { new: true }
+        )
+            .then((student: object) => {
+                console.log('final', student);
+                res.locals.user = student;
+                return next();
+            })
+            .catch((err: string) => console.log(err));
         // const { id } = req.body;
 
         // // try-catch db query here
