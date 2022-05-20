@@ -1,41 +1,53 @@
-export const resolvers = {
+type QueryUserArgs = {
+    email: string;
+};
+
+type CreateUserArgs = {
+    input: { email: string; password: string };
+};
+
+type EmailArg = {
+    email: string;
+};
+
+const resolvers = {
     Query: {
-        users: async (parent: any, args: any, context: any) =>
+        users: async () =>
             // placeholder
             [
                 { id: '1', email: '1' },
-                { id: '2', email: '2', parent, args, context },
+                { id: '2', email: '2' },
             ],
-        user: async (parent: any, args: any, context: any) =>
+        user: async (parent: undefined, args: QueryUserArgs) => {
             // try-catch db query here
-
+            const { email } = args;
             // placeholder
-            ({ id: '1', email: '1', parent, args, context }),
+            return { id: '1', email };
+        },
     },
     Mutation: {
-        createUser: async (parent: any, args: any, context: any) => {
+        createUser: async (parent: undefined, args: CreateUserArgs) => {
             const { email } = args.input;
 
             // try-catch db query here
 
             // placeholder
-            return { id: '1', email, parent, context };
+            return { id: '1', email };
         },
-        updateUser: async (parent: any, args: any, context: any) => {
-            const { id, email } = args.input;
+        updateUser: async (parent: undefined, args: EmailArg) => {
+            const { email } = args;
 
             // try-catch db query here
 
             // placeholder
-            return { id, email, parent, context };
+            return { email };
         },
-        deleteUser: async (parent: any, args: any, context: any) => {
-            const { id } = args;
-
+        deleteUser: async (parent: undefined, args: EmailArg) => {
+            const { email } = args;
             // try-catch db query here
 
             // placeholder
-            return { id, email: '1', parent, context };
+            return { email };
         },
     },
 };
