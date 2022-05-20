@@ -16,5 +16,5 @@
         "noEmit": false,
         "jsx": "react-jsx"
     },
-    "include": ["client"]
+    "include": ["client", "server"]
 }
