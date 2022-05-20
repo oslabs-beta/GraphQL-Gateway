@@ -29,7 +29,7 @@ export const resolvers = {
             // try-catch db query here
 
             // placeholder
-            return { id, email: '1' };
+            return { id, email };
         },
         deleteUser: async (parent: any, args: any, context: any) => {
             const { id } = args;
