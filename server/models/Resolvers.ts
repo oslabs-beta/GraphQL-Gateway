@@ -1,20 +1,18 @@
 export const resolvers = {
     Query: {
-        users: async (parent: any, args: any, context: any) => {
+        users: async (parent: any, args: any, context: any) =>
             // try-catch db query here
 
             // placeholder
-            return [
+            [
                 { id: '1', email: '1' },
                 { id: '2', email: '2' },
-            ];
-        },
-        user: async (parent: any, args: any, context: any) => {
+            ],
+        user: async (parent: any, args: any, context: any) =>
             // try-catch db query here
 
             // placeholder
-            return { id: '1', email: '1' };
-        },
+            ({ id: '1', email: '1' }),
     },
     Mutation: {
         createUser: async (parent: any, args: any, context: any) => {
@@ -30,7 +28,7 @@ export const resolvers = {
 
             // try-catch db query here
 
-            //placeholder
+            // placeholder
             return { id, email: '1' };
         },
         deleteUser: async (parent: any, args: any, context: any) => {
@@ -38,7 +36,7 @@ export const resolvers = {
 
             // try-catch db query here
 
-            //placeholder
+            // placeholder
             return { id, email: '1' };
         },
     },

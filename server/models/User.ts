@@ -1,9 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose';
-
-export interface UserInterface extends Document {
-    email: string;
-    password: string;
-}
+const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 
 const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
@@ -25,4 +21,4 @@ const userSchema = new Schema({
 // const User = mongoose.model<UserInterface>("User", userSchema);
 // export default User;
 
-module.exports = mongoose.model<UserInterface>('User', userSchema);
+export default mongoose.model('User', userSchema);

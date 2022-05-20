@@ -9,7 +9,8 @@
         "airbnb", 
         "airbnb/hooks", 
         "airbnb-typescript", 
-        "prettier"
+        "prettier",
+        "react-app"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {

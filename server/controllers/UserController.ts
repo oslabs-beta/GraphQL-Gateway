@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
 import { Request, Response, NextFunction } from 'express';
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const validator = require('email-validator'); //validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
 
-export class UserController {
-    validate(req: Request, res: Response, next: NextFunction) {
+const bcrypt = require('bcryptjs');
+const validator = require('email-validator'); // validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
+const User = require('../models/User');
+
+export default class UserController {
+    static validate(req: Request, res: Response, next: NextFunction) {
         if (validator.validate(req.body.email)) {
             console.log('PASSED');
             next();
@@ -14,8 +14,8 @@ export class UserController {
         }
     }
 
-    getUser(req: Request, res: Response, next: NextFunction) {
-        let id = req.params.id;
+    static getUser(req: Request, res: Response, next: NextFunction) {
+        const { id } = req.params;
         User.findById(id)
             .then((student: object) => {
                 res.send(student);
@@ -27,15 +27,13 @@ export class UserController {
         // return next();
     }
 
-    getUsers(req: Request, res: Response, next: NextFunction) {
+    static getUsers(req: Request, res: Response, next: NextFunction) {
         User.find()
             .then((users: object) => {
                 res.locals.users = users;
                 console.log('users', users);
             })
-            .then(() => {
-                return next();
-            })
+            .then(() => next())
             .catch((err: string) => console.log('printing error', err));
         // // try-catch db query here
 
@@ -46,22 +44,22 @@ export class UserController {
         // ];
     }
 
-    createUser(req: Request, res: Response, next: NextFunction) {
-        const email = req.body.email;
-        const password = req.body.password;
+    static createUser(req: Request, res: Response, next: NextFunction) {
+        const { email } = req.body;
+        const { password } = req.body;
 
-        User.findOne({ email: email }) //if the user with this email doesn't exist
+        User.findOne({ email }) // if the user with this email doesn't exist
             .then((data: any) => {
-                //create one using bcrypt hashing for password
+                // create one using bcrypt hashing for password
                 if (!data) {
                     return bcrypt
                         .hash(password, 12)
                         .then((savedPassword: string) => {
                             const user = new User({
-                                email: email,
+                                email,
                                 password: savedPassword,
                             });
-                            //now here we should create session to persist while logged in
+                            // now here we should create session to persist while logged in
                             return user.save();
                         })
                         .then((result: object) => {
@@ -70,10 +68,9 @@ export class UserController {
                         .catch((error: string) => {
                             console.log(error);
                         });
-                } else {
-                    console.log('email in already in use!');
-                    res.sendStatus(403);
                 }
+                console.log('email in already in use!');
+                return res.sendStatus(403);
             });
 
         // placeholder
@@ -82,16 +79,16 @@ export class UserController {
         // return next();
     }
 
-    async updateUser(req: Request, res: Response, next: NextFunction) {
-        //I will write a code to update email/pass not the apps, since we still have to figure out out apps object property for user model
+    static async updateUser(req: Request, res: Response, next: NextFunction) {
+        // I will write a code to update email/pass not the apps, since we still have to figure out out apps object property for user model
         const passInside = req.body.password;
-        const id = req.params.id;
+        const { id } = req.params;
 
         console.log('this is id', id);
 
         const pass = await bcrypt.hash(passInside, 12);
 
-        return await User.findByIdAndUpdate(
+        const update = await User.findByIdAndUpdate(
             id,
             { email: req.body.email, password: pass },
             { new: true }
@@ -102,6 +99,8 @@ export class UserController {
                 return next();
             })
             .catch((err: string) => console.log(err));
+
+        return update;
         // const { id } = req.body;
 
         // // try-catch db query here
@@ -112,7 +111,7 @@ export class UserController {
         // return next();
     }
 
-    deleteUser(req: Request, res: Response, next: NextFunction) {
+    static deleteUser(req: Request, res: Response, next: NextFunction) {
         User.findByIdAndRemove(req.params.id)
             .then((user: object) => {
                 console.log('User deleted sucessfully!', user);
