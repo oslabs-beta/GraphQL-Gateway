@@ -1,16 +1,19 @@
 import dotenv from 'dotenv';
-dotenv.config();
 
 import express from 'express';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import cors from 'cors';
+import connectDB from './config/db';
 
-import { typeDefs } from './schema/TypeDefs';
-import { resolvers } from './schema/Resolvers';
+import typeDefs from './schema/TypeDefs';
+import resolvers from './schema/Resolvers';
 
-import { userRouter } from './routes/User';
+import userRouter from './routes/User';
+
+dotenv.config();
+connectDB();
 
 const app: express.Application = express();
 const PORT: number = (process.env.port as any as number) || 3000;
@@ -29,7 +32,16 @@ app.use('/api/users', userRouter);
 // go to localhost:3000/gql to use apollo playground
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
-    app.listen(PORT, () => {
-        console.log(`Server started on port ${PORT}`);
-    });
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 });
+
+// mongoose
+//     .connect(MONGODB_URI)
+//     .then(() => {
+//         app.listen(4000, () => {
+//             console.log('listening on 4000');
+//         });
+//     })
+//     .catch((err: string) => {
+//         console.log(err);
+//     });
