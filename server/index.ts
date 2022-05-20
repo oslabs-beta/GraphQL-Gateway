@@ -7,8 +7,8 @@ import compression from 'compression';
 import cors from 'cors';
 import connectDB from './config/db';
 
-import { typeDefs } from './models/TypeDefs';
-import { resolvers } from './models/Resolvers';
+import typeDefs from './schema/TypeDefs';
+import resolvers from './schema/Resolvers';
 
 import userRouter from './routes/User';
 

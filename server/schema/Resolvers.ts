@@ -1,4 +1,4 @@
-export const resolvers = {
+const resolvers = {
     Query: {
         users: async (parent: any, args: any, context: any) =>
             // placeholder
