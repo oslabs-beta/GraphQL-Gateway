@@ -3,23 +3,24 @@ import { gql } from 'apollo-server-express';
 const typeDefs = gql`
     "below is filler b/c errors are thrown if typeDefs is empty"
     type User {
-        id: ID!
         email: String!
+        password: String!
     }
 
     type Query {
         users: [User]!
-        user(id: ID!): User
+        user(email: String!): User
     }
 
     type Mutation {
         createUser(input: CreateUserInput!): User
         updateUser(input: UpdateUserInput!): User
-        deleteUser(id: ID!): User
+        deleteUser(email: String!): User
     }
 
     input CreateUserInput {
         email: String!
+        password: String!
     }
 
     input UpdateUserInput {
