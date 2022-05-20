@@ -16,7 +16,7 @@ export default class UserController {
                 res.locals.user(student);
                 return next();
             })
-            .catch((err: string) => next({ err: 'Add global error handler' }));
+            .catch((err: Error) => next({ err }));
     }
 
     static async getUsers(req: Request, res: Response, next: NextFunction) {
@@ -25,7 +25,7 @@ export default class UserController {
                 res.locals.users = users;
                 return next();
             })
-            .catch((err: string) => next({ err: 'error' }));
+            .catch((err: Error) => next({ err }));
     }
 
     static createUser(req: Request, res: Response, next: NextFunction) {
@@ -49,7 +49,7 @@ export default class UserController {
                             res.locals.user = result;
                             return next();
                         })
-                        .catch((error: Error) => next({ err: 'error' }));
+                        .catch((err: Error) => next({ err }));
                 }
                 return next({ err: 'email already etc etc' });
             });
@@ -74,7 +74,7 @@ export default class UserController {
                 res.locals.user = student;
                 return next();
             })
-            .catch((err: string) => console.log(err));
+            .catch((err: Error) => next({ err }));
 
         return update;
     }
@@ -86,6 +86,6 @@ export default class UserController {
                 res.locals.user = user;
                 return next();
             })
-            .catch((err: string) => next({ err: 'Error' }));
+            .catch((err: Error) => next({ err }));
     }
 }

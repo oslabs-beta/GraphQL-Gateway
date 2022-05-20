@@ -1,11 +1,11 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import userController from '../controllers/UserController';
 
 const userRouter = express.Router({
     strict: true,
 });
 
-userRouter.get('/', userController.getUsers, (req: Request, res: Response, next: NextFunction) =>
+userRouter.get('/', userController.getUsers, (req: Request, res: Response) =>
     res.status(200).json(res.locals.users)
 );
 
@@ -13,7 +13,7 @@ userRouter.get('/:userID', userController.getUser, (req: Request, res: Response)
     res.status(200).json(res.locals.user)
 );
 
-userRouter.post('/', userController.createUser, (req: Request, res: Response, next: NextFunction) =>
+userRouter.post('/', userController.createUser, (req: Request, res: Response) =>
     res.status(200).json(res.locals.user)
 );
 
