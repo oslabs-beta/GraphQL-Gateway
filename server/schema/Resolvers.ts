@@ -1,41 +1,73 @@
+import User from '../models/User';
+
+const bcrypt = require('bcryptjs');
+
+type QueryUserArgs = {
+    email: string;
+};
+
+type CreateUserArgs = {
+    input: { email: string; password: string };
+};
+
+type EmailArg = {
+    email: string;
+};
+
+type User = {
+    email: String;
+};
+
 const resolvers = {
     Query: {
-        users: async (parent: any, args: any, context: any) =>
+        users: () =>
             // placeholder
             [
                 { id: '1', email: '1' },
-                { id: '2', email: '2', parent, args, context },
+                { id: '2', email: '2' },
             ],
-        user: async (parent: any, args: any, context: any) =>
-            // try-catch db query here
+        user: async (parent: undefined, args: QueryUserArgs) => {
+            const { email } = args;
 
-            // placeholder
-            ({ id: '1', email: '1', parent, args, context }),
+            return User.findOne({ email })
+                .then((user: User) => {
+                    if (!user) return new Error('User does not exist');
+                    return { email: user.email };
+                })
+                .catch(() => new Error('DB query failed'));
+        },
     },
     Mutation: {
-        createUser: async (parent: any, args: any, context: any) => {
-            const { email } = args.input;
+        createUser: async (parent: undefined, args: CreateUserArgs) => {
+            const { email, password } = args.input;
+            const hash = await bcrypt.hash(password, 10);
 
-            // try-catch db query here
-
-            // placeholder
-            return { id: '1', email, parent, context };
+            return User.findOne({ email })
+                .then((user: User) => {
+                    if (user) return new Error('User already exists in DB');
+                    const newUser = new User({
+                        email,
+                        password: hash,
+                    });
+                    return newUser.save();
+                })
+                .then((newUser: User) => newUser)
+                .catch(() => new Error('DB query failed'));
         },
-        updateUser: async (parent: any, args: any, context: any) => {
-            const { id, email } = args.input;
+        updateUser: async (parent: undefined, args: EmailArg) => {
+            const { email } = args;
 
             // try-catch db query here
 
             // placeholder
-            return { id, email, parent, context };
+            return { email };
         },
-        deleteUser: async (parent: any, args: any, context: any) => {
-            const { id } = args;
-
+        deleteUser: async (parent: undefined, args: EmailArg) => {
+            const { email } = args;
             // try-catch db query here
 
             // placeholder
-            return { id, email: '1', parent, context };
+            return { email };
         },
     },
 };
