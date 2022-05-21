@@ -8,4 +8,4 @@ const querySchema = new Schema({
     complexity: { type: Number, required: true },
 });
 
-module.exports = mongoose.model('Query', querySchema, 'queries');
+export default mongoose.model('Query', querySchema, 'queries');
