@@ -1,4 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const querySchema = new Schema({
     text: { type: String, required: true },
