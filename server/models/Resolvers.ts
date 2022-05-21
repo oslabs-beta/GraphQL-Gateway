@@ -3,44 +3,55 @@ import User from './User';
 const bcrypt = require('bcryptjs');
 
 type QueryUserArgs = {
-    id: Number | String | undefined;
+    _id: Number | String | undefined;
 };
 
 type CreateUserArgs = {
-    input: { email: string; password: string };
+    user: { email: string; password: string };
 };
 
 type UpdateUserArgs = {
-    input: {
-        id: Number;
+    user: {
+        _id: Number;
         email: String;
         password: String;
     };
 };
 
 type User = {
-    id: Number;
+    _id: Number;
     email: String;
     password: String;
 };
 
 const resolvers = {
     Query: {
+        users: async (parent: undefined, args: QueryUserArgs) => {
+            return User.find()
+                .then((users: User) => {
+                    return users;
+                })
+                .catch(() => new Error('DB query failed'));
+        },
         user: async (parent: undefined, args: QueryUserArgs) => {
-            const { id } = args;
+            const { _id } = args;
 
-            return User.findOne({ id })
+            return User.findOne({ _id })
                 .then((user: User) => {
                     if (!user) return new Error('User does not exist');
-                    return { email: user.email };
+                    return {
+                        _id,
+                        email: user.email,
+                        password: user.password,
+                    };
                 })
                 .catch(() => new Error('DB query failed'));
         },
     },
     Mutation: {
         createUser: async (parent: undefined, args: CreateUserArgs) => {
-            const { email, password } = args.input;
-            const hash = await bcrypt.hash(password, 10);
+            const { email, password } = args.user;
+            const hash = await bcrypt.hash(password, 11);
 
             return User.findOne({ email })
                 .then((user: User) => {
@@ -55,19 +66,22 @@ const resolvers = {
                 .catch(() => new Error('DB query failed'));
         },
         updateUser: async (parent: undefined, args: UpdateUserArgs) => {
-            const { id } = args.input;
-
-            // try-catch db query here
-
-            // placeholder
-            return { id };
+            const { _id, email, password } = args.user;
+            const hash = await bcrypt.hash(password, 11);
+            return User.findByIdAndUpdate(_id, { email, password: hash }, { new: true })
+                .then((user: User) => {
+                    if (!user) return new Error('User not found');
+                    return user;
+                })
+                .catch(() => new Error('DB query failed'));
         },
         deleteUser: async (parent: undefined, args: QueryUserArgs) => {
-            const { id } = args;
-            // try-catch db query here
-
-            // placeholder
-            return { id };
+            const { _id } = args;
+            return User.findByIdAndRemove({ _id })
+                .then((user: User) => {
+                    return user;
+                })
+                .catch(() => new Error('DB query failed'));
         },
     },
 };
