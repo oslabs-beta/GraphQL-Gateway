@@ -7,8 +7,8 @@ import compression from 'compression';
 import cors from 'cors';
 import connectDB from './config/db';
 
-import typeDefs from './models/TypeDefs';
-import resolvers from './models/Resolvers';
+import typeDefs from './schema/TypeDefs';
+import resolvers from './schema/Resolvers';
 
 import userRouter from './routes/User';
 
@@ -29,19 +29,8 @@ app.use(bodyParser.json());
 
 app.use('/api/users', userRouter);
 
-// go to localhost:3000/gql to use apollo playground
+// localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 });
-
-// mongoose
-//     .connect(MONGODB_URI)
-//     .then(() => {
-//         app.listen(4000, () => {
-//             console.log('listening on 4000');
-//         });
-//     })
-//     .catch((err: string) => {
-//         console.log(err);
-//     });
