@@ -25,11 +25,12 @@ function Signup() {
     };
 
     return (
-        <div className="App">
+        <div className="app">
             <h1>Signup</h1>
             <div className="login-box">
-                <div>
+                <div className="form-wrapper">
                     <input
+                        className="input"
                         type="text"
                         onChange={handleChange}
                         name="email"
@@ -37,13 +38,14 @@ function Signup() {
                         placeholder="enter email"
                     />
                     <input
+                        className="input"
                         type="password"
                         onChange={handleChange}
                         name="password"
                         value={user.password}
                         placeholder="enter password"
                     />
-                    <button type="submit" onClick={handleClick}>
+                    <button className="btn" type="submit" onClick={handleClick}>
                         Signup
                     </button>
                 </div>
