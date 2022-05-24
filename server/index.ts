@@ -32,5 +32,5 @@ app.use('/api/users', userRouter);
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+    app.listen(PORT, () => console.log(`[Server] Started on port :${PORT}`));
 });

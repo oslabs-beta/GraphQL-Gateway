@@ -60,8 +60,6 @@ export default class UserController {
         const passInside = req.body.password;
         const { id } = req.params;
 
-        console.log('this is id', id);
-
         const pass = await bcrypt.hash(passInside, 12);
 
         const update = User.findByIdAndUpdate(
@@ -70,7 +68,6 @@ export default class UserController {
             { new: true }
         )
             .then((student: object) => {
-                console.log('final', student);
                 res.locals.user = student;
                 return next();
             })
@@ -82,7 +79,6 @@ export default class UserController {
     static deleteUser(req: Request, res: Response, next: NextFunction) {
         User.findByIdAndRemove(req.params.id)
             .then((user: object) => {
-                console.log('User deleted sucessfully!', user);
                 res.locals.user = user;
                 return next();
             })

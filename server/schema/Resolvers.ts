@@ -1,9 +1,9 @@
+import { IResolvers } from '@graphql-tools/utils';
+import bcrypt from 'bcrypt';
+
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
-
-import { IResolvers } from '@graphql-tools/utils';
-import bcrypt from 'bcrypt';
 
 const resolvers: IResolvers = {
     Query: {
@@ -172,37 +172,33 @@ const resolvers: IResolvers = {
      * To query nested Project Data in User Object
      */
     User: {
-        projects: (parent: User): Promise<Project[] | Error> => {
-            return ProjectDB.find({ userID: parent.id })
+        projects: (parent: User): Promise<Project[] | Error> =>
+            ProjectDB.find({ userID: parent.id })
                 .then((projects: Project[]): Project[] => projects)
-                .catch((): Error => new Error('DB query failed'));
-        },
-        project: (parent: User, args: QueryByID): Promise<Project | Error> => {
-            return ProjectDB.findOne({ _id: args.id, userID: parent.id })
+                .catch((): Error => new Error('DB query failed')),
+        project: (parent: User, args: QueryByID): Promise<Project | Error> =>
+            ProjectDB.findOne({ _id: args.id, userID: parent.id })
                 .then((project: Project): Project => {
                     if (!project) throw new Error('Project not found');
                     return project;
                 })
-                .catch((): Error => new Error('DB query failed'));
-        },
+                .catch((): Error => new Error('DB query failed')),
     },
     /*
      * To query nested Query Data in Project Object
      */
     Project: {
-        queries: (parent: Project): Promise<ProjectQuery[] | Error> => {
-            return QueryDB.find({ projectID: parent.id })
+        queries: (parent: Project): Promise<ProjectQuery[] | Error> =>
+            QueryDB.find({ projectID: parent.id })
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
-                .catch((): Error => new Error('DB query failed'));
-        },
-        query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> => {
-            return QueryDB.findOne({ _id: args.id, userID: parent.id })
+                .catch((): Error => new Error('DB query failed')),
+        query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> =>
+            QueryDB.findOne({ _id: args.id, userID: parent.id })
                 .then((query: ProjectQuery): ProjectQuery => {
                     if (!query) throw new Error('Query not found');
                     return query;
                 })
-                .catch((): Error => new Error('DB query failed'));
-        },
+                .catch((): Error => new Error('DB query failed')),
     },
 };
 
