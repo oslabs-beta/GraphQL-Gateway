@@ -18,7 +18,6 @@ body a {
 #main {
     color: #353535;
     margin: 0 auto;
-    padding: 130px 0;
     width: 40%;
     text-align: center;
 }
@@ -71,6 +70,7 @@ body a {
     background-color: #a496e3;
 }
 .box {
+    margin: 130px 0;
     color: #353535;
     padding: 30px;
     border-radius: 15px;
@@ -94,4 +94,48 @@ body a {
 }
 .app h1 {
     margin: 50px;
+}
+.dashboard {
+    height: 634px;
+    width: 100%;
+}
+.chartBox {
+    padding-top: 32px;
+    width: 35%;
+    float: right;
+    margin-top: 5%;
+    margin-right: 5%;
+    background-color: rgba(255, 255, 255, 0.4);
+    min-height: 488px;
+    max-height: 488px;
+}
+.loggerBox {
+    margin-top: 5%;
+    margin-left: 5%;
+    float: left;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 50%;
+    min-height: 520px;
+    max-height: 520px;
+}
+.chartBtn {
+    width: 27%;
+    color: #353535;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 2% 4%;
+    margin-left: 5%;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.chartBtn:hover {
+    background-color: #a496e3;
+}
+.h4chart {
+    color: #353535;
+    text-align: center;
 }

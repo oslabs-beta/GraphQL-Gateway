@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import '../public/styles.css';
@@ -8,6 +9,7 @@ export interface ISState {
     style: {
         loginBox: string;
         signupBox: string;
+        dashboard: string;
     };
 }
 
@@ -19,19 +21,8 @@ function App() {
     const [style, setStyle] = useState<ISState['style']>({
         loginBox: 'none',
         signupBox: 'block',
+        dashboard: 'none',
     });
-    // const [user, setUser] = useState();
-
-    // useEffect(() => {
-    //     (async function () {
-    //         const usr = await axios
-    //             .get(`http://localhost:3000/api/me`, {
-    //                 withCredentials: true,
-    //             })
-    //             .then((res: any) => res.data);
-    //         setUser(usr);
-    //     })();
-    // }, []);
 
     const setToggle = () => {
         if (style.loginBox === 'none') {
@@ -49,9 +40,36 @@ function App() {
         }
     };
 
+    const viewDashboard = () => {
+        if (style.dashboard === 'none') {
+            setStyle({
+                ...style,
+                loginBox: 'none',
+                signupBox: 'none',
+                dashboard: 'block',
+            });
+        } else {
+            setStyle({
+                ...style,
+                loginBox: 'none',
+                signupBox: 'block',
+                dashboard: 'none',
+            });
+        }
+    };
+
     return (
         <div>
             <div id="navbar">
+                <div
+                    tabIndex={0}
+                    role="button"
+                    onKeyPress={viewDashboard}
+                    onClick={() => viewDashboard()}
+                    className="linkBtn"
+                >
+                    Dashboard
+                </div>
                 <div className="linkBtn">Link</div>
                 <div className="linkBtn">Link</div>
                 <div className="linkBtn">Link</div>
@@ -101,6 +119,9 @@ function App() {
                         <span className="paragraph">to go back to signup page</span>
                     </div>
                 </div>
+            </div>
+            <div className="dashboard" style={{ display: style.dashboard }}>
+                <Dashboard />
             </div>
             <div id="footer">
                 <div>
