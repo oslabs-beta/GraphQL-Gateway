@@ -14,7 +14,20 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": false,
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "typeRoots": ["./@types", "node_modules/@types"],
+        "baseUrl": "./"
+        // "paths": {
+        //     "*": ["/@types/*"]
+        // }
     },
-    "include": ["client", "server"]
+    "include": [
+        "client/**/*.js",
+        "client/**/*.jsx",
+        "client/**/*.ts",
+        "client/**/*.tsx",
+        "server/**/*.js",
+        "server/**/*.ts",
+        "./@types/*"
+    ]
 }
