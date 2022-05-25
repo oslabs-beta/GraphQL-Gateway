@@ -21,9 +21,9 @@ const typeDefs = gql`
         id: ID!
         name: String!
         projectID: String!
-        depth: Int
-        complexity: Int
-        time: Int
+        depth: Int!
+        complexity: Int!
+        time: Int!
     }
 
     type Query {
@@ -54,6 +54,7 @@ const typeDefs = gql`
     input CreateUserInput {
         email: String!
         password: String!
+        projects: [String]
     }
 
     input UpdateUserInput {
@@ -71,7 +72,6 @@ const typeDefs = gql`
     input UpdateProjectInput {
         id: String!
         name: String
-        queries: [String]
     }
 
     input CreateProjectQueryInput {
@@ -79,6 +79,7 @@ const typeDefs = gql`
         name: String!
         depth: Int!
         complexity: Int!
+        time: Int!
     }
 
     input UpdateProjectQueryInput {

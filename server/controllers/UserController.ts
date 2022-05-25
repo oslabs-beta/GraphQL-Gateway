@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 
-const bcrypt = require('bcryptjs');
-const validator = require('email-validator'); // validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
-const User = require('../models/User');
+import bcrypt from 'bcrypt';
+import validator from 'email-validator'; // validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
+import User from '../models/User';
 
 export default class UserController {
     static validate(req: Request, res: Response, next: NextFunction) {

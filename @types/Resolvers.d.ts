@@ -6,7 +6,7 @@ type User = {
 };
 
 type QueryByID = {
-    id: number | string | undefined;
+    id: string;
 };
 
 type CreateUserArgs = {
@@ -22,7 +22,9 @@ type UpdateUserArgs = {
 };
 
 type Project = {
+    _id?: string;
     id: string;
+    userID: string;
     name: string;
     queries: Array<string>;
 };
@@ -39,15 +41,17 @@ type UpdateProjectArgs = {
         id: string;
         name: string;
         userID: string;
-        queries: Array<string>;
     };
 };
 
 type ProjectQuery = {
+    _id?: string;
     id: string;
+    projectID: string;
     name: string;
     depth: number;
     complexity: number;
+    time: number;
 };
 
 type CreateProjectQueryArgs = {
@@ -61,7 +65,7 @@ type CreateProjectQueryArgs = {
 };
 
 type UpdateProjectQueryArgs = {
-    query: {
+    projectQuery: {
         id: string;
         name: string;
         depth: number;
