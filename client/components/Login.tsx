@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 
 export interface ISState {
     user: {
@@ -20,12 +22,21 @@ function Login() {
         });
     };
 
-    const handleClick = () => {
-        console.log(user);
+    const navigate = useNavigate();
+
+    const switchForm = () => {
+        navigate('/signup');
+    };
+
+    const handleClick = (e: any) => {
+        e.preventDefault();
+        navigate('/dashboard');
+        // console.log(user);
     };
 
     return (
         <div className="App">
+            <Logo />
             <h1>Login</h1>
             <div className="login-box">
                 <div>
@@ -45,6 +56,10 @@ function Login() {
                     />
                     <button type="submit" onClick={handleClick}>
                         Login
+                    </button>
+                    <div>If you do not have an account, click here:</div>
+                    <button type="button" onClick={switchForm}>
+                        Go back to signup form
                     </button>
                 </div>
             </div>
