@@ -1,11 +1,13 @@
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 
-const randomString = require('randomstring');
-
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
+
+import { deleteQuery, deleteProject } from './Helpers';
+
+const randomString = require('randomstring');
 
 const resolvers: IResolvers = {
     Query: {
@@ -81,17 +83,13 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        deleteUser: async (
-            parent: undefined,
-            args: QueryByID,
-            context: Context
-        ): Promise<User | Error> => {
+        deleteUser: async (parent: undefined, args: QueryByID): Promise<User | Error> => {
             const { id } = args;
 
             // goes through project IDs array to delete each user project from DB
             await UserDB.findById(id).then(async (user) => {
-                for (let i = user?.projects.length - 1; i >= 0; i--) {
-                    await deleteProject(user?.projects[i]);
+                for (let i = user.projects.length - 1; i >= 0; i -= 1) {
+                    deleteProject(user.projects[i]);
                 }
             });
 
@@ -145,6 +143,7 @@ const resolvers: IResolvers = {
                     // save project and store new ID
                     const resultID: string | undefined = await newProject
                         .save()
+                        // eslint-disable-next-line no-underscore-dangle
                         .then((res: Project): string | undefined => res._id?.toString())
                         .catch(
                             (err: Error): Error =>
@@ -165,7 +164,7 @@ const resolvers: IResolvers = {
                             resultID,
                             { endpoint: `/${userID}?project=${name}` },
                             { new: true }
-                        ).then((project: Project): Project => project);
+                        ).then((data: Project): Project => data);
                     } else result = new Error('Type Error in new project creation');
 
                     // updates associated project's query array in DB to include new project query
@@ -320,58 +319,5 @@ const resolvers: IResolvers = {
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
     },
 };
-
-// enter project ID as parameter and deletes the project, all queries
-// associated, and the ID from associated user's project array
-async function deleteProject(id: string): Promise<Project | Error> {
-    // first, goes through project's queries array and deletes each from DB
-    await ProjectDB.findById(id).then((project): void => {
-        for (let i = project.queries.length - 1; i >= 0; i--) {
-            deleteQuery(project.queries[i]);
-        }
-        return;
-    });
-
-    // also deletes projectID from userDB's project array
-    return ProjectDB.findByIdAndRemove(id)
-        .then(async (project: Project): Promise<Project> => {
-            const projectArr = await UserDB.findById(project.userID).then(
-                (user): Array<string> => user.projects
-            );
-
-            // removes projectID from user's project array
-            projectArr.splice(projectArr.indexOf(id), 1);
-
-            await UserDB.findByIdAndUpdate(project.userID, { projects: projectArr }).catch(
-                (err: Error): Error => new Error(`DB update failed: ${err}`)
-            );
-
-            return project;
-        })
-        .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-}
-
-// enter project query ID and deletes it from DB and associate project's queries array
-function deleteQuery(id: string): Promise<ProjectQuery | Error> {
-    // also deletes projectID from userDB's project array
-    return QueryDB.findByIdAndRemove(id)
-        .then(async (query: ProjectQuery): Promise<ProjectQuery | Error> => {
-            // store project's query array to remove query to be deleted
-            const queryArr = await ProjectDB.findById(query.projectID).then(
-                (project: Project): Array<string> => project.queries
-            );
-
-            // removes projectID from user's project array
-            queryArr.splice(queryArr.indexOf(id), 1);
-
-            await ProjectDB.findByIdAndUpdate(query.projectID, { queries: queryArr }).catch(
-                (err: Error): Error => new Error(`DB update failed: ${err}`)
-            );
-
-            console.log(`project query deleted`);
-            return query;
-        })
-        .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-}
 
 export default resolvers;
