@@ -12,6 +12,8 @@ import resolvers from './schema/Resolvers';
 
 import userRouter from './routes/User';
 
+import ProjectDB from './models/Project';
+
 dotenv.config();
 connectDB();
 
@@ -28,6 +30,12 @@ app.use(compression());
 app.use(bodyParser.json());
 
 app.use('/api/users', userRouter);
+
+// for testing
+app.get('/api/projects', async (req, res) => {
+    const projects = await ProjectDB.find();
+    return res.json(projects);
+});
 
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {

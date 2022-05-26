@@ -1,3 +1,7 @@
+type Context = {
+    deleteProject: (id: string) => Promise<Error | Project>;
+};
+
 type User = {
     id: string;
     email: string;
