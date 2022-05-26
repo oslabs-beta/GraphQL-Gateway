@@ -5,6 +5,7 @@ const projectSchema = new Schema({
     name: { type: String, required: true },
     queries: { type: Array, required: false },
     endpoint: { type: String },
+    apiKey: { type: String },
 });
 
 export default mongoose.model('Project', projectSchema, 'projects');

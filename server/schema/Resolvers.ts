@@ -1,6 +1,8 @@
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 
+const randomString = require('randomstring');
+
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
@@ -127,11 +129,14 @@ const resolvers: IResolvers = {
                 .then(async (project: Project): Promise<Project | Error> => {
                     if (project) throw new Error('Project already exists');
 
+                    const apiKey = randomString.generate(10);
+
                     // save to DB
                     const newProject = new ProjectDB({
                         userID,
                         name,
                         queries: [],
+                        apiKey,
                     });
 
                     // store new project's ID

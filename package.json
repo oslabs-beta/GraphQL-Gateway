@@ -39,6 +39,7 @@
         "http": "^0.0.1-security",
         "mongoose": "^6.3.3",
         "ncp": "^2.0.0",
+        "randomstring": "^1.2.2",
         "react": "^18.1.0",
         "react-dom": "^18.1.0"
     },
