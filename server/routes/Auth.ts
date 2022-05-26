@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+
 const axios = require('axios');
 require('dotenv').config();
 
@@ -13,7 +14,7 @@ authRouter.get('/', (req: Request, res: Response) => {
     res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
 });
 
-authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFunction) => {
+authRouter.get('/oauth-callback', (req: Request, res: Response) => {
     const body = {
         client_id: clientId,
         client_secret: clientSecret,

@@ -40,6 +40,11 @@ export const data = {
             data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
             backgroundColor: '#3ed9ca',
         },
+        {
+            label: 'Approved',
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+            backgroundColor: '#3ed9ca',
+        },
     ],
 };
 

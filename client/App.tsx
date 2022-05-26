@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -13,11 +12,8 @@ export interface ISState {
     };
 }
 
-// const GITHUB_CLIENT_ID = 'fef59d869191d88d4bc9';
-// const gitHubRedirectURL = 'http://localhost:3000/api/auth/github';
-// const path = '/';
-
 function App() {
+ 
     const [style, setStyle] = useState<ISState['style']>({
         loginBox: 'none',
         signupBox: 'block',
