@@ -1,55 +1,38 @@
 import { Request, Response, NextFunction } from 'express';
 
-const bcrypt = require('bcryptjs');
-const validator = require('email-validator'); // validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
-const User = require('../models/User');
+import bcrypt from 'bcrypt';
+import validator from 'email-validator'; // validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
+import User from '../models/User';
 
 export default class UserController {
     static validate(req: Request, res: Response, next: NextFunction) {
-        if (validator.validate(req.body.email)) {
-            console.log('PASSED');
-            next();
-        } else {
-            res.sendStatus(403);
-        }
+        return validator.validate(req.body.email) ? next() : next({ err: 'Email wrong format' });
     }
 
     static getUser(req: Request, res: Response, next: NextFunction) {
         const { id } = req.params;
-        User.findById(id)
+        return User.findById(id)
             .then((student: object) => {
-                res.send(student);
+                res.locals.user(student);
+                return next();
             })
-            .catch((err: string) => console.log(err));
-        // placeholder
-        // res.locals.user = { id: '1', email: '1' };
-
-        // return next();
+            .catch((err: Error) => next({ err }));
     }
 
-    static getUsers(req: Request, res: Response, next: NextFunction) {
-        User.find()
+    static async getUsers(req: Request, res: Response, next: NextFunction) {
+        return User.find()
             .then((users: object) => {
                 res.locals.users = users;
-                console.log('users', users);
+                return next();
             })
-            .then(() => next())
-            .catch((err: string) => console.log('printing error', err));
-        // // try-catch db query here
-
-        // // placeholder
-        // res.locals.users = [
-        //     { id: '1', email: '1' },
-        //     { id: '2', email: '2' },
-        // ];
+            .catch((err: Error) => next({ err }));
     }
 
     static createUser(req: Request, res: Response, next: NextFunction) {
-        const { email } = req.body;
-        const { password } = req.body;
+        const { email, password } = req.body;
 
-        User.findOne({ email }) // if the user with this email doesn't exist
-            .then((data: any) => {
+        return User.findOne({ email }) // if the user with this email doesn't exist
+            .then((data: Object) => {
                 // create one using bcrypt hashing for password
                 if (!data) {
                     return bcrypt
@@ -63,20 +46,13 @@ export default class UserController {
                             return user.save();
                         })
                         .then((result: object) => {
-                            res.send(result);
+                            res.locals.user = result;
+                            return next();
                         })
-                        .catch((error: string) => {
-                            console.log(error);
-                        });
+                        .catch((err: Error) => next({ err }));
                 }
-                console.log('email in already in use!');
-                return res.sendStatus(403);
+                return next({ err: 'email already etc etc' });
             });
-
-        // placeholder
-        // res.locals.user = { id: '1', email: '1' };
-
-        // return next();
     }
 
     static async updateUser(req: Request, res: Response, next: NextFunction) {
@@ -84,39 +60,28 @@ export default class UserController {
         const passInside = req.body.password;
         const { id } = req.params;
 
-        console.log('this is id', id);
-
         const pass = await bcrypt.hash(passInside, 12);
 
-        const update = await User.findByIdAndUpdate(
+        const update = User.findByIdAndUpdate(
             id,
             { email: req.body.email, password: pass },
             { new: true }
         )
             .then((student: object) => {
-                console.log('final', student);
                 res.locals.user = student;
                 return next();
             })
-            .catch((err: string) => console.log(err));
+            .catch((err: Error) => next({ err }));
 
         return update;
-        // const { id } = req.body;
-
-        // // try-catch db query here
-
-        // // placeholder
-        // res.locals.user = { id: '1', email: '1' };
-
-        // return next();
     }
 
     static deleteUser(req: Request, res: Response, next: NextFunction) {
         User.findByIdAndRemove(req.params.id)
             .then((user: object) => {
-                console.log('User deleted sucessfully!', user);
-                return res.send(user);
+                res.locals.user = user;
+                return next();
             })
-            .catch((err: string) => console.log(err));
+            .catch((err: Error) => next({ err }));
     }
 }
