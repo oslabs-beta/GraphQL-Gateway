@@ -129,6 +129,9 @@ const resolvers: IResolvers = {
                 .then(async (project: Project): Promise<Project | Error> => {
                     if (project) throw new Error('Project already exists');
 
+                    // random 10-char string generated and stored in projectDB
+                    // gate-logger library will cross-reference projects collection
+                    // to validate API call entered by user with auth key in header
                     const apiKey = randomString.generate(10);
 
                     // save to DB
@@ -139,23 +142,32 @@ const resolvers: IResolvers = {
                         apiKey,
                     });
 
-                    // store new project's ID
-                    let resultID: string | undefined;
-                    const result: Project = await newProject
+                    // save project and store new ID
+                    const resultID: string | undefined = await newProject
                         .save()
-                        .then((res: Project): Project => {
-                            resultID = res._id?.toString();
-                            return res;
-                        })
+                        .then((res: Project): string | undefined => res._id?.toString())
                         .catch(
                             (err: Error): Error =>
-                                new Error(`Receiving project ID from DB failed: ${err}`)
+                                new Error(`Saving project/receiving new ID from DB failed: ${err}`)
                         );
 
                     // adds new project query to the end of project's query ID array
+                    let result: Project | Error;
                     if (Array.isArray(updatedProjects) && typeof resultID === 'string') {
                         updatedProjects = updatedProjects.concat([resultID]);
-                    }
+
+                        /* updates project in DB to include API endpoint for logger
+                         * endpoint (sans API Key) -> host.com/:userID?project=[projectID]
+                         * user enters this (along with API key in header) into their project's
+                         * src code with gate-logger library installed
+                         */
+                        result = await ProjectDB.findByIdAndUpdate(
+                            resultID,
+                            { endpoint: `/${userID}?project=${name}` },
+                            { new: true }
+                        ).then((project: Project): Project => project);
+                    } else result = new Error('Type Error in new project creation');
+
                     // updates associated project's query array in DB to include new project query
                     UserDB.findByIdAndUpdate(userID, { projects: updatedProjects }, { new: true })
                         .then((user: User): void => {

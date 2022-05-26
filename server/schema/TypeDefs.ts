@@ -15,6 +15,8 @@ const typeDefs = gql`
         name: String!
         queries: [ProjectQuery]!
         query: ProjectQuery
+        apiKey: String
+        endpoint: String
     }
 
     type ProjectQuery {
