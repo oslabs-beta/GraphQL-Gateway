@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -13,7 +13,6 @@ export interface ISState {
 }
 
 function App() {
- 
     const [style, setStyle] = useState<ISState['style']>({
         loginBox: 'none',
         signupBox: 'block',
