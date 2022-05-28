@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import '../public/styles.css';
+import '../../public/styles.css';
 
 export interface ISState {
     style: {

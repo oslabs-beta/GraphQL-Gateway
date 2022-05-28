@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, AppBar, Box, Toolbar, IconButton, Grid, Typography } from '@mui/material';
-import '../../public/styles.scss';
+import '../../public/styles.css';
 
 export default function HomePage() {
     const navigate = useNavigate();
