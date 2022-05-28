@@ -35,12 +35,13 @@ function Login() {
     };
 
     return (
-        <div className="App">
+        <div className="app">
             <Logo />
             <h1>Login</h1>
             <div className="login-box">
-                <div>
+                <div className="form-wrapper">
                     <input
+                        className="input"
                         type="text"
                         onChange={handleChange}
                         name="email"
@@ -48,13 +49,14 @@ function Login() {
                         placeholder="enter email"
                     />
                     <input
+                        className="input"
                         type="password"
                         onChange={handleChange}
                         name="password"
                         value={user.password}
                         placeholder="enter password"
                     />
-                    <button type="submit" onClick={handleClick}>
+                    <button className="btn" type="submit" onClick={handleClick}>
                         Login
                     </button>
                     <div>If you do not have an account, click here:</div>

@@ -59,7 +59,7 @@ export default function HomePage() {
                 </AppBar>
             </Grid>
 
-            <Box left="150px" position="absolute" bottom="350px">
+            <Box left="200px" position="absolute" bottom="370px">
                 <Typography variant="h1" color="#283593">
                     LET&apos;S MAKE SOMETHING GREAT
                 </Typography>

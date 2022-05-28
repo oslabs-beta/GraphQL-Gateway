@@ -1,11 +1,11 @@
-import mongoose = require('mongoose');
-
-const { Schema } = mongoose;
+import mongoose, { Schema } from 'mongoose';
 
 const querySchema = new Schema({
-    text: { type: String, required: true },
-    time: { type: Number, required: true },
-    complexity: { type: Number, required: true },
+    projectID: { type: String, required: true },
+    name: { type: String, required: true },
+    depth: { type: Number, required: false },
+    complexity: { type: Number, required: false },
+    time: { type: Number, required: false },
 });
 
 export default mongoose.model('Query', querySchema, 'queries');

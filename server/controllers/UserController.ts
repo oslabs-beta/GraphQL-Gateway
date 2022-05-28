@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 
-const bcrypt = require('bcryptjs');
-const validator = require('email-validator'); // validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
-const User = require('../models/User');
+import bcrypt from 'bcrypt';
+import validator from 'email-validator'; // validate real emails - we can activate it later in the process, just put it as a middleware before signup middleware
+import User from '../models/User';
 
 export default class UserController {
     static validate(req: Request, res: Response, next: NextFunction) {
@@ -60,8 +60,6 @@ export default class UserController {
         const passInside = req.body.password;
         const { id } = req.params;
 
-        console.log('this is id', id);
-
         const pass = await bcrypt.hash(passInside, 12);
 
         const update = User.findByIdAndUpdate(
@@ -70,7 +68,6 @@ export default class UserController {
             { new: true }
         )
             .then((student: object) => {
-                console.log('final', student);
                 res.locals.user = student;
                 return next();
             })
@@ -82,7 +79,6 @@ export default class UserController {
     static deleteUser(req: Request, res: Response, next: NextFunction) {
         User.findByIdAndRemove(req.params.id)
             .then((user: object) => {
-                console.log('User deleted sucessfully!', user);
                 res.locals.user = user;
                 return next();
             })
