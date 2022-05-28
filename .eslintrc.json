@@ -5,6 +5,7 @@
         "es2021": true
     },
     "extends": [
+        "react-app",
         "eslint:recommended", 
         "airbnb", 
         "airbnb/hooks", 
