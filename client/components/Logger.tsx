@@ -26,6 +26,10 @@ export interface User {
     project: Project;
 }
 
+export interface Data {
+    user: User;
+}
+
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
         user(id: $userId) {
@@ -49,13 +53,39 @@ const GET_USER_DATA = gql`
 `;
 
 function Loger() {
-    const { data } = useQuery(GET_USER_DATA, {
+    const { data }: { data: Data | undefined } = useQuery(GET_USER_DATA, {
         variables: {
             userId: '6286978e12716d47e6884194',
         },
     });
-    console.log(data);
-    return <div className="app">ayy</div>;
+
+    // eslint-disable-next-line array-callback-return
+    data?.user.projects.map((el: Project): void => {
+        console.log('el', typeof el);
+    });
+
+    return (
+        // <div>aaa</div>
+        <div>
+            <div>
+                {data?.user.projects.map((project) => (
+                    <div className="projectCard">
+                        <div>Project name: {project.name}</div>
+                        <div />
+                        <hr id="cardHr" />
+                        {project.queries.map((query) => (
+                            <>
+                                <div>Name: {query.name}</div>
+                                <div>Time: {query.time}</div>
+                                <div>Depth: {query.depth}</div>
+                                <div>Complexity: {query.complexity}</div>
+                            </>
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default Loger;

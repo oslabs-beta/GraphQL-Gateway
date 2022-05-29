@@ -10,6 +10,7 @@ body {
     );
     width: 100%;
 }
+
 body a {
     color: #0094c6;
     text-decoration: none;
@@ -18,8 +19,11 @@ body a {
 #main {
     color: #353535;
     margin: 0 auto;
-    width: 40%;
+    width: 100%;
+    min-width: 1200px;
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 #navbar {
     color: #353535;
@@ -41,7 +45,6 @@ body a {
     text-align: center;
     padding: 20px 0;
     height: 60px;
-    width: 100%;
     background-color: rgba(255, 255, 255, 0.2);
 }
 .form-wrapper input {
@@ -96,40 +99,41 @@ body a {
     margin: 50px;
 }
 .dashboard {
-    height: 634px;
     width: 100%;
 }
 .chartBox {
-    padding-top: 32px;
-    width: 35%;
-    float: right;
-    margin-top: 5%;
-    margin-right: 5%;
+    border-radius: 10px;
+    padding: 20px;
+    width: 800px;
+    margin: 10px;
+    margin-left: 5px;
     background-color: rgba(255, 255, 255, 0.4);
-    min-height: 488px;
-    max-height: 488px;
 }
 .loggerBox {
-    margin-top: 5%;
-    margin-left: 5%;
-    float: left;
-    background-color: rgba(255, 255, 255, 0.4);
-    width: 50%;
-    min-height: 520px;
-    max-height: 520px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    margin-right: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 250px;
 }
 .chartBtn {
-    width: 27%;
+    width: 100px;
     color: #353535;
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
-    padding: 2% 4%;
-    margin-left: 5%;
-    margin-top: 15%;
-    margin-bottom: 15%;
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 5px;
     transition: 0.5s;
+}
+
+.projectSelector {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .chartBtn:hover {
@@ -138,4 +142,24 @@ body a {
 .h4chart {
     color: #353535;
     text-align: center;
+}
+.chartVisual {
+    margin: 0 auto;
+}
+#dashWrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.projectCard {
+    color: #545353;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    text-align: left;
+    padding: 10px;
+}
+#cardHr {
+    border-top: 1px solid #999999;
+    border-bottom: 0px;
 }

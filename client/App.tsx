@@ -114,9 +114,9 @@ function App() {
                         <span className="paragraph">to go back to signup page</span>
                     </div>
                 </div>
-            </div>
-            <div className="dashboard" style={{ display: style.dashboard }}>
-                <Dashboard />
+                <div className="dashboard" style={{ display: style.dashboard }}>
+                    <Dashboard />
+                </div>
             </div>
             <div id="footer">
                 <div>
