@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import { Chart, Line } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
+import { Projects } from './Interfaces';
 
 ChartJS.register(
     LinearScale,
@@ -109,7 +110,12 @@ export interface ISState {
     };
 }
 
-function ChartBox() {
+export interface IProps {
+    projects: Projects['projects'];
+}
+
+const ChartBox: React.FC<IProps> = ({ projects }) => {
+    console.log('these are projects man', projects);
     const [style, setStyle] = useState<ISState['style']>({
         chartOne: 'block',
         chartTwo: 'none',
@@ -187,6 +193,6 @@ function ChartBox() {
             </div>
         </div>
     );
-}
+};
 
 export default ChartBox;
