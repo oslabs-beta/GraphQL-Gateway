@@ -29,3 +29,6 @@ export interface Data {
 export interface Projects {
     projects: [Project] | undefined;
 }
+export interface SelectedProject {
+    project: Project | undefined;
+}

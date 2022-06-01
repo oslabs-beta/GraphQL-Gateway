@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Logger from './Logger';
 import ChartBox from './ChartBox';
-import { Projects } from './Interfaces';
+import { Projects, SelectedProject } from './Interfaces';
 
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
@@ -26,33 +26,56 @@ const GET_USER_DATA = gql`
     }
 `;
 
+const GET_PROJECT = gql`
+    query Query($projectId: String!) {
+        project(id: $projectId) {
+            id
+            queries {
+                time
+                depth
+                complexity
+            }
+        }
+    }
+`;
+
 function Dashboard() {
-    const { data, loading } = useQuery(GET_USER_DATA, {
+    const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
         variables: {
             userId: '6286978e12716d47e6884194',
         },
     });
+    const { data, loading } = useQuery(GET_PROJECT, {
+        variables: {
+            projectId: '628e864e76cdbbec53f36010',
+        },
+    });
 
-    // const [user, setUser] = useState<Data['user']>();
     const [projects, setProjects] = useState<Projects['projects']>();
+    const [selectedProject, selectProject] = useState<SelectedProject['project']>();
+
+    const test = (pr: any): void => {
+        selectProject(pr);
+    };
 
     useEffect(() => {
-        if (!loading && data) {
-            setProjects(data.user.projects);
+        if (!loadingR && dataR) {
+            setProjects(dataR.user.projects);
         }
-    }, [loading, data]);
-
-    console.log('these are users projects from Dashboard', projects);
+        if (!loading && data) {
+            selectProject(data.project);
+        }
+    }, [loadingR, dataR, loading, data]);
 
     return (
         <div id="dashWrapper">
             <div className="loggerBox">
                 <div className="loggerGUI">
-                    <Logger projects={projects} />
+                    <Logger test={test} projects={projects} />
                 </div>
             </div>
             <div className="chartBox">
-                <ChartBox projects={projects} />
+                <ChartBox project={selectedProject} />
             </div>
         </div>
     );
