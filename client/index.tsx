@@ -6,6 +6,8 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import HomePage from './components/HomePage';
 import Dashboard from './components/Dashboard';
+import { AuthProvider } from './auth/AuthProvider';
+import RequireAuth from './components/RequireAuth';
 
 const client = new ApolloClient({
     uri: 'http://localhost:3000/gql',
@@ -18,14 +20,19 @@ root.render(
     <ApolloProvider client={client}>
         <React.StrictMode>
             <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/about" element={<HomePage />} />
-                    <Route path="/team" element={<HomePage />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
+                <AuthProvider>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/about" element={<HomePage />} />
+                        <Route path="/team" element={<HomePage />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
+                        {/* <Route element={<RequireAuth />}>
+                            <Route path="/dashboard" element={<Dashboard />} />
+                        </Route> */}
+                        <Route path="/dashboard" element={<RequireAuth />} />
+                    </Routes>
+                </AuthProvider>
             </BrowserRouter>
         </React.StrictMode>
     </ApolloProvider>
