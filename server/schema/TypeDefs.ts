@@ -78,7 +78,6 @@ const typeDefs = gql`
 
     input CreateProjectQueryInput {
         projectID: String!
-        name: String!
         depth: Int!
         complexity: Int!
         time: Int!
@@ -86,7 +85,6 @@ const typeDefs = gql`
 
     input UpdateProjectQueryInput {
         id: String!
-        name: String
         depth: Int
         complexity: Int
         time: Int

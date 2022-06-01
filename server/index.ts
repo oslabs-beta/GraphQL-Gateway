@@ -18,7 +18,7 @@ dotenv.config();
 connectDB();
 
 const app: express.Application = express();
-const PORT: number = (process.env.port as any as number) || 3000;
+const PORT: number | string = process.env.port || 3000;
 
 const server = new ApolloServer({
     typeDefs,
@@ -37,8 +37,18 @@ app.get('/api/projects', async (req, res) => {
     return res.json(projects);
 });
 
+// for logger to cross reference project DB api key to request auth header
+app.get('/auth/:projectID', async (req, res) => {
+    const project = await ProjectDB.findById(req.params.projectID).catch(
+        (err) => new Error(`Project not found: ${err}`)
+    );
+    return res.json(project.apiKey);
+});
+
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
-    app.listen(PORT, () => console.log(`[Server] Started on port :${PORT}`));
+    app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
+        console.log(`[Server] Started on port :${PORT}`)
+    );
 });

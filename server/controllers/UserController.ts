@@ -32,7 +32,7 @@ export default class UserController {
         const { email, password } = req.body;
 
         return User.findOne({ email }) // if the user with this email doesn't exist
-            .then((data: Object) => {
+            .then((data: unknown) => {
                 // create one using bcrypt hashing for password
                 if (!data) {
                     return bcrypt

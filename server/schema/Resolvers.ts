@@ -1,13 +1,12 @@
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
+import randomString from 'randomstring';
 
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 
 import { deleteQuery, deleteProject } from './Helpers';
-
-const randomString = require('randomstring');
 
 const resolvers: IResolvers = {
     Query: {
@@ -212,7 +211,7 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: CreateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
-            const { projectID, name, depth, complexity, time } = args.projectQuery;
+            const { projectID, depth, complexity, time } = args.projectQuery;
 
             /* checks if project exists given the projectID and
              * stores its current queryID array if it does
@@ -228,22 +227,19 @@ const resolvers: IResolvers = {
              * if not, creates a new project query and saves it.
              * result is stored to update project's query array with new project query ID
              */
-            return QueryDB.findOne({ projectID, name }).then(async (query) => {
+            return QueryDB.findOne({ projectID, time, depth, complexity }).then(async (query) => {
                 if (query) throw new Error('Query already exists');
-
-                // save to DB
-                const newQuery = new QueryDB({
-                    projectID,
-                    name,
-                    depth,
-                    complexity,
-                    time,
-                });
 
                 // store saved query
                 let resultId: string | undefined;
-                const result: ProjectQuery = await newQuery
-                    .save()
+
+                // upsert will create a new document every time because
+                // no document will have an ID of 0
+                const result: ProjectQuery | Error = await QueryDB.findByIdAndUpdate(
+                    0,
+                    { $inc: { number: 1 }, complexity, depth, time, projectID },
+                    { new: true, upsert: true }
+                )
                     .then((res: ProjectQuery): ProjectQuery => {
                         // eslint-disable-next-line no-underscore-dangle
                         resultId = res._id?.toString();

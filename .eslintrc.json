@@ -5,10 +5,11 @@
         "es2021": true
     },
     "extends": [
-        "eslint:recommended", 
-        "airbnb", 
-        "airbnb/hooks", 
-        "airbnb-typescript", 
+        "eslint:recommended",
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript",
         "prettier"
     ],
     "parser": "@typescript-eslint/parser",
@@ -25,7 +26,9 @@
                 "SwitchCase": 2
             }
         ],
-        "prettier/prettier": ["error"]
-    },
-    "ignorePatterns": ["webpack.config.js"]
-}
+        "prettier/prettier": [
+            "error"
+        ]
+    }
+    }
+    
