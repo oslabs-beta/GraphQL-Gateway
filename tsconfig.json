@@ -15,11 +15,7 @@
         "isolatedModules": true,
         "noEmit": false,
         "jsx": "react-jsx",
-        "typeRoots": ["./@types", "node_modules/@types"],
-        "baseUrl": "./"
-        // "paths": {
-        //     "*": ["/@types/*"]
-        // }
+        "typeRoots": ["./@types", "node_modules/@types"]
     },
     "include": [
         "client/**/*.js",
@@ -29,6 +25,5 @@
         "server/**/*.js",
         "server/**/*.ts",
         "./@types/*"
-    ],
-    "exclude": ["./webpack.config.js"]
+    ]
 }

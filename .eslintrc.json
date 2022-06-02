@@ -12,6 +12,7 @@
         "plugin:import/typescript",
         "prettier"
     ],
+    "ignorePatterns": ["webpack.config.js"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -26,9 +27,6 @@
                 "SwitchCase": 2
             }
         ],
-        "prettier/prettier": [
-            "error"
-        ]
+        "prettier/prettier": ["error"]
     }
-    }
-    
+}
