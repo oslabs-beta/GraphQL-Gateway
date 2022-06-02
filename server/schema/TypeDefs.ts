@@ -56,7 +56,6 @@ const typeDefs = gql`
     input CreateUserInput {
         email: String!
         password: String!
-        projects: [String]
     }
 
     input UpdateUserInput {
@@ -68,7 +67,6 @@ const typeDefs = gql`
     input CreateProjectInput {
         userID: String!
         name: String!
-        queries: [String]
     }
 
     input UpdateProjectInput {
