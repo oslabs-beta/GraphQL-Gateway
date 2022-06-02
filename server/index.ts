@@ -49,6 +49,7 @@ app.get('/auth/:projectID', async (req, res) => {
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
+        // eslint-disable-next-line no-console
         console.log(`[Server] Started on port :${PORT}`)
     );
 });
