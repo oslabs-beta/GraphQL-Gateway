@@ -29,5 +29,6 @@
         "server/**/*.js",
         "server/**/*.ts",
         "./@types/*"
-    ]
+    ],
+    "exclude": ["./webpack.config.js"]
 }
