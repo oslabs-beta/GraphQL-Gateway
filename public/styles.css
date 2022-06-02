@@ -1,0 +1,141 @@
+body {
+    margin: 0 auto;
+    background-image: linear-gradient(
+        -45deg,
+        #35c3f3 0%,
+        #8b9fe8 20%,
+        #e681d8 39%,
+        #ffa9a4 76%,
+        #fed2ce 100%
+    );
+    width: 100%;
+}
+body a {
+    color: #0094c6;
+    text-decoration: none;
+    margin: 0 5px;
+}
+#main {
+    color: #353535;
+    margin: 0 auto;
+    width: 40%;
+    text-align: center;
+}
+#navbar {
+    color: #353535;
+    text-align: right;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    height: 48px;
+}
+.linkBtn {
+    display: inline-block;
+    padding: 15px 30px;
+    transition: 0.5s;
+}
+.linkBtn:hover {
+    background-color: #a496e3;
+}
+#footer {
+    color: #353535;
+    text-align: center;
+    padding: 20px 0;
+    height: 60px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.form-wrapper input {
+    /* margin: 0 auto; */
+    display: block;
+}
+.input {
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    width: 200px;
+    padding: 5px;
+    margin: 20px auto;
+}
+.btn {
+    color: #353535;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 8px 17px;
+    border-radius: 5px;
+    margin: 10px;
+    transition: 0.5s;
+}
+.btn:hover {
+    background-color: #a496e3;
+}
+.box {
+    margin: 130px 0;
+    color: #353535;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.box .transferBtn {
+    color: #0094c6;
+    font-size: 15px;
+    padding: 0 5px 0 5px;
+    margin: 0;
+    background-color: rgba(255, 255, 255, 0);
+    transition: 0.5s;
+}
+.transferBtn:hover {
+    color: #35c3f3;
+    background-color: rgba(255, 255, 255, 0);
+}
+.paragraph {
+    margin: 0;
+    display: inline-block;
+}
+.app h1 {
+    margin: 50px;
+}
+.dashboard {
+    height: 634px;
+    width: 100%;
+}
+.chartBox {
+    padding-top: 32px;
+    width: 35%;
+    float: right;
+    margin-top: 5%;
+    margin-right: 5%;
+    background-color: rgba(255, 255, 255, 0.4);
+    min-height: 488px;
+    max-height: 488px;
+}
+.loggerBox {
+    margin-top: 5%;
+    margin-left: 5%;
+    float: left;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 50%;
+    min-height: 520px;
+    max-height: 520px;
+}
+.chartBtn {
+    width: 27%;
+    color: #353535;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 2% 4%;
+    margin-left: 5%;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.chartBtn:hover {
+    background-color: #a496e3;
+}
+.h4chart {
+    color: #353535;
+    text-align: center;
+}

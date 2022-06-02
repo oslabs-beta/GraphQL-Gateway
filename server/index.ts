@@ -1,20 +1,19 @@
-import dotenv from 'dotenv';
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import connectDB from './config/db';
-
 import typeDefs from './schema/TypeDefs';
 import resolvers from './schema/Resolvers';
-
+import authRouter from './routes/Auth';
 import userRouter from './routes/User';
 
 import ProjectDB from './models/Project';
 
 dotenv.config();
+
 connectDB();
 
 const app: express.Application = express();
@@ -26,10 +25,13 @@ const server = new ApolloServer({
 });
 
 app.use(cors());
+
+app.use(cookieParser());
 app.use(compression());
 app.use(bodyParser.json());
 
 app.use('/api/users', userRouter);
+app.use('/auth', authRouter);
 
 // for testing
 app.get('/api/projects', async (req, res) => {
