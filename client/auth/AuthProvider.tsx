@@ -5,6 +5,7 @@ interface User {
     password: string;
     authenticated: Boolean;
 }
+
 const AuthContext = React.createContext<User | null>(null);
 
 const authContext: User = {

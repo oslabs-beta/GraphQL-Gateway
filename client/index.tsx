@@ -27,10 +27,17 @@ root.render(
                         <Route path="/team" element={<HomePage />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
-                        {/* <Route element={<RequireAuth />}>
-                            <Route path="/dashboard" element={<Dashboard />} />
-                        </Route> */}
-                        <Route path="/dashboard" element={<RequireAuth />} />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <RequireAuth>
+                                    <Dashboard />
+                                </RequireAuth>
+                            }
+                        >
+                            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                        </Route>
+                        {/* <Route path="/dashboard" element={<RequireAuth />} /> */}
                     </Routes>
                 </AuthProvider>
             </BrowserRouter>
