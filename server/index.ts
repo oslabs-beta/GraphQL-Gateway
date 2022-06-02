@@ -6,6 +6,7 @@ import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
 
 import connectDB from './config/db';
 import typeDefs from './schema/TypeDefs';
@@ -45,6 +46,13 @@ app.get('/auth/:projectID', async (req, res) => {
         (err) => new Error(`Project not found: ${err}`)
     );
     return res.json(project.apiKey);
+});
+
+// serve homepage
+app.use('/', (req, res) => {
+    return res
+        .setHeader('Content-Type', 'text/html')
+        .sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 // localhost:3000/gql -> graphQL sandbox
