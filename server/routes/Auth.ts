@@ -9,6 +9,10 @@ const authRouter = express.Router({
 const clientId = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
+type ResObj = {
+    data: object;
+};
+
 authRouter.get('/', (req: Request, res: Response) => {
     res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
 });
@@ -22,7 +26,7 @@ authRouter.get('/oauth-callback', (req: Request, res: Response) => {
     const opts = { headers: { accept: 'application/json' } };
     axios
         .post(`https://github.com/login/oauth/access_token`, body, opts)
-        .then((response: object | any) => response.data)
+        .then((response: ResObj) => response.data)
         // eslint-disable-next-line no-console
         .then((data: object) => console.log('this is data', data))
         .then(() => res.redirect('http://localhost:8080/'))

@@ -142,21 +142,16 @@ const resolvers: IResolvers = {
                                 new Error(`Saving project/receiving new ID from DB failed: ${err}`)
                         );
 
-                    // adds new project query to the end of project's query ID array
-                    let result: Project | Error;
-
                     /* updates project in DB to include API endpoint for logger
                      * endpoint (sans API Key) -> host.com/:userID?project=[projectID]
                      * user enters this (along with API key in header) into their project's
                      * src code with gate-logger library installed
                      */
-                    result = await ProjectDB.findByIdAndUpdate(
+                    return ProjectDB.findByIdAndUpdate(
                         resultID,
                         { endpoint: `/log?project=${resultID}` },
                         { new: true }
                     ).then((data: Project): Project => data);
-
-                    return result;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
@@ -176,16 +171,14 @@ const resolvers: IResolvers = {
                         return project;
                     })
                     .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-            else throw new Error('Updated name not provided');
+            throw new Error('Updated name not provided');
         },
         deleteProject: async (parent: undefined, args: QueryByID): Promise<Project | Error> => {
             const { id } = args;
             await QueryDB.deleteMany({ projectID: id });
 
             return ProjectDB.findByIdAndRemove(id)
-                .then(async (project: Project): Promise<Project> => {
-                    return project;
-                })
+                .then(async (project: Project): Promise<Project> => project)
                 .catch((err: Error): Error => new Error(`Project deletion failed: ${err}`));
         },
         /*
@@ -214,9 +207,6 @@ const resolvers: IResolvers = {
             return QueryDB.findOne({ projectID, time, depth, complexity }).then(async (query) => {
                 if (query) throw new Error('Query already exists');
 
-                // store saved query
-                let resultId: string | undefined;
-
                 // upsert will create a new document every time because
                 // no document will have an ID of 0
                 const result: ProjectQuery | Error = await QueryDB.findByIdAndUpdate(
@@ -224,11 +214,7 @@ const resolvers: IResolvers = {
                     { $inc: { number: 1 }, complexity, depth, time, projectID },
                     { new: true, upsert: true }
                 )
-                    .then((res: ProjectQuery): ProjectQuery => {
-                        // eslint-disable-next-line no-underscore-dangle
-                        resultId = res._id?.toString();
-                        return res;
-                    })
+                    .then((res: ProjectQuery): ProjectQuery => res)
                     .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
                 return result;
@@ -252,9 +238,7 @@ const resolvers: IResolvers = {
         ): Promise<ProjectQuery | Error> => {
             const { id } = args;
             return QueryDB.findByIdAndRemove(id)
-                .then(async (query: ProjectQuery): Promise<ProjectQuery | Error> => {
-                    return query;
-                })
+                .then(async (query: ProjectQuery): Promise<ProjectQuery | Error> => query)
                 .catch((err: Error): Error => new Error(`Query deletion failed: ${err}`));
         },
     },

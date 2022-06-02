@@ -49,11 +49,11 @@ app.get('/auth/:projectID', async (req, res) => {
 });
 
 // serve homepage
-app.use('/', (req, res) => {
-    return res
+app.use('/', (req, res) =>
+    res
         .setHeader('Content-Type', 'text/html')
-        .sendFile(path.join(__dirname, '../public/index.html'));
-});
+        .sendFile(path.join(__dirname, '../public/index.html'))
+);
 
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
