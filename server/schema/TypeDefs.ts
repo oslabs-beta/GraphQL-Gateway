@@ -21,7 +21,8 @@ const typeDefs = gql`
 
     type ProjectQuery {
         id: ID!
-        name: String!
+        number: Int!
+        userID: String!
         projectID: String!
         depth: Int!
         complexity: Int!
@@ -32,10 +33,10 @@ const typeDefs = gql`
         users: [User!]!
         user(id: String!): User
 
-        projects: [Project]
+        projects: [Project]!
         project(id: String!): Project
 
-        projectQueries: [ProjectQuery]
+        projectQueries: [ProjectQuery]!
         projectQuery: ProjectQuery
     }
 

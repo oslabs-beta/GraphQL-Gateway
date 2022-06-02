@@ -83,6 +83,11 @@ const resolvers: IResolvers = {
         deleteUser: async (parent: undefined, args: QueryByID): Promise<User | Error> => {
             const { id } = args;
 
+            // delete each user project query from DB
+            await QueryDB.deleteMany({ userID: id }).catch(
+                (err) => `DB user project query deletion failed ${err}`
+            );
+
             // delete each user project from DB
             await ProjectDB.deleteMany({ userID: id }).catch(
                 (err) => `DB user project deletion failed ${err}`
@@ -194,31 +199,29 @@ const resolvers: IResolvers = {
             /* checks if project exists given the projectID and
              * throws error if not
              */
-            await ProjectDB.findById(projectID)
-                .then((project: Project): void => {
+            const userID: string | undefined | Error = await ProjectDB.findById(projectID)
+                .then((project: Project): string | undefined => {
                     if (!project) throw new Error('Project does not exist');
+                    return project?.userID;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            /* Checks if this query already exists under specified project.
-             * if not, creates a new project query and saves it.
-             * result is stored to update project's query array with new project query ID
-             */
-            return QueryDB.findOne({ projectID, time, depth, complexity }).then(async (query) => {
-                if (query) throw new Error('Query already exists');
+            const queries: any = await QueryDB.find({}).catch((err) => `DB query failed: ${err}`);
+            const newNumber: number = queries.length + 1;
 
-                // upsert will create a new document every time because
-                // no document will have an ID of 0
-                const result: ProjectQuery | Error = await QueryDB.findByIdAndUpdate(
-                    0,
-                    { $inc: { number: 1 }, complexity, depth, time, projectID },
-                    { new: true, upsert: true }
-                )
-                    .then((res: ProjectQuery): ProjectQuery => res)
-                    .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+            const newQuery = new QueryDB({
+                complexity,
+                depth,
+                time,
+                projectID,
+                userID,
+                number: newNumber,
+            })
+                .save()
+                .then((res: ProjectQuery): ProjectQuery => res)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-                return result;
-            });
+            return newQuery;
         },
         updateProjectQuery: async (
             parent: undefined,
