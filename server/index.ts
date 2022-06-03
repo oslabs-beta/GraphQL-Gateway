@@ -2,11 +2,14 @@ import 'dotenv/config';
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, gql } from 'apollo-server-express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
+import { print } from 'graphql';
+
+import axios from 'axios';
 
 import connectDB from './config/db';
 import typeDefs from './schema/TypeDefs';
@@ -59,9 +62,6 @@ server.start().then((): void => {
             .setHeader('Content-Type', 'text/html')
             .sendFile(path.join(__dirname, '../public/index.html'))
     );
-
-    // send 404 when endpoint is unknown
-    app.all('/*', (req, res) => res.status(404).send(`Error 404`));
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console
