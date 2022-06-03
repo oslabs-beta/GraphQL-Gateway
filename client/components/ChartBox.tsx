@@ -10,7 +10,7 @@ import {
     Tooltip,
 } from 'chart.js';
 import { Chart, Line } from 'react-chartjs-2';
-import { faker } from '@faker-js/faker';
+import { SelectedProject } from './Interfaces';
 
 ChartJS.register(
     LinearScale,
@@ -22,42 +22,6 @@ ChartJS.register(
     Tooltip
 );
 const labels = ['Query1', 'Query2', 'Query3', 'Query4', 'Query5', 'Query6', 'Query7'];
-
-export const time = {
-    labels,
-    datasets: [
-        {
-            label: 'Time to execute query',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-    ],
-};
-
-export const depth = {
-    labels,
-    datasets: [
-        {
-            label: 'Depth of query',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-            borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgb(75, 192, 192)',
-        },
-    ],
-};
-
-export const complexity = {
-    labels,
-    datasets: [
-        {
-            label: 'Time to execute query',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgb(53, 162, 235)',
-        },
-    ],
-};
 
 export const options = {
     responsive: true,
@@ -71,35 +35,6 @@ export const options = {
         },
     },
 };
-
-export const data = {
-    labels,
-    datasets: [
-        {
-            type: 'line' as const,
-            label: 'Time',
-            borderColor: 'rgb(255, 99, 132)',
-            borderWidth: 2,
-            fill: false,
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-        },
-        {
-            type: 'bar' as const,
-            label: 'Depth',
-            backgroundColor: 'rgb(75, 192, 192)',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-            borderColor: 'rgb(75, 192, 192)',
-            borderWidth: 2,
-        },
-        {
-            type: 'bar' as const,
-            label: 'Complexity',
-            backgroundColor: 'rgb(53, 162, 235)',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-        },
-    ],
-};
-
 export interface ISState {
     style: {
         chartOne: string;
@@ -109,7 +44,87 @@ export interface ISState {
     };
 }
 
-function ChartBox() {
+export interface IProps {
+    project: SelectedProject['project'];
+}
+
+// eslint-disable-next-line react/function-component-definition
+const ChartBox: React.FC<SelectedProject> = ({ project }) => {
+    const timeFromProjectProps: number[] = [];
+    const depthFromProjectProps: number[] = [];
+    const complexityFromProjectProps: number[] = [];
+
+    // eslint-disable-next-line array-callback-return
+    project?.queries.map((query) => {
+        timeFromProjectProps.push(query.time / 100);
+        depthFromProjectProps.push(query.depth);
+        complexityFromProjectProps.push(query.complexity);
+    });
+
+    const time = {
+        labels,
+        datasets: [
+            {
+                label: 'Time to execute query',
+                data: timeFromProjectProps,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+        ],
+    };
+
+    const depth = {
+        labels,
+        datasets: [
+            {
+                label: 'Depth of query',
+                data: depthFromProjectProps,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(75, 192, 192)',
+            },
+        ],
+    };
+
+    const complexity = {
+        labels,
+        datasets: [
+            {
+                label: 'Time to execute query',
+                data: complexityFromProjectProps,
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgb(53, 162, 235)',
+            },
+        ],
+    };
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                type: 'line' as const,
+                label: 'Time',
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: 2,
+                fill: false,
+                data: timeFromProjectProps,
+            },
+            {
+                type: 'bar' as const,
+                label: 'Depth',
+                backgroundColor: 'rgb(75, 192, 192)',
+                data: depthFromProjectProps,
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 2,
+            },
+            {
+                type: 'bar' as const,
+                label: 'Complexity',
+                backgroundColor: 'rgb(53, 162, 235)',
+                data: complexityFromProjectProps,
+            },
+        ],
+    };
+
     const [style, setStyle] = useState<ISState['style']>({
         chartOne: 'block',
         chartTwo: 'none',
@@ -187,6 +202,6 @@ function ChartBox() {
             </div>
         </div>
     );
-}
+};
 
 export default ChartBox;

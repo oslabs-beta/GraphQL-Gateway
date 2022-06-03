@@ -116,6 +116,7 @@ body a {
     margin-right: 5px;
     background-color: rgba(255, 255, 255, 0.2);
     width: 250px;
+    overflow: scroll;
 }
 .chartBtn {
     width: 100px;
@@ -151,15 +152,41 @@ body a {
     justify-content: center;
     padding-top: 50px;
     padding-bottom: 50px;
+    max-height: 620px;
 }
-.projectCard {
+.Collapsible {
     color: #545353;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
-    text-align: left;
+    text-align: center;
     padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
 }
+
 #cardHr {
     border-top: 1px solid #999999;
     border-bottom: 0px;
+}
+.label {
+    float: left;
+    font-weight: bold;
+    width: 100px;
+}
+.value {
+    text-align: center;
+}
+.queryProps {
+    border-radius: 7px;
+    padding: 5px;
+    margin: 5px 0;
+    background-color: #a496e32f;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.queryProps:hover {
+    background-color: #a496e3b1;
+}
+.projectLabel {
+    cursor: pointer;
 }
