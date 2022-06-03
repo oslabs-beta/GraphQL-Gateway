@@ -194,7 +194,7 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: CreateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
-            const { projectID, depth, complexity, time } = args.projectQuery;
+            const { projectID, depth, complexity, timestamp, tokens } = args.projectQuery;
 
             /* checks if project exists given the projectID and
              * throws error if not
@@ -206,13 +206,16 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            const queries: any = await QueryDB.find({}).catch((err) => `DB query failed: ${err}`);
+            const queries: any = await QueryDB.find({ projectID }).catch(
+                (err) => `DB query failed: ${err}`
+            );
             const newNumber: number = queries.length + 1;
 
             const newQuery = new QueryDB({
                 complexity,
                 depth,
-                time,
+                timestamp,
+                tokens,
                 projectID,
                 userID,
                 number: newNumber,
@@ -227,8 +230,12 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: UpdateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
-            const { id, name, depth, complexity, time } = args.projectQuery;
-            return QueryDB.findByIdAndUpdate(id, { name, depth, complexity, time }, { new: true })
+            const { id, number, depth, complexity, timestamp, tokens } = args.projectQuery;
+            return QueryDB.findByIdAndUpdate(
+                id,
+                { number, depth, complexity, timestamp, tokens },
+                { new: true }
+            )
                 .then((query: ProjectQuery): ProjectQuery => {
                     if (!query) throw new Error('Query not found');
                     return query;

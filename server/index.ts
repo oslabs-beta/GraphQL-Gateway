@@ -54,11 +54,14 @@ server.start().then((): void => {
     });
 
     // serve homepage
-    app.use('/', (req, res) =>
+    app.all('/', (req, res) =>
         res
             .setHeader('Content-Type', 'text/html')
             .sendFile(path.join(__dirname, '../public/index.html'))
     );
+
+    // send 404 when endpoint is unknown
+    app.all('/*', (req, res) => res.status(404).send(`Error 404`));
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console
