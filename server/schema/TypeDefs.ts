@@ -38,7 +38,7 @@ const typeDefs = gql`
         project(id: String!): Project
 
         projectQueries: [ProjectQuery]!
-        projectQuery: ProjectQuery
+        projectQuery(id: String!): ProjectQuery
     }
 
     type Mutation {
