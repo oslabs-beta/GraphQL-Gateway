@@ -39,6 +39,20 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
+        projectQueries: (): Promise<ProjectQuery[] | Error> =>
+            QueryDB.find()
+                .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+        projectQuery: (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
+            const { id } = args;
+
+            return QueryDB.findOne({ _id: id })
+                .then((query: ProjectQuery): ProjectQuery => {
+                    if (!query) throw new Error('Query does not exist');
+                    return query;
+                })
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
     },
     Mutation: {
         /*
