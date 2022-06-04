@@ -26,8 +26,9 @@ const typeDefs = gql`
         projectID: String!
         depth: Int!
         complexity: Int!
-        timestamp: Int!
         tokens: Int!
+        blocked: Boolean!
+        timestamp: Int!
     }
 
     type Query {
@@ -80,8 +81,9 @@ const typeDefs = gql`
         projectID: String!
         depth: Int!
         complexity: Int!
+        tokens: Int!
+        blocked: Boolean!
         timestamp: Int!
-        tokens: Int
     }
 
     input UpdateProjectQueryInput {
@@ -90,6 +92,7 @@ const typeDefs = gql`
         complexity: Int
         time: Int
         tokens: Int
+        blocked: Boolean
     }
 `;
 

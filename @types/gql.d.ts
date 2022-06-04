@@ -1,7 +1,3 @@
-type Context = {
-    deleteProject: (id: string) => Promise<Error | Project>;
-};
-
 type User = {
     id: string;
     email: string;
@@ -55,8 +51,9 @@ type ProjectQuery = {
     name: string;
     depth: number;
     complexity: number;
-    timestamp: number;
     tokens: number;
+    blocked: boolean;
+    timestamp: number;
 };
 
 type CreateProjectQueryArgs = {
@@ -65,8 +62,9 @@ type CreateProjectQueryArgs = {
         number: string;
         depth: number;
         complexity: number;
-        timestamp: number;
         tokens: number;
+        blocked: boolean;
+        timestamp: number;
     };
 };
 
@@ -76,7 +74,8 @@ type UpdateProjectQueryArgs = {
         number: string;
         depth: number;
         complexity: number;
-        timestamp: number;
         tokens: number;
+        blocked: boolean;
+        timestamp: number;
     };
 };

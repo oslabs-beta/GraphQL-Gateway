@@ -208,7 +208,7 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: CreateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
-            const { projectID, depth, complexity, timestamp, tokens } = args.projectQuery;
+            const { projectID, depth, complexity, timestamp, tokens, blocked } = args.projectQuery;
 
             /* checks if project exists given the projectID and
              * throws error if not
@@ -226,13 +226,14 @@ const resolvers: IResolvers = {
             const newNumber: number = queries.length + 1;
 
             const newQuery = new QueryDB({
+                userID,
+                projectID,
+                number: newNumber,
                 complexity,
                 depth,
-                timestamp,
                 tokens,
-                projectID,
-                userID,
-                number: newNumber,
+                blocked,
+                timestamp,
             })
                 .save()
                 .then((res: ProjectQuery): ProjectQuery => res)
@@ -244,10 +245,10 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: UpdateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
-            const { id, number, depth, complexity, timestamp, tokens } = args.projectQuery;
+            const { id, number, depth, complexity, timestamp, tokens, blocked } = args.projectQuery;
             return QueryDB.findByIdAndUpdate(
                 id,
-                { number, depth, complexity, timestamp, tokens },
+                { number, depth, complexity, timestamp, tokens, blocked },
                 { new: true }
             )
                 .then((query: ProjectQuery): ProjectQuery => {
