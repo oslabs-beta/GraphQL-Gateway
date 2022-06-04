@@ -5,11 +5,10 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { render } from 'react-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import HomePage from './components/HomePage';
 import Dashboard from './components/Dashboard';
 import { AuthProvider } from './auth/AuthProvider';
 import RequireAuth from './components/RequireAuth';
-// import App from './App';
+import App from './App';
 
 const client = new ApolloClient({
     uri: 'http://localhost:3000/gql',
@@ -22,9 +21,9 @@ render(
             <BrowserRouter>
                 <AuthProvider>
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/about" element={<HomePage />} />
-                        <Route path="/team" element={<HomePage />} />
+                        <Route path="/" element={<App />} />
+                        <Route path="/about" element={<App />} />
+                        <Route path="/team" element={<App />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route

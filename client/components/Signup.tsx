@@ -39,35 +39,48 @@ function Signup() {
     };
 
     return (
-        <div className="app">
+        <div className="box">
             <Logo />
-            <h1>Signup</h1>
-            <div className="login-box">
-                <div className="form-wrapper">
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="email"
-                        value={user.email}
-                        placeholder="enter email"
-                    />
-                    <input
-                        className="input"
-                        type="password"
-                        onChange={handleChange}
-                        name="password"
-                        value={user.password}
-                        placeholder="enter password"
-                    />
-                    <button className="btn" type="submit" onClick={handleClick}>
-                        Signup
+            <h1 className="text">Signup</h1>
+
+            <div className="form-wrapper">
+                <input
+                    className="email"
+                    type="text"
+                    onChange={handleChange}
+                    name="email"
+                    value={user.email}
+                    placeholder="enter email"
+                />
+                <input
+                    className="password"
+                    type="password"
+                    onChange={handleChange}
+                    name="password"
+                    value={user.password}
+                    placeholder="enter password"
+                />
+                <br />
+                <button className="formBtn" type="submit" onClick={handleClick}>
+                    Signup
+                </button>
+                <span className="paragraph">
+                    Already a member?
+                    <button className="btn transferBtn" type="button" onClick={() => switchForm()}>
+                        Login here
                     </button>
-                    <div>If you already have account, click here:</div>
-                    <button type="button" onClick={() => switchForm()}>
-                        Login instead
-                    </button>
-                </div>
+                </span>
+                <span>
+                    or sign in using your
+                    <a
+                        className="btn transferBtn"
+                        // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
+                        href="http://localhost:3000/auth"
+                    >
+                        GitHub
+                    </a>
+                    account
+                </span>
             </div>
         </div>
     );

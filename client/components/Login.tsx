@@ -35,35 +35,38 @@ function Login() {
     };
 
     return (
-        <div className="app">
+        <div className="box">
             <Logo />
-            <h1>Login</h1>
-            <div className="login-box">
-                <div className="form-wrapper">
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="email"
-                        value={user.email}
-                        placeholder="enter email"
-                    />
-                    <input
-                        className="input"
-                        type="password"
-                        onChange={handleChange}
-                        name="password"
-                        value={user.password}
-                        placeholder="enter password"
-                    />
-                    <button className="btn" type="submit" onClick={handleClick}>
-                        Login
+            <h1 className="text">Login</h1>
+
+            <div className="form-wrapper">
+                <input
+                    className="email"
+                    type="text"
+                    onChange={handleChange}
+                    name="email"
+                    value={user.email}
+                    placeholder="Type your email"
+                />
+                <input
+                    className="password"
+                    type="password"
+                    onChange={handleChange}
+                    name="password"
+                    value={user.password}
+                    placeholder="Type your password"
+                />
+                <br />
+                <button className="formBtn" type="submit" onClick={handleClick}>
+                    Login
+                </button>
+                <br />
+                <span className="paragraph">
+                    Not a member?
+                    <button className="btn transferBtn" type="button" onClick={switchForm}>
+                        Register here
                     </button>
-                    <div>If you do not have an account, click here:</div>
-                    <button type="button" onClick={switchForm}>
-                        Go back to signup form
-                    </button>
-                </div>
+                </span>
             </div>
         </div>
     );
