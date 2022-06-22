@@ -8,6 +8,9 @@ interface User {
 
 const AuthContext = React.createContext<User | null>(null);
 
+// mock data
+// TODO: change this with real auth data
+
 const authContext: User = {
     email: 'test@test.com',
     password: 'test123',
