@@ -12,27 +12,32 @@ export default function HomePage() {
     const handleSignup = (): void => {
         navigate('/signup');
     };
+    const handleHome = (): void => {
+        navigate('/');
+    };
+    const handleDemo = (): void => {
+        navigate('/demo');
+    };
     const handleAbout = (): void => {
         navigate('/about');
-    };
-    const handlePoweredBy = (): void => {
-        navigate('/team');
     };
 
     return (
         <div>
-            <div id="navbarCenter">
+            <div id="navbar">
                 {/* <img src="logo.png" alt="logo" /> */}
 
+                <button type="submit" onClick={handleHome} className="linkBtn">
+                    Home
+                </button>
+                <button type="submit" onClick={handleDemo} className="linkBtn">
+                    Demo
+                </button>
                 <button type="submit" onClick={handleAbout} className="linkBtn">
                     About
                 </button>
-                <button type="submit" onClick={handlePoweredBy} className="linkBtn">
-                    Powered By
-                </button>
             </div>
-            <div id="navbar">
-                {/* <img src="logo.png" alt="logo" /> */}
+            <div id="side-navbar">
                 <button type="submit" onClick={handleLogin} className="linkBtn">
                     Login
                 </button>
