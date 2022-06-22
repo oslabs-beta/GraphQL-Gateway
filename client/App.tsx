@@ -59,15 +59,14 @@ function App() {
                 <div
                     tabIndex={0}
                     role="button"
-                    onKeyPress={viewDashboard}
+                    aria-hidden="true"
                     onClick={() => viewDashboard()}
                     className="linkBtn"
                 >
                     Dashboard
                 </div>
-                <div className="linkBtn">Link</div>
-                <div className="linkBtn">Link</div>
-                <div className="linkBtn">Link</div>
+                <div className="linkBtn">Solutions</div>
+                <div className="linkBtn">About</div>
             </div>
             <div id="main">
                 <div className="box" style={{ display: style.signupBox }}>
@@ -99,7 +98,7 @@ function App() {
 
                 <div className="box" style={{ display: style.loginBox }}>
                     <div>
-                        <Login />
+                        <Login viewDashboard={viewDashboard} />
                     </div>
                     <br />
                     <div>
@@ -114,9 +113,9 @@ function App() {
                         <span className="paragraph">to go back to signup page</span>
                     </div>
                 </div>
-            </div>
-            <div className="dashboard" style={{ display: style.dashboard }}>
-                <Dashboard />
+                <div className="dashboard" style={{ display: style.dashboard }}>
+                    <Dashboard />
+                </div>
             </div>
             <div id="footer">
                 <div>
