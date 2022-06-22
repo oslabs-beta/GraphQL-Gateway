@@ -3,10 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
 export interface ISState {
-    user: {
-        email: string;
-        password: string;
-    };
+    viewDashboard: any;
 }
 
 function Login() {
@@ -69,7 +66,7 @@ function Login() {
                 </span>
             </div>
         </div>
-    );
-}
+    </div>
+);
 
 export default Login;
