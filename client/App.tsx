@@ -21,12 +21,8 @@ export default function HomePage() {
 
     return (
         <div>
-            <div id="navbar">
+            <div id="navbarCenter">
                 {/* <img src="logo.png" alt="logo" /> */}
-                <h2 className="logoText">
-                    GraphQL
-                    <br /> Gateway
-                </h2>
 
                 <button type="submit" onClick={handleAbout} className="linkBtn">
                     About
@@ -34,6 +30,9 @@ export default function HomePage() {
                 <button type="submit" onClick={handlePoweredBy} className="linkBtn">
                     Powered By
                 </button>
+            </div>
+            <div id="navbar">
+                {/* <img src="logo.png" alt="logo" /> */}
                 <button type="submit" onClick={handleLogin} className="linkBtn">
                     Login
                 </button>
