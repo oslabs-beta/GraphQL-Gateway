@@ -330,3 +330,13 @@ img {
 .projectLabel {
     cursor: pointer;
 }
+
+#demoCard {
+    position: absolute;
+    top: 800px;
+    background-color: white;
+    width: 70%;
+    height: 700px;
+    margin-left: 15%;
+    margin-rign: 15%;
+}

@@ -42,6 +42,7 @@ export default function HomePage() {
             </div>
             <div className="container">
                 <section id="pageOne" />
+                <div id="demoCard" />
                 <section id="pageTwo" />
                 <section id="pageThree" />
                 <div id="footer">
