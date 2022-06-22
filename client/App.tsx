@@ -1,129 +1,56 @@
-import React, { useState } from 'react';
-import Dashboard from './components/Dashboard';
-import Signup from './components/Signup';
-import Login from './components/Login';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+// import { Button, AppBar, Box, Toolbar, IconButton, Grid, Typography } from '@mui/material';
 import '../public/styles.css';
 
-export interface ISState {
-    style: {
-        loginBox: string;
-        signupBox: string;
-        dashboard: string;
+export default function HomePage() {
+    const navigate = useNavigate();
+
+    const handleLogin = (): void => {
+        navigate('/login');
     };
-}
-
-function App() {
-    const [style, setStyle] = useState<ISState['style']>({
-        loginBox: 'none',
-        signupBox: 'block',
-        dashboard: 'none',
-    });
-
-    const setToggle = () => {
-        if (style.loginBox === 'none') {
-            setStyle({
-                ...style,
-                loginBox: 'block',
-                signupBox: 'none',
-            });
-        } else {
-            setStyle({
-                ...style,
-                loginBox: 'none',
-                signupBox: 'block',
-            });
-        }
+    const handleSignup = (): void => {
+        navigate('/signup');
     };
-
-    const viewDashboard = () => {
-        if (style.dashboard === 'none') {
-            setStyle({
-                ...style,
-                loginBox: 'none',
-                signupBox: 'none',
-                dashboard: 'block',
-            });
-        } else {
-            setStyle({
-                ...style,
-                loginBox: 'none',
-                signupBox: 'block',
-                dashboard: 'none',
-            });
-        }
+    const handleAbout = (): void => {
+        navigate('/about');
+    };
+    const handlePoweredBy = (): void => {
+        navigate('/team');
     };
 
     return (
         <div>
             <div id="navbar">
-                <div
-                    tabIndex={0}
-                    role="button"
-                    aria-hidden="true"
-                    onClick={() => viewDashboard()}
-                    className="linkBtn"
-                >
-                    Dashboard
-                </div>
-                <div className="linkBtn">Solutions</div>
-                <div className="linkBtn">About</div>
-            </div>
-            <div id="main">
-                <div className="box" style={{ display: style.signupBox }}>
-                    <div>
-                        <Signup />
-                    </div>
-                    <br />
-                    <div>
-                        <span className="paragraph">If you are already registered, click</span>
-                        <button
-                            className="btn transferBtn"
-                            type="button"
-                            onClick={() => setToggle()}
-                        >
-                            here
-                        </button>
-                        <span>
-                            or sign in using your
-                            <a
-                                // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
-                                href="http://localhost:3000/auth"
-                            >
-                                github
-                            </a>
-                            account
-                        </span>
-                    </div>
-                </div>
+                {/* <img src="logo.png" alt="logo" /> */}
+                <h2 className="logoText">
+                    GraphQL
+                    <br /> Gateway
+                </h2>
 
-                <div className="box" style={{ display: style.loginBox }}>
-                    <div>
-                        <Login viewDashboard={viewDashboard} />
-                    </div>
-                    <br />
-                    <div>
-                        <span className="paragraph">Click</span>
-                        <button
-                            className="btn transferBtn"
-                            type="button"
-                            onClick={() => setToggle()}
-                        >
-                            here
-                        </button>
-                        <span className="paragraph">to go back to signup page</span>
-                    </div>
-                </div>
-                <div className="dashboard" style={{ display: style.dashboard }}>
-                    <Dashboard />
-                </div>
+                <button type="submit" onClick={handleAbout} className="linkBtn">
+                    About
+                </button>
+                <button type="submit" onClick={handlePoweredBy} className="linkBtn">
+                    Powered By
+                </button>
+                <button type="submit" onClick={handleLogin} className="linkBtn">
+                    Login
+                </button>
+                <button type="submit" onClick={handleSignup} className="linkBtn">
+                    Signup
+                </button>
             </div>
-            <div id="footer">
-                <div>
-                    <h4>Copyright © Team Cat-Snake 2022</h4>
+            <div className="container">
+                <section id="pageOne" />
+                <section id="pageTwo" />
+                <section id="pageThree" />
+                <div id="footer">
+                    <div>
+                        <h4>Copyright © Team Cat-Snake 2022</h4>
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
-
-export default App;

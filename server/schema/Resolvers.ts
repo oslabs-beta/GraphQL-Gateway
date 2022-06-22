@@ -1,6 +1,5 @@
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
-
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
