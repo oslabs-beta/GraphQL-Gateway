@@ -1,9 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { Button, AppBar, Box, Toolbar, IconButton, Grid, Typography } from '@mui/material';
-import Dashboard from './components/Dashboard';
-import Signup from './components/Signup';
-import Login from './components/Login';
 import '../public/styles.css';
 
 export default function HomePage() {

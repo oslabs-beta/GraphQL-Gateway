@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from './Logo';
+// import Logo from './Logo';
 
 export interface ISState {
     user: {
@@ -36,12 +36,12 @@ function Login() {
 
     return (
         <div className="box">
-            <Logo />
+            {/* <Logo /> */}
             <h1 className="text">Login</h1>
 
             <div className="form-wrapper">
                 <input
-                    className="email"
+                    className="input"
                     type="text"
                     onChange={handleChange}
                     name="email"
@@ -49,7 +49,7 @@ function Login() {
                     placeholder="Type your email"
                 />
                 <input
-                    className="password"
+                    className="input"
                     type="password"
                     onChange={handleChange}
                     name="password"
