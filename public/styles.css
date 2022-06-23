@@ -27,9 +27,38 @@ section {
 }
 
 section#pageOne {
+    color: rgb(225, 225, 225);
+    text-align: center;
     /* background-color: #092173; */
     background-image: linear-gradient(-180deg, #092173 0%, #00259f 100%);
     background-size: 100% 100%;
+}
+
+#demoCard {
+    position: absolute;
+    top: 600px;
+    background-color: white;
+    width: 70%;
+    height: 800px;
+    margin-left: 15%;
+}
+
+#pageOne h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+#pageOne h2 {
+    margin: 10px 0 50px 0;
+    font-size: 30px;
+}
+
+#pageOne p {
+    color: rgb(177, 175, 175);
+}
+
+#pageOneTextBox {
+    margin-top: -100px;
+    width: 650px;
 }
 
 section#pageTwo {
