@@ -3,7 +3,7 @@ import React from 'react';
 interface User {
     email: string;
     password: string;
-    authenticated: Boolean;
+    authenticated: boolean;
 }
 
 const AuthContext = React.createContext<User | null>(null);
@@ -17,7 +17,7 @@ const authContext: User = {
     authenticated: true,
 };
 
-type MyComponentProps = React.PropsWithChildren<{}>;
+type MyComponentProps = React.PropsWithChildren<unknown>;
 
 function AuthProvider({ children }: MyComponentProps) {
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;

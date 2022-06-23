@@ -26,11 +26,6 @@ function Signup() {
         });
     };
 
-<<<<<<< HEAD
-    const handleClick = () => {
-        // eslint-disable-next-line no-console
-        console.log(user);
-=======
     const navigate = useNavigate();
 
     const switchForm = () => {
@@ -41,7 +36,6 @@ function Signup() {
         e.preventDefault();
         navigate('/dashboard');
         // console.log(user);
->>>>>>> dev
     };
 
     return (
