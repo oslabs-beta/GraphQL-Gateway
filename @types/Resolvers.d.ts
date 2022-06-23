@@ -9,6 +9,13 @@ type QueryByID = {
     id: string;
 };
 
+type GetUserArgs = {
+    user: {
+        email: string;
+        password: string;
+    };
+};
+
 type CreateUserArgs = {
     user: { email: string; password: string; projects: Array<string> };
 };

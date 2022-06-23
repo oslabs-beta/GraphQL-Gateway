@@ -42,6 +42,19 @@ const resolvers: IResolvers = {
         /*
          *  User Mutations
          */
+        findUser: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
+            const { email, password } = args.user;
+
+            return UserDB.findOne({ email })
+                .then(async (user: User): Promise<User> => {
+                    const verifyUser: boolean = await bcrypt.compare(password, user.password);
+                    if (!verifyUser) {
+                        throw new Error('You have entered invalid username or password.');
+                    }
+                    return user;
+                })
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
         createUser: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
