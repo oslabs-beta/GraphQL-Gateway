@@ -27,7 +27,7 @@ section {
 }
 
 section#pageOne {
-    color: rgb(225, 225, 225);
+    color: #fff;
     text-align: center;
     /* background-color: #092173; */
     background-image: linear-gradient(-180deg, #092173 0%, #00259f 100%);
@@ -35,14 +35,43 @@ section#pageOne {
 }
 
 #demoCard {
+    z-index: 1;
     position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     top: 600px;
-    background-color: white;
+    background-color: #fff;
     width: 70%;
-    height: 800px;
-    margin-left: 15%;
+    height: 700px;
+    box-shadow: 0px 0px 20px #00259e;
 }
-
+#demoCardWrapper {
+    position: absolute;
+    top: 0;
+    height: 300px;
+}
+.algorithmCard {
+    display: inline-block;
+    padding: 20px;
+    margin: 20px 12px;
+    text-align: center;
+    height: 200px;
+    width: 200px;
+    transition: 0.3s;
+}
+.algorithmCard > img {
+    -webkit-transition: -webkit-transform 0.8s ease-in-out;
+    transition: transform 0.8s ease-in-out;
+}
+.algorithmCard:hover > img {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+.algorithmCard:hover {
+    background-color: #3574f3;
+}
 #pageOne h1 {
     font-size: 60px;
     margin-bottom: 10px;
@@ -65,14 +94,56 @@ section#pageTwo {
     /* background-image: linear-gradient(180deg, rgb(228, 255, 146) 0%, #ffe684 40%, #94afe9 100%); */
     /* background-color: rgb(225, 225, 225);
     */
-    background-image: linear-gradient(-180deg, #00259f 30%, rgb(225, 225, 225) 30%);
+    background-image: linear-gradient(-180deg, #00259f 30%, #fff 30%);
     background-size: 100% 100%;
 }
 
 section#pageThree {
     /* background-image: linear-gradient(180deg, #94afe9 0%, #e9a6df 66%, #b57cff 100%); */
-    background-color: rgb(225, 225, 225);
-    background-size: 100% 100%;
+    background-color: #fff;
+}
+
+.icon {
+    padding: 20px;
+}
+.centeredSentence {
+    text-align: center;
+    color: #fff;
+    display: inline-block;
+    height: 150px;
+    width: 100%;
+    background-color: #00259f;
+}
+.centeredSentence h1 {
+    font-size: 50px;
+}
+#pageThreeWrapper {
+    width: 100%;
+}
+#pageThreeLeft {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+#pageThreeRight {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+.iconImg {
+    width: 100px;
+    padding: 30px;
+}
+#pageThreeLeft p {
+    float: right;
+    width: 50%;
+    padding: 50px;
+}
+#pageThreeRight p {
+    float: right;
+    width: 50%;
+    padding: 50px;
 }
 
 /* img {
@@ -91,15 +162,17 @@ section#pageThree {
     justify-content: center;
 } */
 #navbar {
+    z-index: 3;
     position: fixed;
-    background-color: rgb(225, 225, 225);
+    background-color: #fff;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 #side-navbar {
+    z-index: 3;
     position: fixed;
-    background-color: rgb(225, 225, 225);
+    background-color: #fff;
     top: 0;
     right: 0;
 }
@@ -272,21 +345,25 @@ section#pageThree {
 .dashboard {
     width: 100%;
 }
+/* #chartBoxInside {
+    height: 1000px;
+} */
+
 .chartBox {
     border-radius: 10px;
     padding: 20px;
-    width: 800px;
+    width: 760px;
     margin: 10px;
     margin-left: 5px;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.7);
 }
 .loggerBox {
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
     margin-right: 5px;
-    background-color: rgba(255, 255, 255, 0.2);
-    width: 250px;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 290px;
     overflow: scroll;
 }
 .chartBtn {
@@ -303,7 +380,6 @@ section#pageThree {
 }
 
 .projectSelector {
-    margin: 20px;
     display: flex;
     justify-content: space-between;
 }
@@ -356,7 +432,7 @@ section#pageThree {
     cursor: pointer;
 }
 .queryProps:hover {
-    background-color: #a496e3b1;
+    background-color: rgb(9, 32, 116, 0.1);
 }
 .projectLabel {
     cursor: pointer;
