@@ -54,7 +54,6 @@ function Loger() {
             userId: '6286978e12716d47e6884194',
         },
     });
-    // eslint-disable-next-line no-console
     console.log(data);
     return <div className="app">ayy</div>;
 }
