@@ -1,61 +1,49 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import Collapsible from 'react-collapsible';
+import { Projects, Project, ProjectQuery } from './Interfaces';
 
-export interface ProjectQuery {
-    id: string;
-    name: string;
-    projectID: string;
-    depth: number;
-    complexity: number;
-    time: number;
+export interface IProps {
+    projects: Projects['projects'];
+    test: any;
 }
 
-export interface Project {
-    id: string;
-    userID: string;
-    name: string;
-    queries: [ProjectQuery];
-    query: ProjectQuery;
-}
-
-export interface User {
-    id: string;
-    email: string;
-    password: string;
-    projects: [Project];
-    project: Project;
-}
-
-const GET_USER_DATA = gql`
-    query getUserData($userId: String!) {
-        user(id: $userId) {
-            email
-            password
-            projects {
-                id
-                userID
-                name
-                queries {
-                    id
-                    projectID
-                    name
-                    complexity
-                    depth
-                    time
-                }
-            }
-        }
-    }
-`;
-
-function Loger() {
-    const { data } = useQuery(GET_USER_DATA, {
-        variables: {
-            userId: '6286978e12716d47e6884194',
-        },
-    });
-    console.log(data);
-    return <div className="app">ayy</div>;
-}
+// eslint-disable-next-line react/function-component-definition
+const Loger: React.FC<IProps> = ({ projects, test }) => (
+    <div>
+        <div>
+            {projects?.map((project: Project) => (
+                <div aria-hidden="true" onClick={() => test(project)}>
+                    <Collapsible
+                        trigger={<span style={{ padding: '10px 50px' }}>{project.name}</span>}
+                        className="projectCard"
+                    >
+                        <div>
+                            {project.queries.map((query: ProjectQuery) => (
+                                <div className="queryProps">
+                                    <div>
+                                        <div className="label">Name: </div>
+                                        <div className="value">{query.name}</div>
+                                    </div>
+                                    <div>
+                                        <div className="label">Time: </div>
+                                        <div className="value">{query.time}</div>
+                                    </div>
+                                    <div>
+                                        <div className="label">Depth: </div>
+                                        <div className="value">{query.depth}</div>
+                                    </div>
+                                    <div>
+                                        <div className="label">Complexity: </div>
+                                        <div className="value">{query.complexity}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </Collapsible>
+                </div>
+            ))}
+        </div>
+    </div>
+);
 
 export default Loger;

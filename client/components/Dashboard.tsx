@@ -1,129 +1,81 @@
-import React, { useState } from 'react';
-import {
-    Chart as ChartJS,
-    LinearScale,
-    CategoryScale,
-    BarElement,
-    PointElement,
-    LineElement,
-    Legend,
-    Tooltip,
-} from 'chart.js';
-import { Chart } from 'react-chartjs-2';
-import { faker } from '@faker-js/faker';
+import React, { useState, useEffect } from 'react';
+import { useQuery, gql } from '@apollo/client';
 import Logger from './Logger';
+import ChartBox from './ChartBox';
+import { Projects, SelectedProject } from './Interfaces';
 
-ChartJS.register(
-    LinearScale,
-    CategoryScale,
-    BarElement,
-    PointElement,
-    LineElement,
-    Legend,
-    Tooltip
-);
+const GET_USER_DATA = gql`
+    query getUserData($userId: String!) {
+        user(id: $userId) {
+            email
+            password
+            projects {
+                id
+                userID
+                name
+                queries {
+                    id
+                    projectID
+                    name
+                    complexity
+                    depth
+                    time
+                }
+            }
+        }
+    }
+`;
 
-const labels = ['Query1', 'Query2', 'Query3', 'Query4', 'Query5', 'Query6', 'Query7'];
-
-export const data = {
-    labels,
-    datasets: [
-        {
-            type: 'line' as const,
-            label: 'Dataset 1',
-            borderColor: 'rgb(255, 99, 132)',
-            borderWidth: 2,
-            fill: false,
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-        },
-        {
-            type: 'bar' as const,
-            label: 'Dataset 2',
-            backgroundColor: 'rgb(75, 192, 192)',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-            borderColor: 'rgb(75, 192, 192)',
-            borderWidth: 2,
-        },
-        {
-            type: 'bar' as const,
-            label: 'Dataset 3',
-            backgroundColor: 'rgb(53, 162, 235)',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-        },
-    ],
-};
-
-export interface ISState {
-    style: {
-        chartOne: string;
-        chartTwo: string;
-        chartThree: string;
-    };
-}
+const GET_PROJECT = gql`
+    query Query($projectId: String!) {
+        project(id: $projectId) {
+            id
+            queries {
+                time
+                depth
+                complexity
+            }
+        }
+    }
+`;
 
 function Dashboard() {
-    const [style, setStyle] = useState<ISState['style']>({
-        chartOne: 'block',
-        chartTwo: 'none',
-        chartThree: 'none',
+    const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
+        variables: {
+            userId: '6286978e12716d47e6884194',
+        },
+    });
+    const { data, loading } = useQuery(GET_PROJECT, {
+        variables: {
+            projectId: '628e864e76cdbbec53f36010',
+        },
     });
 
-    const chartOneFn = () => {
-        setStyle({
-            ...style,
-            chartOne: 'block',
-            chartTwo: 'none',
-            chartThree: 'none',
-        });
-    };
-    const chartTwoFn = () => {
-        setStyle({
-            ...style,
-            chartOne: 'none',
-            chartTwo: 'block',
-            chartThree: 'none',
-        });
-    };
-    const chartThreeFn = () => {
-        setStyle({
-            ...style,
-            chartOne: 'none',
-            chartTwo: 'none',
-            chartThree: 'block',
-        });
+    const [projects, setProjects] = useState<Projects['projects']>();
+    const [selectedProject, selectProject] = useState<SelectedProject['project']>();
+
+    const test = (pr: any): void => {
+        selectProject(pr);
     };
 
+    useEffect(() => {
+        if (!loadingR && dataR) {
+            setProjects(dataR.user.projects);
+        }
+        if (!loading && data) {
+            selectProject(data.project);
+        }
+    }, [loadingR, dataR, loading, data]);
+
     return (
-        <div>
+        <div id="dashWrapper">
             <div className="loggerBox">
                 <div className="loggerGUI">
-                    <Logger />
+                    <Logger test={test} projects={projects} />
                 </div>
             </div>
             <div className="chartBox">
-                <div className="chartOne" style={{ display: style.chartOne }}>
-                    <h4 className="h4chart">GraphQL Gate using Algorithm One</h4>
-                    <Chart type="bar" data={data} />
-                </div>
-                <div className="chartTwo" style={{ display: style.chartTwo }}>
-                    <h4 className="h4chart">GraphQL Gate using Algorithm Two</h4>
-                    <Chart type="bar" data={data} />
-                </div>
-                <div className="chartThree" style={{ display: style.chartThree }}>
-                    <h4 className="h4chart">GraphQL Gate using Algorithm Three</h4>
-                    <Chart type="bar" data={data} />
-                </div>
-                <div className="projectSelector">
-                    <button onClick={() => chartOneFn()} className="chartBtn" type="button">
-                        Algorithm One
-                    </button>
-                    <button onClick={() => chartTwoFn()} className="chartBtn" type="button">
-                        Algorithm Two
-                    </button>
-                    <button onClick={() => chartThreeFn()} className="chartBtn" type="button">
-                        Algorithm Three
-                    </button>
-                </div>
+                <ChartBox project={selectedProject} />
             </div>
         </div>
     );
