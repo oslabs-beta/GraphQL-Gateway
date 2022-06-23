@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { Button, AppBar, Box, Toolbar, IconButton, Grid, Typography } from '@mui/material';
+import settings from '../public/settings.png';
 import '../public/styles.css';
 
-const settings = require('../public/settings.png');
+// const settings = require('../public/settings.png');
 const intime = require('../public/intime.png');
 const data = require('../public/data.png');
 const barchart = require('../public/barchart.png');
