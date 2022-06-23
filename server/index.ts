@@ -2,14 +2,11 @@ import 'dotenv/config';
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
-import { print } from 'graphql';
-
-import axios from 'axios';
 
 import connectDB from './config/db';
 import typeDefs from './schema/TypeDefs';

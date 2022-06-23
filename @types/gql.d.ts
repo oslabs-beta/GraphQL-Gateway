@@ -52,7 +52,7 @@ type ProjectQuery = {
     depth: number;
     complexity: number;
     tokens: number;
-    blocked: boolean;
+    success: boolean;
     timestamp: number;
 };
 
@@ -63,7 +63,7 @@ type CreateProjectQueryArgs = {
         depth: number;
         complexity: number;
         tokens: number;
-        blocked: boolean;
+        success: boolean;
         timestamp: number;
     };
 };
@@ -75,7 +75,7 @@ type UpdateProjectQueryArgs = {
         depth: number;
         complexity: number;
         tokens: number;
-        blocked: boolean;
+        success: boolean;
         timestamp: number;
     };
 };

@@ -82,7 +82,7 @@ const typeDefs = gql`
         depth: Int!
         complexity: Int!
         tokens: Int!
-        blocked: Boolean!
+        success: Boolean!
         timestamp: Int!
     }
 
@@ -92,7 +92,7 @@ const typeDefs = gql`
         complexity: Int
         time: Int
         tokens: Int
-        blocked: Boolean
+        success: Boolean
     }
 `;
 
