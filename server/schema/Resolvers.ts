@@ -56,7 +56,10 @@ const resolvers: IResolvers = {
                     });
                     return newUser.save();
                 })
-                .then((newUser: User): User => newUser)
+                .then((newUser: User): User => {
+                    // uidu
+                    return newUser;
+                })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         updateUser: async (parent: undefined, args: UpdateUserArgs): Promise<User | Error> => {

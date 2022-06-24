@@ -15,15 +15,16 @@ const httpLink = createHttpLink({
     uri: '/gql',
 });
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext((request, { headers }) => {
     // get the authentication token from local storage if it exists
     const token: string | null = localStorage.getItem('session-token');
     // return the headers to the context so httpLink can read them
-    // eslint-disable-next-line no-param-reassign
-    headers = {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        ...headers,
-        authorization: token ? `Bearer ${token}` : '',
+    return {
+        headers: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ...headers,
+            authorization: token ? `Bearer ${token}` : '',
+        },
     };
 });
 
