@@ -17,7 +17,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
-    const token: string | null = localStorage.getItem('token');
+    const token: string | null = localStorage.getItem('session-token');
     // return the headers to the context so httpLink can read them
     // eslint-disable-next-line no-param-reassign
     headers = {
