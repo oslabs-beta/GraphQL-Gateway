@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import ReactDOM from 'react-dom/client';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { render } from 'react-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -10,8 +11,24 @@ import { AuthProvider } from './auth/AuthProvider';
 import RequireAuth from './components/RequireAuth';
 import App from './App';
 
+const httpLink = createHttpLink({
+    uri: '/gql',
+});
+
+const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token: string | null = localStorage.getItem('token');
+    // return the headers to the context so httpLink can read them
+    // eslint-disable-next-line no-param-reassign
+    headers = {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+    };
+});
+
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/gql',
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
 
