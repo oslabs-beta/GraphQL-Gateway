@@ -352,7 +352,7 @@ section#pageThree {
 .chartBox {
     border-radius: 10px;
     padding: 20px;
-    width: 760px;
+    width: 800px;
     margin: 10px;
     margin-left: 5px;
     background-color: rgba(255, 255, 255, 0.7);
@@ -363,7 +363,7 @@ section#pageThree {
     margin: 10px;
     margin-right: 5px;
     background-color: rgba(255, 255, 255, 0.7);
-    width: 290px;
+    width: 510px;
     overflow: scroll;
 }
 .chartBtn {
@@ -377,6 +377,28 @@ section#pageThree {
     margin-bottom: 20px;
     border-radius: 5px;
     transition: 0.5s;
+}
+#loggerBtnWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.loggerBtn {
+    font-size: 12px;
+    text-align: center;
+    width: 70px;
+    color: #353535;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+.loggerBtn:hover {
+    background-color: #a496e3;
 }
 
 .projectSelector {
