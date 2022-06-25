@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface User {
     email: string;
@@ -20,6 +20,10 @@ const authContext: User = {
 type MyComponentProps = React.PropsWithChildren<{}>;
 
 function AuthProvider({ children }: MyComponentProps) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [authenticated, setAuthenticated] = useState(false);
+
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;
 }
 

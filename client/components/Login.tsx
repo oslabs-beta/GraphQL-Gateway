@@ -28,10 +28,11 @@ function Login() {
         navigate('/signup');
     };
 
-    const handleClick = (e: any) => {
+    const handleClick = async (e: any) => {
         e.preventDefault();
+        //apollo client query
+        const response = await fetch ('/api/users'): Promise <response>
         navigate('/dashboard');
-        // console.log(user);
     };
 
     return (
