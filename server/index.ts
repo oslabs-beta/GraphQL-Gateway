@@ -1,19 +1,24 @@
+import 'dotenv/config';
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
+
 import connectDB from './config/db';
 import typeDefs from './schema/TypeDefs';
 import resolvers from './schema/Resolvers';
 import authRouter from './routes/Auth';
 import userRouter from './routes/User';
+import ProjectDB from './models/Project';
 
 connectDB();
 
 const app: express.Application = express();
-const PORT: number = (process.env.port as any as number) || 3000;
+const PORT: number | string = process.env.port || 3000;
 
 const server = new ApolloServer({
     typeDefs,
@@ -26,11 +31,37 @@ app.use(cookieParser());
 app.use(compression());
 app.use(bodyParser.json());
 
-app.use('/api/users', userRouter);
-app.use('/auth', authRouter);
-
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
-    app.listen(PORT, () => console.log(`[Server] Started on port :${PORT}`));
+
+    // routers
+    app.use('/api/users', userRouter);
+    app.use('/auth', authRouter);
+
+    // for testing purposes
+    app.get('/api/projects', async (req, res) => {
+        const projects = await ProjectDB.find();
+        return res.json(projects);
+    });
+
+    // for logger to cross reference project DB api key to request auth header
+    app.get('/auth/:projectID', async (req, res) => {
+        const project = await ProjectDB.findById(req.params.projectID).catch(
+            (err) => new Error(`Project not found: ${err}`)
+        );
+        return res.json(project.apiKey);
+    });
+
+    // serve homepage
+    app.all('/', (req, res) =>
+        res
+            .setHeader('Content-Type', 'text/html')
+            .sendFile(path.join(__dirname, '../public/index.html'))
+    );
+
+    app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
+        // eslint-disable-next-line no-console
+        console.log(`[Server] Started on port :${PORT}`)
+    );
 });
