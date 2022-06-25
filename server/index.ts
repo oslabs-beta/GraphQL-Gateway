@@ -23,6 +23,12 @@ const PORT: number | string = process.env.port || 3000;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: ({ req }) => {
+        // Get the user token from the headers.
+        const token = req.headers.authorization || '';
+
+        // return { };
+    },
 });
 
 app.use(cors());
