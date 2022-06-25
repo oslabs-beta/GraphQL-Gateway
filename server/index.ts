@@ -14,6 +14,7 @@ import resolvers from './schema/Resolvers';
 import authRouter from './routes/Auth';
 import userRouter from './routes/User';
 import ProjectDB from './models/Project';
+import session from './utilities/sessions';
 
 connectDB();
 
@@ -24,10 +25,18 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: ({ req }) => {
-        // Get the user token from the headers.
-        const token = req.headers.authorization || '';
+        /** Pull the authe */
+        const authHeader = req.headers.authorization || null;
+        if (!authHeader) return { authenticated: false };
 
-        // return { };
+        // authentication header looks like 'Bearer <token>'
+        // access the token off of the header
+        const authToken = authHeader.split(' ')[1];
+        const user = session.verify(authToken);
+
+        if (!user.authenticated) return { authenticated: false };
+
+        return { authenticated: true, userData: user.data };
     },
 });
 
