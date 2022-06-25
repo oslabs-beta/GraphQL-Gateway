@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Button, AppBar, Box, Toolbar, IconButton, Grid, Typography } from '@mui/material';
 import settings from '../public/settings.png';
 import intime from '../public/intime.png';
 import data from '../public/data.png';
 import barchart from '../public/barchart.png';
 import gear from '../public/gear.png';
-// import mockChart from '../public/mockChart.jpg';
 import '../public/styles.css';
 
 export default function HomePage() {
-    // this is a temp solution to hide the navbar. Final one will hide on scroll up
+    // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
     const controlNavbar = () => {
         if (window.scrollY > 100) {
@@ -98,9 +96,7 @@ export default function HomePage() {
                             <h1>Leacky Bucket</h1>
                             <img src={gear} alt="settings" />
                         </div>
-                        <div className="demoCardImg">
-                            {/* <img className="iconImg" src={mockChart} alt="mockChart" /> */}
-                        </div>
+                        <div className="demoCardImg" />
                     </div>
                 </section>
                 <section id="pageTwo" />
