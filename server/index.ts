@@ -19,7 +19,7 @@ import session from './utilities/sessions';
 connectDB();
 
 const app: express.Application = express();
-const PORT: number | string = process.env.port || 3000;
+const PORT: number | string = process.env.PORT || 3000;
 
 const server = new ApolloServer({
     typeDefs,
