@@ -24,7 +24,7 @@ const PORT: number | string = process.env.PORT || 3000;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => {
+    context: async ({ req }) => {
         /** Pull the authe */
         const authHeader = req.headers.authorization || null;
         if (!authHeader) return { authenticated: false };
@@ -32,11 +32,11 @@ const server = new ApolloServer({
         // authentication header looks like 'Bearer <token>'
         // access the token off of the header
         const authToken = authHeader.split(' ')[1];
-        const user = session.verify(authToken);
-
+        const user = await session.verify(authToken);
+        // TODO: return encrypted user data to context
         if (!user.authenticated) return { authenticated: false };
 
-        return { authenticated: true, userData: user.data };
+        return { authenticated: true };
     },
 });
 
