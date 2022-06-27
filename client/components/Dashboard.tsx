@@ -41,7 +41,53 @@ const GET_PROJECT = gql`
     }
 `;
 
+export interface ISState {
+    style: {
+        time: boolean;
+        depth: boolean;
+        complexity: boolean;
+    };
+}
+
 function Dashboard() {
+    const [style, setStyle] = useState<ISState['style']>({
+        time: false,
+        depth: false,
+        complexity: false,
+    });
+    const [order, setOrder] = useState<boolean>();
+    const [arrow, setArrow] = useState<string>();
+
+    const setToggle = (arg: string) => {
+        if (arg === 'time') {
+            setStyle({
+                ...style,
+                time: true,
+                depth: false,
+                complexity: false,
+            });
+        } else if (arg === 'depth') {
+            setStyle({
+                ...style,
+                time: false,
+                depth: true,
+                complexity: false,
+            });
+        } else if (arg === 'complexity') {
+            setStyle({
+                ...style,
+                time: false,
+                depth: false,
+                complexity: true,
+            });
+        }
+    };
+    useEffect(() => {
+        console.log('t', style.time);
+        console.log('d', style.depth);
+        console.log('c', style.complexity);
+    }, [style.time, style.depth, style.complexity]);
+
     const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
         variables: {
             userId: '6286978e12716d47e6884194',
@@ -57,102 +103,105 @@ function Dashboard() {
     const [selectedProject, selectProject] = useState<SelectedProject['project']>();
     const [queries, selectQuerries] = useState<ProjectQuery[]>();
 
-    const test = (pr: any): void => {
-        selectProject(pr);
-    };
-    const sortByTimeAsc = (): any => {
-        console.log('this is queries', queries);
-        const newArr = [];
-        if (selectedProject) {
-            // eslint-disable-next-line no-restricted-syntax, guard-for-in
-            for (const key in selectedProject?.queries) {
-                newArr.push(selectedProject?.queries[key]);
-            }
-        }
-        const dataToSort = [...newArr];
-        dataToSort.sort((a, b) => a.time - b.time);
-        selectQuerries(dataToSort);
-    };
-    const sortByTimeDesc = (): any => {
-        const newArr = [];
-        if (selectedProject) {
-            // eslint-disable-next-line no-restricted-syntax, guard-for-in
-            for (const key in selectedProject?.queries) {
-                newArr.push(selectedProject?.queries[key]);
-            }
-        }
-        const dataToSort = [...newArr];
-        dataToSort.sort((a, b) => a.time + b.time);
-        selectQuerries(dataToSort);
-    };
-    const sortByDepthAsc = (): any => {
-        const newArr = [];
-        if (selectedProject) {
-            // eslint-disable-next-line no-restricted-syntax, guard-for-in
-            for (const key in selectedProject?.queries) {
-                newArr.push(selectedProject?.queries[key]);
-            }
-        }
-        const dataToSort = [...newArr];
-        dataToSort.sort((a, b) => a.depth - b.depth);
-        selectQuerries(dataToSort);
-    };
-    const sortByDepthDesc = (): any => {
-        const newArr = [];
-        if (selectedProject) {
-            // eslint-disable-next-line no-restricted-syntax, guard-for-in
-            for (const key in selectedProject?.queries) {
-                newArr.push(selectedProject?.queries[key]);
-            }
-        }
-        const dataToSort = [...newArr];
-        dataToSort.sort((a, b) => b.depth - a.depth);
-        selectQuerries(dataToSort);
-    };
-    const sortByComplexityAsc = (): any => {
-        console.log('this is queries', queries);
-        const newArr = [];
-        if (selectedProject) {
-            // eslint-disable-next-line no-restricted-syntax, guard-for-in
-            for (const key in selectedProject?.queries) {
-                newArr.push(selectedProject?.queries[key]);
-            }
-        }
-        const dataToSort = [...newArr];
-        dataToSort.sort((a, b) => a.complexity - b.complexity);
-        selectQuerries(dataToSort);
-    };
-    const sortByComplexityDesc = (): any => {
-        const newArr = [];
-        if (selectedProject) {
-            // eslint-disable-next-line no-restricted-syntax, guard-for-in
-            for (const key in selectedProject?.queries) {
-                newArr.push(selectedProject?.queries[key]);
-            }
-        }
-        const dataToSort = [...newArr];
-        dataToSort.sort((a, b) => b.complexity - a.complexity);
-        selectQuerries(dataToSort);
-    };
-    // const sortByNameDesc = (pr: any): void => {
+    // const test = (pr: any): void => {
     //     selectProject(pr);
     // };
-    // const sortBySucess = (pr: any): void => {
-    //     selectProject(pr);
-    // };
-    // const showLastDay = (pr: any): void => {
-    //     selectProject(pr);
-    // };
-    // const showLastSevenDays = (pr: any): void => {
-    //     selectProject(pr);
-    // };
-    // const showLastSixMonths = (pr: any): void => {
-    //     selectProject(pr);
-    // };
-    // const showYTD= (pr: any): void => {
-    //     selectProject(pr);
-    // };
-
+    const sortByTime = (): any => {
+        if (order === true) {
+            setOrder(false);
+            setArrow('↑');
+        } else {
+            setOrder(true);
+            setArrow('↓');
+        }
+        if (order) {
+            const newArr = [];
+            if (selectedProject) {
+                // eslint-disable-next-line no-restricted-syntax, guard-for-in
+                for (const key in selectedProject?.queries) {
+                    newArr.push(selectedProject?.queries[key]);
+                }
+            }
+            const dataToSort = [...newArr];
+            dataToSort.sort((a, b) => a.time - b.time);
+            selectQuerries(dataToSort);
+        } else {
+            const newArr = [];
+            if (selectedProject) {
+                // eslint-disable-next-line no-restricted-syntax, guard-for-in
+                for (const key in selectedProject?.queries) {
+                    newArr.push(selectedProject?.queries[key]);
+                }
+            }
+            const dataToSort = [...newArr];
+            dataToSort.sort((a, b) => a.time + b.time);
+            selectQuerries(dataToSort);
+        }
+    };
+    const sortByDepth = (): any => {
+        if (order === true) {
+            setOrder(false);
+            setArrow('↑');
+        } else {
+            setOrder(true);
+            setArrow('↓');
+        }
+        if (order) {
+            const newArr = [];
+            if (selectedProject) {
+                // eslint-disable-next-line no-restricted-syntax, guard-for-in
+                for (const key in selectedProject?.queries) {
+                    newArr.push(selectedProject?.queries[key]);
+                }
+            }
+            const dataToSort = [...newArr];
+            dataToSort.sort((a, b) => a.depth - b.depth);
+            selectQuerries(dataToSort);
+        } else {
+            const newArr = [];
+            if (selectedProject) {
+                // eslint-disable-next-line no-restricted-syntax, guard-for-in
+                for (const key in selectedProject?.queries) {
+                    newArr.push(selectedProject?.queries[key]);
+                }
+            }
+            const dataToSort = [...newArr];
+            dataToSort.sort((a, b) => b.depth - a.depth);
+            selectQuerries(dataToSort);
+        }
+    };
+    const sortByComplexity = (): any => {
+        if (order === true) {
+            setOrder(false);
+            setArrow('↑');
+        } else {
+            setOrder(true);
+            setArrow('↓');
+        }
+        if (order) {
+            const newArr = [];
+            if (selectedProject) {
+                // eslint-disable-next-line no-restricted-syntax, guard-for-in
+                for (const key in selectedProject?.queries) {
+                    newArr.push(selectedProject?.queries[key]);
+                }
+            }
+            const dataToSort = [...newArr];
+            dataToSort.sort((a, b) => a.complexity - b.complexity);
+            selectQuerries(dataToSort);
+        } else {
+            const newArr = [];
+            if (selectedProject) {
+                // eslint-disable-next-line no-restricted-syntax, guard-for-in
+                for (const key in selectedProject?.queries) {
+                    newArr.push(selectedProject?.queries[key]);
+                }
+            }
+            const dataToSort = [...newArr];
+            dataToSort.sort((a, b) => b.complexity - a.complexity);
+            selectQuerries(dataToSort);
+        }
+    };
     useEffect(() => {
         if (!loadingR && dataR) {
             setProjects(dataR.user.projects);
@@ -170,13 +219,15 @@ function Dashboard() {
                     {/* <Logger test={test} projects={projects} /> */}
                     {/* <Querries queries={queries} sortByNameAsc={sortByNameAsc} test={test} projects={projects} /> */}
                     <Querries
+                        arrow={arrow}
+                        time={style.time}
+                        depth={style.depth}
+                        complexity={style.complexity}
+                        setToggle={setToggle}
                         queries={queries}
-                        sortByTimeAsc={sortByTimeAsc}
-                        sortByTimeDesc={sortByTimeDesc}
-                        sortByDepthAsc={sortByDepthAsc}
-                        sortByDepthDesc={sortByDepthDesc}
-                        sortByComplexityAsc={sortByComplexityAsc}
-                        sortByComplexityDesc={sortByComplexityDesc}
+                        sortByTime={sortByTime}
+                        sortByDepth={sortByDepth}
+                        sortByComplexity={sortByComplexity}
                     />
                 </div>
             </div>

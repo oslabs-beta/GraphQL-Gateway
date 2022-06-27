@@ -1,55 +1,66 @@
 import React from 'react';
-import Collapsible from 'react-collapsible';
+// import Collapsible from 'react-collapsible';
 // import { Projects, Project, ProjectQuery } from './Interfaces';
-// import { ProjectQuery } from './Interfaces';
+import { ProjectQuery } from './Interfaces';
 
 export interface IProps {
     // projects: Projects['projects'];
     // test: any;
-    sortByTimeAsc: any;
-    sortByTimeDesc: any;
-    sortByDepthAsc: any;
-    sortByDepthDesc: any;
-    sortByComplexityAsc: any;
-    sortByComplexityDesc: any;
+    arrow: string | undefined;
+    setToggle: any;
+    time: boolean;
+    depth: boolean;
+    complexity: boolean;
+    sortByTime: any;
+    sortByDepth: any;
+    sortByComplexity: any;
     queries: ProjectQuery[] | undefined;
 }
-
 // eslint-disable-next-line react/function-component-definition
 const Querries: React.FC<IProps> = ({
-    sortByTimeAsc,
-    sortByTimeDesc,
-    sortByDepthAsc,
-    sortByDepthDesc,
-    sortByComplexityAsc,
-    sortByComplexityDesc,
+    arrow,
+    setToggle,
+    time,
+    depth,
+    complexity,
+    sortByTime,
+    sortByDepth,
+    sortByComplexity,
     queries,
 }) => (
     // const Querries: React.FC<IProps> = ({ projects, test, sortByNameAsc, queries }) => (
     <div>
         <div>
             <div id="loggerBtnWrapper">
-                <div aria-hidden="true" className="loggerBtn" onClick={() => sortByTimeAsc()}>
-                    Time ↑
-                </div>
-                <div aria-hidden="true" className="loggerBtn" onClick={() => sortByTimeDesc()}>
-                    Time ↓
-                </div>
-                <div aria-hidden="true" className="loggerBtn" onClick={() => sortByDepthAsc()}>
-                    Depth ↑
-                </div>
-                <div aria-hidden="true" className="loggerBtn" onClick={() => sortByDepthDesc()}>
-                    Depth ↓
-                </div>
-                <div aria-hidden="true" className="loggerBtn" onClick={() => sortByComplexityAsc()}>
-                    Complexity ↑
+                <div
+                    aria-hidden="true"
+                    className={`loggerBtn${time ? ' active' : ''}`}
+                    onClick={() => {
+                        sortByTime();
+                        setToggle('time');
+                    }}
+                >
+                    Time {arrow}
                 </div>
                 <div
                     aria-hidden="true"
-                    className="loggerBtn"
-                    onClick={() => sortByComplexityDesc()}
+                    className={`loggerBtn${depth ? ' active' : ''}`}
+                    onClick={() => {
+                        sortByDepth();
+                        setToggle('depth');
+                    }}
                 >
-                    Complexity ↓
+                    Depth {arrow}
+                </div>
+                <div
+                    aria-hidden="true"
+                    className={`loggerBtn${complexity ? ' active' : ''}`}
+                    onClick={() => {
+                        sortByComplexity();
+                        setToggle('complexity');
+                    }}
+                >
+                    Complexity {arrow}
                 </div>
             </div>
             {/* {projects?.map((project: Project) => (
