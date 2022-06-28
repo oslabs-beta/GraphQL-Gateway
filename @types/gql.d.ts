@@ -51,25 +51,31 @@ type ProjectQuery = {
     name: string;
     depth: number;
     complexity: number;
-    time: number;
+    tokens: number;
+    success: boolean;
+    timestamp: number;
 };
 
 type CreateProjectQueryArgs = {
     projectQuery: {
         projectID: string;
-        name: string;
+        number: string;
         depth: number;
         complexity: number;
-        time: number;
+        tokens: number;
+        success: boolean;
+        timestamp: number;
     };
 };
 
 type UpdateProjectQueryArgs = {
     projectQuery: {
         id: string;
-        name: string;
+        number: string;
         depth: number;
         complexity: number;
-        time: number;
+        tokens: number;
+        success: boolean;
+        timestamp: number;
     };
 };
