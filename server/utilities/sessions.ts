@@ -2,19 +2,18 @@ import 'dotenv/config';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 
 const sessions = {
-    expiry: '7d',
-    verify: async (token: string) => {
-        const data = await jwt.verify(token, String(process.env.JWT_SESSION_KEY), {
-            maxAge: sessions.expiry,
-        });
-        if (!data) {
+    expiry: 604800000, // 7 days
+    verify: (token: string) => {
+        try {
+            const data = jwt.verify(token, String(process.env.JWT_SESSION_KEY));
+            return { authenticated: false, data };
+        } catch {
+            // token invalid
             return { authenticated: false, data: null };
         }
-
-        return { authenticated: false, data };
     },
-    create: async (data: { id: string }) => {
-        const token = await jwt.sign(data, String(process.env.JWT_SESSION_KEY), {
+    create: (data: { id: string }) => {
+        const token = jwt.sign(data, String(process.env.JWT_SESSION_KEY), {
             expiresIn: sessions.expiry,
         });
         return token;
