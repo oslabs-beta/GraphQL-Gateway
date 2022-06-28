@@ -47,6 +47,11 @@ export interface ISState {
         depth: boolean;
         complexity: boolean;
     };
+    arrow: {
+        time: string;
+        depth: string;
+        complexity: string;
+    };
 }
 
 function Dashboard() {
@@ -56,7 +61,11 @@ function Dashboard() {
         complexity: false,
     });
     const [order, setOrder] = useState<boolean>();
-    const [arrow, setArrow] = useState<string>();
+    const [arrow, setArrow] = useState<ISState['arrow']>({
+        time: '',
+        depth: '',
+        complexity: '',
+    });
 
     const setToggle = (arg: string) => {
         if (arg === 'time') {
@@ -109,10 +118,21 @@ function Dashboard() {
     const sortByTime = (): any => {
         if (order === true) {
             setOrder(false);
-            setArrow('↑');
+            // setArrow();
+            setArrow({
+                ...arrow,
+                time: '↑',
+                depth: '',
+                complexity: '',
+            });
         } else {
             setOrder(true);
-            setArrow('↓');
+            setArrow({
+                ...arrow,
+                time: '↓',
+                depth: '',
+                complexity: '',
+            });
         }
         if (order) {
             const newArr = [];
@@ -141,10 +161,20 @@ function Dashboard() {
     const sortByDepth = (): any => {
         if (order === true) {
             setOrder(false);
-            setArrow('↑');
+            setArrow({
+                ...arrow,
+                depth: '↑',
+                time: '',
+                complexity: '',
+            });
         } else {
             setOrder(true);
-            setArrow('↓');
+            setArrow({
+                ...arrow,
+                depth: '↓',
+                time: '',
+                complexity: '',
+            });
         }
         if (order) {
             const newArr = [];
@@ -173,10 +203,20 @@ function Dashboard() {
     const sortByComplexity = (): any => {
         if (order === true) {
             setOrder(false);
-            setArrow('↑');
+            setArrow({
+                ...arrow,
+                complexity: '↑',
+                time: '',
+                depth: '',
+            });
         } else {
             setOrder(true);
-            setArrow('↓');
+            setArrow({
+                ...arrow,
+                complexity: '↓',
+                depth: '',
+                time: '',
+            });
         }
         if (order) {
             const newArr = [];
@@ -219,7 +259,9 @@ function Dashboard() {
                     {/* <Logger test={test} projects={projects} /> */}
                     {/* <Querries queries={queries} sortByNameAsc={sortByNameAsc} test={test} projects={projects} /> */}
                     <Querries
-                        arrow={arrow}
+                        arrowTime={arrow.time}
+                        arrowDepth={arrow.depth}
+                        arrowComplexity={arrow.complexity}
                         time={style.time}
                         depth={style.depth}
                         complexity={style.complexity}

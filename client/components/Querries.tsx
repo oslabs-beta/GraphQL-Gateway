@@ -6,7 +6,9 @@ import { ProjectQuery } from './Interfaces';
 export interface IProps {
     // projects: Projects['projects'];
     // test: any;
-    arrow: string | undefined;
+    arrowTime: string | undefined;
+    arrowDepth: string | undefined;
+    arrowComplexity: string | undefined;
     setToggle: any;
     time: boolean;
     depth: boolean;
@@ -18,7 +20,9 @@ export interface IProps {
 }
 // eslint-disable-next-line react/function-component-definition
 const Querries: React.FC<IProps> = ({
-    arrow,
+    arrowTime,
+    arrowDepth,
+    arrowComplexity,
     setToggle,
     time,
     depth,
@@ -40,7 +44,7 @@ const Querries: React.FC<IProps> = ({
                         setToggle('time');
                     }}
                 >
-                    Time {arrow}
+                    Time {arrowTime}
                 </div>
                 <div
                     aria-hidden="true"
@@ -50,7 +54,7 @@ const Querries: React.FC<IProps> = ({
                         setToggle('depth');
                     }}
                 >
-                    Depth {arrow}
+                    Depth {arrowDepth}
                 </div>
                 <div
                     aria-hidden="true"
@@ -60,7 +64,7 @@ const Querries: React.FC<IProps> = ({
                         setToggle('complexity');
                     }}
                 >
-                    Complexity {arrow}
+                    Complexity {arrowComplexity}
                 </div>
             </div>
             {/* {projects?.map((project: Project) => (
