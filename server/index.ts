@@ -26,16 +26,14 @@ const server = new ApolloServer({
     resolvers,
     context: async ({ req }) => {
         const authHeader = req.headers.authorization || null;
-        if (!authHeader) return { authenticated: false };
+        if (!authHeader) return { authenticated: false, user: null };
 
         // authentication header looks like 'Bearer <token>'
         // access the token off of the header
         const authToken = authHeader.split(' ')[1];
         const user = await session.verify(authToken);
-        // TODO: return encrypted user data to context
-        if (!user.authenticated) return { authenticated: false };
 
-        return { authenticated: true };
+        return { authenticated: user.authenticated, user: user.data };
     },
 });
 
