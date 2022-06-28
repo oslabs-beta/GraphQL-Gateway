@@ -48,7 +48,7 @@ type ProjectQuery = {
     _id?: string;
     id: string;
     projectID: string;
-    name: string;
+    number: string;
     depth: number;
     complexity: number;
     tokens: number;
