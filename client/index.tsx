@@ -33,10 +33,7 @@ render(
                                     <Dashboard />
                                 </RequireAuth>
                             }
-                        >
-                            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-                        </Route>
-                        {/* <Route path="/dashboard" element={<RequireAuth />} /> */}
+                        />
                     </Routes>
                 </AuthProvider>
             </BrowserRouter>

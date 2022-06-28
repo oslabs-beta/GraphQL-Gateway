@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
 // import Logo from './Logo';
 
 export interface ISState {
@@ -12,6 +13,14 @@ export interface ISState {
         signupBox: string;
     };
 }
+
+// const REGISTER_MUTATION = gql`
+//     mutation RegisterMutation($email: String!, $password: String!) {
+//         register(email: $email, password: $password) {
+//             value
+//         }
+//     }
+// `;
 
 function Signup() {
     const [user, setUser] = useState<ISState['user']>({
@@ -35,7 +44,6 @@ function Signup() {
     const handleClick = (e: any) => {
         e.preventDefault();
         navigate('/dashboard');
-        // console.log(user);
     };
 
     return (
@@ -62,7 +70,7 @@ function Signup() {
                 />
                 <br />
                 <button className="formBtn" type="submit" onClick={handleClick}>
-                    Login
+                    Register
                 </button>
                 <br />
                 <span className="paragraph">

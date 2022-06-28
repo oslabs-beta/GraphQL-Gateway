@@ -47,9 +47,12 @@ const resolvers: IResolvers = {
 
             return UserDB.findOne({ email })
                 .then(async (user: User): Promise<User> => {
-                    const verifyUser: boolean = await bcrypt.compare(password, user.password);
-                    if (!verifyUser) {
-                        throw new Error('You have entered invalid username or password.');
+                    if (!user.email) {
+                        throw new Error('Email not found.');
+                    }
+                    const verifyPassword: boolean = await bcrypt.compare(password, user.password);
+                    if (!verifyPassword) {
+                        throw new Error('Password you entered is incorrect.');
                     }
                     return user;
                 })

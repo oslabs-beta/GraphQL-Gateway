@@ -4,13 +4,16 @@ import { useNavigate } from 'react-router-dom';
 
 export interface ISState {
     user: {
+        login: boolean;
         email: string;
         password: string;
     };
 }
 
 function Login() {
+    const navigate = useNavigate();
     const [user, setUser] = useState<ISState['user']>({
+        login: true,
         email: '',
         password: '',
     });
@@ -22,16 +25,16 @@ function Login() {
         });
     };
 
-    const navigate = useNavigate();
-
     const switchForm = () => {
         navigate('/signup');
     };
 
     const handleClick = async (e: any) => {
         e.preventDefault();
-        //apollo client query
-        const response = await fetch ('/api/users'): Promise <response>
+        setUser({
+            ...user,
+            login: !user.login,
+        });
         navigate('/dashboard');
     };
 

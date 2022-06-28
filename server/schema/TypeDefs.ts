@@ -38,6 +38,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
+        getUser(user: GetUserInput!): User
         createUser(user: CreateUserInput!): User
         updateUser(user: UpdateUserInput!): User
         deleteUser(id: String!): User
@@ -49,6 +50,12 @@ const typeDefs = gql`
         createProjectQuery(projectQuery: CreateProjectQueryInput!): ProjectQuery
         updateProjectQuery(projectQuery: UpdateProjectQueryInput!): ProjectQuery
         deleteProjectQuery(id: String!): ProjectQuery
+    }
+
+    input GetUserInput {
+        email: String!
+        password: String!
+        projects: [String]
     }
 
     input CreateUserInput {
