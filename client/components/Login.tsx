@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Logo from './Logo';
 
 export interface ISState {
     user: {
@@ -40,7 +39,6 @@ function Login() {
 
     return (
         <div className="box">
-            {/* <Logo /> */}
             <h1 className="text">Login</h1>
 
             <div className="form-wrapper">

@@ -185,19 +185,15 @@ const ChartBox: React.FC<SelectedProject> = ({ project }) => {
                 </button>
             </div>
             <div className="chartOne chartVisual" style={{ display: style.chartOne }}>
-                {/* <h4 className="h4chart">GraphQL Gate using Algorithm One</h4> */}
                 <Line options={options} data={time} />
             </div>
             <div className="chartTwo chartVisual" style={{ display: style.chartTwo }}>
-                {/* <h4 className="h4chart">GraphQL Gate using Algorithm Two</h4> */}
                 <Line options={options} data={depth} />
             </div>
             <div className="chartThree chartVisual" style={{ display: style.chartThree }}>
-                {/* <h4 className="h4chart">GraphQL Gate using Algorithm Three</h4> */}
                 <Line options={options} data={complexity} />
             </div>
             <div className="chartFour chartVisual" style={{ display: style.chartFour }}>
-                {/* <h4 className="h4chart">GraphQL Gate using Algorithm Four</h4> */}
                 <Chart type="bar" data={data} />
             </div>
             <div className="projectSelector">
