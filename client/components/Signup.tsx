@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
+// import { gql, useMutation } from '@apollo/client';
 // import Logo from './Logo';
 
 export interface ISState {
