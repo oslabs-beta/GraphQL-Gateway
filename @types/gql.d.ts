@@ -50,12 +50,12 @@ type ProjectQuery = {
     number: string;
     userID: string;
     projectID: string;
-    depth: number;
-    complexity: number;
+    depth?: number;
+    complexity?: number;
     tokens: number;
     success: boolean;
-    timestamp: number;
-    latency: number;
+    timestamp?: number;
+    latency?: number;
 };
 
 type CreateProjectQueryArgs = {
