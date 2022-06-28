@@ -103,7 +103,7 @@ const Querries: React.FC<IProps> = ({
                     <div className="queryProps">
                         <div>
                             <div className="label">Name: </div>
-                            <div className="value">/</div>
+                            <div className="value">{query.projectID}</div>
                         </div>
                         <div>
                             <div className="label">Time: </div>
