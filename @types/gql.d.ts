@@ -47,12 +47,13 @@ type UpdateProjectArgs = {
 type ProjectQuery = {
     _id?: string;
     id: string;
-    projectID: string;
     number: string;
+    userID: string;
+    projectID: string;
     depth: number;
     complexity: number;
     tokens: number;
-    blocked: boolean;
+    success: boolean;
     timestamp: number;
     latency: number;
 };
