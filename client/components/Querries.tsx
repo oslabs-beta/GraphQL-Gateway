@@ -67,7 +67,8 @@ const Querries: React.FC<IProps> = ({
                     Complexity {arrowComplexity}
                 </div>
             </div>
-            {/* {projects?.map((project: Project) => (
+            {/* -------this is left for the future project implementation. Waiting for instruction
+                {projects?.map((project: Project) => (
                 <div aria-hidden="true" onClick={() => test(project)}>
                     <Collapsible
                         trigger={<span style={{ padding: '10px 50px' }}>{project.name}</span>}
@@ -101,13 +102,14 @@ const Querries: React.FC<IProps> = ({
             {queries?.map((query: ProjectQuery) => (
                 <div>
                     <div className="queryProps">
-                        <div>
-                            <div className="label">Name: </div>
-                            <div className="value">{query.projectID}</div>
-                        </div>
+                        {/* number still missing */}
+                        {/* <div>
+                            <div className="label">Number: </div>
+                            <div className="value">{query.number}</div>
+                        </div> */}
                         <div>
                             <div className="label">Time: </div>
-                            <div className="value">{query.time}</div>
+                            <div className="value">{query.timestamp}</div>
                         </div>
                         <div>
                             <div className="label">Depth: </div>

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
-// import Logger from './Logger';
-// import Query from 'server/models/Query';
 import ChartBox from './ChartBox';
-import { Projects, SelectedProject } from './Interfaces';
+import { Projects, SelectedProject, ProjectQuery } from './Interfaces';
 import Querries from './Querries';
 
 const GET_USER_DATA = gql`
@@ -16,12 +14,10 @@ const GET_USER_DATA = gql`
                 userID
                 name
                 queries {
-                    id
-                    projectID
-                    name
+                    number
                     complexity
                     depth
-                    time
+                    timestamp
                 }
             }
         }
@@ -33,14 +29,14 @@ const GET_PROJECT = gql`
         project(id: $projectId) {
             id
             queries {
-                time
+                timestamp
                 depth
                 complexity
             }
         }
     }
 `;
-
+// we are defining state types - arrow (for sorting arrow change when clicked -ascending or descending) and time,depth and complexity props of a query
 export interface ISState {
     style: {
         time: boolean;
@@ -60,13 +56,14 @@ function Dashboard() {
         depth: false,
         complexity: false,
     });
-    const [order, setOrder] = useState<boolean>();
+    const [order, setOrder] = useState<boolean>(); // ascending vs descending on click
     const [arrow, setArrow] = useState<ISState['arrow']>({
+        // adjusting arrow based on ascending vs descending
         time: '',
         depth: '',
         complexity: '',
     });
-
+    // toggle classes on click in the Queries component
     const setToggle = (arg: string) => {
         if (arg === 'time') {
             setStyle({
@@ -91,30 +88,28 @@ function Dashboard() {
             });
         }
     };
-    useEffect(() => {
-        console.log('t', style.time);
-        console.log('d', style.depth);
-        console.log('c', style.complexity);
-    }, [style.time, style.depth, style.complexity]);
-
+    // graphql calling
     const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
         variables: {
-            userId: '6286978e12716d47e6884194',
+            userId: '62ba5b743f40d18829e018a1',
         },
     });
     const { data, loading } = useQuery(GET_PROJECT, {
         variables: {
-            projectId: '628e864e76cdbbec53f36010',
+            projectId: '62ba5bd43f40d18829e018c4',
         },
     });
 
-    const [projects, setProjects] = useState<Projects['projects']>();
+    // const [projects, setProjects] = useState<Projects['projects']>();   // commented out due to still not knowing how you guys want our project selection to look like. Waiting for instructions
     const [selectedProject, selectProject] = useState<SelectedProject['project']>();
     const [queries, selectQuerries] = useState<ProjectQuery[]>();
 
-    // const test = (pr: any): void => {
+    // const test = (pr: any): void => { // this is poorly named fuction that selects the project
     //     selectProject(pr);
     // };
+
+    // sorting functions
+
     const sortByTime = (): any => {
         if (order === true) {
             setOrder(false);
@@ -143,7 +138,7 @@ function Dashboard() {
                 }
             }
             const dataToSort = [...newArr];
-            dataToSort.sort((a, b) => a.time - b.time);
+            dataToSort.sort((a, b) => a.timestamp - b.timestamp);
             selectQuerries(dataToSort);
         } else {
             const newArr = [];
@@ -154,7 +149,7 @@ function Dashboard() {
                 }
             }
             const dataToSort = [...newArr];
-            dataToSort.sort((a, b) => a.time + b.time);
+            dataToSort.sort((a, b) => a.timestamp + b.timestamp);
             selectQuerries(dataToSort);
         }
     };
@@ -243,9 +238,9 @@ function Dashboard() {
         }
     };
     useEffect(() => {
-        if (!loadingR && dataR) {
-            setProjects(dataR.user.projects);
-        }
+        // if (!loadingR && dataR) {
+        //     setProjects(dataR.user.projects);
+        // }
         if (!loading && data) {
             selectProject(data.project);
             selectQuerries(selectedProject?.queries);

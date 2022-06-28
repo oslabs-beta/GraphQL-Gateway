@@ -56,7 +56,7 @@ const ChartBox: React.FC<SelectedProject> = ({ project }) => {
 
     // eslint-disable-next-line array-callback-return
     project?.queries.map((query) => {
-        timeFromProjectProps.push(query.time / 100);
+        timeFromProjectProps.push(query.timestamp / 100);
         depthFromProjectProps.push(query.depth);
         complexityFromProjectProps.push(query.complexity);
     });

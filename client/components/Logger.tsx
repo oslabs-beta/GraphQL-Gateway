@@ -22,11 +22,11 @@ const Loger: React.FC<IProps> = ({ projects, test }) => (
                                 <div className="queryProps">
                                     <div>
                                         <div className="label">Name: </div>
-                                        <div className="value">{query.name}</div>
+                                        <div className="value">{query.timestamp}</div>
                                     </div>
                                     <div>
                                         <div className="label">Time: </div>
-                                        <div className="value">{query.time}</div>
+                                        <div className="value">{query.timestamp}</div>
                                     </div>
                                     <div>
                                         <div className="label">Depth: </div>
