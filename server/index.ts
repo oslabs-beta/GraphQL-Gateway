@@ -25,7 +25,6 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: async ({ req }) => {
-        /** Pull the authe */
         const authHeader = req.headers.authorization || null;
         if (!authHeader) return { authenticated: false };
 

@@ -5,6 +5,7 @@ import randomString from 'randomstring';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
+import sessions from '../utilities/sessions';
 
 const resolvers: IResolvers = {
     Query: {
@@ -63,14 +64,26 @@ const resolvers: IResolvers = {
             const hash: string = await bcrypt.hash(password, 11);
 
             return UserDB.findOne({ email })
-                .then((user: User): User => {
+                .then(async (user: User): Promise<User> => {
                     if (user) throw new Error('User already exists');
                     const newUser = new UserDB({
                         email,
                         password: hash,
                         projects: [],
                     });
-                    return newUser.save();
+                    const savedUser = await newUser.save();
+                    if (!savedUser) throw new Error('Could not save user. Try again later.');
+                    // eslint-disable-next-line no-underscore-dangle
+                    const token = await sessions.create({ id: savedUser._id });
+
+                    return {
+                        token,
+                        email: savedUser.email,
+                        password: savedUser.password,
+                        // eslint-disable-next-line no-underscore-dangle
+                        id: savedUser._id,
+                        projects: [],
+                    };
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },

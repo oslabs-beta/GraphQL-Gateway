@@ -3,6 +3,7 @@ type User = {
     email: string;
     password: string;
     projects: Array<string>;
+    token: string;
 };
 
 type QueryByID = {
