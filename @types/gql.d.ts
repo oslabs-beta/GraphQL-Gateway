@@ -52,30 +52,33 @@ type ProjectQuery = {
     depth: number;
     complexity: number;
     tokens: number;
-    success: boolean;
+    blocked: boolean;
     timestamp: number;
+    latency: number;
 };
 
 type CreateProjectQueryArgs = {
     projectQuery: {
         projectID: string;
         number: string;
-        depth: number;
-        complexity: number;
+        depth?: number;
+        complexity?: number;
         tokens: number;
         success: boolean;
         timestamp: number;
+        latency?: number;
     };
 };
 
 type UpdateProjectQueryArgs = {
     projectQuery: {
         id: string;
-        number: string;
-        depth: number;
-        complexity: number;
-        tokens: number;
-        success: boolean;
-        timestamp: number;
+        number?: string;
+        depth?: number;
+        complexity?: number;
+        tokens?: number;
+        success?: boolean;
+        timestamp?: number;
+        latency?: number;
     };
 };
