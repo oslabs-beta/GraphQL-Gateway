@@ -14,6 +14,10 @@ const LOGIN_MUTATION = gql`
     mutation loginMutation($email: String!, $password: String!) {
         loginMutation(email: $email, password: $password) {
             token
+            email
+            password
+            projects
+            id
         }
     }
 `;

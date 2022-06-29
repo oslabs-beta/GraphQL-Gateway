@@ -59,7 +59,7 @@ const resolvers: IResolvers = {
         /*
          *  User Mutations
          */
-        findUser: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
+        login: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
 
             return UserDB.findOne({ email })
@@ -71,11 +71,12 @@ const resolvers: IResolvers = {
                     if (!verifyPassword) {
                         throw new Error('Password you entered is incorrect.');
                     }
+                    // todo create a token
                     return user;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        createUser: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
+        signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
 
@@ -90,7 +91,7 @@ const resolvers: IResolvers = {
                     const savedUser = await newUser.save();
                     if (!savedUser) throw new Error('Could not save user. Try again later.');
                     // eslint-disable-next-line no-underscore-dangle
-                    const token = await sessions.create({ id: savedUser._id });
+                    const token = sessions.create({ id: savedUser._id });
 
                     return {
                         token,

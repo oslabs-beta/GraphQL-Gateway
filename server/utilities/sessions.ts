@@ -6,7 +6,7 @@ const sessions = {
     verify: (token: string) => {
         try {
             const data = jwt.verify(token, String(process.env.JWT_SESSION_KEY));
-            return { authenticated: false, data };
+            return { authenticated: true, data };
         } catch {
             // token invalid
             return { authenticated: false, data: null };
