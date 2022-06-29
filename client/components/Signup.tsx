@@ -18,6 +18,10 @@ const SIGNUP_MUTATION = gql`
     mutation signupMutation($email: String!, $password: String!) {
         signupMutation(email: $email, password: $password) {
             token
+            email
+            password
+            projects
+            id
         }
     }
 `;

@@ -24,7 +24,7 @@ function setContext(user: UserContext, token: string) {
     localStorage.setItem('session-token', token);
 }
 
-type MyComponentProps = React.PropsWithChildren<{}>;
+type MyComponentProps = React.PropsWithChildren<unknown>;
 
 function AuthProvider({ children }: MyComponentProps) {
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;

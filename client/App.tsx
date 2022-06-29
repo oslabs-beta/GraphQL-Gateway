@@ -8,6 +8,8 @@ import gear from '../public/gear.png';
 import '../public/styles.css';
 
 export default function HomePage() {
+    // todo: query to check auth status
+
     // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
     const controlNavbar = () => {
