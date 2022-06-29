@@ -49,6 +49,7 @@ function Login() {
         if (error) console.log('login error', error);
         else {
             // todo: check format of data coming back from server
+            console.log('login data', data);
             setContext(data, data.token);
             navigate('/dashboard');
         }

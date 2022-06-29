@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { useLocation, Navigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider';
 
 interface HeaderProps {
