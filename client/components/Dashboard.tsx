@@ -110,7 +110,7 @@ function Dashboard() {
 
     // sorting functions
 
-    const sortByTime = (): any => {
+    const sortByTime = (): void => {
         if (order === true) {
             setOrder(false);
             // setArrow();
@@ -153,7 +153,7 @@ function Dashboard() {
             selectQuerries(dataToSort);
         }
     };
-    const sortByDepth = (): any => {
+    const sortByDepth = (): void => {
         if (order === true) {
             setOrder(false);
             setArrow({
@@ -195,7 +195,7 @@ function Dashboard() {
             selectQuerries(dataToSort);
         }
     };
-    const sortByComplexity = (): any => {
+    const sortByComplexity = (): void => {
         if (order === true) {
             setOrder(false);
             setArrow({
