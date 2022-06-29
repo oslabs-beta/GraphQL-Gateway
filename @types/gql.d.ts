@@ -47,13 +47,15 @@ type UpdateProjectArgs = {
 type ProjectQuery = {
     _id?: string;
     id: string;
+    number: string;
+    userID: string;
     projectID: string;
-    name: string;
     depth: number;
     complexity: number;
     tokens: number;
     success: boolean;
     timestamp: number;
+    latency?: number;
 };
 
 type CreateProjectQueryArgs = {
@@ -65,17 +67,19 @@ type CreateProjectQueryArgs = {
         tokens: number;
         success: boolean;
         timestamp: number;
+        latency?: number;
     };
 };
 
 type UpdateProjectQueryArgs = {
     projectQuery: {
         id: string;
-        number: string;
-        depth: number;
-        complexity: number;
-        tokens: number;
-        success: boolean;
-        timestamp: number;
+        number?: string;
+        depth?: number;
+        complexity?: number;
+        tokens?: number;
+        success?: boolean;
+        timestamp?: number;
+        latency?: number;
     };
 };
