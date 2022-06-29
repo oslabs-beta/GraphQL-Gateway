@@ -3,7 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 // import Logger from './Logger';
 import ChartBox from './ChartBox';
 import { Projects, SelectedProject } from './Interfaces';
-import Querries from './Querries';
+import Queries from './Queries';
 
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
@@ -73,7 +73,7 @@ function Dashboard() {
             <div className="loggerBox">
                 <div className="loggerGUI">
                     {/* <Logger test={test} projects={projects} /> */}
-                    <Querries test={test} projects={projects} />
+                    <Queries test={test} projects={projects} />
                 </div>
             </div>
             <div className="chartBox">
