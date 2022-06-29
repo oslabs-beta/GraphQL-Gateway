@@ -4,8 +4,8 @@ const AuthContext = React.createContext<UserContext | null>(null);
 interface UserContext {
     email: string;
     password: string;
-    authenticated: Boolean;
-    id: String;
+    authenticated: boolean;
+    id: string;
     projects: [];
 }
 
