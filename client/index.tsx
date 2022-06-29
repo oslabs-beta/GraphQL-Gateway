@@ -14,7 +14,7 @@ import App from './App';
 const httpLink = createHttpLink({
     uri: '/gql',
 });
-
+// todo: add apollo link to check auth status
 const authLink = setContext((request, { headers }) => {
     // get the authentication token from local storage if it exists
     const token: string | null = localStorage.getItem('session-token');
