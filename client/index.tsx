@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import ReactDOM from 'react-dom/client';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink } from '@apollo/client';
 import { render } from 'react-dom';
+import { setContext } from 'apollo-link-context';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -10,16 +11,29 @@ import { AuthProvider } from './auth/AuthProvider';
 import RequireAuth from './components/RequireAuth';
 import App from './App';
 
+const httpLink = new HttpLink({ uri: '/gql' });
+const authLink = setContext(async (req, { headers }) => {
+    const token = localStorage.getItem('session-token');
+
+    return {
+        ...headers,
+        headers: {
+            Authorization: token ? `Bearer ${token}` : null,
+        },
+    };
+});
+
+const link = authLink.concat(httpLink as any);
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/gql',
+    link: link as any,
     cache: new InMemoryCache(),
 });
 
 render(
     <ApolloProvider client={client}>
-        <React.StrictMode>
-            <BrowserRouter>
-                <AuthProvider>
+        <AuthProvider>
+            <React.StrictMode>
+                <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<App />} />
                         <Route path="/about" element={<App />} />
@@ -35,9 +49,9 @@ render(
                             }
                         />
                     </Routes>
-                </AuthProvider>
-            </BrowserRouter>
-        </React.StrictMode>
+                </BrowserRouter>
+            </React.StrictMode>
+        </AuthProvider>
     </ApolloProvider>,
     document.getElementById('root')
 );

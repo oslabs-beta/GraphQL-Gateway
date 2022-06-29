@@ -34,6 +34,7 @@
         "@mui/icons-material": "^5.8.0",
         "@mui/material": "^5.8.0",
         "@mui/styled-engine-sc": "^5.8.0",
+        "apollo-link-context": "^1.0.20",
         "apollo-server-express": "^3.7.0",
         "axios": "^0.27.2",
         "bcrypt": "^5.0.1",

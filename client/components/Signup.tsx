@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { gql, useMutation } from '@apollo/client';
-// import Logo from './Logo';
+import { gql, useMutation } from '@apollo/client';
+import { setContext } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -14,13 +14,13 @@ export interface ISState {
     };
 }
 
-// const REGISTER_MUTATION = gql`
-//     mutation RegisterMutation($email: String!, $password: String!) {
-//         register(email: $email, password: $password) {
-//             value
-//         }
-//     }
-// `;
+const SIGNUP_MUTATION = gql`
+    mutation signupMutation($email: String!, $password: String!) {
+        signupMutation(email: $email, password: $password) {
+            token
+        }
+    }
+`;
 
 function Signup() {
     const [user, setUser] = useState<ISState['user']>({
@@ -41,14 +41,20 @@ function Signup() {
         navigate('/login');
     };
 
-    const handleClick = (e: any) => {
+    const [signupMutation, { error, data }] = useMutation(SIGNUP_MUTATION);
+
+    const handleClick = async (e: any, variables: ISState['user']) => {
         e.preventDefault();
-        navigate('/dashboard');
+        signupMutation({ variables });
+        if (error) console.log(`Signup error, ${error}`);
+        else {
+            setContext(data, data.token);
+            navigate('/dashboard');
+        }
     };
 
     return (
         <div className="box">
-            {/* <Logo /> */}
             <h1 className="text">Signup</h1>
 
             <div className="form-wrapper">
@@ -69,7 +75,7 @@ function Signup() {
                     placeholder="Type your password"
                 />
                 <br />
-                <button className="formBtn" type="submit" onClick={handleClick}>
+                <button className="formBtn" type="submit" onClick={(e) => handleClick(e, user)}>
                     Register
                 </button>
                 <br />

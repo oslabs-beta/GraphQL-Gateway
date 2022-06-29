@@ -1,21 +1,28 @@
 import React from 'react';
 
-interface User {
+const AuthContext = React.createContext<UserContext | null>(null);
+interface UserContext {
     email: string;
     password: string;
     authenticated: Boolean;
+    id: String;
+    projects: [];
 }
 
-const AuthContext = React.createContext<User | null>(null);
-
-// mock data
-// TODO: change this with real auth data
-
-const authContext: User = {
-    email: 'test@test.com',
-    password: 'test123',
-    authenticated: true,
+const authContext: UserContext = {
+    email: '',
+    password: '',
+    authenticated: false,
+    id: '',
+    projects: [],
 };
+
+function setContext(user: UserContext, token: string) {
+    authContext.email = user.email;
+    authContext.password = user.password;
+    authContext.authenticated = true;
+    localStorage.setItem('session-token', token);
+}
 
 type MyComponentProps = React.PropsWithChildren<{}>;
 
@@ -29,4 +36,4 @@ const useAuth = () => {
     return context;
 };
 
-export { useAuth, AuthProvider };
+export { useAuth, AuthProvider, setContext };
