@@ -35,13 +35,13 @@ const client = new ApolloClient({
 
 render(
     <ApolloProvider client={client}>
-        <React.StrictMode>
-            <BrowserRouter>
-                <AuthProvider>
+        <AuthProvider>
+            <React.StrictMode>
+                <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<App />} />
                         <Route path="/about" element={<App />} />
-                        <Route path="/team" element={<App />} />
+                        <Route path="/demo" element={<App />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route
@@ -51,14 +51,11 @@ render(
                                     <Dashboard />
                                 </RequireAuth>
                             }
-                        >
-                            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-                        </Route>
-                        {/* <Route path="/dashboard" element={<RequireAuth />} /> */}
+                        />
                     </Routes>
-                </AuthProvider>
-            </BrowserRouter>
-        </React.StrictMode>
+                </BrowserRouter>
+            </React.StrictMode>
+        </AuthProvider>
     </ApolloProvider>,
     document.getElementById('root')
 );

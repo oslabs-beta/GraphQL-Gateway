@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Logo from './Logo';
+import { gql, useMutation } from '@apollo/client';
+import { setContext } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -12,6 +13,14 @@ export interface ISState {
         signupBox: string;
     };
 }
+
+const SIGNUP_MUTATION = gql`
+    mutation signupMutation($email: String!, $password: String!) {
+        signupMutation(email: $email, password: $password) {
+            token
+        }
+    }
+`;
 
 function Signup() {
     const [user, setUser] = useState<ISState['user']>({
@@ -32,15 +41,20 @@ function Signup() {
         navigate('/login');
     };
 
-    const handleClick = (e: any) => {
+    const [signupMutation, { error, data }] = useMutation(SIGNUP_MUTATION);
+
+    const handleClick = async (e: any, variables: ISState['user']) => {
         e.preventDefault();
-        navigate('/dashboard');
-        // console.log(user);
+        signupMutation({ variables });
+        if (error) console.log(`Signup error, ${error}`);
+        else {
+            setContext(data, data.token);
+            navigate('/dashboard');
+        }
     };
 
     return (
         <div className="box">
-            {/* <Logo /> */}
             <h1 className="text">Signup</h1>
 
             <div className="form-wrapper">
@@ -61,8 +75,8 @@ function Signup() {
                     placeholder="Type your password"
                 />
                 <br />
-                <button className="formBtn" type="submit" onClick={handleClick}>
-                    Login
+                <button className="formBtn" type="submit" onClick={(e) => handleClick(e, user)}>
+                    Register
                 </button>
                 <br />
                 <span className="paragraph">

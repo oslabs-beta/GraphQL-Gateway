@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Logo from './Logo';
+import { gql, useMutation } from '@apollo/client';
+import { setContext } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -9,7 +10,16 @@ export interface ISState {
     };
 }
 
+const LOGIN_MUTATION = gql`
+    mutation loginMutation($email: String!, $password: String!) {
+        loginMutation(email: $email, password: $password) {
+            token
+        }
+    }
+`;
+
 function Login() {
+    const navigate = useNavigate();
     const [user, setUser] = useState<ISState['user']>({
         email: '',
         password: '',
@@ -22,21 +32,26 @@ function Login() {
         });
     };
 
-    const navigate = useNavigate();
-
     const switchForm = () => {
         navigate('/signup');
     };
 
-    const handleClick = (e: any) => {
+    const [loginMutation, { data, error }] = useMutation(LOGIN_MUTATION);
+
+    const handleClick = async (e: any, variables: ISState['user']) => {
         e.preventDefault();
-        navigate('/dashboard');
-        // console.log(user);
+
+        loginMutation({ variables });
+        if (error) console.log('login error', error);
+        else {
+            // todo: check format of data coming back from server
+            setContext(data, data.token);
+            navigate('/dashboard');
+        }
     };
 
     return (
         <div className="box">
-            {/* <Logo /> */}
             <h1 className="text">Login</h1>
 
             <div className="form-wrapper">
@@ -57,7 +72,7 @@ function Login() {
                     placeholder="Type your password"
                 />
                 <br />
-                <button className="formBtn" type="submit" onClick={handleClick}>
+                <button className="formBtn" type="submit" onClick={(e) => handleClick(e, user)}>
                     Login
                 </button>
                 <br />
