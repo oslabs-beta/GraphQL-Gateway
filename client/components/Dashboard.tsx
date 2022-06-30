@@ -111,33 +111,7 @@ function Dashboard() {
     // };
 
     // sorting functions
-
-    // enum Direction {
-    //     Up = 'UP',
-    //     Down = 'DOWN',
-    //     Left = 'LEFT',
-    //     Right = 'RIGHT',
-    // }
-
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
-        // if (ascending === true) {
-        //     setOrder(false);
-        //     setArrow({
-        //         ...arrow,
-        //         time: '↑',
-        //         depth: '',
-        //         complexity: '',
-        //     });
-        // } else {
-        //     setOrder(true);
-        //     setArrow({
-        //         ...arrow,
-        //         time: '↓',
-        //         depth: '',
-        //         complexity: '',
-        //     });
-        // }
-        // if (order) {
         if (setProject) {
             const newArr = [];
             // eslint-disable-next-line no-restricted-syntax, guard-for-in
@@ -161,18 +135,6 @@ function Dashboard() {
             });
             setQueries(newArr);
         }
-        // } else {
-        //     const newArr = [];
-        //     if (selectedProject) {
-        //         // eslint-disable-next-line no-restricted-syntax, guard-for-in
-        //         for (const key in selectedProject?.queries) {
-        //             newArr.push(selectedProject?.queries[key]);
-        //         }
-        //     }
-        //     const dataToSort = [...newArr];
-        //     dataToSort.sort((a, b) => a.timestamp + b.timestamp);
-        //     selectQuerries(dataToSort);
-        // }
     };
 
     // const sortByTime = (): void => {
