@@ -12,6 +12,17 @@ const resolvers: IResolvers = {
         /*
          * User queries
          */
+        checkAuth: (parent, args, context): Promise<User | Error> | null => {
+            if (context.authenticated) {
+                return UserDB.findOne({ _id: context.user.id })
+                    .then((user: User): User => {
+                        if (!user) throw new Error('User does not exist');
+                        return user;
+                    })
+                    .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+            }
+            return null;
+        },
         users: (): Promise<User[] | Error> =>
             UserDB.find()
                 .then((users: User[]): User[] => users)
