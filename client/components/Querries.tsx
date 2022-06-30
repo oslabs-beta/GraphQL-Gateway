@@ -2,10 +2,12 @@ import React from 'react';
 // import Collapsible from 'react-collapsible';
 // import { Projects, Project, ProjectQuery } from './Interfaces';
 import { ProjectQuery } from './Interfaces';
+import { SortOrder } from '../../@types/dashboard';
 
 export interface IProps {
     // projects: Projects['projects'];
     // test: any;
+    combinedSort: (field: 'timestamp' | 'depth' | 'complexity', sortOrder: SortOrder) => void;
     arrowTime: string | undefined;
     arrowDepth: string | undefined;
     arrowComplexity: string | undefined;
@@ -13,13 +15,14 @@ export interface IProps {
     time: boolean;
     depth: boolean;
     complexity: boolean;
-    sortByTime: any;
-    sortByDepth: any;
-    sortByComplexity: any;
+    // sortByTime: any;
+    // sortByDepth: any;
+    // sortByComplexity: any;
     queries: ProjectQuery[] | undefined;
 }
 // eslint-disable-next-line react/function-component-definition
 const Querries: React.FC<IProps> = ({
+    combinedSort,
     arrowTime,
     arrowDepth,
     arrowComplexity,
@@ -27,9 +30,9 @@ const Querries: React.FC<IProps> = ({
     time,
     depth,
     complexity,
-    sortByTime,
-    sortByDepth,
-    sortByComplexity,
+    // sortByTime,
+    // sortByDepth,
+    // sortByComplexity,
     queries,
 }) => (
     // const Querries: React.FC<IProps> = ({ projects, test, sortByNameAsc, queries }) => (
@@ -40,7 +43,15 @@ const Querries: React.FC<IProps> = ({
                     aria-hidden="true"
                     className={`loggerBtn${time ? ' active' : ''}`}
                     onClick={() => {
-                        sortByTime();
+                        // sortByTime();
+                        let sortOrder: SortOrder;
+                        if (arrowTime === '' || arrowTime === '↓') {
+                            sortOrder = '↑';
+                        } else {
+                            sortOrder = '↓';
+                        }
+
+                        combinedSort('timestamp', sortOrder);
                         setToggle('time');
                     }}
                 >
@@ -50,7 +61,14 @@ const Querries: React.FC<IProps> = ({
                     aria-hidden="true"
                     className={`loggerBtn${depth ? ' active' : ''}`}
                     onClick={() => {
-                        sortByDepth();
+                        // sortByDepth();
+                        let sortOrder: SortOrder;
+                        if (arrowDepth === '' || arrowDepth === '↓') {
+                            sortOrder = '↑';
+                        } else {
+                            sortOrder = '↓';
+                        }
+                        combinedSort('depth', sortOrder);
                         setToggle('depth');
                     }}
                 >
@@ -60,7 +78,14 @@ const Querries: React.FC<IProps> = ({
                     aria-hidden="true"
                     className={`loggerBtn${complexity ? ' active' : ''}`}
                     onClick={() => {
-                        sortByComplexity();
+                        // sortByComplexity();
+                        let sortOrder: SortOrder;
+                        if (arrowComplexity === '' || arrowComplexity === '↓') {
+                            sortOrder = '↑';
+                        } else {
+                            sortOrder = '↓';
+                        }
+                        combinedSort('complexity', sortOrder);
                         setToggle('complexity');
                     }}
                 >
