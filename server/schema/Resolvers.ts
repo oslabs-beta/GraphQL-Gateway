@@ -12,6 +12,17 @@ const resolvers: IResolvers = {
         /*
          * User queries
          */
+        checkAuth: (parent, args, context): Promise<User | Error> | null => {
+            if (context.authenticated) {
+                return UserDB.findOne({ _id: context.user.id })
+                    .then((user: User): User => {
+                        if (!user) throw new Error('User does not exist');
+                        return user;
+                    })
+                    .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+            }
+            return null;
+        },
         users: (): Promise<User[] | Error> =>
             UserDB.find()
                 .then((users: User[]): User[] => users)
@@ -79,7 +90,6 @@ const resolvers: IResolvers = {
         signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
-
             return UserDB.findOne({ email })
                 .then(async (user: User): Promise<User> => {
                     if (user) throw new Error('User already exists');
@@ -92,7 +102,6 @@ const resolvers: IResolvers = {
                     if (!savedUser) throw new Error('Could not save user. Try again later.');
                     // eslint-disable-next-line no-underscore-dangle
                     const token = sessions.create({ id: savedUser._id });
-
                     return {
                         token,
                         email: savedUser.email,

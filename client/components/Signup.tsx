@@ -15,12 +15,11 @@ export interface ISState {
 }
 
 const SIGNUP_MUTATION = gql`
-    mutation signupMutation($email: String!, $password: String!) {
-        signup(email: $email, password: $password) {
+    mutation signupMutation($user: UserInput!) {
+        signup(user: $user) {
             token
             email
             password
-            projects
             id
         }
     }
@@ -45,16 +44,17 @@ function Signup() {
         navigate('/login');
     };
 
-    const [signupMutation, { error, data }] = useMutation(SIGNUP_MUTATION);
-
-    const handleClick = async (e: any, variables: ISState['user']) => {
-        e.preventDefault();
-        signupMutation({ variables });
-        if (error) console.log(`Signup error, ${error}`);
-        else {
-            setContext(data, data.token);
+    const [signupMutation] = useMutation(SIGNUP_MUTATION, {
+        onCompleted: (data) => {
+            setContext(data.signup, data.signup.token);
             navigate('/dashboard');
-        }
+        },
+        onError: (error) => console.log(error),
+    });
+
+    const handleClick = async (e: any, userData: ISState['user']) => {
+        e.preventDefault();
+        signupMutation({ variables: { user: userData } });
     };
 
     return (

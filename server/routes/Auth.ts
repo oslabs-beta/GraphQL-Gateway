@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import axios from 'axios';
+import sessions from '../utilities/sessions';
 
 const authRouter = express.Router({
     strict: true,
@@ -28,7 +29,13 @@ authRouter.get('/oauth-callback', (req: Request, res: Response) => {
         .post(`https://github.com/login/oauth/access_token`, body, opts)
         .then((response: ResObj) => response.data)
         // eslint-disable-next-line no-console
-        .then((data: object) => console.log('this is data', data))
+        .then((data: object) => {
+            console.log('this is data', data);
+            // check if there already is a user with this email, get _id
+            // if there isn't, create a new user
+            // create a session
+            // sessions.create({id:  /** user _id */})
+        })
         .then(() => res.redirect('http://localhost:8080/'))
         // eslint-disable-next-line no-console
         .catch((err: string) => console.log(err));

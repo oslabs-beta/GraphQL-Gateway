@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 const sessions = {
     expiry: 604800000, // 7 days

@@ -1,32 +1,47 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { gql, useQuery } from '@apollo/client';
 
-const AuthContext = React.createContext<UserContext | null>(null);
 interface UserContext {
     email: string;
     password: string;
     authenticated: boolean;
     id: string;
-    projects: [];
 }
+
+type MyComponentProps = React.PropsWithChildren<unknown>;
+
+const AuthContext = React.createContext<UserContext | null>(null);
 
 const authContext: UserContext = {
     email: '',
     password: '',
     authenticated: false,
     id: '',
-    projects: [],
 };
 
-function setContext(user: UserContext, token: string) {
+function setContext(user: UserContext, token?: string) {
     authContext.email = user.email;
     authContext.password = user.password;
     authContext.authenticated = true;
-    localStorage.setItem('session-token', token);
+    if (token) localStorage.setItem('session-token', token);
 }
 
-type MyComponentProps = React.PropsWithChildren<unknown>;
+const CHECK_AUTH_QUERY = gql`
+    query checkAuthQuery {
+        checkAuth {
+            id
+            email
+            password
+        }
+    }
+`;
 
 function AuthProvider({ children }: MyComponentProps) {
+    const { data } = useQuery(CHECK_AUTH_QUERY);
+    if (data.checkAuth !== null) {
+        setContext(data.checkAuth);
+    }
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;
 }
 
