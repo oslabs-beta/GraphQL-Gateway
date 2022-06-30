@@ -23,7 +23,7 @@ render(
                     <Routes>
                         <Route path="/" element={<App />} />
                         <Route path="/about" element={<App />} />
-                        <Route path="/team" element={<App />} />
+                        <Route path="/demo" element={<App />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route

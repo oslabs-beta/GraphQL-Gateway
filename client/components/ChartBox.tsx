@@ -170,20 +170,30 @@ const ChartBox: React.FC<SelectedProject> = ({ project }) => {
     };
     return (
         <div id="chartBoxInside">
+            <div className="projectSelector">
+                <button onClick={() => chartOneFn()} className="chartBtn" type="button">
+                    Today
+                </button>
+                <button onClick={() => chartTwoFn()} className="chartBtn" type="button">
+                    Last 7 Days
+                </button>
+                <button onClick={() => chartThreeFn()} className="chartBtn" type="button">
+                    Last 6 Months
+                </button>
+                <button onClick={() => chartFourFn()} className="chartBtn" type="button">
+                    YTD
+                </button>
+            </div>
             <div className="chartOne chartVisual" style={{ display: style.chartOne }}>
-                <h4 className="h4chart">GraphQL Gate using Algorithm One</h4>
                 <Line options={options} data={time} />
             </div>
             <div className="chartTwo chartVisual" style={{ display: style.chartTwo }}>
-                <h4 className="h4chart">GraphQL Gate using Algorithm Two</h4>
                 <Line options={options} data={depth} />
             </div>
             <div className="chartThree chartVisual" style={{ display: style.chartThree }}>
-                <h4 className="h4chart">GraphQL Gate using Algorithm Three</h4>
                 <Line options={options} data={complexity} />
             </div>
             <div className="chartFour chartVisual" style={{ display: style.chartFour }}>
-                <h4 className="h4chart">GraphQL Gate using Algorithm Four</h4>
                 <Chart type="bar" data={data} />
             </div>
             <div className="projectSelector">
