@@ -6,7 +6,6 @@ interface UserContext {
     password: string;
     authenticated: boolean;
     id: string;
-    projects: [];
 }
 
 const authContext: UserContext = {
@@ -14,7 +13,6 @@ const authContext: UserContext = {
     password: '',
     authenticated: false,
     id: '',
-    projects: [],
 };
 
 function setContext(user: UserContext, token: string) {

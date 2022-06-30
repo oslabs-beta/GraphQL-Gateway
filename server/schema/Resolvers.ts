@@ -79,7 +79,6 @@ const resolvers: IResolvers = {
         signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
-
             return UserDB.findOne({ email })
                 .then(async (user: User): Promise<User> => {
                     if (user) throw new Error('User already exists');
@@ -92,7 +91,6 @@ const resolvers: IResolvers = {
                     if (!savedUser) throw new Error('Could not save user. Try again later.');
                     // eslint-disable-next-line no-underscore-dangle
                     const token = sessions.create({ id: savedUser._id });
-
                     return {
                         token,
                         email: savedUser.email,
