@@ -120,10 +120,10 @@ function Dashboard() {
             }
             newArr.sort((a, b) => {
                 if (sortOrder === '↑') {
-                    return b[field] - a[field];
+                    return a[field] - b[field];
                 }
                 if (sortOrder === '↓') {
-                    return a[field] - b[field];
+                    return b[field] - a[field];
                 }
                 return 0;
             });
