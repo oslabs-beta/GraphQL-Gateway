@@ -118,7 +118,7 @@ const resolvers: IResolvers = {
         createProject: async (
             parent: undefined,
             args: CreateProjectArgs
-        ): Promise<void | Error> => {
+        ): Promise<Project | Error> => {
             const { userID, name } = args.project;
 
             /* checks if user exists given the userID,
@@ -135,7 +135,7 @@ const resolvers: IResolvers = {
              * creates a new project based on the mongoose model and saves it.
              */
             return ProjectDB.findOne({ userID, name }).then(
-                async (project: Project): Promise<Error | void> => {
+                async (project: Project): Promise<Project | Error> => {
                     if (project) throw new Error('Project already exists');
 
                     // random 10-char string generated and stored in projectDB
