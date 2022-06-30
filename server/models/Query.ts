@@ -6,6 +6,7 @@ const querySchema = new Schema({
     number: { type: Number, unique: true, required: true },
     depth: { type: Number, required: false },
     complexity: { type: Number, required: false },
+    success: { type: Boolean, required: true },
     timestamp: { type: Number, required: false },
     logged_on: { type: Date },
     tokens: { type: Number },
