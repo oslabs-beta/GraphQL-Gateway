@@ -15,26 +15,32 @@ const typeDefs = gql`
         name: String!
         queries: [ProjectQuery]!
         query: ProjectQuery
+        apiKey: String
+        endpoint: String
     }
 
     type ProjectQuery {
         id: ID!
-        name: String!
+        number: Int!
+        userID: String!
         projectID: String!
         depth: Int!
         complexity: Int!
-        time: Int!
+        tokens: Int!
+        success: Boolean!
+        timestamp: Int!
+        latency: Int
     }
 
     type Query {
         users: [User!]!
         user(id: String!): User
 
-        projects: [Project]
+        projects: [Project]!
         project(id: String!): Project
 
-        projectQueries: [ProjectQuery]
-        projectQuery: ProjectQuery
+        projectQueries: [ProjectQuery]!
+        projectQuery(id: String!): ProjectQuery
     }
 
     type Mutation {
@@ -54,7 +60,6 @@ const typeDefs = gql`
     input CreateUserInput {
         email: String!
         password: String!
-        projects: [String]
     }
 
     input UpdateUserInput {
@@ -66,7 +71,6 @@ const typeDefs = gql`
     input CreateProjectInput {
         userID: String!
         name: String!
-        queries: [String]
     }
 
     input UpdateProjectInput {
@@ -76,18 +80,22 @@ const typeDefs = gql`
 
     input CreateProjectQueryInput {
         projectID: String!
-        name: String!
         depth: Int!
         complexity: Int!
-        time: Int!
+        tokens: Int!
+        success: Boolean!
+        timestamp: Int!
+        latency: Int
     }
 
     input UpdateProjectQueryInput {
         id: String!
-        name: String
         depth: Int
         complexity: Int
-        time: Int
+        timestamp: Int
+        tokens: Int
+        success: Boolean
+        latency: Int
     }
 `;
 
