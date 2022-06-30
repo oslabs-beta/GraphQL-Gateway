@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import ChartBox from './ChartBox';
-import { Projects, SelectedProject, ProjectQuery } from './Interfaces';
+import { SelectedProject, ProjectQuery } from './Interfaces';
 import { SortOrder } from '../../@types/dashboard';
-import Queries from './Querries';
+import Queries from './Queries';
 
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
