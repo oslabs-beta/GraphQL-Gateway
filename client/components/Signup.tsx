@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from './Logo';
+// import Logo from './Logo';
 
 export interface ISState {
     user: {
@@ -40,30 +40,31 @@ function Signup() {
 
     return (
         <div className="box">
-            <Logo />
+            {/* <Logo /> */}
             <h1 className="text">Signup</h1>
 
             <div className="form-wrapper">
                 <input
-                    className="email"
+                    className="input"
                     type="text"
                     onChange={handleChange}
                     name="email"
                     value={user.email}
-                    placeholder="enter email"
+                    placeholder="Type your email"
                 />
                 <input
-                    className="password"
+                    className="input"
                     type="password"
                     onChange={handleChange}
                     name="password"
                     value={user.password}
-                    placeholder="enter password"
+                    placeholder="Type your password"
                 />
                 <br />
                 <button className="formBtn" type="submit" onClick={handleClick}>
-                    Signup
+                    Login
                 </button>
+                <br />
                 <span className="paragraph">
                     Already a member?
                     <button className="btn transferBtn" type="button" onClick={() => switchForm()}>
