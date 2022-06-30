@@ -22,10 +22,10 @@ type UpdateUserArgs = {
 };
 
 type Project = {
-    _id?: string;
     id: string;
     userID: string;
     name: string;
+    apiKey: string;
     queries: Array<string>;
 };
 
@@ -45,7 +45,6 @@ type UpdateProjectArgs = {
 };
 
 type ProjectQuery = {
-    _id?: string;
     id: string;
     projectID: string;
     name: string;

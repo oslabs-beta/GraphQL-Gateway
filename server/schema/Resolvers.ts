@@ -151,12 +151,13 @@ const resolvers: IResolvers = {
                     });
 
                     // save project
-                    await newProject
+                    return newProject
                         .save()
                         .catch(
                             (err: Error): Error =>
                                 new Error(`Saving project/receiving new ID from DB failed: ${err}`)
-                        );
+                        )
+                        .finally(() => newProject);
                 }
             );
         },
