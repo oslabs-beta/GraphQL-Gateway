@@ -26,7 +26,7 @@ const typeDefs = gql`
         depth: Int!
         complexity: Int!
         tokens: Int!
-        blocked: Boolean!
+        success: Boolean!
         timestamp: Int!
     }
 
