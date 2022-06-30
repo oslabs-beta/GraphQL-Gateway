@@ -46,7 +46,6 @@ function Signup() {
 
     const [signupMutation] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
-            console.log(data);
             setContext(data.signup, data.signup.token);
             navigate('/dashboard');
         },
@@ -56,7 +55,6 @@ function Signup() {
     const handleClick = async (e: any, userData: ISState['user']) => {
         e.preventDefault();
         signupMutation({ variables: { user: userData } });
-        // if (error) console.log(`Signup error, ${error}`);
     };
 
     return (
