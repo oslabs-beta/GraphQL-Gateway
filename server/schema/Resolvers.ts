@@ -195,8 +195,11 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: CreateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
-            const { projectID, depth, complexity, timestamp, tokens, success, logged_on } =
-                args.projectQuery;
+            const { projectID } = args.projectQuery;
+            const newQueryProps = args.projectQuery;
+
+            // only add latency to the query object if it was passed into variables
+            if (args.projectQuery.latency) newQueryProps.latency = args.projectQuery.latency;
 
             /* checks if project exists given the projectID and
              * throws error if not
@@ -214,15 +217,9 @@ const resolvers: IResolvers = {
             const newNumber: number = queries.length + 1;
 
             const newQuery = new QueryDB({
+                ...newQueryProps,
                 userID,
-                projectID,
                 number: newNumber,
-                complexity,
-                depth,
-                tokens,
-                success,
-                timestamp,
-                logged_on,
             })
                 .save()
                 .then((res: ProjectQuery): ProjectQuery => res)
