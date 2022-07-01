@@ -211,7 +211,7 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            const queries: any = await QueryDB.find({ projectID }).catch(
+            const queries: string | ProjectQuery[] = await QueryDB.find({ projectID }).catch(
                 (err) => `DB query failed: ${err}`
             );
             const newNumber: number = queries.length + 1;
