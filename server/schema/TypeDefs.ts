@@ -20,11 +20,11 @@ const typeDefs = gql`
 
     type ProjectQuery {
         id: ID!
-        number: Int!
         userID: String!
         projectID: String!
-        depth: Int!
+        number: Int!
         complexity: Int!
+        depth: Int!
         tokens: Int!
         success: Boolean!
         timestamp: Int!
@@ -79,8 +79,8 @@ const typeDefs = gql`
 
     input CreateProjectQueryInput {
         projectID: String!
-        depth: Int!
         complexity: Int!
+        depth: Int!
         tokens: Int!
         success: Boolean!
         timestamp: Int!

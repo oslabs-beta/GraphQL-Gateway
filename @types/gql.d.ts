@@ -46,11 +46,11 @@ type UpdateProjectArgs = {
 
 type ProjectQuery = {
     id: string;
-    number: string;
     userID: string;
     projectID: string;
-    depth: number;
+    number: string;
     complexity: number;
+    depth: number;
     tokens: number;
     success: boolean;
     timestamp: number;
@@ -62,8 +62,8 @@ type CreateProjectQueryArgs = {
     projectQuery: {
         projectID: string;
         number: string;
-        depth: number;
         complexity: number;
+        depth: number;
         tokens: number;
         success: boolean;
         timestamp: number;
