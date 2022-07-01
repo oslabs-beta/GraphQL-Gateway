@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 import randomString from 'randomstring';
@@ -74,7 +75,7 @@ const resolvers: IResolvers = {
             const { email, password } = args.user;
 
             return UserDB.findOne({ email })
-                .then(async (user: User): Promise<User> => {
+                .then(async (user: any): Promise<User> => {
                     if (!user.email) {
                         throw new Error('Email not found.');
                     }
@@ -82,8 +83,15 @@ const resolvers: IResolvers = {
                     if (!verifyPassword) {
                         throw new Error('Password you entered is incorrect.');
                     }
-                    // todo create a token
-                    return user;
+
+                    const token = sessions.create({ id: user._id });
+                    return {
+                        token,
+                        email: user.email,
+                        password: user.password,
+                        id: user._id,
+                        projects: [],
+                    };
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
@@ -100,13 +108,11 @@ const resolvers: IResolvers = {
                     });
                     const savedUser = await newUser.save();
                     if (!savedUser) throw new Error('Could not save user. Try again later.');
-                    // eslint-disable-next-line no-underscore-dangle
                     const token = sessions.create({ id: savedUser._id });
                     return {
                         token,
                         email: savedUser.email,
                         password: savedUser.password,
-                        // eslint-disable-next-line no-underscore-dangle
                         id: savedUser._id,
                         projects: [],
                     };
