@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { setContext } from '../auth/AuthProvider';
 
@@ -22,7 +22,6 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
-    const navigate = useNavigate();
     const [user, setUser] = useState<ISState['user']>({
         email: '',
         password: '',
@@ -35,9 +34,7 @@ function Login() {
         });
     };
 
-    const switchForm = () => {
-        navigate('/signup');
-    };
+    const navigate = useNavigate();
 
     const [loginMutation] = useMutation(LOGIN_MUTATION, {
         onCompleted: (data) => {
@@ -80,9 +77,9 @@ function Login() {
                 <br />
                 <span className="paragraph">
                     Not a member?
-                    <button className="btn transferBtn" type="button" onClick={switchForm}>
+                    <Link to="/signup" className="btn transferBtn" type="button">
                         Register here
-                    </button>
+                    </Link>
                 </span>
             </div>
         </div>
