@@ -25,11 +25,13 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: async ({ req }) => {
-        const authToken = req.headers.authorization || null;
-        if (!authToken) return { authenticated: false, user: null };
+        const authHeader = req.headers.authorization || null;
+        if (!authHeader) return { authenticated: false, user: null };
 
-        const user = await session.verify(authToken);
+        const token = authHeader?.split(' ')[1];
+        if (!token) return { authenticated: false, user: null };
 
+        const user = await session.verify(token);
         return { authenticated: user.authenticated, user: user.data };
     },
 });

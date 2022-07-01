@@ -2,7 +2,7 @@ import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
 const sessions = {
-    expiry: 604800000, // 7 days
+    expiry: '7 days',
     verify: (token: string) => {
         try {
             const data = jwt.verify(token, String(process.env.JWT_SESSION_KEY));

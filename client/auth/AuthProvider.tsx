@@ -24,7 +24,7 @@ function setContext(user: UserContext, token?: string) {
     authContext.email = user.email;
     authContext.password = user.password;
     authContext.authenticated = true;
-    if (token) localStorage.setItem('session-token', token);
+    if (token && token !== null) localStorage.setItem('session-token', token);
 }
 
 const CHECK_AUTH_QUERY = gql`

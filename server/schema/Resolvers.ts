@@ -76,6 +76,7 @@ const resolvers: IResolvers = {
 
             return UserDB.findOne({ email })
                 .then(async (user: any): Promise<User> => {
+                    console.log(user);
                     if (!user.email) {
                         throw new Error('Email not found.');
                     }
