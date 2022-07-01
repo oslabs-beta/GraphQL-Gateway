@@ -41,6 +41,7 @@ function Login() {
 
     const [loginMutation] = useMutation(LOGIN_MUTATION, {
         onCompleted: (data) => {
+            console.log(data.login.token);
             setContext(data.login, data.login.token);
             navigate('/dashboard');
         },

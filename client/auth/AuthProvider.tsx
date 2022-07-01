@@ -39,7 +39,8 @@ const CHECK_AUTH_QUERY = gql`
 
 function AuthProvider({ children }: MyComponentProps) {
     const { data } = useQuery(CHECK_AUTH_QUERY);
-    if (data.checkAuth !== null) {
+    if (data && data.checkAuth !== null) {
+        console.log('auth provider', data);
         setContext(data.checkAuth);
     }
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;
