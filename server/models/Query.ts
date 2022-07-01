@@ -7,9 +7,10 @@ const querySchema = new Schema({
     depth: { type: Number, required: false },
     complexity: { type: Number, required: false },
     success: { type: Boolean, required: true },
+    tokens: { type: Number },
     timestamp: { type: Number, required: false },
     logged_on: { type: Number, required: true },
-    tokens: { type: Number },
+    latency: { type: Number },
 });
 
 export default mongoose.model('Query', querySchema, 'queries');
