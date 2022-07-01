@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { setContext } from '../auth/AuthProvider';
+import { setAuthContext } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -41,7 +41,7 @@ function Login() {
 
     const [loginMutation] = useMutation(LOGIN_MUTATION, {
         onCompleted: (data) => {
-            setContext(data.login, data.login.token);
+            setAuthContext(data.login, data.login.token);
             navigate('/dashboard');
         },
         onError: (error) => console.log(error),

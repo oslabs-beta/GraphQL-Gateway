@@ -20,7 +20,7 @@ const authContext: UserContext = {
     id: '',
 };
 
-function setContext(user: UserContext, token?: string) {
+function setAuthContext(user: UserContext, token?: string) {
     authContext.email = user.email;
     authContext.password = user.password;
     authContext.authenticated = true;
@@ -40,8 +40,7 @@ const CHECK_AUTH_QUERY = gql`
 function AuthProvider({ children }: MyComponentProps) {
     const { data } = useQuery(CHECK_AUTH_QUERY);
     if (data && data.checkAuth !== null) {
-        console.log('auth provider', data);
-        setContext(data.checkAuth);
+        setAuthContext(data.checkAuth);
     }
     return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;
 }
@@ -52,4 +51,4 @@ const useAuth = () => {
     return context;
 };
 
-export { useAuth, AuthProvider, setContext };
+export { useAuth, AuthProvider, setAuthContext };
