@@ -8,7 +8,7 @@ const querySchema = new Schema({
     complexity: { type: Number, required: false },
     success: { type: Boolean, required: true },
     timestamp: { type: Number, required: false },
-    logged_on: { type: Date },
+    logged_on: { type: Number, required: true },
     tokens: { type: Number },
 });
 

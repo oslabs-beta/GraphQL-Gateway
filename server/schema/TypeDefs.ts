@@ -28,6 +28,7 @@ const typeDefs = gql`
         tokens: Int!
         success: Boolean!
         timestamp: Int!
+        logged_on: Int!
         latency: Int
     }
 
@@ -52,7 +53,6 @@ const typeDefs = gql`
         deleteProject(id: String!): Project
 
         createProjectQuery(projectQuery: CreateProjectQueryInput!): ProjectQuery
-        updateProjectQuery(projectQuery: UpdateProjectQueryInput!): ProjectQuery
         deleteProjectQuery(id: String!): ProjectQuery
     }
 
@@ -84,16 +84,7 @@ const typeDefs = gql`
         tokens: Int!
         success: Boolean!
         timestamp: Int!
-        latency: Int
-    }
-
-    input UpdateProjectQueryInput {
-        id: String!
-        depth: Int
-        complexity: Int
-        timestamp: Int
-        tokens: Int
-        success: Boolean
+        logged_on: Int!
         latency: Int
     }
 `;
