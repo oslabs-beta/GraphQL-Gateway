@@ -54,7 +54,7 @@ type ProjectQuery = {
     tokens: number;
     success: boolean;
     timestamp: number;
-    logged_on: number;
+    loggedOn: number;
     latency?: number;
 };
 
@@ -67,7 +67,7 @@ type CreateProjectQueryArgs = {
         tokens: number;
         success: boolean;
         timestamp: number;
-        logged_on: number;
+        loggedOn: number;
         latency?: number;
     };
 };

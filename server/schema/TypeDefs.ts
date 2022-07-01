@@ -27,8 +27,8 @@ const typeDefs = gql`
         depth: Int!
         tokens: Int!
         success: Boolean!
-        timestamp: Int!
-        logged_on: Int!
+        timestamp: Float!
+        loggedOn: Float!
         latency: Int
     }
 
@@ -83,8 +83,8 @@ const typeDefs = gql`
         depth: Int!
         tokens: Int!
         success: Boolean!
-        timestamp: Int!
-        logged_on: Int!
+        timestamp: Float!
+        loggedOn: Float!
         latency: Int
     }
 `;
