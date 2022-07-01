@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 // import Logger from './Logger';
+import { Navigate } from 'react-router';
 import ChartBox from './ChartBox';
 import { Projects, SelectedProject } from './Interfaces';
 import Queries from './Queries';
+import { useAuth } from '../auth/AuthProvider';
 
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
@@ -41,9 +43,10 @@ const GET_PROJECT = gql`
 `;
 
 function Dashboard() {
+    const user = useAuth();
     const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
         variables: {
-            userId: '6286978e12716d47e6884194',
+            userId: user.id,
         },
     });
     const { data, loading } = useQuery(GET_PROJECT, {

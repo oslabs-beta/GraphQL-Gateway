@@ -23,6 +23,7 @@ const authContext: UserContext = {
 function setAuthContext(user: UserContext, token?: string) {
     authContext.email = user.email;
     authContext.password = user.password;
+    authContext.id = user.id;
     authContext.authenticated = true;
     if (token && token !== null) localStorage.setItem('session-token', token);
 }
