@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { setAuthContext } from '../auth/AuthProvider';
 
@@ -39,10 +39,6 @@ function Signup() {
     };
 
     const navigate = useNavigate();
-
-    const switchForm = () => {
-        navigate('/login');
-    };
 
     const [signupMutation] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
@@ -85,9 +81,9 @@ function Signup() {
                 <br />
                 <span className="paragraph">
                     Already a member?
-                    <button className="btn transferBtn" type="button" onClick={() => switchForm()}>
+                    <Link to="/login" className="btn transferBtn" type="button">
                         Login here
-                    </button>
+                    </Link>
                 </span>
                 <span>
                     or sign in using your
