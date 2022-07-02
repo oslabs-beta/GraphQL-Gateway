@@ -10,17 +10,16 @@ import { useAuth } from '../auth/AuthProvider';
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
         user(id: $userId) {
-            email
-            password
             projects {
-                id
-                userID
                 name
+                id
+                # userID
+                # name
                 queries {
                     number
                     complexity
                     depth
-                    timestamp
+                    # timestamp
                 }
             }
         }
@@ -97,17 +96,17 @@ function Dashboard() {
         }
     };
     // graphql calling
-    const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
+    const { data, loading } = useQuery(GET_USER_DATA, {
         variables: {
             userId: user!.id,
         },
     });
     // ? is this second query necesary?
-    const { data, loading } = useQuery(GET_PROJECT, {
-        variables: {
-            projectId: dataR.projects.id,
-        },
-    });
+    // const { data, loading } = useQuery(GET_PROJECT, {
+    //     variables: {
+    //         projectId: dataR.projects.id,
+    //     },
+    // });
 
     // const [projects, setProjects] = useState<Projects['projects']>();   // commented out due to still not knowing how you guys want our project selection to look like. Waiting for instructions
     const [setProject, selectProject] = useState<SelectedProject['project']>();
@@ -276,10 +275,11 @@ function Dashboard() {
         //     setProjects(dataR.user.projects);
         // }
         if (!loading && data) {
-            selectProject(data.project);
+            console.log(data);
+            selectProject(data.user.projects[0]);
             setQueries(setProject?.queries);
         }
-    }, [loadingR, dataR, loading, data, setProject?.queries]);
+    }, [/** loadingR, dataR, */ loading, data, setProject?.queries]);
 
     return (
         <div id="dashWrapper">
