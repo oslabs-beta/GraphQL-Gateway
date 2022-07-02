@@ -1,10 +1,10 @@
 export interface ProjectQuery {
     id: string;
-    name: string;
+    number: number;
     projectID: string;
     depth: number;
     complexity: number;
-    time: number;
+    timestamp: number;
 }
 
 export interface Project {
