@@ -10,14 +10,14 @@ interface UserContext {
 
 type MyComponentProps = React.PropsWithChildren<unknown>;
 
-const AuthContext = React.createContext<UserContext | null>(null);
-
 const authContext: UserContext = {
     email: '',
     password: '',
     authenticated: false,
     id: '',
 };
+
+const AuthContext = React.createContext<UserContext>(authContext);
 
 function setAuthContext(user: UserContext, token?: string) {
     authContext.email = user.email;

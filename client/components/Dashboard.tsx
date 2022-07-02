@@ -10,6 +10,7 @@ import { useAuth } from '../auth/AuthProvider';
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
         user(id: $userId) {
+            # note this curretnly gets all projects and queries. This could be a very expersive query.
             projects {
                 name
                 id
@@ -56,8 +57,11 @@ export interface ISState {
 
 function Dashboard() {
     const Navigate = useNavigate();
+    // get the user information from the authentication context
     const user = useAuth();
-    if (user === null) Navigate('/');
+    // redirect if the user is (unauthenticated
+    // FIXME: do to asyncronisity, this may return falsy and redirect before the query that checks the session token has gotten a response back.
+    if (user.authenticated === false) Navigate('/');
 
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
