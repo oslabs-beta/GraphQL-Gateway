@@ -13,31 +13,32 @@ const GET_USER_DATA = gql`
             projects {
                 name
                 id
-                # userID
-                # name
                 queries {
                     number
+                    latency
                     complexity
                     depth
-                    # timestamp
+                    timestamp
+                    tokens
+                    success
                 }
             }
         }
     }
 `;
 
-const GET_PROJECT = gql`
-    query Query($projectId: String!) {
-        project(id: $projectId) {
-            id
-            queries {
-                timestamp
-                depth
-                complexity
-            }
-        }
-    }
-`;
+// const GET_PROJECT = gql`
+//     query Query($projectId: String!) {
+//         project(id: $projectId) {
+//             id
+//             queries {
+//                 timestamp
+//                 depth
+//                 complexity
+//             }
+//         }
+//     }
+// `;
 
 // we are defining state types - arrow (for sorting arrow change when clicked -ascending or descending) and time,depth and complexity props of a query
 export interface ISState {
@@ -101,7 +102,6 @@ function Dashboard() {
             userId: user!.id,
         },
     });
-    // ? is this second query necesary?
     // const { data, loading } = useQuery(GET_PROJECT, {
     //     variables: {
     //         projectId: dataR.projects.id,
