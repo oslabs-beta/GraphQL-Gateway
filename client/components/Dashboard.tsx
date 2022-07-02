@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { useNavigate } from 'react-router';
 import ChartBox from './ChartBox';
 import { SelectedProject, ProjectQuery } from './Interfaces';
 import { SortOrder } from '../../@types/dashboard';
@@ -54,7 +55,9 @@ export interface ISState {
 }
 
 function Dashboard() {
+    const Navigate = useNavigate();
     const user = useAuth();
+    if (user === null) Navigate('/');
 
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
@@ -96,12 +99,13 @@ function Dashboard() {
     // graphql calling
     const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
         variables: {
-            userId: user.id,
+            userId: user!.id,
         },
     });
+    // ? is this second query necesary?
     const { data, loading } = useQuery(GET_PROJECT, {
         variables: {
-            projectId: '62ba5bd43f40d18829e018c4',
+            projectId: dataR.projects.id,
         },
     });
 
