@@ -50,6 +50,7 @@ type ProjectQuery = {
     number: string;
     userID: string;
     projectID: string;
+    number: number;
     depth: number;
     complexity: number;
     tokens: number;
