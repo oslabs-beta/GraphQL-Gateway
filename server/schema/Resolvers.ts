@@ -177,10 +177,9 @@ const resolvers: IResolvers = {
             /*
              * Checks if this project already exists under specified user, if not
              * creates a new project based on the mongoose model and saves it.
-             * result is stored to update project's query array with new project query ID
              */
-            return ProjectDB.findOne({ userID, name })
-                .then(async (project: Project): Promise<Project | Error> => {
+            return ProjectDB.findOne({ userID, name }).then(
+                async (project: Project): Promise<Project | Error> => {
                     if (project) throw new Error('Project already exists');
 
                     // random 10-char string generated and stored in projectDB
@@ -195,28 +194,16 @@ const resolvers: IResolvers = {
                         apiKey,
                     });
 
-                    // save project and store new ID
-                    const resultID: string | undefined = await newProject
+                    // save project
+                    return newProject
                         .save()
-                        // eslint-disable-next-line no-underscore-dangle
-                        .then((res: Project): string | undefined => res._id?.toString())
                         .catch(
                             (err: Error): Error =>
                                 new Error(`Saving project/receiving new ID from DB failed: ${err}`)
-                        );
-
-                    /* updates project in DB to include API endpoint for logger
-                     * endpoint (sans API Key) -> host.com/:userID?project=[projectID]
-                     * user enters this (along with API key in header) into their project's
-                     * src code with gate-logger library installed
-                     */
-                    return ProjectDB.findByIdAndUpdate(
-                        resultID,
-                        { endpoint: `/log?project=${resultID}` },
-                        { new: true }
-                    ).then((data: Project): Project => data);
-                })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+                        )
+                        .finally(() => newProject);
+                }
+            );
         },
         /*
          *   updates project name
@@ -252,7 +239,11 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: CreateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
-            const { projectID, depth, complexity, timestamp, tokens, success } = args.projectQuery;
+            const { projectID } = args.projectQuery;
+            const newQueryProps = args.projectQuery;
+
+            // only add latency to the query object if it was passed into variables
+            if (args.projectQuery.latency) newQueryProps.latency = args.projectQuery.latency;
 
             /* checks if project exists given the projectID and
              * throws error if not
@@ -264,42 +255,21 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            const queries: any = await QueryDB.find({ projectID }).catch(
+            const queries: string | ProjectQuery[] = await QueryDB.find({ projectID }).catch(
                 (err) => `DB query failed: ${err}`
             );
             const newNumber: number = queries.length + 1;
 
             const newQuery = new QueryDB({
+                ...newQueryProps,
                 userID,
-                projectID,
                 number: newNumber,
-                complexity,
-                depth,
-                tokens,
-                success,
-                timestamp,
             })
                 .save()
                 .then((res: ProjectQuery): ProjectQuery => res)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
             return newQuery;
-        },
-        updateProjectQuery: async (
-            parent: undefined,
-            args: UpdateProjectQueryArgs
-        ): Promise<ProjectQuery | Error> => {
-            const { id, number, depth, complexity, timestamp, tokens, success } = args.projectQuery;
-            return QueryDB.findByIdAndUpdate(
-                id,
-                { number, depth, complexity, timestamp, tokens, success },
-                { new: true }
-            )
-                .then((query: ProjectQuery): ProjectQuery => {
-                    if (!query) throw new Error('Query not found');
-                    return query;
-                })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         deleteProjectQuery: async (
             parent: undefined,
