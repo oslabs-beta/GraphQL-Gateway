@@ -47,7 +47,6 @@ type UpdateProjectArgs = {
 type ProjectQuery = {
     _id?: string;
     id: string;
-    number: string;
     userID: string;
     projectID: string;
     number: number;

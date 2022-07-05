@@ -264,15 +264,32 @@ function Dashboard() {
     //         setQueries(dataToSort);
     //     }
     // };
-    useEffect(() => {
-        // if (!loadingR && dataR) {
-        //     setProjects(dataR.user.projects);
-        // }
-        if (!loading && data) {
-            selectProject(data.project);
-            setQueries(setProject?.queries);
-        }
-    }, [loadingR, dataR, loading, data, setProject?.queries]);
+    // const uniqueToRender = true;
+
+    // const mounted = React.useRef(true);
+
+    // useEffect(() => {
+    //     // if (!loadingR && dataR) {
+    //     //     setProjects(dataR.user.projects);
+    //     // }
+    //     if (!loading && data) {
+    //         selectProject(data.project);
+    //         setQueries(setProject?.queries);
+    //     }
+
+    //     return () => (mounted.current = false);
+    // }, [loadingR, dataR, loading, data, setProject?.queries]);
+
+    // const handleSubmit = () => {
+    //     const asyncCall = async () => {
+    //         const data = await fetch('asdlfkj');
+    //         if (mounted.current) {
+    //             setState(data);
+    //         }
+    //     };
+
+    //     asyncCall();
+    // };
 
     return (
         <div id="dashWrapper">
