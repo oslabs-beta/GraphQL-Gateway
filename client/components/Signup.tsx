@@ -41,7 +41,7 @@ function Signup() {
 
     const navigate = useNavigate();
 
-    const signupMutation = useMutation(SIGNUP_MUTATION, {
+    const [signupMutation] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
             setAuth({
                 email: data.login.email,
