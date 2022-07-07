@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { setAuthContext } from '../auth/AuthProvider';
+import { useAuth } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -15,7 +15,6 @@ const LOGIN_MUTATION = gql`
         login(user: $user) {
             token
             email
-            password
             id
         }
     }
@@ -26,7 +25,7 @@ function Login() {
         email: '',
         password: '',
     });
-
+    const { setUser: setAuth } = useAuth();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
@@ -38,7 +37,11 @@ function Login() {
 
     const [loginMutation] = useMutation(LOGIN_MUTATION, {
         onCompleted: (data) => {
-            setAuthContext(data.login, data.login.token);
+            setAuth({
+                email: data.login.email,
+                id: data.login.id,
+            });
+            localStorage.setItem('session-token', data.login.token);
             navigate('/dashboard');
         },
         onError: (error) => console.log(error),

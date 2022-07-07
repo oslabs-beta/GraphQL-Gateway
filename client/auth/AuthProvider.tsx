@@ -1,31 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 interface UserContext {
-    email: string;
-    password: string;
-    authenticated: boolean;
-    id: string;
+    email?: string;
+    id?: string;
 }
 
-type MyComponentProps = React.PropsWithChildren<unknown>;
-
-const authContext: UserContext = {
-    email: '',
-    password: '',
-    authenticated: false,
-    id: '',
-};
-
-const AuthContext = React.createContext<UserContext>(authContext);
-
-function setAuthContext(user: UserContext, token?: string) {
-    authContext.email = user.email;
-    authContext.password = user.password;
-    authContext.id = user.id;
-    authContext.authenticated = true;
-    if (token && token !== null) localStorage.setItem('session-token', token);
+interface AuthContextType {
+    user: UserContext | null;
+    setUser: any;
+    loading: boolean;
 }
+
+const AuthContext = React.createContext<AuthContextType>({
+    user: null,
+    setUser: '',
+    loading: true,
+});
 
 const CHECK_AUTH_QUERY = gql`
     query checkAuthQuery {
@@ -37,12 +28,30 @@ const CHECK_AUTH_QUERY = gql`
     }
 `;
 
-function AuthProvider({ children }: MyComponentProps) {
-    const { data } = useQuery(CHECK_AUTH_QUERY);
-    if (data && data.checkAuth !== null) {
-        setAuthContext(data.checkAuth);
-    }
-    return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;
+function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
+    const [user, setUser] = useState<UserContext | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    // query the server to check if there is a valid session
+    useEffect(() => {
+        const { data } = useQuery(CHECK_AUTH_QUERY);
+        if (data && data.checkAuth !== null) {
+            setLoading(false);
+            setUser({
+                email: data.checkAuth.email,
+                id: data.checkAuth.id,
+            });
+        }
+    }, []);
+    const value: AuthContextType = useMemo(
+        () => ({
+            user,
+            setUser,
+            loading,
+        }),
+        [user, loading]
+    );
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 const useAuth = () => {
@@ -51,4 +60,4 @@ const useAuth = () => {
     return context;
 };
 
-export { useAuth, AuthProvider, setAuthContext };
+export { useAuth, AuthProvider };

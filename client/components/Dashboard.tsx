@@ -56,12 +56,7 @@ export interface ISState {
 }
 
 function Dashboard() {
-    const Navigate = useNavigate();
-    // get the user information from the authentication context
-    const user = useAuth();
-    // redirect if the user is (unauthenticated
-    // FIXME: do to asyncronisity, this may return falsy and redirect before the query that checks the session token has gotten a response back.
-    if (user.authenticated === false) Navigate('/');
+    const { user } = useAuth();
 
     const [style, setStyle] = useState<ISState['style']>({
         time: false,

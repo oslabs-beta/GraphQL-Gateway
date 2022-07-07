@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { setAuthContext } from '../auth/AuthProvider';
+import { useAuth } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -13,6 +13,7 @@ export interface ISState {
         signupBox: string;
     };
 }
+const { setUser: setAuth } = useAuth();
 
 const SIGNUP_MUTATION = gql`
     mutation signupMutation($user: UserInput!) {
@@ -42,7 +43,11 @@ function Signup() {
 
     const [signupMutation] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
-            setAuthContext(data.signup, data.signup.token);
+            setAuth({
+                email: data.login.email,
+                id: data.login.id,
+            });
+            localStorage.setItem('session-token', data.login.token);
             navigate('/dashboard');
         },
         onError: (error) => console.log(error),
