@@ -47,7 +47,10 @@ function Login() {
         onError: (error) => console.log(error),
     });
 
-    const handleClick = async (e: any, userData: ISState['user']) => {
+    const handleClick = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        userData: ISState['user']
+    ) => {
         e.preventDefault();
         loginMutation({ variables: { user: userData } });
     };

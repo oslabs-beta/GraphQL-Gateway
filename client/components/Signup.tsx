@@ -41,7 +41,7 @@ function Signup() {
 
     const navigate = useNavigate();
 
-    const [signupMutation] = useMutation(SIGNUP_MUTATION, {
+    const signupMutation = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
             setAuth({
                 email: data.login.email,
@@ -53,7 +53,10 @@ function Signup() {
         onError: (error) => console.log(error),
     });
 
-    const handleClick = async (e: any, userData: ISState['user']) => {
+    const handleClick = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        userData: ISState['user']
+    ) => {
         e.preventDefault();
         signupMutation({ variables: { user: userData } });
     };
