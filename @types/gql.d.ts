@@ -22,10 +22,10 @@ type UpdateUserArgs = {
 };
 
 type Project = {
-    _id?: string;
     id: string;
     userID: string;
     name: string;
+    apiKey: string;
     queries: Array<string>;
 };
 
@@ -45,17 +45,17 @@ type UpdateProjectArgs = {
 };
 
 type ProjectQuery = {
-    _id?: string;
     id: string;
-    number: string;
     userID: string;
     projectID: string;
     number: number;
     depth: number;
     complexity: number;
+    depth: number;
     tokens: number;
     success: boolean;
     timestamp: number;
+    loggedOn: number;
     latency?: number;
 };
 
@@ -63,24 +63,12 @@ type CreateProjectQueryArgs = {
     projectQuery: {
         projectID: string;
         number: string;
-        depth: number;
         complexity: number;
+        depth: number;
         tokens: number;
         success: boolean;
         timestamp: number;
-        latency?: number;
-    };
-};
-
-type UpdateProjectQueryArgs = {
-    projectQuery: {
-        id: string;
-        number?: string;
-        depth?: number;
-        complexity?: number;
-        tokens?: number;
-        success?: boolean;
-        timestamp?: number;
+        loggedOn: number;
         latency?: number;
     };
 };
