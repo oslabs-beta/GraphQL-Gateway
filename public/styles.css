@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur');
+.example::-webkit-scrollbar {
+    display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 html {
-    background-image: linear-gradient(-180deg, #092173 0%, #00259f 100%);
-    height: 100%;
+    background-color: #092173;
 }
 body {
     margin: 0 auto;
@@ -14,7 +21,6 @@ a:link {
 }
 
 .container {
-    width: 100%;
     height: 100%;
 }
 
@@ -22,20 +28,32 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
+    max-height: 900px;
 }
 
 section#pageOne {
     color: #fff;
     text-align: center;
-    /* background-color: #092173; */
-    background-image: linear-gradient(-180deg, #092173 0%, #00259f 100%);
-    background-size: 100% 100%;
+    position: relative;
+    background-color: #092173;
+    overflow: hidden;
 }
-
+.blue-filter {
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(9, 33, 115, 0.7);
+}
+.video_wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
 #demoCard {
-    z-index: 1;
+    z-index: 11;
     position: absolute;
     left: 0;
     right: 0;
@@ -88,19 +106,22 @@ section#pageOne {
 #pageOneTextBox {
     margin-top: -100px;
     width: 650px;
+    position: absolute;
+    z-index: 10;
 }
 
 section#pageTwo {
     /* background-image: linear-gradient(180deg, rgb(228, 255, 146) 0%, #ffe684 40%, #94afe9 100%); */
     /* background-color: rgb(225, 225, 225);
     */
-    background-image: linear-gradient(-180deg, #00259f 30%, #fff 30%);
-    background-size: 100% 100%;
+    background-image: url('./white.webp');
+    background-size: cover;
 }
 
 section#pageThree {
     /* background-image: linear-gradient(180deg, #94afe9 0%, #e9a6df 66%, #b57cff 100%); */
-    background-color: #fff;
+    background: #fff;
+    height: 500px;
 }
 
 .icon {
@@ -112,22 +133,24 @@ section#pageThree {
     display: inline-block;
     height: 150px;
     width: 100%;
-    background-color: #00259f;
+    background-color: #092173;
 }
 .centeredSentence h1 {
-    font-size: 50px;
+    margin: 52px;
+    font-size: 40px;
 }
 #pageThreeWrapper {
     width: 100%;
+    text-align: center;
 }
 #pageThreeLeft {
     display: inline-block;
-    width: 50%;
+    width: 700px;
     text-align: center;
 }
 #pageThreeRight {
     display: inline-block;
-    width: 50%;
+    width: 700px;
     text-align: center;
 }
 
@@ -162,15 +185,15 @@ section#pageThree {
     justify-content: center;
 } */
 #navbar {
-    z-index: 3;
+    z-index: 11;
     position: fixed;
     background-color: #fff;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    top: 0;
+    text-align: center;
 }
 #side-navbar {
-    z-index: 3;
+    z-index: 11;
     position: fixed;
     background-color: #fff;
     top: 0;
@@ -251,7 +274,7 @@ section#pageThree {
 } */
 
 #footer {
-    background-color: #00259f;
+    background-color: #092173;
     color: #fff;
     text-align: center;
     padding: 40px 0;
@@ -351,11 +374,12 @@ section#pageThree {
 
 .chartBox {
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     width: 800px;
     margin: 10px;
     margin-left: 5px;
     background-color: rgba(255, 255, 255, 0.7);
+    height: 500px;
 }
 .loggerBox {
     border-radius: 10px;
@@ -364,6 +388,8 @@ section#pageThree {
     margin-right: 5px;
     background-color: rgba(255, 255, 255, 0.7);
     width: 510px;
+    height: 500px;
+    position: relative;
     overflow: scroll;
 }
 .chartBtn {
@@ -373,17 +399,16 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
     padding: 5px;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 20px;
     border-radius: 5px;
     transition: 0.5s;
 }
 #loggerBtnWrapper {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
 }
-
 .loggerBtn {
+    position: absolute;
     font-size: 12px;
     text-align: center;
     width: 70px;
@@ -421,9 +446,9 @@ section#pageThree {
 #dashWrapper {
     display: flex;
     justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    max-height: 620px;
+    padding-top: 150px;
+    padding-bottom: 100px;
+    max-height: 720px;
 }
 .Collapsible {
     color: #545353;
