@@ -288,6 +288,65 @@ function Dashboard() {
     return (
         <div id="dashWrapper">
             <div className="loggerBox">
+                <div className="loggerSortButtonsWrapper">
+                    <div className="loggerSortButtons">
+                        {
+                            // const Querries: React.FC<IProps> = ({ projects, test, sortByNameAsc, queries }) => (}
+                        }
+                        <div
+                            aria-hidden="true"
+                            className={`loggerBtn${style.time ? ' active' : ''}`}
+                            onClick={() => {
+                                // sortByTime();
+                                let sortOrder: SortOrder;
+                                if (arrow.timestamp === '' || arrow.timestamp === '↓') {
+                                    sortOrder = '↑';
+                                } else {
+                                    sortOrder = '↓';
+                                }
+
+                                combinedSort('timestamp', sortOrder);
+                                setToggle('time');
+                            }}
+                        >
+                            Time {arrow.timestamp}
+                        </div>
+                        <div
+                            aria-hidden="true"
+                            className={`loggerBtn${style.depth ? ' active' : ''}`}
+                            onClick={() => {
+                                // sortByDepth();
+                                let sortOrder: SortOrder;
+                                if (arrow.depth === '' || arrow.depth === '↓') {
+                                    sortOrder = '↑';
+                                } else {
+                                    sortOrder = '↓';
+                                }
+                                combinedSort('depth', sortOrder);
+                                setToggle('depth');
+                            }}
+                        >
+                            Depth {arrow.depth}
+                        </div>
+                        <div
+                            aria-hidden="true"
+                            className={`loggerBtn${arrow.complexity ? ' active' : ''}`}
+                            onClick={() => {
+                                // sortByComplexity();
+                                let sortOrder: SortOrder;
+                                if (arrow.complexity === '' || arrow.complexity === '↓') {
+                                    sortOrder = '↑';
+                                } else {
+                                    sortOrder = '↓';
+                                }
+                                combinedSort('complexity', sortOrder);
+                                setToggle('complexity');
+                            }}
+                        >
+                            Complexity {arrow.complexity}
+                        </div>
+                    </div>
+                </div>
                 {/* <div
                     aria-hidden="true"
                     className={`loggerBtn${style.time ? ' active' : ''}`}

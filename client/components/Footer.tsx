@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import '../../public/styles.css';
@@ -9,11 +10,22 @@ export default function Footer() {
             id="footer"
             style={{
                 backgroundColor:
-                    // eslint-disable-next-line no-nested-ternary
-                    pathname === '/signup' ? '#fff' : pathname === '/login' ? '#fff' : '#092173',
+                    pathname === '/signup'
+                        ? '#fff'
+                        : pathname === '/login'
+                            ? '#fff'
+                            : pathname === '/dashboard'
+                                ? '#fff'
+                                : '#092173',
                 color:
                     // eslint-disable-next-line no-nested-ternary
-                    pathname === '/signup' ? '#092173' : pathname === '/login' ? '#092173' : '#fff',
+                    pathname === '/signup'
+                        ? '#092173'
+                        : pathname === '/login'
+                            ? '#092173'
+                            : pathname === '/dashboard'
+                                ? '#092173'
+                                : '#fff',
             }}
         >
             <div>
