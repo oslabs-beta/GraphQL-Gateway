@@ -7,6 +7,7 @@ function RequireAuth({ children }: PropsWithChildren<unknown>) {
     const { user, loading } = useAuth();
     const location = useLocation();
     console.log('user', user);
+    console.log('loading', loading);
     // if authentication is still being confirmed, return a loading component
     if (loading) return <Loading />;
     // eslint-disable-next-line react/jsx-no-useless-fragment
