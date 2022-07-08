@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
