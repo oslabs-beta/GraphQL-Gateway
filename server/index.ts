@@ -57,7 +57,7 @@ server.start().then((): void => {
     });
 
     // for logger to cross reference project DB api key to request auth header
-    app.get('/auth/:projectID', async (req, res) => {
+    app.get('/key/:projectID', async (req, res) => {
         const project = await ProjectDB.findById(req.params.projectID).catch(
             (err) => new Error(`Project not found: ${err}`)
         );

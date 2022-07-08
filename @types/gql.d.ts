@@ -57,8 +57,8 @@ type ProjectQuery = {
     userID: string;
     projectID: string;
     number: number;
-    complexity: number;
     depth: number;
+    complexity: number;
     tokens: number;
     success: boolean;
     timestamp: number;
