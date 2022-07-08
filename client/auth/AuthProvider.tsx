@@ -32,7 +32,7 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
     const [user, setUser] = useState<UserContext | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // query the server to check if there is a valid session
+    // setup the query to the server to check if there is a valid session and update state accordingly
     const [checkAuth] = useLazyQuery(CHECK_AUTH_QUERY, {
         onCompleted: (data) => {
             if (data.checkAuth === null) {
@@ -51,6 +51,7 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
         },
     });
 
+    // call checkAuth to make the query from inside useEffect to avoid calling function on every render
     useEffect(() => {
         checkAuth();
     }, []);
