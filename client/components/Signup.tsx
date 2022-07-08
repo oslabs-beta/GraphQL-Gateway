@@ -13,14 +13,12 @@ export interface ISState {
         signupBox: string;
     };
 }
-const { setUser: setUserAuth } = useAuth();
 
 const SIGNUP_MUTATION = gql`
     mutation signupMutation($user: UserInput!) {
         signup(user: $user) {
             token
             email
-            password
             id
         }
     }
@@ -31,6 +29,7 @@ function Signup() {
         email: '',
         password: '',
     });
+    const { setUser: setUserAuth } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({

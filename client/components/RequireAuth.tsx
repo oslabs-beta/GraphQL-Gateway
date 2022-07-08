@@ -8,7 +8,8 @@ function RequireAuth({ children }: PropsWithChildren<unknown>) {
     // if authentication is still being confirmed, return a loading component
     // TODO: replace this with a loading component
     if (loading) return <div>Loading...</div>;
-    return user ? <>children</> : <Navigate to="/" state={{ from: location }} replace />;
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    return user ? <>{children}</> : <Navigate to="/" state={{ from: location }} replace />;
 }
 
 export default RequireAuth;

@@ -57,7 +57,7 @@ export interface ISState {
 
 function Dashboard() {
     const { user } = useAuth();
-
+    console.log(user);
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 
 interface UserContext {
     email?: string;
@@ -24,7 +24,6 @@ const CHECK_AUTH_QUERY = gql`
         checkAuth {
             id
             email
-            password
         }
     }
 `;
@@ -34,8 +33,9 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
     const [loading, setLoading] = useState(true);
 
     // query the server to check if there is a valid session
+    const [checkAuth, { data }] = useLazyQuery(CHECK_AUTH_QUERY);
     useEffect(() => {
-        const { data } = useQuery(CHECK_AUTH_QUERY);
+        checkAuth();
         if (data && data.checkAuth !== null) {
             setLoading(false);
             setUser({
