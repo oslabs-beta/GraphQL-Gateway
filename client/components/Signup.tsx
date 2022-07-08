@@ -13,7 +13,7 @@ export interface ISState {
         signupBox: string;
     };
 }
-const { setUser: setAuth } = useAuth();
+const { setUser: setUserAuth } = useAuth();
 
 const SIGNUP_MUTATION = gql`
     mutation signupMutation($user: UserInput!) {
@@ -43,7 +43,7 @@ function Signup() {
 
     const [signupMutation] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
-            setAuth({
+            setUserAuth({
                 email: data.login.email,
                 id: data.login.id,
             });

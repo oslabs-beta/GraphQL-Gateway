@@ -25,7 +25,7 @@ function Login() {
         email: '',
         password: '',
     });
-    const { setUser: setAuth } = useAuth();
+    const { setUser: setUserAuth } = useAuth();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
@@ -37,7 +37,7 @@ function Login() {
 
     const [loginMutation] = useMutation(LOGIN_MUTATION, {
         onCompleted: (data) => {
-            setAuth({
+            setUserAuth({
                 email: data.login.email,
                 id: data.login.id,
             });

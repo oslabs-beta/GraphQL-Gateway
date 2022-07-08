@@ -1,14 +1,14 @@
 import React, { PropsWithChildren } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider';
 
-function RequireAuth({ children }: React.PropsWithChildren<unknown>) {
+function RequireAuth({ children }: PropsWithChildren<unknown>) {
     const { user, loading } = useAuth();
+    const location = useLocation();
     // if authentication is still being confirmed, return a loading component
     // TODO: replace this with a loading component
-    if (loading) return <>Loading...</>;
-    const location = useLocation();
-    return user ? children : <Navigate to="/" state={{ from: location }} replace />;
+    if (loading) return <div>Loading...</div>;
+    return user ? <>children</> : <Navigate to="/" state={{ from: location }} replace />;
 }
 
 export default RequireAuth;

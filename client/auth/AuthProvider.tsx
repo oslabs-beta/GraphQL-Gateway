@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 interface UserContext {
@@ -8,6 +8,7 @@ interface UserContext {
 
 interface AuthContextType {
     user: UserContext | null;
+    // better typed but erroring --> setUser: React.Dispatch<React.SetStateAction<boolean>> | null
     setUser: any;
     loading: boolean;
 }
@@ -43,21 +44,16 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
             });
         }
     }, []);
-    const value: AuthContextType = useMemo(
-        () => ({
-            user,
-            setUser,
-            loading,
-        }),
-        [user, loading]
-    );
+
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    const value: AuthContextType = { user, setUser, loading };
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-const useAuth = () => {
+function useAuth() {
     const context = React.useContext(AuthContext);
     if (context === undefined) throw new Error('useAuth must be used within an Auth provider');
     return context;
-};
+}
 
 export { useAuth, AuthProvider };
