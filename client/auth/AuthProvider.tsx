@@ -47,6 +47,7 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
         },
         onError: (error) => {
             console.log(error);
+            localStorage.removeItem('session-token');
             setLoading(false);
         },
     });
