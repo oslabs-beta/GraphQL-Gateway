@@ -1,8 +1,10 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../../public/styles.css';
 
 export default function Navbar() {
+    const { pathname } = useLocation();
     // todo: query to check auth status
 
     // FIXME: navbar show only on scroll up, not down
@@ -24,7 +26,14 @@ export default function Navbar() {
 
     return (
         <div>
-            <div id="navbar" style={{ display: show }}>
+            <div
+                id="navbar"
+                style={{
+                    display: show,
+                    // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
+                    // color: pathname === '/dashboard' ? '#fff' : '#092173',
+                }}
+            >
                 <Link to="/" type="submit" className="linkBtn">
                     Home
                 </Link>
@@ -35,7 +44,14 @@ export default function Navbar() {
                     About
                 </Link>
             </div>
-            <div id="side-navbar" style={{ display: show }}>
+            <div
+                id="side-navbar"
+                style={{
+                    display: show,
+                    // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
+                    // color: pathname === '/dashboard' ? '#fff' : '#092173',
+                }}
+            >
                 <Link to="/login" type="submit" className="linkBtn">
                     Login
                 </Link>

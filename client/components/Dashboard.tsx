@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useNavigate } from 'react-router';
 import ChartBox from './ChartBox';
-import { SelectedProject, ProjectQuery } from './Interfaces';
+import { SelectedProject, ProjectQuery } from '../../@types/Interfaces';
 import { SortOrder } from '../../@types/dashboard';
 import Queries from './Queries';
 import { useAuth } from '../auth/AuthProvider';

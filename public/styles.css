@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur');
-.example::-webkit-scrollbar {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+.loggerBox::-webkit-scrollbar {
     display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.example {
+.loggerBox {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
 html {
     background-color: #092173;
+    font-family: 'Roboto', sans-serif;
 }
 body {
     margin: 0 auto;
@@ -201,7 +203,6 @@ section#pageThree {
 }
 .logoText {
     font-size: 150%;
-    font-family: 'Playfair Display', serif;
     color: #ffffff;
     text-align: center;
     margin-left: 50px;
@@ -210,7 +211,6 @@ section#pageThree {
 
 .text {
     font-size: 250%;
-    font-family: 'Playfair Display', serif;
     color: #3e403f;
 }
 
@@ -222,7 +222,6 @@ section#pageThree {
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    font-family: 'Playfair Display', serif;
     font-size: 16px;
     letter-spacing: 0;
     line-height: 1em;
@@ -372,23 +371,23 @@ section#pageThree {
     height: 1000px;
 } */
 .chartBox {
-    border-radius: 10px;
-    padding: 10px;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    border-radius: 2px;
     flex: 50%;
-    margin: 10px;
     margin-left: 10px;
     background-color: rgba(255, 255, 255, 0.7);
-    height: 600px;
+    height: 580px;
     min-width: 900px;
     max-width: 900px;
 }
 .loggerBox {
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    border-radius: 2px;
     margin-right: 5px;
     background-color: rgba(255, 255, 255, 0.7);
-    height: 600px;
+    height: 580px;
     overflow: scroll;
     flex: 50%;
     min-width: 410px;
@@ -397,7 +396,6 @@ section#pageThree {
 .loggerSortButtonsWrapper {
     width: 410px;
     order: 3;
-    border-radius: 5px;
     position: absolute;
     height: 33px;
 }
@@ -411,8 +409,8 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
     padding: 5px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 5px;
     transition: 0.5s;
 }
@@ -426,7 +424,7 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
     padding: 5px;
-    margin-top: 5px;
+    margin-top: 20px;
     margin-bottom: 5px;
     margin-left: 20px;
     margin-right: 20px;
@@ -442,6 +440,8 @@ section#pageThree {
 .projectSelector {
     display: flex;
     justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .chartBtn:hover {
@@ -455,8 +455,6 @@ section#pageThree {
     margin: 0 auto;
 }
 #dashWrapper {
-    margin-top: 150px;
-    padding-bottom: 100px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -488,10 +486,9 @@ section#pageThree {
 }
 .queryProps {
     display: inline-block;
-    border-radius: 7px;
-    padding: 5px;
-    margin: 5px 0;
-    background-color: #a496e32f;
+    border-bottom: 1px solid #092173;
+    padding: 10px;
+    background-color: #b6bcd6;
     transition: 0.5s;
     cursor: pointer;
     width: 100%;
@@ -500,7 +497,8 @@ section#pageThree {
     display: inline-block;
 }
 .space {
-    height: 35px;
+    height: 60px;
+    border-bottom: 1px solid #092173;
 }
 
 .queryProps:hover {

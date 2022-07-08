@@ -1,7 +1,7 @@
 import React from 'react';
 // import Collapsible from 'react-collapsible';
 // import { Projects, Project, ProjectQuery } from './Interfaces';
-import { ProjectQuery } from './Interfaces';
+import { ProjectQuery } from '../../@types/Interfaces';
 import { SortOrder } from '../../@types/dashboard';
 
 export interface IProps {
