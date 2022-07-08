@@ -33,16 +33,26 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
     const [loading, setLoading] = useState(true);
 
     // query the server to check if there is a valid session
-    const [checkAuth, { data }] = useLazyQuery(CHECK_AUTH_QUERY);
+    const [checkAuth] = useLazyQuery(CHECK_AUTH_QUERY, {
+        onCompleted: (data) => {
+            if (data.checkAuth === null) {
+                localStorage.removeItem('session-token');
+            } else {
+                setUser({
+                    email: data.checkAuth.email,
+                    id: data.checkAuth.id,
+                });
+            }
+            setLoading(false);
+        },
+        onError: (error) => {
+            console.log(error);
+            setLoading(false);
+        },
+    });
+
     useEffect(() => {
         checkAuth();
-        if (data && data.checkAuth !== null) {
-            setLoading(false);
-            setUser({
-                email: data.checkAuth.email,
-                id: data.checkAuth.id,
-            });
-        }
     }, []);
 
     // eslint-disable-next-line react/jsx-no-constructed-context-values

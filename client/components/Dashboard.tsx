@@ -57,7 +57,6 @@ export interface ISState {
 
 function Dashboard() {
     const { user } = useAuth();
-    console.log(user);
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -274,7 +273,6 @@ function Dashboard() {
         //     setProjects(dataR.user.projects);
         // }
         if (!loading && data) {
-            console.log(data);
             selectProject(data.user.projects[0]);
             setQueries(setProject?.queries);
         }
