@@ -14,15 +14,26 @@ import resolvers from './schema/Resolvers';
 import authRouter from './routes/Auth';
 import userRouter from './routes/User';
 import ProjectDB from './models/Project';
+import session from './utilities/sessions';
 
 connectDB();
 
 const app: express.Application = express();
-const PORT: number | string = process.env.port || 3000;
+const PORT: number | string = process.env.PORT || 3000;
 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: async ({ req }) => {
+        const authHeader = req.headers.authorization || null;
+        if (!authHeader) return { authenticated: false, user: null };
+
+        const token = authHeader?.split(' ')[1];
+        if (!token) return { authenticated: false, user: null };
+
+        const user = await session.verify(token);
+        return { authenticated: user.authenticated, user: user.data };
+    },
 });
 
 app.use(cors());

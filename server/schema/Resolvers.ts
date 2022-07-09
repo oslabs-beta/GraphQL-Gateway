@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 import randomString from 'randomstring';
@@ -5,12 +6,24 @@ import randomString from 'randomstring';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
+import sessions from '../utilities/sessions';
 
 const resolvers: IResolvers = {
     Query: {
         /*
          * User queries
          */
+        checkAuth: (parent, args, context): Promise<User | Error> | null => {
+            if (context.authenticated) {
+                return UserDB.findOne({ _id: context.user.id })
+                    .then((user: User): User => {
+                        if (!user) throw new Error('User does not exist');
+                        return user;
+                    })
+                    .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+            }
+            return null;
+        },
         users: (): Promise<User[] | Error> =>
             UserDB.find()
                 .then((users: User[]): User[] => users)
@@ -58,21 +71,52 @@ const resolvers: IResolvers = {
         /*
          *  User Mutations
          */
-        createUser: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
+        login: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
-            const hash: string = await bcrypt.hash(password, 11);
 
             return UserDB.findOne({ email })
-                .then((user: User): User => {
+                .then(async (user: any): Promise<User> => {
+                    if (!user.email) {
+                        throw new Error('Email not found.');
+                    }
+                    const verifyPassword: boolean = await bcrypt.compare(password, user.password);
+                    if (!verifyPassword) {
+                        throw new Error('Password you entered is incorrect.');
+                    }
+
+                    const token = sessions.create({ id: user._id });
+                    return {
+                        token,
+                        email: user.email,
+                        password: user.password,
+                        id: user._id,
+                        projects: [],
+                    };
+                })
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
+            const { email, password } = args.user;
+            const hash: string = await bcrypt.hash(password, 11);
+            return UserDB.findOne({ email })
+                .then(async (user: User): Promise<User> => {
                     if (user) throw new Error('User already exists');
                     const newUser = new UserDB({
                         email,
                         password: hash,
                         projects: [],
                     });
-                    return newUser.save();
+                    const savedUser = await newUser.save();
+                    if (!savedUser) throw new Error('Could not save user. Try again later.');
+                    const token = sessions.create({ id: savedUser._id });
+                    return {
+                        token,
+                        email: savedUser.email,
+                        password: savedUser.password,
+                        id: savedUser._id,
+                        projects: [],
+                    };
                 })
-                .then((newUser: User): User => newUser)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         updateUser: async (parent: undefined, args: UpdateUserArgs): Promise<User | Error> => {

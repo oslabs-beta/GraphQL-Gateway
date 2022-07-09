@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import settings from '../public/settings.png';
 import intime from '../public/intime.png';
 import data from '../public/data.png';
@@ -8,6 +8,8 @@ import gear from '../public/gear.png';
 import '../public/styles.css';
 
 export default function HomePage() {
+    // todo: query to check auth status
+
     // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
     const controlNavbar = () => {
@@ -25,46 +27,26 @@ export default function HomePage() {
         };
     }, []);
 
-    const navigate = useNavigate();
-
-    const handleLogin = (): void => {
-        navigate('/login');
-    };
-    const handleSignup = (): void => {
-        navigate('/signup');
-    };
-    const handleHome = (): void => {
-        navigate('/');
-    };
-    const handleDemo = (): void => {
-        navigate('/demo');
-    };
-    const handleAbout = (): void => {
-        navigate('/about');
-    };
-
     return (
         <div>
             <div id="navbar" style={{ display: show }}>
-                {/* <img src="logo.png" alt="logo" /> */}
-
-                <button type="submit" onClick={handleHome} className="linkBtn">
+                <Link to="/" type="submit" className="linkBtn">
                     Home
-                </button>
-                <button type="submit" onClick={handleDemo} className="linkBtn">
+                </Link>
+                <Link to="/demo" type="submit" className="linkBtn">
                     Demo
-                </button>
-                <button type="submit" onClick={handleAbout} className="linkBtn">
+                </Link>
+                <Link to="/about" type="submit" className="linkBtn">
                     About
-                </button>
+                </Link>
             </div>
             <div id="side-navbar" style={{ display: show }}>
-                <button type="submit" onClick={handleLogin} className="linkBtn">
+                <Link to="/login" type="submit" className="linkBtn">
                     Login
-                </button>
-                <button type="submit" onClick={handleSignup} className="linkBtn">
+                </Link>
+                <Link to="/signup" type="submit" className="linkBtn">
                     Signup
-                </button>
+                </Link>
             </div>
             <div className="container">
                 <section id="pageOne">

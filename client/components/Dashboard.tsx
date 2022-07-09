@@ -1,42 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { useNavigate } from 'react-router';
 import ChartBox from './ChartBox';
 import { SelectedProject, ProjectQuery } from './Interfaces';
 import { SortOrder } from '../../@types/dashboard';
 import Queries from './Queries';
+import { useAuth } from '../auth/AuthProvider';
 
 const GET_USER_DATA = gql`
     query getUserData($userId: String!) {
         user(id: $userId) {
-            email
-            password
+            # note this curretnly gets all projects and queries. This could be a very expersive query.
             projects {
-                id
-                userID
                 name
+                id
                 queries {
                     number
+                    latency
                     complexity
                     depth
                     timestamp
+                    tokens
+                    success
                 }
             }
         }
     }
 `;
 
-const GET_PROJECT = gql`
-    query Query($projectId: String!) {
-        project(id: $projectId) {
-            id
-            queries {
-                timestamp
-                depth
-                complexity
-            }
-        }
-    }
-`;
+// const GET_PROJECT = gql`
+//     query Query($projectId: String!) {
+//         project(id: $projectId) {
+//             id
+//             queries {
+//                 timestamp
+//                 depth
+//                 complexity
+//             }
+//         }
+//     }
+// `;
 
 // we are defining state types - arrow (for sorting arrow change when clicked -ascending or descending) and time,depth and complexity props of a query
 export interface ISState {
@@ -53,6 +56,7 @@ export interface ISState {
 }
 
 function Dashboard() {
+    const { user } = useAuth();
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -91,16 +95,16 @@ function Dashboard() {
         }
     };
     // graphql calling
-    const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
+    const { data, loading } = useQuery(GET_USER_DATA, {
         variables: {
-            userId: '62ba5b743f40d18829e018a1',
+            userId: user!.id,
         },
     });
-    const { data, loading } = useQuery(GET_PROJECT, {
-        variables: {
-            projectId: '62ba5bd43f40d18829e018c4',
-        },
-    });
+    // const { data, loading } = useQuery(GET_PROJECT, {
+    //     variables: {
+    //         projectId: dataR.projects.id,
+    //     },
+    // });
 
     // const [projects, setProjects] = useState<Projects['projects']>();   // commented out due to still not knowing how you guys want our project selection to look like. Waiting for instructions
     const [setProject, selectProject] = useState<SelectedProject['project']>();
@@ -269,10 +273,10 @@ function Dashboard() {
         //     setProjects(dataR.user.projects);
         // }
         if (!loading && data) {
-            selectProject(data.project);
+            selectProject(data.user.projects[0]);
             setQueries(setProject?.queries);
         }
-    }, [loadingR, dataR, loading, data, setProject?.queries]);
+    }, [/** loadingR, dataR, */ loading, data, setProject?.queries]);
 
     return (
         <div id="dashWrapper">

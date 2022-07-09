@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import Logo from './Logo';
+import { useNavigate, Link } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
+import { useAuth } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -13,11 +14,22 @@ export interface ISState {
     };
 }
 
+const SIGNUP_MUTATION = gql`
+    mutation signupMutation($user: UserInput!) {
+        signup(user: $user) {
+            token
+            email
+            id
+        }
+    }
+`;
+
 function Signup() {
     const [user, setUser] = useState<ISState['user']>({
         email: '',
         password: '',
     });
+    const { setUser: setUserAuth } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({
@@ -28,19 +40,28 @@ function Signup() {
 
     const navigate = useNavigate();
 
-    const switchForm = () => {
-        navigate('/login');
-    };
+    const [signupMutation] = useMutation(SIGNUP_MUTATION, {
+        onCompleted: (data) => {
+            setUserAuth({
+                email: data.login.email,
+                id: data.login.id,
+            });
+            localStorage.setItem('session-token', data.login.token);
+            navigate('/dashboard');
+        },
+        onError: (error) => console.log(error),
+    });
 
-    const handleClick = (e: any) => {
+    const handleClick = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        userData: ISState['user']
+    ) => {
         e.preventDefault();
-        navigate('/dashboard');
-        // console.log(user);
+        signupMutation({ variables: { user: userData } });
     };
 
     return (
         <div className="box">
-            {/* <Logo /> */}
             <h1 className="text">Signup</h1>
 
             <div className="form-wrapper">
@@ -61,17 +82,17 @@ function Signup() {
                     placeholder="Type your password"
                 />
                 <br />
-                <button className="formBtn" type="submit" onClick={handleClick}>
-                    Login
+                <button className="formBtn" type="submit" onClick={(e) => handleClick(e, user)}>
+                    Register
                 </button>
                 <br />
                 <span className="paragraph">
                     Already a member?
-                    <button className="btn transferBtn" type="button" onClick={() => switchForm()}>
+                    <Link to="/login" className="btn transferBtn" type="button">
                         Login here
-                    </button>
+                    </Link>
                 </span>
-                <span>
+                {/* <span>
                     or sign in using your
                     <a
                         className="btn transferBtn"
@@ -81,7 +102,7 @@ function Signup() {
                         GitHub
                     </a>
                     account
-                </span>
+                </span> */}
             </div>
         </div>
     );

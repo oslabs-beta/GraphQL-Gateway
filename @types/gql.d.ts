@@ -3,10 +3,18 @@ type User = {
     email: string;
     password: string;
     projects: Array<string>;
+    token: string;
 };
 
 type QueryByID = {
     id: string;
+};
+
+type GetUserArgs = {
+    user: {
+        email: string;
+        password: string;
+    };
 };
 
 type CreateUserArgs = {
@@ -51,7 +59,6 @@ type ProjectQuery = {
     number: number;
     depth: number;
     complexity: number;
-    depth: number;
     tokens: number;
     success: boolean;
     timestamp: number;

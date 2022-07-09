@@ -7,6 +7,7 @@ const typeDefs = gql`
         password: String!
         projects: [Project]!
         project: Project
+        token: String
     }
 
     type Project {
@@ -35,7 +36,7 @@ const typeDefs = gql`
     type Query {
         users: [User!]!
         user(id: String!): User
-
+        checkAuth: User
         projects: [Project]!
         project(id: String!): Project
 
@@ -44,7 +45,8 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        createUser(user: CreateUserInput!): User
+        login(user: UserInput!): User
+        signup(user: UserInput!): User
         updateUser(user: UpdateUserInput!): User
         deleteUser(id: String!): User
 
@@ -56,7 +58,7 @@ const typeDefs = gql`
         deleteProjectQuery(id: String!): ProjectQuery
     }
 
-    input CreateUserInput {
+    input UserInput {
         email: String!
         password: String!
     }
