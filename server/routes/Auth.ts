@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
 import UserDB from '../models/User';
 import sessions from '../utilities/sessions';
@@ -27,7 +27,7 @@ authRouter.get('/', (req: Request, res: Response) => {
     res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
 });
 
-authRouter.get('/oauth-callback', (req: Request, res: Response) => {
+authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFunction) => {
     const body = {
         client_id: clientId,
         client_secret: clientSecret,
@@ -74,7 +74,7 @@ authRouter.get('/oauth-callback', (req: Request, res: Response) => {
         })
         .catch((err: string) => {
             console.log(err);
-            // respond to user with null response
+            return next(err);
         });
 });
 

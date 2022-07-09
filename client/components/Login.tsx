@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { useAuth } from '../auth/AuthProvider';
+import GithubButton from './GithubButton';
 
 export interface ISState {
     user: {
@@ -58,7 +59,7 @@ function Login() {
     return (
         <div className="box">
             <h1 className="text">Login</h1>
-
+            <GithubButton />
             <div className="form-wrapper">
                 <input
                     className="input"

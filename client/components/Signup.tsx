@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { useAuth } from '../auth/AuthProvider';
+import GithubButton from './GithubButton';
 
 export interface ISState {
     user: {
@@ -64,6 +65,7 @@ function Signup() {
         <div className="box">
             <h1 className="text">Signup</h1>
 
+            <GithubButton />
             <div className="form-wrapper">
                 <input
                     className="input"
@@ -91,17 +93,6 @@ function Signup() {
                     <Link to="/login" className="btn transferBtn" type="button">
                         Login here
                     </Link>
-                </span>
-                <span>
-                    or sign in using your
-                    <a
-                        className="btn transferBtn"
-                        // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
-                        href="http://localhost:3000/auth"
-                    >
-                        GitHub
-                    </a>
-                    account
                 </span>
             </div>
         </div>

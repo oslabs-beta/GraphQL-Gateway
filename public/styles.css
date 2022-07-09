@@ -33,7 +33,18 @@ section#pageOne {
     background-image: linear-gradient(-180deg, #092173 0%, #00259f 100%);
     background-size: 100% 100%;
 }
+#github {
+    background-color: black;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    border: none;
+    border-radius: 5px;
+}
 
+#github:hover {
+    color: black;
+    background-color: white;
+}
 #demoCard {
     z-index: 1;
     position: absolute;
