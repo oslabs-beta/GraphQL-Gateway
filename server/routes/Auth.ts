@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import axios from 'axios';
+import UserDB from '../models/User';
 import sessions from '../utilities/sessions';
 
 const authRouter = express.Router({
@@ -10,9 +11,17 @@ const authRouter = express.Router({
 const clientId = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
-type ResObj = {
-    data: object;
+type TokenResponse = {
+    data: GithubToken;
 };
+
+interface GithubToken {
+    access_token: string;
+    token_type: string;
+}
+interface GithubUser {
+    id: string;
+}
 
 authRouter.get('/', (req: Request, res: Response) => {
     res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
@@ -27,18 +36,46 @@ authRouter.get('/oauth-callback', (req: Request, res: Response) => {
     const opts = { headers: { accept: 'application/json' } };
     axios
         .post(`https://github.com/login/oauth/access_token`, body, opts)
-        .then((response: ResObj) => response.data)
-        // eslint-disable-next-line no-console
-        .then((data: object) => {
-            console.log('this is data', data);
-            // check if there already is a user with this email, get _id
-            // if there isn't, create a new user
-            // create a session
-            // sessions.create({id:  /** user _id */})
+        .then((tokenResponse: TokenResponse) => tokenResponse.data)
+        .then((tokenData) => {
+            axios
+                .get('https://api.github.com/user', {
+                    headers: { Authorization: `token ${tokenData.access_token}` },
+                })
+                .then(async (userResponse) => {
+                    const { id }: GithubUser = userResponse.data;
+                    try {
+                        let user: User | null = await UserDB.findOne({ email: id });
+
+                        // if user does not exist yet. create a new account in the database
+                        if (!user) {
+                            const newUser = new UserDB({
+                                email: id,
+                                projects: [],
+                            });
+                            user = await newUser.save();
+                            if (!user)
+                                throw new Error(
+                                    'Could not create an account for this user. Try again later.'
+                                );
+                        }
+                        // create a session
+                        const token = sessions.create({ id: user.id });
+                        res.status(200).json({
+                            token,
+                            id: user.id,
+                            email: user.email,
+                        });
+                    } catch (err) {
+                        throw new Error(`Error ${err}`);
+                    }
+                });
+            // .catch((err) => console.log(err));
         })
-        .then(() => res.redirect('http://localhost:8080/'))
-        // eslint-disable-next-line no-console
-        .catch((err: string) => console.log(err));
+        .catch((err: string) => {
+            console.log(err);
+            // respond to user with null response
+        });
 });
 
 export default authRouter;

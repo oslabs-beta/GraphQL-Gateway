@@ -92,7 +92,7 @@ function Signup() {
                         Login here
                     </Link>
                 </span>
-                {/* <span>
+                <span>
                     or sign in using your
                     <a
                         className="btn transferBtn"
@@ -102,7 +102,7 @@ function Signup() {
                         GitHub
                     </a>
                     account
-                </span> */}
+                </span>
             </div>
         </div>
     );
