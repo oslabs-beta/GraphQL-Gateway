@@ -52,11 +52,12 @@ authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFuncti
                     );
                     try {
                         let user: User | null = await UserDB.findOne({ email });
-
                         // if user does not exist yet. create a new account in the database
                         if (!user) {
                             const newUser = new UserDB({
                                 email,
+                                // FIXME: database is requiring the password to be unique, remove hard coded number/string once this fixed
+                                password: '2',
                                 projects: [],
                             });
                             user = await newUser.save();

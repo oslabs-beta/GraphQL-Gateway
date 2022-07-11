@@ -4,10 +4,10 @@ import axios from 'axios';
 export default function GithubButton() {
     const handleClick = () => {
         axios
-            .get('http://localhost:8080/auth', {
+            .get('http://localhost:3000/auth', {
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    Accept: 'text/html; charset=utf-8',
+                    // 'Access-Control-Allow-Origin': '*',
+                    // Accept: 'text/html; charset=utf-8',
                     // withCredentials: false,
                     // Origin: 'https://github.com',
                 },
