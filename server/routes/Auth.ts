@@ -26,7 +26,9 @@ interface GithubUser {
 authRouter.get('/', (req: Request, res: Response) => {
     res.set('Access-Control-Allow-Origin', '*')
         .type('html')
-        .redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
+        .redirect(
+            `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=read:user,user:email`
+        );
 });
 
 authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFunction) => {
@@ -48,7 +50,6 @@ authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFuncti
                     const { email } = userResponse.data.find(
                         (address: { primary: boolean }) => address.primary
                     );
-                    console.log(email);
                     try {
                         let user: User | null = await UserDB.findOne({ email });
 
