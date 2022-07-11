@@ -24,14 +24,12 @@ interface GithubUser {
 }
 
 authRouter.get('/', (req: Request, res: Response) => {
-    console.log('hi');
     res.set('Access-Control-Allow-Origin', '*')
         .type('html')
         .redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
 });
 
 authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFunction) => {
-    console.log('hi2');
     const body = {
         client_id: clientId,
         client_secret: clientSecret,
@@ -43,18 +41,21 @@ authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFuncti
         .then((tokenResponse: TokenResponse) => tokenResponse.data)
         .then((tokenData) => {
             axios
-                .get('https://api.github.com/user', {
+                .get('https://api.github.com/user/emails', {
                     headers: { Authorization: `token ${tokenData.access_token}` },
                 })
                 .then(async (userResponse) => {
-                    const { id }: GithubUser = userResponse.data;
+                    const { email } = userResponse.data.find(
+                        (address: { primary: boolean }) => address.primary
+                    );
+                    console.log(email);
                     try {
-                        let user: User | null = await UserDB.findOne({ email: id });
+                        let user: User | null = await UserDB.findOne({ email });
 
                         // if user does not exist yet. create a new account in the database
                         if (!user) {
                             const newUser = new UserDB({
-                                email: id,
+                                email,
                                 projects: [],
                             });
                             user = await newUser.save();
