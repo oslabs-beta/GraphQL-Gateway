@@ -49,6 +49,13 @@ function Login() {
         loginMutation({ variables: { user: userData } });
     };
 
+    // const handleGithub = () => {
+    //     fetch('http://localhost:3000/auth')
+    //         // .then((response) => response.json())
+    //         .then((data) => console.log(data))
+    //         .catch((err) => console.log(err));
+    // };
+
     return (
         <div className="box">
             <h1 className="text">Login</h1>
@@ -82,7 +89,7 @@ function Login() {
                     </Link>
                 </span>
                 <span>
-                    or log in using your
+                    or log in using your{' '}
                     <a
                         // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
                         href="http://localhost:3000/auth"
@@ -90,7 +97,9 @@ function Login() {
                         {' '}
                         github{' '}
                     </a>
-                    account
+                    {/* <button type="submit" onClick={handleGithub}>
+                        github account
+                    </button> */}
                 </span>
             </div>
         </div>
