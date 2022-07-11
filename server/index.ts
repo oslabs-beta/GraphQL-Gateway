@@ -35,8 +35,13 @@ const server = new ApolloServer({
         return { authenticated: user.authenticated, user: user.data };
     },
 });
-
-app.use(cors());
+app.use(
+    cors({
+        origin: '*',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS',
+        allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+    })
+);
 
 app.use(cookieParser());
 app.use(compression());

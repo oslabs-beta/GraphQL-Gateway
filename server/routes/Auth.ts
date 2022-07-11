@@ -24,10 +24,14 @@ interface GithubUser {
 }
 
 authRouter.get('/', (req: Request, res: Response) => {
-    res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
+    console.log('hi');
+    res.set('Access-Control-Allow-Origin', '*')
+        .type('html')
+        .redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
 });
 
 authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFunction) => {
+    console.log('hi2');
     const body = {
         client_id: clientId,
         client_secret: clientSecret,
