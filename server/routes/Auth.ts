@@ -24,11 +24,9 @@ interface GithubUser {
 }
 
 authRouter.get('/', (req: Request, res: Response) => {
-    res.set('Access-Control-Allow-Origin', '*')
-        .type('html')
-        .redirect(
-            `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=read:user,user:email`
-        );
+    res.redirect(
+        `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=read:user,user:email`
+    );
 });
 
 authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFunction) => {
@@ -56,8 +54,6 @@ authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFuncti
                         if (!user) {
                             const newUser = new UserDB({
                                 email,
-                                // FIXME: database is requiring the password to be unique, remove hard coded number/string once this fixed
-                                password: '2',
                                 projects: [],
                             });
                             user = await newUser.save();
@@ -68,11 +64,13 @@ authRouter.get('/oauth-callback', (req: Request, res: Response, next: NextFuncti
                         }
                         // create a session
                         const token = sessions.create({ id: user.id });
-                        res.status(200).json({
-                            token,
-                            id: user.id,
-                            email: user.email,
+                        res.cookie('session_token', token, {
+                            httpOnly: true,
+                            maxAge: 604800000,
+                            sameSite: 'none',
+                            secure: true,
                         });
+                        res.send(); // how to redirect to the dashboard
                     } catch (err) {
                         throw new Error(`Error ${err}`);
                     }

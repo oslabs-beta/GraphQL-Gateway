@@ -36,7 +36,7 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
     useQuery(CHECK_AUTH_QUERY, {
         onCompleted: (data: any) => {
             if (data.checkAuth === null) {
-                localStorage.removeItem('session-token');
+                // localStorage.removeItem('session-token');
             } else {
                 setUser({
                     email: data.checkAuth.email,
@@ -47,7 +47,7 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
         },
         onError: (error) => {
             console.log(error);
-            localStorage.removeItem('session-token');
+            // localStorage.removeItem('session-token');
             setLoading(false);
         },
     });

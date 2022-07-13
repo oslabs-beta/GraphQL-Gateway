@@ -14,7 +14,7 @@ export interface ISState {
 const LOGIN_MUTATION = gql`
     mutation loginMutation($user: UserInput!) {
         login(user: $user) {
-            token
+            # token
             email
             id
         }

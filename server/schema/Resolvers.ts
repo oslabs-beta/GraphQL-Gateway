@@ -71,7 +71,7 @@ const resolvers: IResolvers = {
         /*
          *  User Mutations
          */
-        login: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
+        login: async (parent: undefined, args: GetUserArgs, context): Promise<User | Error> => {
             const { email, password } = args.user;
 
             return UserDB.findOne({ email })
@@ -85,8 +85,14 @@ const resolvers: IResolvers = {
                     }
 
                     const token = sessions.create({ id: user._id });
+                    context.res.cookie('session_token', token, {
+                        httpOnly: true,
+                        maxAge: 604800000,
+                        sameSite: 'none',
+                        secure: true,
+                    });
                     return {
-                        token,
+                        // token,
                         email: user.email,
                         password: user.password,
                         id: user._id,
@@ -95,7 +101,7 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
+        signup: async (parent: undefined, args: CreateUserArgs, context): Promise<User | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
             return UserDB.findOne({ email })
@@ -109,8 +115,14 @@ const resolvers: IResolvers = {
                     const savedUser = await newUser.save();
                     if (!savedUser) throw new Error('Could not save user. Try again later.');
                     const token = sessions.create({ id: savedUser._id });
+                    context.res.cookie('session_cookie', token, {
+                        httpOnly: true,
+                        maxAge: 604800000,
+                        sameSite: 'none',
+                        secure: true,
+                    });
                     return {
-                        token,
+                        // token,
                         email: savedUser.email,
                         password: savedUser.password,
                         id: savedUser._id,

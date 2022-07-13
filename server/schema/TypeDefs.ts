@@ -7,7 +7,7 @@ const typeDefs = gql`
         password: String!
         projects: [Project]!
         project: Project
-        token: String
+        # token: String
     }
 
     type Project {

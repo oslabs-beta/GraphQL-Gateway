@@ -24,24 +24,15 @@ const PORT: number | string = process.env.PORT || 3000;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: async ({ req }) => {
-        const authHeader = req.headers.authorization || null;
-        if (!authHeader) return { authenticated: false, user: null };
+    context: async ({ req, res }) => {
+        const token = req.cookies.session_token;
+        if (!token) return { authenticated: false, user: null, res };
 
-        const token = authHeader?.split(' ')[1];
-        if (!token) return { authenticated: false, user: null };
-
-        const user = await session.verify(token);
-        return { authenticated: user.authenticated, user: user.data };
+        const user = session.verify(token);
+        return { authenticated: user.authenticated, user: user.data, res };
     },
 });
-app.use(
-    cors({
-        // origin: '*',
-        // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS',
-        // allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
-    })
-);
+app.use(cors({ origin: '*', credentials: true }));
 
 app.use(cookieParser());
 app.use(compression());

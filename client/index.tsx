@@ -13,23 +13,20 @@ import App from './App';
 
 const httpLink = createHttpLink({
     uri: '/gql',
-});
-// todo: add apollo link to check auth status
-const authLink = setContext((request, { headers }) => {
-    // get the authentication token from local storage if it exists
-    const token: string | null = localStorage.getItem('session-token');
-    // return the headers to the context so httpLink can read them
-    return {
-        headers: {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ...headers,
-            authorization: token ? `Bearer ${token}` : '',
-        },
-    };
+    credentials: 'same-origin',
 });
 
+// const authLink = setContext((request, { headers }) => ({
+//     headers: {
+//         // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//         ...headers,
+//     },
+// }));
+
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    // link: authLink.concat(httpLink),
+    // uri: '/gql',
+    link: httpLink,
     cache: new InMemoryCache(),
 });
 
