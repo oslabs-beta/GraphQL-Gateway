@@ -87,6 +87,17 @@ function Login() {
                         Register here
                     </Link>
                 </span>
+                <span>
+                    or log in using your
+                    <a
+                        // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
+                        href="http://localhost:3000/auth"
+                    >
+                        {' '}
+                        github{' '}
+                    </a>
+                    account
+                </span>
             </div>
         </div>
     );

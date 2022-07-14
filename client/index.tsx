@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 // import ReactDOM from 'react-dom/client';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
@@ -8,8 +8,10 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import { AuthProvider } from './auth/AuthProvider';
+import Navbar from './components/Navbar';
 import RequireAuth from './components/RequireAuth';
 import App from './App';
+import Footer from './components/Footer';
 
 const httpLink = createHttpLink({
     uri: '/gql',
@@ -38,6 +40,7 @@ render(
         <AuthProvider>
             <React.StrictMode>
                 <BrowserRouter>
+                    <Navbar />
                     <Routes>
                         <Route path="/" element={<App />} />
                         <Route path="/about" element={<App />} />
@@ -53,6 +56,7 @@ render(
                             }
                         />
                     </Routes>
+                    <Footer />
                 </BrowserRouter>
             </React.StrictMode>
         </AuthProvider>

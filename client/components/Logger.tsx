@@ -1,6 +1,6 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
-import { Projects, Project, ProjectQuery } from './Interfaces';
+import { Projects, Project, ProjectQuery } from '../../@types/Interfaces';
 
 export interface IProps {
     projects: Projects['projects'];

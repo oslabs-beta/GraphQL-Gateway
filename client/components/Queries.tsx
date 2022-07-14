@@ -1,7 +1,7 @@
 import React from 'react';
 // import Collapsible from 'react-collapsible';
 // import { Projects, Project, ProjectQuery } from './Interfaces';
-import { ProjectQuery } from './Interfaces';
+import { ProjectQuery } from '../../@types/Interfaces';
 import { SortOrder } from '../../@types/dashboard';
 
 export interface IProps {
@@ -35,64 +35,8 @@ const Querries: React.FC<IProps> = ({
     // sortByComplexity,
     queries,
 }) => (
-    // const Querries: React.FC<IProps> = ({ projects, test, sortByNameAsc, queries }) => (
-    <div>
-        <div>
-            <div id="loggerBtnWrapper">
-                <div
-                    aria-hidden="true"
-                    className={`loggerBtn${time ? ' active' : ''}`}
-                    onClick={() => {
-                        // sortByTime();
-                        let sortOrder: SortOrder;
-                        if (arrowTime === '' || arrowTime === '↓') {
-                            sortOrder = '↑';
-                        } else {
-                            sortOrder = '↓';
-                        }
-
-                        combinedSort('timestamp', sortOrder);
-                        setToggle('time');
-                    }}
-                >
-                    Time {arrowTime}
-                </div>
-                <div
-                    aria-hidden="true"
-                    className={`loggerBtn${depth ? ' active' : ''}`}
-                    onClick={() => {
-                        // sortByDepth();
-                        let sortOrder: SortOrder;
-                        if (arrowDepth === '' || arrowDepth === '↓') {
-                            sortOrder = '↑';
-                        } else {
-                            sortOrder = '↓';
-                        }
-                        combinedSort('depth', sortOrder);
-                        setToggle('depth');
-                    }}
-                >
-                    Depth {arrowDepth}
-                </div>
-                <div
-                    aria-hidden="true"
-                    className={`loggerBtn${complexity ? ' active' : ''}`}
-                    onClick={() => {
-                        // sortByComplexity();
-                        let sortOrder: SortOrder;
-                        if (arrowComplexity === '' || arrowComplexity === '↓') {
-                            sortOrder = '↑';
-                        } else {
-                            sortOrder = '↓';
-                        }
-                        combinedSort('complexity', sortOrder);
-                        setToggle('complexity');
-                    }}
-                >
-                    Complexity {arrowComplexity}
-                </div>
-            </div>
-            {/* -------this is left for the future project implementation. Waiting for instruction
+    <div id="loggerBtnWrapper">
+        {/* -------this is left for the future project implementation. Waiting for instruction
                 {projects?.map((project: Project) => (
                 <div aria-hidden="true" onClick={() => test(project)}>
                     <Collapsible
@@ -124,30 +68,30 @@ const Querries: React.FC<IProps> = ({
                     </Collapsible>
                 </div>
             ))} */}
-            {queries?.map((query: ProjectQuery) => (
-                <div>
-                    <div className="queryProps">
-                        {/* number still missing */}
-                        {/* <div>
+        <div className="space" />
+        {queries?.map((query: ProjectQuery) => (
+            <div>
+                <div className="queryProps">
+                    {/* number still missing */}
+                    {/* <div>
                             <div className="label">Number: </div>
                             <div className="value">{query.number}</div>
                         </div> */}
-                        <div>
-                            <div className="label">Time: </div>
-                            <div className="value">{query.timestamp}</div>
-                        </div>
-                        <div>
-                            <div className="label">Depth: </div>
-                            <div className="value">{query.depth}</div>
-                        </div>
-                        <div>
-                            <div className="label">Complexity: </div>
-                            <div className="value">{query.complexity}</div>
-                        </div>
+                    <div className="individualQuery">
+                        <div className="label">Time: </div>
+                        <div className="value">{query.timestamp}</div>
+                    </div>
+                    <div className="individualQuery">
+                        <div className="label">Depth: </div>
+                        <div className="value">{query.depth}</div>
+                    </div>
+                    <div className="individualQuery">
+                        <div className="label">Complexity: </div>
+                        <div className="value">{query.complexity}</div>
                     </div>
                 </div>
-            ))}
-        </div>
+            </div>
+        ))}
     </div>
 );
 

@@ -10,7 +10,7 @@ import {
     Tooltip,
 } from 'chart.js';
 import { Chart, Line } from 'react-chartjs-2';
-import { SelectedProject } from './Interfaces';
+import { SelectedProject } from '../../@types/Interfaces';
 
 ChartJS.register(
     LinearScale,

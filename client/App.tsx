@@ -11,25 +11,25 @@ export default function HomePage() {
     // todo: query to check auth status
 
     // FIXME: navbar show only on scroll up, not down
-    const [show, setShow] = useState('block');
-    const controlNavbar = () => {
-        if (window.scrollY > 100) {
-            setShow('none');
-        } else {
-            setShow('block');
-        }
-    };
+    // const [show, setShow] = useState('block');
+    // const controlNavbar = () => {
+    //     if (window.scrollY > 100) {
+    //         setShow('none');
+    //     } else {
+    //         setShow('block');
+    //     }
+    // };
 
-    useEffect(() => {
-        window.addEventListener('scroll', controlNavbar);
-        return () => {
-            window.removeEventListener('scroll', controlNavbar);
-        };
-    }, []);
+    // useEffect(() => {
+    //     window.addEventListener('scroll', controlNavbar);
+    //     return () => {
+    //         window.removeEventListener('scroll', controlNavbar);
+    //     };
+    // }, []);
 
     return (
         <div>
-            <div id="navbar" style={{ display: show }}>
+            {/* <div id="navbar" style={{ display: show }}>
                 <Link to="/" type="submit" className="linkBtn">
                     Home
                 </Link>
@@ -47,9 +47,20 @@ export default function HomePage() {
                 <Link to="/signup" type="submit" className="linkBtn">
                     Signup
                 </Link>
-            </div>
+            </div> */}
             <div className="container">
                 <section id="pageOne">
+                    <div className="blue-filter" />
+                    <div className="video_wrapper">
+                        <iframe
+                            title="unique-title-1"
+                            className="modest-vid-embed__item"
+                            style={{ width: '100%', height: '130%' }}
+                            src="https://www.youtube.com/embed/BQ0mxQXmLsk?mute=1&autoplay=1&modestbranding=1&loop=1&rel=0&amp;controls=0&amp;showinfo=0&playlist=rwlzvGfGXn4"
+                            frameBorder="0"
+                            allowFullScreen
+                        />
+                    </div>
                     <div id="pageOneTextBox">
                         <h1>Graph QL Rate Limiter</h1>
                         <h2>Gateway visualisation tool</h2>
@@ -82,11 +93,11 @@ export default function HomePage() {
                     </div>
                 </section>
                 <section id="pageTwo" />
+                <div className="centeredSentence">
+                    <h1>What makes us different?</h1>
+                </div>
                 <section id="pageThree">
                     <div id="pageThreeWrapper">
-                        <div className="centeredSentence">
-                            <h1>What makes us different?</h1>
-                        </div>
                         <div id="pageThreeLeft">
                             <div className="icon">
                                 <img className="iconImg" src={settings} alt="settings-icon" />
@@ -121,11 +132,6 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                <div id="footer">
-                    <div>
-                        <h4>Copyright © Team Cat-Snake 2022</h4>
-                    </div>
-                </div>
             </div>
         </div>
     );
