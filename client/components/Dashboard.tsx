@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useNavigate } from 'react-router';
-import ChartBox from './ChartBox';
+// import ChartBox from './ChartBox';
+import Chart from 'react-apexcharts';
 import { SelectedProject, ProjectQuery } from '../../@types/Interfaces';
-import { SortOrder } from '../../@types/dashboard';
+import { SortOrder, ChartData } from '../../@types/dashboard';
 import Queries from './Queries';
 import { useAuth } from '../auth/AuthProvider';
 
@@ -56,20 +57,43 @@ export interface ISState {
 }
 
 function Dashboard() {
+    /** Bring the user context into this component */
     const { user } = useAuth();
+
+    /** Layout the state requirments for this component */
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
         complexity: false,
     });
-    // const [order, setOrder] = useState<boolean>(); // ascending vs descending on click
     const [arrow, setArrow] = useState<ISState['arrow']>({
         // adjusting arrow based on ascending vs descending
         timestamp: '',
         depth: '',
         complexity: '',
     });
+    const [setProject, selectProject] = useState<SelectedProject['project']>();
+    const [queries, setQueries] = useState<ProjectQuery[]>();
+    // const [projects, setProjects] = useState<Projects['projects']>();   // commented out due to still not knowing how you guys want our project selection to look like. Waiting for instructions
+    // const [order, setOrder] = useState<boolean>(); // ascending vs descending on click
+
+    /** Layout the options and state requirements for the chart */
+    const [chartData, setChartData] = useState<ChartData | null>(null);
+
+    /** Query the databes for project data */
+    const { data, loading } = useQuery(GET_USER_DATA, {
+        variables: {
+            userId: user!.id,
+        },
+    });
+    // const { data, loading } = useQuery(GET_PROJECT, {
+    //     variables: {
+    //         projectId: dataR.projects.id,
+    //     },
+    // });
+
     // toggle classes on click in the Queries component
+
     const setToggle = (arg: string) => {
         if (arg === 'time') {
             setStyle({
@@ -94,27 +118,13 @@ function Dashboard() {
             });
         }
     };
-    // graphql calling
-    const { data, loading } = useQuery(GET_USER_DATA, {
-        variables: {
-            userId: user!.id,
-        },
-    });
-    // const { data, loading } = useQuery(GET_PROJECT, {
-    //     variables: {
-    //         projectId: dataR.projects.id,
-    //     },
-    // });
-
-    // const [projects, setProjects] = useState<Projects['projects']>();   // commented out due to still not knowing how you guys want our project selection to look like. Waiting for instructions
-    const [setProject, selectProject] = useState<SelectedProject['project']>();
-    const [queries, setQueries] = useState<ProjectQuery[]>();
 
     // const test = (pr: any): void => { // this is poorly named fuction that selects the project
     //     selectProject(pr);
     // };
 
     // sorting functions
+
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
         if (setProject) {
             const newArr = [];
@@ -268,6 +278,7 @@ function Dashboard() {
     //         setQueries(dataToSort);
     //     }
     // };
+
     useEffect(() => {
         // if (!loadingR && dataR) {
         //     setProjects(dataR.user.projects);
@@ -412,7 +423,8 @@ function Dashboard() {
                 </div>
             </div>
             <div className="chartBox">
-                <ChartBox project={setProject} />
+                {/* <ChartBox project={setProject} /> */}
+                <Chart options={chartData?.options} series={chartData?.series} type="line" />
             </div>
         </div>
     );

@@ -28,6 +28,7 @@
     "dependencies": {
         "@apollo/client": "^3.6.5",
         "@graphql-tools/utils": "^8.6.10",
+        "apexcharts": "^3.35.3",
         "apollo-server-express": "^3.7.0",
         "axios": "^0.27.2",
         "bcrypt": "^5.0.1",
@@ -46,6 +47,7 @@
         "ncp": "^2.0.0",
         "randomstring": "^1.2.2",
         "react": "^17.0.2",
+        "react-apexcharts": "^1.4.0",
         "react-chartjs-2": "^4.1.0",
         "react-collapsible": "^2.9.0",
         "react-dom": "^17.0.2",
