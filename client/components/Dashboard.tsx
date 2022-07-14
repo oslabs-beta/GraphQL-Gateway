@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useNavigate } from 'react-router';
-// import ChartBox from './ChartBox';
 import Chart from 'react-apexcharts';
+import ChartBox from './ChartBox';
 import { SelectedProject, ProjectQuery } from '../../@types/Interfaces';
 import { SortOrder, ChartData } from '../../@types/dashboard';
 import Queries from './Queries';
@@ -423,8 +423,8 @@ function Dashboard() {
                 </div>
             </div>
             <div className="chartBox">
-                {/* <ChartBox project={setProject} /> */}
-                <Chart options={chartData?.options} series={chartData?.series} type="line" />
+                <ChartBox project={setProject} />
+                {/* <Chart options={chartData?.options} series={chartData?.series} type="line" /> */}
             </div>
         </div>
     );
