@@ -56,13 +56,7 @@ export interface ISState {
 }
 
 function Dashboard() {
-    const Navigate = useNavigate();
-    // get the user information from the authentication context
-    const user = useAuth();
-    // redirect if the user is (unauthenticated
-    // FIXME: do to asyncronisity, this may return falsy and redirect before the query that checks the session token has gotten a response back.
-    if (user.authenticated === false) Navigate('/');
-
+    const { user } = useAuth();
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -279,7 +273,6 @@ function Dashboard() {
         //     setProjects(dataR.user.projects);
         // }
         if (!loading && data) {
-            console.log(data);
             selectProject(data.user.projects[0]);
             setQueries(setProject?.queries);
         }

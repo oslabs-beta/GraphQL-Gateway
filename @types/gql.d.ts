@@ -59,7 +59,6 @@ type ProjectQuery = {
     number: number;
     depth: number;
     complexity: number;
-    depth: number;
     tokens: number;
     success: boolean;
     timestamp: number;
