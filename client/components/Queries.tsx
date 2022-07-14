@@ -3,18 +3,19 @@ import React from 'react';
 // import { Projects, Project, ProjectQuery } from './Interfaces';
 import { ProjectQuery } from '../../@types/Interfaces';
 import { SortOrder } from '../../@types/dashboard';
+import Query from './Query';
 
 export interface IProps {
     // projects: Projects['projects'];
     // test: any;
-    combinedSort: (field: 'timestamp' | 'depth' | 'complexity', sortOrder: SortOrder) => void;
-    arrowTime: string | undefined;
-    arrowDepth: string | undefined;
-    arrowComplexity: string | undefined;
-    setToggle: any;
-    time: boolean;
-    depth: boolean;
-    complexity: boolean;
+    // combinedSort: (field: 'timestamp' | 'depth' | 'complexity', sortOrder: SortOrder) => void;
+    // arrowTime: string | undefined;
+    // arrowDepth: string | undefined;
+    // arrowComplexity: string | undefined;
+    // setToggle: any;
+    // time: boolean;
+    // depth: boolean;
+    // complexity: boolean;
     // sortByTime: any;
     // sortByDepth: any;
     // sortByComplexity: any;
@@ -22,14 +23,14 @@ export interface IProps {
 }
 // eslint-disable-next-line react/function-component-definition
 const Querries: React.FC<IProps> = ({
-    combinedSort,
-    arrowTime,
-    arrowDepth,
-    arrowComplexity,
-    setToggle,
-    time,
-    depth,
-    complexity,
+    // combinedSort,
+    // arrowTime,
+    // arrowDepth,
+    // arrowComplexity,
+    // setToggle,
+    // time,
+    // depth,
+    // complexity,
     // sortByTime,
     // sortByDepth,
     // sortByComplexity,
@@ -70,27 +71,7 @@ const Querries: React.FC<IProps> = ({
             ))} */}
         <div className="space" />
         {queries?.map((query: ProjectQuery) => (
-            <div>
-                <div className="queryProps">
-                    {/* number still missing */}
-                    {/* <div>
-                            <div className="label">Number: </div>
-                            <div className="value">{query.number}</div>
-                        </div> */}
-                    <div className="individualQuery">
-                        <div className="label">Time: </div>
-                        <div className="value">{query.timestamp}</div>
-                    </div>
-                    <div className="individualQuery">
-                        <div className="label">Depth: </div>
-                        <div className="value">{query.depth}</div>
-                    </div>
-                    <div className="individualQuery">
-                        <div className="label">Complexity: </div>
-                        <div className="value">{query.complexity}</div>
-                    </div>
-                </div>
-            </div>
+            <Query query={query} />
         ))}
     </div>
 );
