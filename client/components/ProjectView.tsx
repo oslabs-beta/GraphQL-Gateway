@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Queries from './Queries';
 import ChartBox from './ChartBox';
 import { SortOrder, ChartData } from '../../@types/dashboard';
+import Loading from './Loading';
 
 export interface ISState {
     style: {
@@ -16,7 +17,12 @@ export interface ISState {
     };
 }
 
-export default function ProjectView() {
+interface ProjectViewProps {
+    selectedProject: Project | undefined;
+    loading: boolean;
+}
+
+export default function ProjectView({ selectedProject, loading }: ProjectViewProps) {
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -54,7 +60,33 @@ export default function ProjectView() {
             setQueries(newArr);
         }
     };
+    const setToggle = (arg: string) => {
+        if (arg === 'time') {
+            setStyle({
+                ...style,
+                time: true,
+                depth: false,
+                complexity: false,
+            });
+        } else if (arg === 'depth') {
+            setStyle({
+                ...style,
+                time: false,
+                depth: true,
+                complexity: false,
+            });
+        } else if (arg === 'complexity') {
+            setStyle({
+                ...style,
+                time: false,
+                depth: false,
+                complexity: true,
+            });
+        }
+    };
 
+    if (loading) return <Loading />;
+    if (!selectedProject) return <div>Select a project</div>;
     return (
         <div id="dashWrapper">
             <div className="loggerBox">
@@ -173,15 +205,15 @@ export default function ProjectView() {
                     {/* <Logger test={test} projects={projects} /> */}
                     {/* <Querries queries={queries} sortByNameAsc={sortByNameAsc} test={test} projects={projects} /> */}
                     <Queries
-                        arrowTime={arrow.timestamp}
-                        arrowDepth={arrow.depth}
-                        arrowComplexity={arrow.complexity}
-                        time={style.time}
-                        depth={style.depth}
-                        complexity={style.complexity}
-                        setToggle={setToggle}
+                        // arrowTime={arrow.timestamp}
+                        // arrowDepth={arrow.depth}
+                        // arrowComplexity={arrow.complexity}
+                        // time={style.time}
+                        // depth={style.depth}
+                        // complexity={style.complexity}
+                        // setToggle={setToggle}
                         queries={queries}
-                        combinedSort={combinedSort}
+                        // combinedSort={combinedSort}
                         // sortByTime={sortByTime}
                         // sortByDepth={sortByDepth}
                         // sortByComplexity={sortByComplexity}
@@ -189,7 +221,7 @@ export default function ProjectView() {
                 </div>
             </div>
             <div className="chartBox">
-                <ChartBox project={setProject} />
+                <ChartBox project={selectedProject} />
                 {/* <Chart options={chartData?.options} series={chartData?.series} type="line" /> */}
             </div>
         </div>
