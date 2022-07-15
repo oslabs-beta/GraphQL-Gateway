@@ -56,7 +56,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const [tokenData, setTokenData] = useState<number[]>([]);
     const [blockedData, setblockedData] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]);
-    const [smoothingFactor, setSmoothingFactor] = useState<1 | 2 | 4 | 8 | 10>(8);
+    const [smoothingFactor, setSmoothingFactor] = useState<1 | 3 | 6 | 12>(12);
     const [timeRangeDays, setTimeRangeDays] = useState<30 | 90 | 180 | 360>(90);
 
     /** useEffect will create the chart data to display form the query data */
@@ -71,7 +71,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
 
         /** layout the begining of the chart and time increments for each point */
         const currentTime = new Date().valueOf();
-        const timeBlock = 1800000 * smoothingFactor; // 15 minutes * the smoothing factor applied
+        const timeBlock = 900000 * smoothingFactor; // 15 minutes * the smoothing factor applied
         let nextTimeBlock = queries[0].timestamp + timeBlock;
         const startTime = currentTime - timeRangeDays * 86400000; // 1 day * number of days for the time frame
 
@@ -79,7 +79,8 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         const padChartRange = (from: number, to: number): void => {
             let current = from;
             while (current < to) {
-                labelsArray.push(new Date(current).toDateString());
+                const date = new Date(current);
+                labelsArray.push(`${date.toDateString().slice(0, 10)}, ${date.getHours()}:00`);
                 depthArray.push(0);
                 complexityArray.push(0);
                 tokenArray.push(0);
@@ -94,7 +95,8 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         /** interate through the queries, averaging the query data that falls within the same time block */
         for (let i = 0; i < queries.length; i += 1) {
             // push the date for the current timeblock into the labels array
-            labelsArray.push(new Date(queries[i].timestamp).toDateString());
+            const date = new Date(queries[i].timestamp);
+            labelsArray.push(`${date.toDateString().slice(0, 10)}, ${date.getHours()}:00`);
             // intialze the sum of depth, complexity, tokens, etc. to be zero
             let count = 0;
             let totalDepth = 0;
@@ -158,7 +160,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         datasets: [
             {
                 ...defaultDatasetProperties,
-                label: 'Blocked',
+                label: '% Blocked',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
                 borderColor: 'rgba(53, 162, 235, 0.5)',
                 data: blockedData,
@@ -277,13 +279,13 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
                     Smooth 1
                 </button>
-                <button onClick={() => setSmoothingFactor(2)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(3)} className="chartBtn" type="button">
                     Smooth 2
                 </button>
-                <button onClick={() => setSmoothingFactor(4)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(6)} className="chartBtn" type="button">
                     Smooth 3
                 </button>
-                <button onClick={() => setSmoothingFactor(8)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(12)} className="chartBtn" type="button">
                     Smooth 4
                 </button>
             </div>
@@ -297,10 +299,10 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 <Line options={options} data={complexity} />
             </div>
             <div className="chartFour chartVisual" style={{ display: style.chartFour }}>
-                <Chart type="bar" options={options} data={blocked} />
+                <Line options={options} data={blocked} />
             </div>
             <div className="chartFive chartVisual" style={{ display: style.chartFive }}>
-                <Chart type="bar" data={data} />
+                <Line data={data} />
             </div>
             <div className="projectSelector">
                 <button onClick={() => chartOneFn()} className="chartBtn" type="button">
@@ -313,7 +315,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                     Complexity
                 </button>
                 <button onClick={() => chartFourFn()} className="chartBtn" type="button">
-                    Blocked
+                    % Blocked
                 </button>
                 <button onClick={() => chartFiveFn()} className="chartBtn" type="button">
                     Combined
