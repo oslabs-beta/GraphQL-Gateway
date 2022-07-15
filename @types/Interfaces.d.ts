@@ -5,6 +5,9 @@ export interface ProjectQuery {
     depth: number;
     complexity: number;
     timestamp: number;
+    tokens: number;
+    // latency: number;
+    success: boolean;
 }
 
 export interface Project {

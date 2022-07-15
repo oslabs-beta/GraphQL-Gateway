@@ -133,7 +133,16 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                 <div className="chartBox">Select a project</div>;
             </div>
         );
-    if (projectLoading || !queries) return <Loading />;
+    if (projectLoading || !queries)
+        return (
+            <div id="dashWrapper">
+                <div className="loggerBox" />
+                <div className="chartBox">
+                    <Loading />
+                </div>
+                ;
+            </div>
+        );
 
     return (
         <div id="dashWrapper">
@@ -269,7 +278,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                 </div>
             </div>
             <div className="chartBox">
-                <ChartBox project={selectedProject} queries={queries} />
+                <ChartBox queries={queries} />
                 {/* <Chart options={chartData?.options} series={chartData?.series} type="line" /> */}
             </div>
         </div>

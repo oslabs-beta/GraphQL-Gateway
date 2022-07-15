@@ -18,12 +18,24 @@ export default function Query({ query }: QueryProps) {
                 <div className="value">{query.timestamp}</div>
             </div>
             <div className="individualQuery">
+                <div className="label">Tokens: </div>
+                <div className="value">{query.tokens}</div>
+            </div>
+            <div className="individualQuery">
                 <div className="label">Depth: </div>
                 <div className="value">{query.depth}</div>
             </div>
             <div className="individualQuery">
                 <div className="label">Complexity: </div>
                 <div className="value">{query.complexity}</div>
+            </div>
+            {/* <div className="individualQuery">
+                <div className="label">Latency: </div>
+                <div className="value">{query.latency}</div>
+            </div> */}
+            <div className="individualQuery">
+                <div className="label">Success: </div>
+                <div className="value">{query.success.toString()}</div>
             </div>
         </div>
     );

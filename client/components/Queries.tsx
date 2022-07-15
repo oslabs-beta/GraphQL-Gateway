@@ -19,7 +19,7 @@ export interface IProps {
     // sortByTime: any;
     // sortByDepth: any;
     // sortByComplexity: any;
-    queries: ProjectQuery[] | undefined;
+    queries: ProjectQuery[];
 }
 // eslint-disable-next-line react/function-component-definition
 const Queries: React.FC<IProps> = ({

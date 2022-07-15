@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Chart as ChartJS,
     LinearScale,
@@ -21,7 +21,6 @@ ChartJS.register(
     Legend,
     Tooltip
 );
-const labels = ['Query1', 'Query2', 'Query3', 'Query4', 'Query5', 'Query6', 'Query7'];
 
 export const options = {
     responsive: true,
@@ -37,7 +36,7 @@ export const options = {
 };
 export interface ISState {
     style: {
-        chartOne: string;
+        // chartOne: string;
         chartTwo: string;
         chartThree: string;
         chartFour: string;
@@ -45,43 +44,76 @@ export interface ISState {
 }
 
 export interface IProps {
-    project: SelectedProject['project'];
-    queries: ProjectQuery[] | undefined;
+    queries: ProjectQuery[];
 }
 
 // eslint-disable-next-line react/function-component-definition
-const ChartBox: React.FC<IProps> = ({ project, queries }) => {
-    const timeFromProjectProps: number[] = [];
-    const depthFromProjectProps: number[] = [];
-    const complexityFromProjectProps: number[] = [];
+const ChartBox: React.FC<IProps> = ({ queries }) => {
+    // const timeFromProjectProps: number[] = [];
+    // const depthFromProjectProps: number[] = [];
+    // const complexityFromProjectProps: number[] = [];
+    // const labels: string[] = [];
+
+    const [depthData, setDepthData] = useState<number[]>([]);
+    const [complexityData, setcomplexityData] = useState<number[]>([]);
+    const [labels, setLabels] = useState<string[]>([]);
+    useEffect(() => {
+        const depthArray: number[] = [];
+        const complexityArray: number[] = [];
+        const labelsArray: string[] = [];
+        const currentTime = new Date().valueOf();
+        const timeBlock = 1800000 * 4; // 60 minutes
+        let nextTimeBlock = queries[0].timestamp + timeBlock;
+        for (let i = 0; i < queries.length; i += 1) {
+            labelsArray.push(String(queries[i].timestamp));
+            let count = 0;
+            let totalDepth = 0;
+            let totalComplexity = 0;
+            while (i < queries.length && queries[i].timestamp < nextTimeBlock) {
+                totalDepth += queries[i].depth;
+                totalComplexity += queries[i].complexity;
+                count += 1;
+                i += 1;
+            }
+            i -= 1;
+            depthArray.push(Math.round(totalDepth / count) || 0);
+            complexityArray.push(Math.round(totalComplexity / count) || 0);
+            nextTimeBlock += timeBlock;
+        }
+        setDepthData(depthArray);
+        setcomplexityData(complexityArray);
+        setLabels(labelsArray);
+    }, [queries]);
 
     // eslint-disable-next-line array-callback-return
-    queries!.map((query) => {
-        timeFromProjectProps.push(query.timestamp / 100);
-        depthFromProjectProps.push(query.depth);
-        complexityFromProjectProps.push(query.complexity);
-    });
+    // queries!.map((query) => {
+    //     // timeFromProjectProps.push(query.timestamp / 100);
+    //     depthFromProjectProps.push(query.depth);
+    //     complexityFromProjectProps.push(query.complexity);
+    // });
 
-    const time = {
-        labels,
-        datasets: [
-            {
-                label: 'Time to execute query',
-                data: timeFromProjectProps,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-        ],
-    };
+    // const time = {
+    //     labels,
+    //     datasets: [
+    //         {
+    //             label: 'Time to execute query',
+    //             data: timeFromProjectProps,
+    //             borderColor: 'rgb(255, 99, 132)',
+    //             backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    //         },
+    //     ],
+    // };
 
     const depth = {
         labels,
         datasets: [
             {
                 label: 'Depth of query',
-                data: depthFromProjectProps,
+                data: depthData,
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgb(75, 192, 192)',
+                tension: 0.5,
+                pointStyle: 'line',
             },
         ],
     };
@@ -91,9 +123,11 @@ const ChartBox: React.FC<IProps> = ({ project, queries }) => {
         datasets: [
             {
                 label: 'Time to execute query',
-                data: complexityFromProjectProps,
+                data: complexityData,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgb(53, 162, 235)',
+                tension: 0.5,
+                pointStyle: 'line',
             },
         ],
     };
@@ -101,51 +135,55 @@ const ChartBox: React.FC<IProps> = ({ project, queries }) => {
     const data = {
         labels,
         datasets: [
+            // {
+            //     type: 'line' as const,
+            //     label: 'Time',
+            //     borderColor: 'rgb(255, 99, 132)',
+            //     borderWidth: 2,
+            //     fill: false,
+            //     data: timeFromProjectProps,
+            // },
             {
                 type: 'line' as const,
-                label: 'Time',
-                borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 2,
-                fill: false,
-                data: timeFromProjectProps,
-            },
-            {
-                type: 'bar' as const,
                 label: 'Depth',
                 backgroundColor: 'rgb(75, 192, 192)',
-                data: depthFromProjectProps,
+                data: depthData,
                 borderColor: 'rgb(75, 192, 192)',
                 borderWidth: 2,
+                tension: 0.5,
+                pointStyle: 'line',
             },
             {
-                type: 'bar' as const,
+                type: 'line' as const,
                 label: 'Complexity',
                 backgroundColor: 'rgb(53, 162, 235)',
-                data: complexityFromProjectProps,
+                data: complexityData,
+                tension: 0.5,
+                pointStyle: 'line',
             },
         ],
     };
 
     const [style, setStyle] = useState<ISState['style']>({
-        chartOne: 'block',
+        // chartOne: 'block',
         chartTwo: 'none',
         chartThree: 'none',
-        chartFour: 'none',
+        chartFour: 'block',
     });
 
-    const chartOneFn = () => {
-        setStyle({
-            ...style,
-            chartOne: 'block',
-            chartTwo: 'none',
-            chartThree: 'none',
-            chartFour: 'none',
-        });
-    };
+    // const chartOneFn = () => {
+    //     setStyle({
+    //         ...style,
+    //         chartOne: 'block',
+    //         chartTwo: 'none',
+    //         chartThree: 'none',
+    //         chartFour: 'none',
+    //     });
+    // };
     const chartTwoFn = () => {
         setStyle({
             ...style,
-            chartOne: 'none',
+            // chartOne: 'none',
             chartTwo: 'block',
             chartThree: 'none',
             chartFour: 'none',
@@ -154,7 +192,7 @@ const ChartBox: React.FC<IProps> = ({ project, queries }) => {
     const chartThreeFn = () => {
         setStyle({
             ...style,
-            chartOne: 'none',
+            // chartOne: 'none',
             chartTwo: 'none',
             chartThree: 'block',
             chartFour: 'none',
@@ -163,7 +201,7 @@ const ChartBox: React.FC<IProps> = ({ project, queries }) => {
     const chartFourFn = () => {
         setStyle({
             ...style,
-            chartOne: 'none',
+            // chartOne: 'none',
             chartTwo: 'none',
             chartThree: 'none',
             chartFour: 'block',
@@ -172,9 +210,9 @@ const ChartBox: React.FC<IProps> = ({ project, queries }) => {
     return (
         <div id="chartBoxInside">
             <div className="projectSelector">
-                <button onClick={() => chartOneFn()} className="chartBtn" type="button">
+                {/* <button onClick={() => chartOneFn()} className="chartBtn" type="button">
                     Today
-                </button>
+                </button> */}
                 <button onClick={() => chartTwoFn()} className="chartBtn" type="button">
                     Last 7 Days
                 </button>
@@ -185,9 +223,9 @@ const ChartBox: React.FC<IProps> = ({ project, queries }) => {
                     YTD
                 </button>
             </div>
-            <div className="chartOne chartVisual" style={{ display: style.chartOne }}>
+            {/* <div className="chartOne chartVisual" style={{ display: style.chartOne }}>
                 <Line options={options} data={time} />
-            </div>
+            </div> */}
             <div className="chartTwo chartVisual" style={{ display: style.chartTwo }}>
                 <Line options={options} data={depth} />
             </div>
@@ -198,9 +236,9 @@ const ChartBox: React.FC<IProps> = ({ project, queries }) => {
                 <Chart type="bar" data={data} />
             </div>
             <div className="projectSelector">
-                <button onClick={() => chartOneFn()} className="chartBtn" type="button">
+                {/* <button onClick={() => chartOneFn()} className="chartBtn" type="button">
                     Time
-                </button>
+                </button> */}
                 <button onClick={() => chartTwoFn()} className="chartBtn" type="button">
                     Depth
                 </button>
