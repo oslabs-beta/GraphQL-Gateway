@@ -125,7 +125,6 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
      * Do not reder component if the GET_PROJECT_DATA or GET_QUERY_DATA query is still loading is still  or
      * if a project hasn't been selected fromm the tool bar
      * */
-    if (projectLoading || !queries) return <Loading />;
     if (!selectedProject)
         return (
             <div id="dashWrapper">
@@ -133,6 +132,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                 <div className="chartBox">Select a project</div>;
             </div>
         );
+    if (projectLoading || !queries) return <Loading />;
 
     return (
         <div id="dashWrapper">
