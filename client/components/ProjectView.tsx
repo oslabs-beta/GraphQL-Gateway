@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { gql } from 'apollo-server-express';
-import { useQuery } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 import Queries from './Queries';
 import ChartBox from './ChartBox';
 import { SortOrder } from '../../@types/dashboard';
@@ -109,7 +108,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
      * if a project hasn't been selected fromm the tool bar
      * */
     if (projectLoading) return <Loading />;
-    if (!selectedProject) return <div>Select a project</div>;
+    if (!selectedProject) return <div id="dashWrapper">Select a project</div>;
 
     /** Send query to get project information for this user */
     const { data, loading: queriesLoading } = useQuery(GET_QUERY_DATA, {

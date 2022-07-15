@@ -7,7 +7,7 @@ import { render } from 'react-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
 // import Dashboard from './components/Dashboard';
-import NewDashboard from './components/newDashboard';
+import NewDashboard from './components/NewDashboard';
 import { AuthProvider } from './auth/AuthProvider';
 import Navbar from './components/Navbar';
 import RequireAuth from './components/RequireAuth';

@@ -6,5 +6,5 @@ interface ToolbarProps {
     projectLoading: boolean;
 }
 export default function ToolBar({ projects, setSelectedProject, projectLoading }: ToolbarProps) {
-    return <div>This will be a toolbar</div>;
+    return <div id="toolBar">This will be a toolbar</div>;
 }
