@@ -66,6 +66,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         const complexityArray: number[] = [];
         const tokenArray: number[] = [];
         const blockedArray: number[] = [];
+        // x-axis data is an array of dates
         const labelsArray: string[] = [];
 
         /** layout the begining of the chart and time increments for each point */
@@ -92,12 +93,15 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
 
         /** interate through the queries, averaging the query data that falls within the same time block */
         for (let i = 0; i < queries.length; i += 1) {
+            // push the date for the current timeblock into the labels array
             labelsArray.push(new Date(queries[i].timestamp).toDateString());
+            // intialze the sum of depth, complexity, tokens, etc. to be zero
             let count = 0;
             let totalDepth = 0;
             let totalComplexity = 0;
             let totalTokens = 0;
             let totalBlocked = 0;
+            // continue to iterate through the queries, totaling the query data for this time block
             while (i < queries.length && queries[i].timestamp < nextTimeBlock) {
                 totalDepth += queries[i].depth;
                 totalComplexity += queries[i].complexity;
@@ -106,11 +110,14 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 count += 1;
                 i += 1;
             }
+            // decrement "i" by 1 after the loop to miss no queries
             i -= 1;
+            // push the average depth, complexity, tokens into the appropriate array
             depthArray.push(Math.round(totalDepth / count) || 0);
             complexityArray.push(Math.round(totalComplexity / count) || 0);
             tokenArray.push(Math.round(totalTokens / count) || 0);
             blockedArray.push(Math.round((totalBlocked / count) * 100) || 0);
+            // inrement the time block
             nextTimeBlock += timeBlock;
         }
 
@@ -126,17 +133,22 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     }, [queries, timeRangeDays, smoothingFactor]);
 
     /** Configure the datasets for Chart.js */
+    // apply these prooperties to all datasets
+    const defaultDatasetProperties = {
+        type: 'line' as const,
+        tension: 0.5,
+        pointStyle: 'line',
+    };
+
     const tokens = {
         labels,
         datasets: [
             {
-                type: 'line' as const,
+                ...defaultDatasetProperties,
                 label: 'Tokens',
                 borderColor: 'rgba(255, 99, 132, 0.5)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
                 data: tokenData,
-                tension: 0.5,
-                pointStyle: 'line',
             },
         ],
     };
@@ -145,13 +157,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         labels,
         datasets: [
             {
-                type: 'line' as const,
+                ...defaultDatasetProperties,
                 label: 'Blocked',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
                 borderColor: 'rgba(53, 162, 235, 0.5)',
                 data: blockedData,
-                tension: 0.5,
-                pointStyle: 'line',
             },
         ],
     };
@@ -160,13 +170,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         labels,
         datasets: [
             {
-                type: 'line' as const,
+                ...defaultDatasetProperties,
                 label: 'Depth',
                 backgroundColor: 'rgba(75, 192, 192, 0.8)',
                 data: depthData,
                 borderColor: 'rgba(75, 192, 192, 0.8)',
-                tension: 0.5,
-                pointStyle: 'line',
             },
         ],
     };
@@ -175,13 +183,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         labels,
         datasets: [
             {
-                type: 'line' as const,
+                ...defaultDatasetProperties,
                 label: 'Complexity',
                 backgroundColor: 'rgba(255, 255, 0, 0.5)',
                 borderColor: 'rgba(255, 255, 0, 0.5)',
                 data: complexityData,
-                tension: 0.5,
-                pointStyle: 'line',
             },
         ],
     };

@@ -22,6 +22,7 @@ export interface IProps {
 
 // eslint-disable-next-line react/function-component-definition
 const Queries: React.FC<IProps> = ({ rawQueries }) => {
+    /** State requirments for this component */
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -33,9 +34,10 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
         depth: '',
         complexity: '',
     });
-
+    // "rawQueries" is the raw, unfilter array of queries. "listOfQueries" is the filter list
     const [listOfQueries, setListOfQueries] = useState(rawQueries);
 
+    /** Sort/filter the queries in the set the state of the filter arrows */
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
         const newArr = [...listOfQueries];
         newArr.sort((a, b) => {

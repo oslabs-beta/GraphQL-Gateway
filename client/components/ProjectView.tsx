@@ -61,17 +61,22 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     }, [queriesLoading, data, selectedProject, projectLoading]);
 
     /**
-     * Do not reder component if the GET_PROJECT_DATA or GET_QUERY_DATA query is still loading or
-     * if a project hasn't been selected fromm the tool bar
+     * There are 3 states to the project view
+     *  1. no project selected - render a shell of the project view with a "Select a Project Prompt"
+     *  2. projects or queries are loading - render a shell of the  project view with a loading component
+     *  3. project selected and queries loaded - render the querues and chart
      * */
-    if (!selectedProject)
+    if (!selectedProject || projectLoading)
         return (
             <div id="dashWrapper">
                 <div className="loggerBox" />
-                <div className="chartBox">Select a project</div>;
+                <div className="chartBox">
+                    {projectLoading ? <Loading /> : <div id="loading"> Select a project</div>}
+                </div>
+                ;
             </div>
         );
-    if (projectLoading || !queries)
+    if (queriesLoading || !queries)
         return (
             <div id="dashWrapper">
                 <div className="loggerBox" />
