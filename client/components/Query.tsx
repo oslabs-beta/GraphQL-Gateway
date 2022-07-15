@@ -8,25 +8,20 @@ interface QueryProps {
 export default function Query({ query }: QueryProps) {
     return (
         <div className="queryProps">
-            {/* number still missing */}
-            {/* <div>
-                            <div className="label">Number: </div>
-                            <div className="value">{query.number}</div>
-                        </div> */}
             <div className="individualQuery">
-                <div className="label">Time: </div>
-                <div className="value">{query.timestamp}</div>
+                <div className="label">Num: </div>
+                <div className="value">{query.number}</div>
             </div>
             <div className="individualQuery">
-                <div className="label">Tokens: </div>
+                <div className="label">Tok: </div>
                 <div className="value">{query.tokens}</div>
             </div>
             <div className="individualQuery">
-                <div className="label">Depth: </div>
+                <div className="label">Dep: </div>
                 <div className="value">{query.depth}</div>
             </div>
             <div className="individualQuery">
-                <div className="label">Complexity: </div>
+                <div className="label">Com: </div>
                 <div className="value">{query.complexity}</div>
             </div>
             {/* <div className="individualQuery">
@@ -34,8 +29,8 @@ export default function Query({ query }: QueryProps) {
                 <div className="value">{query.latency}</div>
             </div> */}
             <div className="individualQuery">
-                <div className="label">Success: </div>
-                <div className="value">{query.success.toString()}</div>
+                <div className="label">Blo: </div>
+                <div className="value">{(!query.success).toString()}</div>
             </div>
         </div>
     );
