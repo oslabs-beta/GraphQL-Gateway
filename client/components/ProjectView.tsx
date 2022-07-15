@@ -121,8 +121,9 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
             setQueries(data.projectQueries);
         }
     }, [queriesLoading, data, selectedProject, projectLoading]);
+
     /**
-     * Do not reder component if the GET_PROJECT_DATA or GET_QUERY_DATA query is still loading is still  or
+     * Do not reder component if the GET_PROJECT_DATA or GET_QUERY_DATA query is still loading or
      * if a project hasn't been selected fromm the tool bar
      * */
     if (!selectedProject)

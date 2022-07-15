@@ -19,6 +19,9 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
         );
     return (
         <div id="toolBar">
+            {/** //ToDo: make the tool bar look nice. 
+                   -toggle in and out from the right hand side. 
+                   - sylethe project buttons */}
             <div id="toolBarMenu">
                 This will be a menu of all the projects the user has list by name. User can select a
                 project to dispaly. The tool will be able to toggle in and out{' '}
