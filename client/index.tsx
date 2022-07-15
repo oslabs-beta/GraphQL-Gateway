@@ -6,7 +6,8 @@ import { setContext } from '@apollo/client/link/context';
 import { render } from 'react-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+// import Dashboard from './components/Dashboard';
+import NewDashboard from './components/newDashboard';
 import { AuthProvider } from './auth/AuthProvider';
 import Navbar from './components/Navbar';
 import RequireAuth from './components/RequireAuth';
@@ -51,7 +52,8 @@ render(
                             path="/dashboard"
                             element={
                                 <RequireAuth>
-                                    <Dashboard />
+                                    {/**  <Dashboard /> */}
+                                    <NewDashboard />
                                 </RequireAuth>
                             }
                         />

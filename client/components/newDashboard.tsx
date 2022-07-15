@@ -4,12 +4,11 @@ import { useQuery } from '@apollo/client';
 import ToolBar from './ToolBar';
 import ProjectView from './ProjectView';
 import { useAuth } from '../auth/AuthProvider';
-import { SelectedProject, Projects } from '../../@types/Interfaces';
+// import { SelectedProject, Projects } from '../../@types/Interfaces';
 
 const GET_PROJECT_DATA = gql`
     query getUserData($userId: String!) {
         user(id: $userId) {
-            # note this curretnly gets all projects and queries. This could be a very expersive query.
             projects {
                 name
                 id
@@ -20,7 +19,7 @@ const GET_PROJECT_DATA = gql`
     }
 `;
 
-export default function newDashboard() {
+export default function NewDashboard() {
     /** Bring the user context into this component */
     const { user } = useAuth();
 

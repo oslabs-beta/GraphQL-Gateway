@@ -55,8 +55,8 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     const [queries, setQueries] = useState<ProjectQuery[]>();
 
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
-        if (selectedProject) {
-            const newArr = [...queries!];
+        if (selectedProject && queries) {
+            const newArr = [...queries];
             // eslint-disable-next-line no-restricted-syntax, guard-for-in
             // for (const key of queries!) {
             //     newArr.push(queries![key]);

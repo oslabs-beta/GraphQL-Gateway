@@ -22,7 +22,7 @@ export interface IProps {
     queries: ProjectQuery[] | undefined;
 }
 // eslint-disable-next-line react/function-component-definition
-const Querries: React.FC<IProps> = ({
+const Queries: React.FC<IProps> = ({
     // combinedSort,
     // arrowTime,
     // arrowDepth,
@@ -76,4 +76,4 @@ const Querries: React.FC<IProps> = ({
     </div>
 );
 
-export default Querries;
+export default Queries;
