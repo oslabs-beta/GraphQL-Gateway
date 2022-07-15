@@ -52,10 +52,12 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        projectQueries: (): Promise<ProjectQuery[] | Error> =>
-            QueryDB.find()
+        projectQueries: (parent: undefined, args: QueryByID): Promise<ProjectQuery[] | Error> => {
+            const { id } = args;
+            return QueryDB.find({ projectID: id })
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
         projectQuery: (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
             const { id } = args;
 

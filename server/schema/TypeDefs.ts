@@ -15,7 +15,7 @@ const typeDefs = gql`
         userID: String!
         name: String!
         queries: [ProjectQuery]!
-        query: ProjectQuery
+        # query: ProjectQuery
         apiKey: String
     }
 
@@ -40,7 +40,7 @@ const typeDefs = gql`
         projects: [Project]!
         project(id: String!): Project
 
-        projectQueries: [ProjectQuery]!
+        projectQueries(id: String): [ProjectQuery]!
         projectQuery(id: String!): ProjectQuery
     }
 
