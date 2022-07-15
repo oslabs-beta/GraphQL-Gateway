@@ -46,16 +46,17 @@ export interface ISState {
 
 export interface IProps {
     project: SelectedProject['project'];
+    queries: ProjectQuery[] | undefined;
 }
 
 // eslint-disable-next-line react/function-component-definition
-const ChartBox: React.FC<SelectedProject> = ({ project }) => {
+const ChartBox: React.FC<IProps> = ({ project, queries }) => {
     const timeFromProjectProps: number[] = [];
     const depthFromProjectProps: number[] = [];
     const complexityFromProjectProps: number[] = [];
 
     // eslint-disable-next-line array-callback-return
-    project?.queries.map((query) => {
+    queries!.map((query) => {
         timeFromProjectProps.push(query.timestamp / 100);
         depthFromProjectProps.push(query.depth);
         complexityFromProjectProps.push(query.complexity);

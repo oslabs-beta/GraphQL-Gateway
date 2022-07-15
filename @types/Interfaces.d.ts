@@ -11,8 +11,8 @@ export interface Project {
     id: string;
     userID: string;
     name: string;
-    queries: [ProjectQuery];
-    query: ProjectQuery;
+    // queries: [ProjectQuery];
+    // query: ProjectQuery;
 }
 export interface User {
     id: string;

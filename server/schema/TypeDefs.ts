@@ -15,7 +15,7 @@ const typeDefs = gql`
         userID: String!
         name: String!
         queries: [ProjectQuery]!
-        # query: ProjectQuery
+        query: ProjectQuery
         apiKey: String
     }
 

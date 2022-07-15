@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { gql } from 'apollo-server-express';
+import { useQuery } from '@apollo/client';
 import Queries from './Queries';
 import ChartBox from './ChartBox';
-import { SortOrder, ChartData } from '../../@types/dashboard';
+import { SortOrder } from '../../@types/dashboard';
 import Loading from './Loading';
 
 export interface ISState {
@@ -19,10 +21,26 @@ export interface ISState {
 
 interface ProjectViewProps {
     selectedProject: Project | undefined;
-    loading: boolean;
+    projectLoading: boolean;
 }
 
-export default function ProjectView({ selectedProject, loading }: ProjectViewProps) {
+const GET_QUERY_DATA = gql`
+    query getQueryData($projectId: String!) {
+        projectQueries(id: $projectId) {
+            number
+            latency
+            complexity
+            loggedOn
+            depth
+            timestamp
+            tokens
+            success
+        }
+    }
+`;
+
+export default function ProjectView({ selectedProject, projectLoading }: ProjectViewProps) {
+    /** State requirments for this component */
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -34,14 +52,15 @@ export default function ProjectView({ selectedProject, loading }: ProjectViewPro
         depth: '',
         complexity: '',
     });
+    const [queries, setQueries] = useState<ProjectQuery[]>();
 
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
-        if (setProject) {
-            const newArr = [];
+        if (selectedProject) {
+            const newArr = [...queries!];
             // eslint-disable-next-line no-restricted-syntax, guard-for-in
-            for (const key in setProject?.queries) {
-                newArr.push(setProject?.queries[key]);
-            }
+            // for (const key of queries!) {
+            //     newArr.push(queries![key]);
+            // }
             newArr.sort((a, b) => {
                 if (sortOrder === '↑') {
                     return a[field] - b[field];
@@ -85,8 +104,27 @@ export default function ProjectView({ selectedProject, loading }: ProjectViewPro
         }
     };
 
-    if (loading) return <Loading />;
+    /**
+     * Do not reder component if the GET_PROJECT_DATA query is still loading is still  or
+     * if a project hasn't been selected fromm the tool bar
+     * */
+    if (projectLoading) return <Loading />;
     if (!selectedProject) return <div>Select a project</div>;
+
+    /** Send query to get project information for this user */
+    const { data, loading: queriesLoading } = useQuery(GET_QUERY_DATA, {
+        variables: {
+            projectId: selectedProject!.id,
+        },
+    });
+    useEffect(() => {
+        if (!queriesLoading && data) {
+            setQueries(data.user.projects);
+        }
+    }, [queriesLoading, data]);
+
+    /** if the GET_QUERY_DATA query is still loading return the loading component */
+    if (queriesLoading) return <Loading />;
     return (
         <div id="dashWrapper">
             <div className="loggerBox">
@@ -221,7 +259,7 @@ export default function ProjectView({ selectedProject, loading }: ProjectViewPro
                 </div>
             </div>
             <div className="chartBox">
-                <ChartBox project={selectedProject} />
+                <ChartBox project={selectedProject} queries={queries} />
                 {/* <Chart options={chartData?.options} series={chartData?.series} type="line" /> */}
             </div>
         </div>

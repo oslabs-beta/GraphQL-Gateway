@@ -45,9 +45,9 @@ export default function newDashboard() {
             <ToolBar
                 projects={allProjects}
                 setSelectedProject={setSelectedProject}
-                loading={loading}
+                projectLoading={loading}
             />
-            <ProjectView selectedProject={selectedProject} loading={loading} />
+            <ProjectView selectedProject={selectedProject} projectLoading={loading} />
         </div>
     );
 }
