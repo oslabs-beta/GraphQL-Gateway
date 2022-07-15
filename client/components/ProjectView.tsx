@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useLazyQuery, gql } from '@apollo/client';
 import Queries from './Queries';
 import ChartBox from './ChartBox';
 import { SortOrder } from '../../@types/dashboard';
@@ -53,6 +53,9 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     });
     const [queries, setQueries] = useState<ProjectQuery[]>();
 
+    /** Get the query ready to get query information for this project */
+    const [getProjectQueries, { data, loading: queriesLoading }] = useLazyQuery(GET_QUERY_DATA);
+
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
         if (selectedProject && queries) {
             const newArr = [...queries];
@@ -78,6 +81,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
             setQueries(newArr);
         }
     };
+
     const setToggle = (arg: string) => {
         if (arg === 'time') {
             setStyle({
@@ -103,27 +107,33 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
         }
     };
 
+    useEffect(() => {
+        /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
+        if (!projectLoading && selectedProject) {
+            getProjectQueries({
+                variables: {
+                    projectId: selectedProject!.id,
+                },
+            });
+        }
+        /** Once the queries are done loading and there is data, set the queries in state */
+        if (!queriesLoading && data) {
+            setQueries(data.projectQueries);
+        }
+    }, [queriesLoading, data, selectedProject, projectLoading]);
     /**
-     * Do not reder component if the GET_PROJECT_DATA query is still loading is still  or
+     * Do not reder component if the GET_PROJECT_DATA or GET_QUERY_DATA query is still loading is still  or
      * if a project hasn't been selected fromm the tool bar
      * */
-    if (projectLoading) return <Loading />;
-    if (!selectedProject) return <div id="dashWrapper">Select a project</div>;
+    if (projectLoading || !queries) return <Loading />;
+    if (!selectedProject)
+        return (
+            <div id="dashWrapper">
+                <div className="loggerBox" />
+                <div className="chartBox">Select a project</div>;
+            </div>
+        );
 
-    /** Send query to get project information for this user */
-    const { data, loading: queriesLoading } = useQuery(GET_QUERY_DATA, {
-        variables: {
-            projectId: selectedProject!.id,
-        },
-    });
-    useEffect(() => {
-        if (!queriesLoading && data) {
-            setQueries(data.user.projects);
-        }
-    }, [queriesLoading, data]);
-
-    /** if the GET_QUERY_DATA query is still loading return the loading component */
-    if (queriesLoading) return <Loading />;
     return (
         <div id="dashWrapper">
             <div className="loggerBox">

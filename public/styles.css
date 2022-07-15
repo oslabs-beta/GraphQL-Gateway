@@ -70,13 +70,15 @@ section#pageOne {
 
 #loading {
     font-size: 30px;
-    color: white;
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
+    color: #d3d3d3;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    border-radius: 2px;
+    flex: 50%;
+    margin-left: 10px;
+    height: 580px;
+    min-width: 900px;
+    max-width: 900px;
 }
 #demoCardWrapper {
     position: absolute;
@@ -381,6 +383,19 @@ section#pageThree {
 /* #chartBoxInside {
     height: 1000px;
 } */
+#toolBar {
+    position: absolute;
+    height: 100%;
+    width: 100px;
+    top: 0px;
+    z-index: 10;
+    background-color: #f5f5f5;
+}
+#toolBarMenu {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
 .chartBox {
     margin-top: 150px;
     margin-bottom: 100px;

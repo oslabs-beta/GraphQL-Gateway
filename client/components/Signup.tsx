@@ -92,7 +92,7 @@ function Signup() {
                         Login here
                     </Link>
                 </span>
-                <span>
+                {/* <span>
                     or sign up using your
                     <a
                         // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
@@ -102,7 +102,7 @@ function Signup() {
                         github{' '}
                     </a>
                     account
-                </span>
+                </span> */}
             </div>
         </div>
     );

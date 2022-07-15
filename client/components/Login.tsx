@@ -87,7 +87,7 @@ function Login() {
                         Register here
                     </Link>
                 </span>
-                <span>
+                {/* <span>
                     or log in using your
                     <a
                         // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
@@ -97,7 +97,7 @@ function Login() {
                         github{' '}
                     </a>
                     account
-                </span>
+                </span> */}
             </div>
         </div>
     );
