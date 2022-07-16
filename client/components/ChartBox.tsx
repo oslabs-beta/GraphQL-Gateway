@@ -56,7 +56,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const [tokenData, setTokenData] = useState<number[]>([]);
     const [blockedData, setblockedData] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]);
-    const [smoothingFactor, setSmoothingFactor] = useState<1 | 2 | 4 | 8>(8);
+    const [smoothingFactor, setSmoothingFactor] = useState<1 | 3 | 6 | 12>(12);
     const [timeRangeDays, setTimeRangeDays] = useState<30 | 90 | 180 | 360>(90);
 
     /** useEffect will create the chart data to display form the query data */
@@ -146,7 +146,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const defaultDatasetProperties = {
         type: 'line' as const,
         tension: 0.5,
-        pointStyle: 'line',
+        elements: {
+            point: {
+                radius: 0,
+            },
+        },
     };
 
     const tokens = {
@@ -286,13 +290,13 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
                     Smooth 1
                 </button>
-                <button onClick={() => setSmoothingFactor(2)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(3)} className="chartBtn" type="button">
                     Smooth 2
                 </button>
-                <button onClick={() => setSmoothingFactor(4)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(6)} className="chartBtn" type="button">
                     Smooth 3
                 </button>
-                <button onClick={() => setSmoothingFactor(8)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(12)} className="chartBtn" type="button">
                     Smooth 4
                 </button>
             </div>
