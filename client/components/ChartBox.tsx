@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     Chart as ChartJS,
     LinearScale,
@@ -9,8 +9,7 @@ import {
     Legend,
     Tooltip,
 } from 'chart.js';
-import { Chart, Line } from 'react-chartjs-2';
-import { SelectedProject } from '../../@types/Interfaces';
+import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
     LinearScale,
