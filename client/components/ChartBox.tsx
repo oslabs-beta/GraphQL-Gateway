@@ -56,7 +56,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const [tokenData, setTokenData] = useState<number[]>([]);
     const [blockedData, setblockedData] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]);
-    const [smoothingFactor, setSmoothingFactor] = useState<1 | 3 | 6 | 12>(12);
+    const [smoothingFactor, setSmoothingFactor] = useState<1 | 2 | 4 | 8>(8);
     const [timeRangeDays, setTimeRangeDays] = useState<30 | 90 | 180 | 360>(90);
 
     /** useEffect will create the chart data to display form the query data */
@@ -71,7 +71,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
 
         /** layout the begining of the chart and time increments for each point */
         const currentTime = new Date().valueOf();
-        const timeBlock = 900000 * smoothingFactor; // 15 minutes * the smoothing factor applied
+        // the time black is determined by:
+        //         taking the smallest block of 15 minutes
+        //         multiplying that by a user conctrolled smoothing factor
+        //         and multilpying that by a automatic smoothing factor detrmined the time rannge in days divided by 30
+        const timeBlock = 900000 * smoothingFactor * (timeRangeDays / 30);
         let nextTimeBlock = queries[0].timestamp + timeBlock;
         const startTime = currentTime - timeRangeDays * 86400000; // 1 day * number of days for the time frame
 
@@ -279,13 +283,13 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
                     Smooth 1
                 </button>
-                <button onClick={() => setSmoothingFactor(3)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(2)} className="chartBtn" type="button">
                     Smooth 2
                 </button>
-                <button onClick={() => setSmoothingFactor(6)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(4)} className="chartBtn" type="button">
                     Smooth 3
                 </button>
-                <button onClick={() => setSmoothingFactor(12)} className="chartBtn" type="button">
+                <button onClick={() => setSmoothingFactor(8)} className="chartBtn" type="button">
                     Smooth 4
                 </button>
             </div>
