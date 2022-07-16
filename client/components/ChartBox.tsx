@@ -62,6 +62,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     /** useEffect will create the chart data to display form the query data */
     useEffect(() => {
         /** create storage for the */
+        // y-akis data
         const depthArray: number[] = [];
         const complexityArray: number[] = [];
         const tokenArray: number[] = [];
@@ -71,10 +72,10 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
 
         /** layout the begining of the chart and time increments for each point */
         const currentTime = new Date().valueOf();
-        // the time black is determined by:
+        // the time block is determined by:
         //         taking the smallest block of 15 minutes
         //         multiplying that by a user conctrolled smoothing factor
-        //         and multilpying that by a automatic smoothing factor detrmined the time rannge in days divided by 30
+        //         and multilpying that by an automatic smoothing factor detrmined the time rannge in days divided by 30
         const timeBlock = 900000 * smoothingFactor * (timeRangeDays / 30);
         let nextTimeBlock = queries[0].timestamp + timeBlock;
         const startTime = currentTime - timeRangeDays * 86400000; // 1 day * number of days for the time frame
@@ -83,8 +84,10 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         const padChartRange = (from: number, to: number): void => {
             let current = from;
             while (current < to) {
+                // push the date for the current timeblock into the labels array
                 const date = new Date(current);
                 labelsArray.push(`${date.toDateString().slice(0, 10)}, ${date.getHours()}:00`);
+                // push all zeros into the data arrays
                 depthArray.push(0);
                 complexityArray.push(0);
                 tokenArray.push(0);
