@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
     Chart as ChartJS,
     LinearScale,
@@ -60,7 +60,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const [timeRangeDays, setTimeRangeDays] = useState<30 | 90 | 180 | 360>(90);
 
     /** useEffect will create the chart data to display form the query data */
-    useEffect(() => {
+    useMemo(() => {
         /** create storage for the */
         // y-akis data
         const depthArray: number[] = [];
