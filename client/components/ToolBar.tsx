@@ -44,6 +44,7 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
                             />
                         ))}
                         <button type="button">Create a new Project</button>
+                        <div>Menu toSee/update profile info</div>
                     </>
                 )}
             </div>
