@@ -9,7 +9,7 @@ import {
     Legend,
     Tooltip,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 
 ChartJS.register(
     LinearScale,
@@ -32,6 +32,8 @@ export const options = {
             text: 'Chart.js Line Chart',
         },
     },
+    // TODO: if there is no data, the chart axis should start at 0. This is not working
+    options: { scales: { y: { suggestedMin: 0 } } },
 };
 export interface ISState {
     style: {
@@ -40,6 +42,7 @@ export interface ISState {
         chartThree: string;
         chartFour: string;
         chartFive: string;
+        chartSix: string;
     };
 }
 
@@ -54,19 +57,20 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const [complexityData, setComplexityData] = useState<number[]>([]);
     const [tokenData, setTokenData] = useState<number[]>([]);
     const [blockedData, setblockedData] = useState<number[]>([]);
+    const [volumeData, setVolumeData] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]);
     const [smoothingFactor, setSmoothingFactor] = useState<1 | 3 | 6 | 12>(12);
     const [timeRangeDays, setTimeRangeDays] = useState<1 | 7 | 30 | 360>(30);
 
     /** useEffect will create the chart data to display form the query data */
     useMemo(() => {
-        console.log(timeRangeDays);
         /** create storage for the */
         // y-akis data
         const depthArray: number[] = [];
         const complexityArray: number[] = [];
         const tokenArray: number[] = [];
         const blockedArray: number[] = [];
+        const volumeArray: number[] = [];
         // x-axis data is an array of dates
         const labelsArray: string[] = [];
 
@@ -91,6 +95,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             let totalComplexity = 0;
             let totalTokens = 0;
             let totalBlocked = 0;
+            let totalVolume = 0;
 
             /** process the queries that lie within this time block */
             while (i < queries.length && queries[i].timestamp < nextTimeBlock) {
@@ -98,6 +103,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                     totalDepth += queries[i].depth;
                     totalComplexity += queries[i].complexity;
                     totalTokens += queries[i].tokens;
+                    totalVolume += 1;
                     if (!queries[i].success) totalBlocked += 1;
                     count += 1;
                 }
@@ -108,6 +114,8 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             complexityArray.push(Math.round(totalComplexity / count) || 0);
             tokenArray.push(Math.round(totalTokens / count) || 0);
             blockedArray.push(Math.round((totalBlocked / count) * 100) || 0);
+            const volumePerHour = totalVolume / (timeBlock / 3600000);
+            volumeArray.push(Number(volumePerHour.toFixed(2)));
             // increment the start time for the next timeblock
             startTime = nextTimeBlock;
         }
@@ -118,6 +126,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         setTokenData(tokenArray);
         setblockedData(blockedArray);
         setLabels(labelsArray);
+        setVolumeData(volumeArray);
     }, [queries, timeRangeDays, smoothingFactor]);
 
     /** Configure the datasets for Chart.js */
@@ -125,16 +134,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const defaultDatasetProperties = {
         type: 'line' as const,
         tension: 0.5,
-        elements: {
-            point: {
-                radius: 0,
-            },
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-            },
-        },
+        elements: { point: { radius: 0 } },
     };
 
     const tokens = {
@@ -148,11 +148,19 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 data: tokenData,
             },
         ],
-        scales: {
-            yAxis: {
-                min: 0,
+    };
+    const volume = {
+        labels,
+        datasets: [
+            {
+                ...defaultDatasetProperties,
+                // type: 'Bar' as const,
+                label: 'Volume (query / h)',
+                borderColor: 'rgba(128, 0, 128, 0.5)',
+                backgroundColor: 'rgba(128, 0, 128, 0.5)',
+                data: volumeData,
             },
-        },
+        ],
     };
 
     const blocked = {
@@ -201,6 +209,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             depth.datasets[0],
             blocked.datasets[0],
             tokens.datasets[0],
+            // volume.datasets[0],
         ],
     };
 
@@ -209,7 +218,8 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         chartTwo: 'none',
         chartThree: 'none',
         chartFour: 'none',
-        chartFive: 'block',
+        chartFive: 'none',
+        chartSix: 'block',
     });
     const chartOneFn = () => {
         setStyle({
@@ -219,6 +229,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartThree: 'none',
             chartFour: 'none',
             chartFive: 'none',
+            chartSix: 'none',
         });
     };
     const chartTwoFn = () => {
@@ -229,6 +240,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartThree: 'none',
             chartFour: 'none',
             chartFive: 'none',
+            chartSix: 'none',
         });
     };
     const chartThreeFn = () => {
@@ -239,6 +251,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartThree: 'block',
             chartFour: 'none',
             chartFive: 'none',
+            chartSix: 'none',
         });
     };
     const chartFourFn = () => {
@@ -249,6 +262,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartThree: 'none',
             chartFour: 'block',
             chartFive: 'none',
+            chartSix: 'none',
         });
     };
     const chartFiveFn = () => {
@@ -259,6 +273,18 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartThree: 'none',
             chartFour: 'none',
             chartFive: 'block',
+            chartSix: 'none',
+        });
+    };
+    const chartSixFn = () => {
+        setStyle({
+            ...style,
+            chartOne: 'none',
+            chartTwo: 'none',
+            chartThree: 'none',
+            chartFour: 'none',
+            chartFive: 'none',
+            chartSix: 'block',
         });
     };
     return (
@@ -302,6 +328,9 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 <Line options={options} data={blocked} />
             </div>
             <div className="chartFive chartVisual" style={{ display: style.chartFive }}>
+                <Line options={options} data={volume} />
+            </div>
+            <div className="chartSix chartVisual" style={{ display: style.chartSix }}>
                 <Line data={data} />
             </div>
             <div className="projectSelector">
@@ -318,6 +347,9 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                     % Blocked
                 </button>
                 <button onClick={() => chartFiveFn()} className="chartBtn" type="button">
+                    Volume
+                </button>
+                <button onClick={() => chartSixFn()} className="chartBtn" type="button">
                     Combined
                 </button>
             </div>
