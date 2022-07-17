@@ -154,7 +154,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         datasets: [
             {
                 ...defaultDatasetProperties,
-                // type: 'Bar' as const,
+                type: 'bar' as const,
                 label: 'Volume (query / h)',
                 borderColor: 'rgba(128, 0, 128, 0.5)',
                 backgroundColor: 'rgba(128, 0, 128, 0.5)',
@@ -328,7 +328,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 <Line options={options} data={blocked} />
             </div>
             <div className="chartFive chartVisual" style={{ display: style.chartFive }}>
-                <Line options={options} data={volume} />
+                <Bar options={options} data={volume} />
             </div>
             <div className="chartSix chartVisual" style={{ display: style.chartSix }}>
                 <Line data={data} />
