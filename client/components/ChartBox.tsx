@@ -56,10 +56,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const [blockedData, setblockedData] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]);
     const [smoothingFactor, setSmoothingFactor] = useState<1 | 3 | 6 | 12>(12);
-    const [timeRangeDays, setTimeRangeDays] = useState<30 | 90 | 180 | 360>(90);
+    const [timeRangeDays, setTimeRangeDays] = useState<1 | 7 | 30 | 360>(30);
 
     /** useEffect will create the chart data to display form the query data */
     useMemo(() => {
+        console.log(timeRangeDays);
         /** create storage for the */
         // y-akis data
         const depthArray: number[] = [];
@@ -71,37 +72,18 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
 
         /** layout the begining of the chart and time increments for each point */
         const currentTime = new Date().valueOf();
-        // the time block is determined by:
-        //         taking the smallest block of 15 minutes
-        //         multiplying that by a user conctrolled smoothing factor
-        //         and multilpying that by an automatic smoothing factor detrmined the time rannge in days divided by 30
-        const timeBlock = 900000 * smoothingFactor * (timeRangeDays / 30);
-        let nextTimeBlock = queries[0].timestamp + timeBlock;
-        const startTime = currentTime - timeRangeDays * 86400000; // 1 day * number of days for the time frame
+        // the time block is determined by: taking the smallest block of 15 minutes and multiplying that by a user conctrolled smoothing factor
+        const timeBlock = 900000 * smoothingFactor * ((timeRangeDays + 30) / 30);
+        let startTime = currentTime - timeRangeDays * 86400000; // 1 day * number of days for the time frame
 
-        /** This is a helper function to pad the start and finish of the time block if no queries exist */
-        const padChartRange = (from: number, to: number): void => {
-            let current = from;
-            while (current < to) {
-                // push the date for the current timeblock into the labels array
-                const date = new Date(current);
-                labelsArray.push(`${date.toDateString().slice(0, 10)}, ${date.getHours()}:00`);
-                // push all zeros into the data arrays
-                depthArray.push(0);
-                complexityArray.push(0);
-                tokenArray.push(0);
-                blockedArray.push(0);
-                current += timeBlock;
-            }
-        };
-
-        /** pad the start of the time range */
-        padChartRange(startTime, queries[0].timestamp);
-
-        /** interate through the queries, averaging the query data that falls within the same time block */
-        for (let i = 0; i < queries.length; i += 1) {
+        /** process time blocks for the chart while the start time of the current time block is less than the current date */
+        // The counter i will track the index we are on in the queries array
+        let i = 0;
+        while (startTime < currentTime) {
+            // specify the end time for the current time block
+            const nextTimeBlock = startTime + timeBlock;
             // push the date for the current timeblock into the labels array
-            const date = new Date(queries[i].timestamp);
+            const date = new Date(startTime);
             labelsArray.push(`${date.toDateString().slice(0, 10)}, ${date.getHours()}:00`);
             // intialze the sum of depth, complexity, tokens, etc. to be zero
             let count = 0;
@@ -109,28 +91,26 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             let totalComplexity = 0;
             let totalTokens = 0;
             let totalBlocked = 0;
-            // continue to iterate through the queries, totaling the query data for this time block
+
+            /** process the queries that lie within this time block */
             while (i < queries.length && queries[i].timestamp < nextTimeBlock) {
-                totalDepth += queries[i].depth;
-                totalComplexity += queries[i].complexity;
-                totalTokens += queries[i].tokens;
-                if (!queries[i].success) totalBlocked += 1;
-                count += 1;
+                if (queries[i].timestamp > startTime) {
+                    totalDepth += queries[i].depth;
+                    totalComplexity += queries[i].complexity;
+                    totalTokens += queries[i].tokens;
+                    if (!queries[i].success) totalBlocked += 1;
+                    count += 1;
+                }
                 i += 1;
             }
-            // decrement "i" by 1 after the loop to miss no queries
-            i -= 1;
             // push the average depth, complexity, tokens into the appropriate array
             depthArray.push(Math.round(totalDepth / count) || 0);
             complexityArray.push(Math.round(totalComplexity / count) || 0);
             tokenArray.push(Math.round(totalTokens / count) || 0);
             blockedArray.push(Math.round((totalBlocked / count) * 100) || 0);
-            // inrement the time block
-            nextTimeBlock += timeBlock;
+            // increment the start time for the next timeblock
+            startTime = nextTimeBlock;
         }
-
-        /** pad the end of the time range, from the last query to the curretn time */
-        padChartRange(queries[queries.length - 1].timestamp, currentTime);
 
         /** set the state of the chart data */
         setDepthData(depthArray);
@@ -150,6 +130,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 radius: 0,
             },
         },
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
     };
 
     const tokens = {
@@ -163,6 +148,11 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                 data: tokenData,
             },
         ],
+        scales: {
+            yAxis: {
+                min: 0,
+            },
+        },
     };
 
     const blocked = {
@@ -274,17 +264,17 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     return (
         <div id="chartBoxInside">
             <div className="projectSelector">
+                <button onClick={() => setTimeRangeDays(1)} className="chartBtn" type="button">
+                    Last 24 h
+                </button>
+                <button onClick={() => setTimeRangeDays(7)} className="chartBtn" type="button">
+                    Last Week
+                </button>
                 <button onClick={() => setTimeRangeDays(30)} className="chartBtn" type="button">
-                    Last 30 Days
-                </button>
-                <button onClick={() => setTimeRangeDays(90)} className="chartBtn" type="button">
-                    Last 90 Days
-                </button>
-                <button onClick={() => setTimeRangeDays(180)} className="chartBtn" type="button">
-                    Last 180 Days
+                    Last Month
                 </button>
                 <button onClick={() => setTimeRangeDays(360)} className="chartBtn" type="button">
-                    Last 360 Days
+                    Last Year
                 </button>
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
                     Smooth 1
