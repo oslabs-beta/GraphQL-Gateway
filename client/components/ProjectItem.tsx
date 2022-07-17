@@ -4,9 +4,14 @@ import { Project } from '../../@types/Interfaces';
 interface ProjectItemProps {
     project: Project;
     setSelectedProject: any;
+    setExtended: any;
 }
 
-export default function ProjectItem({ project, setSelectedProject }: ProjectItemProps) {
+export default function ProjectItem({
+    project,
+    setSelectedProject,
+    setExtended,
+}: ProjectItemProps) {
     const [dropdown, setDropdown] = useState(false);
     return (
         <>
@@ -27,7 +32,10 @@ export default function ProjectItem({ project, setSelectedProject }: ProjectItem
                         className="selectProjectButton"
                         type="button"
                         aria-label="switch"
-                        onClick={() => setSelectedProject(project)}
+                        onClick={() => {
+                            setExtended(false);
+                            setSelectedProject(project);
+                        }}
                     >
                         View Data
                     </button>

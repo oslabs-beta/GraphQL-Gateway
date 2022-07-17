@@ -40,6 +40,7 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
                             <ProjectItem
                                 project={project}
                                 setSelectedProject={setSelectedProject}
+                                setExtended={setExtended}
                             />
                         ))}
                         <button type="button">Create a new Project</button>
