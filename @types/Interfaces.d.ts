@@ -14,6 +14,7 @@ export interface Project {
     id: string;
     userID: string;
     name: string;
+    apiKey: string;
     // queries: [ProjectQuery];
     // query: ProjectQuery;
 }
