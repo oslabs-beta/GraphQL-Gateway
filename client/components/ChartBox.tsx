@@ -48,10 +48,11 @@ export interface ISState {
 
 export interface IProps {
     queries: ProjectQuery[];
+    setDaysFn: any;
 }
 
 // eslint-disable-next-line react/function-component-definition
-const ChartBox: React.FC<IProps> = ({ queries }) => {
+const ChartBox: React.FC<IProps> = ({ queries, setDaysFn }) => {
     /** create the state required for the chart */
     const [depthData, setDepthData] = useState<number[]>([]);
     const [complexityData, setComplexityData] = useState<number[]>([]);
@@ -287,19 +288,23 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartSix: 'block',
         });
     };
+    const multipleFnOne = (num: any) => {
+        setDaysFn(num);
+        setTimeRangeDays(num);
+    };
     return (
         <div id="chartBoxInside">
             <div className="projectSelector">
-                <button onClick={() => setTimeRangeDays(1)} className="chartBtn" type="button">
+                <button onClick={() => multipleFnOne(1)} className="chartBtn" type="button">
                     Last 24 h
                 </button>
-                <button onClick={() => setTimeRangeDays(7)} className="chartBtn" type="button">
+                <button onClick={() => multipleFnOne(7)} className="chartBtn" type="button">
                     Last Week
                 </button>
-                <button onClick={() => setTimeRangeDays(30)} className="chartBtn" type="button">
+                <button onClick={() => multipleFnOne(30)} className="chartBtn" type="button">
                     Last Month
                 </button>
-                <button onClick={() => setTimeRangeDays(360)} className="chartBtn" type="button">
+                <button onClick={() => multipleFnOne(360)} className="chartBtn" type="button">
                     Last Year
                 </button>
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
