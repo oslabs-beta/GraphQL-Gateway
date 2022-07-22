@@ -57,38 +57,41 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     // const startTime = Date.now().valueOf() - 5 * 24 * 60 * 60 * 1000;
     // const currentTime = new Date().valueOf();
     // const startTime = currentTime - 5 * 86400000;
-    const startTime: any = new Date().valueOf() - days * 24 * 60 * 60 * 1000;
+    // const startTime: number = new Date().valueOf() - days * 24 * 60 * 60 * 1000;
 
-    const { data, loading } = useQuery(GET_QUERY_DATA, {
-        variables: {
-            projectId: selectedProject?.id,
-            date: startTime,
-            // date: 1658033559728,
-        },
-    });
-    useEffect(() => {
-        if (!loading && data) {
-            setQueries(data.projectQueries);
-        }
-    }, [loading, data]);
-
-    /** Get the query ready to get query information for this project */
-    // const [getProjectQueries, { data, loading: queriesLoading }] = useLazyQuery(GET_QUERY_DATA);
-
+    // const { data, loading } = useQuery(GET_QUERY_DATA, {
+    //     variables: {
+    //         projectId: selectedProject?.id,
+    //         // date: startTime,
+    //         date: 1658033559728,
+    //     },
+    // });
     // useEffect(() => {
-    //     /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
-    //     if (!projectLoading && selectedProject) {
-    //         getProjectQueries({
-    //             variables: {
-    //                 projectId: selectedProject!.id,
-    //             },
-    //         });
-    //     }
-    //     /** Once the queries are done loading and there is data, set the queries in state */
-    //     if (!queriesLoading && data) {
+    //     if (!loading && data) {
     //         setQueries(data.projectQueries);
     //     }
-    // }, [queriesLoading, data, selectedProject, projectLoading]);
+    // }, [loading, data]);
+
+    /** Get the query ready to get query information for this project */
+    const startTime: number = new Date().valueOf() - 30 * 24 * 60 * 60 * 1000;
+    const [getProjectQueries, { data, loading: queriesLoading }] = useLazyQuery(GET_QUERY_DATA);
+
+    useEffect(() => {
+        /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
+        if (!projectLoading && selectedProject) {
+            getProjectQueries({
+                variables: {
+                    projectId: selectedProject!.id,
+                    date: startTime,
+                    // date: 1655918025713,
+                },
+            });
+        }
+        /** Once the queries are done loading and there is data, set the queries in state */
+        if (!queriesLoading && data) {
+            setQueries(data.projectQueries);
+        }
+    }, [queriesLoading, data, selectedProject, projectLoading]);
 
     /**
      * There are 3 states to the project view
@@ -106,7 +109,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                 ;
             </div>
         );
-    if (loading || !queries)
+    if (projectLoading || !queries)
         return (
             <div id="dashWrapper">
                 <div className="loggerBox" />
