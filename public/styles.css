@@ -561,6 +561,13 @@ section#pageThree {
     cursor: pointer;
     width: 100%;
 }
+.loggerGUI {
+    text-align: center;
+}
+.loadMoreBtn {
+    margin: 50px;
+    display: inline-block;
+}
 .individualQuery {
     display: inline-block;
 }

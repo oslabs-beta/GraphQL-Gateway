@@ -53,8 +53,8 @@ const resolvers: IResolvers = {
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         projectQueries: (parent: undefined, args: QueryByID): Promise<ProjectQuery[] | Error> => {
-            const { id, date } = args;
-            return QueryDB.find({ projectID: id, timestamp: { $gte: date } })
+            const { id, date, offset } = args;
+            return QueryDB.find({ projectID: id, timestamp: { $gte: date, $lt: offset } })
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
