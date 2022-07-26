@@ -88,12 +88,14 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                 },
             });
         }
+    }, [selectedProject, days]);
+
+    useEffect(() => {
         /** Once the queries are done loading and there is data, set the queries in state */
         if (!queriesLoading && data) {
             setQueries(data.projectQueries);
         }
-    }, [queriesLoading, data, selectedProject, projectLoading, queries]);
-
+    }, [data]);
     /**
      * There are 3 states to the project view
      *  1. no project selected - render a shell of the project view with a "Select a Project Prompt"
