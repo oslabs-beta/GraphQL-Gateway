@@ -18,6 +18,7 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
     /** render the toolbar
      * while the GET_PROJECT_DATA query is loading, render the loading component
      * instead of the project list */
+
     return (
         <div id="toolBar" style={extended === true ? { left: '0px' } : { left: '-340px' }}>
             {/** //ToDo: make the tool bar look nice. 

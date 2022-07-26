@@ -41,7 +41,7 @@ const GET_QUERY_DATA = gql`
 export default function ProjectView({ selectedProject, projectLoading }: ProjectViewProps) {
     /** State requirments for this component */
     const [queries, setQueries] = useState<ProjectQuery[]>();
-    const [days, setDays] = useState<1 | 7 | 30 | 365>(30);
+    const [days, setDays] = useState<1 | 7 | 30 | 365>(1);
 
     const setDaysFn = (param: number): any => {
         if (param === 1) {
@@ -73,10 +73,11 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     // }, [loading, data]);
 
     /** Get the query ready to get query information for this project */
-    const startTime: number = new Date().valueOf() - 30 * 24 * 60 * 60 * 1000;
+    const startTime: number = new Date().valueOf() - days * 24 * 60 * 60 * 1000;
     const [getProjectQueries, { data, loading: queriesLoading }] = useLazyQuery(GET_QUERY_DATA);
 
     useEffect(() => {
+        console.log('firing');
         /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
         if (!projectLoading && selectedProject) {
             getProjectQueries({
@@ -91,7 +92,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
         if (!queriesLoading && data) {
             setQueries(data.projectQueries);
         }
-    }, [queriesLoading, data, selectedProject, projectLoading]);
+    }, [queriesLoading, data, selectedProject, projectLoading, queries]);
 
     /**
      * There are 3 states to the project view

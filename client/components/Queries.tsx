@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { ProjectQuery } from '../../@types/Interfaces';
 import { SortOrder } from '../../@types/dashboard';
 import Query from './Query';
@@ -22,7 +22,39 @@ export interface IProps {
 
 // eslint-disable-next-line react/function-component-definition
 const Queries: React.FC<IProps> = ({ rawQueries }) => {
+    // "rawQueries" is the raw, unfilter array of queries. "listOfQueries" is the filter list
+    const [listOfQueries, setListOfQueries] = useState(rawQueries);
+    const [queryyy, setQuery] = useState('');
+    const [page, setPage] = useState(1);
+    const loader = useRef(null);
+
+    const handleChange = (e: any) => {
+        setQuery(e.target.value);
+    };
+
+    const handleObserver = useCallback((entries: any) => {
+        const target = entries[0];
+        if (target.isIntersecting) {
+            setPage((prev) => prev + 1);
+        }
+    }, []);
+
+    useEffect(() => {
+        const option = {
+            root: null,
+            rootMargin: '20px',
+            threshold: 0,
+        };
+        const observer = new IntersectionObserver(handleObserver, option);
+        if (loader.current) observer.observe(loader.current);
+    }, [handleObserver]);
+
     /** State requirments for this component */
+    useEffect(() => {
+        /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
+        setListOfQueries(rawQueries);
+    }, [rawQueries]);
+
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -34,9 +66,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
         depth: '',
         complexity: '',
     });
-    // "rawQueries" is the raw, unfilter array of queries. "listOfQueries" is the filter list
-    const [listOfQueries, setListOfQueries] = useState(rawQueries);
-
     /** Sort/filter the queries in the set the state of the filter arrows */
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
         const newArr = [...listOfQueries];
@@ -142,12 +171,14 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                 </div>
             </div>
             <div className="loggerGUI">
+                <div className="space" />
                 <div id="loggerBtnWrapper">
-                    <div className="space" />
                     {listOfQueries?.map((query: ProjectQuery) => (
                         <Query query={query} />
                     ))}
                 </div>
+                <p>Loading...</p>
+                <div ref={loader} />
             </div>
         </>
     );
