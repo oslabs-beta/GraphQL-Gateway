@@ -74,7 +74,7 @@ export default function Navbar() {
                             <Link to="/dashboard" type="submit" className="linkBtn">
                                 Dashboard
                             </Link>
-                            <button type="button" onClick={logout}>
+                            <button className="linkBtn" type="button" onClick={logout}>
                                 Logout
                             </button>
                         </>

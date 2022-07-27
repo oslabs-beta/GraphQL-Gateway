@@ -9,6 +9,13 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
+.authError {
+    padding: 10px;
+    color: red;
+    background-color: pink;
+    border-radius: 5px;
+}
+
 html {
     background-color: #092173;
     font-family: 'Roboto', sans-serif;
@@ -295,6 +302,7 @@ section#pageThree {
 }
 .form-wrapper {
     text-align: center;
+    margin-top: 20px;
 }
 .input {
     width: 240px;
