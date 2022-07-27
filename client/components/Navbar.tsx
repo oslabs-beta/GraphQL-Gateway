@@ -7,7 +7,7 @@ import '../../public/styles.css';
 export default function Navbar() {
     // const { pathname } = useLocation();
     const navigate = useNavigate();
-    const { user, setUser } = useAuth();
+    const { user, setUser, loading } = useAuth();
     // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
     const controlNavbar = () => {
@@ -17,10 +17,9 @@ export default function Navbar() {
             setShow('block');
         }
     };
-
+    console.log(user);
     function logout() {
-        console.log('logging out');
-        setUser({ user: null, setUser: '', loading: true });
+        setUser(null);
         localStorage.clear();
         navigate('/');
     }
@@ -60,25 +59,26 @@ export default function Navbar() {
                     // color: pathname === '/dashboard' ? '#fff' : '#092173',
                 }}
             >
-                {user === null ? (
-                    <>
-                        <Link to="/login" type="submit" className="linkBtn">
-                            Login
-                        </Link>
-                        <Link to="/signup" type="submit" className="linkBtn">
-                            Signup
-                        </Link>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/dashboard" type="submit" className="linkBtn">
-                            Dashboard
-                        </Link>
-                        <button type="button" onClick={logout}>
-                            Logout
-                        </button>
-                    </>
-                )}
+                {loading === false &&
+                    (user === null ? (
+                        <>
+                            <Link to="/login" type="submit" className="linkBtn">
+                                Login
+                            </Link>
+                            <Link to="/signup" type="submit" className="linkBtn">
+                                Signup
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/dashboard" type="submit" className="linkBtn">
+                                Dashboard
+                            </Link>
+                            <button type="button" onClick={logout}>
+                                Logout
+                            </button>
+                        </>
+                    ))}
             </div>
         </div>
     );
