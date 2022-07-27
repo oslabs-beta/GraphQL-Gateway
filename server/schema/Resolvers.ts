@@ -24,11 +24,20 @@ const resolvers: IResolvers = {
             }
             return null;
         },
-        users: (): Promise<User[] | Error> =>
-            UserDB.find()
+        users: (parent, args, context: Context): Promise<User[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === null) return new Error('Unauthorized to make this request');
+            return UserDB.find()
                 .then((users: User[]): User[] => users)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        user: (parent: undefined, args: QueryByID): Promise<User | Error> => {
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        user: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<User | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === null) return new Error('Unauthorized to make this request');
             const { id } = args;
 
             return UserDB.findOne({ _id: id })
@@ -38,11 +47,20 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        projects: (): Promise<Project[] | Error> =>
-            ProjectDB.find()
+        projects: (parent, args, context: Context): Promise<Project[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === null) return new Error('Unauthorized to make this request');
+            return ProjectDB.find()
                 .then((projects: Project[]): Project[] => projects)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        project: (parent: undefined, args: QueryByID): Promise<Project | Error> => {
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        project: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<Project | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === null) return new Error('Unauthorized to make this request');
             const { id } = args;
 
             return ProjectDB.findOne({ _id: id })
@@ -52,14 +70,26 @@ const resolvers: IResolvers = {
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        projectQueries: (parent: undefined, args: QueryByID): Promise<ProjectQuery[] | Error> => {
+        projectQueries: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<ProjectQuery[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === null) return new Error('Unauthorized to make this request');
             const { id, date, offset } = args;
             return QueryDB.find({ projectID: id, timestamp: { $gte: date, $lt: offset } })
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        projectQuery: (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
+        projectQuery: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<ProjectQuery | Error> | Error => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === null) return new Error('Unauthorized to make this request');
 
             return QueryDB.findOne({ _id: id })
                 .then((query: ProjectQuery): ProjectQuery => {
