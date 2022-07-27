@@ -68,6 +68,11 @@ type ProjectQuery = {
     latency?: number;
 };
 
+type Context = {
+    authenticated: boolean;
+    user: null | string | JwtPayload;
+};
+
 type CreateProjectQueryArgs = {
     projectQuery: {
         projectID: string;

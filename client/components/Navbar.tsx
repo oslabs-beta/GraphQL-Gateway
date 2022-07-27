@@ -1,12 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
 import '../../public/styles.css';
 
 export default function Navbar() {
-    const { pathname } = useLocation();
+    // const { pathname } = useLocation();
     // todo: query to check auth status
-
+    const { user, setUser } = useAuth();
     // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
     const controlNavbar = () => {
@@ -16,6 +17,11 @@ export default function Navbar() {
             setShow('block');
         }
     };
+
+    function logout() {
+        setUser({ user: null, setUser: '', loading: true });
+        localStorage.clear();
+    }
 
     useEffect(() => {
         window.addEventListener('scroll', controlNavbar);
@@ -52,12 +58,25 @@ export default function Navbar() {
                     // color: pathname === '/dashboard' ? '#fff' : '#092173',
                 }}
             >
-                <Link to="/login" type="submit" className="linkBtn">
-                    Login
-                </Link>
-                <Link to="/signup" type="submit" className="linkBtn">
-                    Signup
-                </Link>
+                {user === null ? (
+                    <>
+                        <Link to="/login" type="submit" className="linkBtn">
+                            Login
+                        </Link>
+                        <Link to="/signup" type="submit" className="linkBtn">
+                            Signup
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/dashboard" type="submit" className="linkBtn">
+                            Dashboard
+                        </Link>
+                        <button type="button" onClick={logout}>
+                            Logout
+                        </button>
+                    </>
+                )}
             </div>
         </div>
     );
