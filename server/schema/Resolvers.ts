@@ -7,7 +7,7 @@ import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 import sessions from '../utilities/sessions';
-import { WrongCredentialsError } from './errors';
+import { UserTakenError, WrongCredentialsError } from './errors';
 
 const resolvers: IResolvers = {
     Query: {
@@ -132,7 +132,7 @@ const resolvers: IResolvers = {
             const hash: string = await bcrypt.hash(password, 11);
             return UserDB.findOne({ email })
                 .then(async (user: User): Promise<User> => {
-                    if (user) throw new Error('Account already exists for this email');
+                    if (user) throw new UserTakenError();
                     const newUser = new UserDB({
                         email,
                         password: hash,
@@ -149,7 +149,7 @@ const resolvers: IResolvers = {
                         projects: [],
                     };
                 })
-                .catch((err: Error): Error => new Error(`Try again later.`));
+                .catch((err: Error): Error => new Error(`${err}`));
         },
         updateUser: async (
             parent: undefined,

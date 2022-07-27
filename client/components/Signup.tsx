@@ -50,7 +50,7 @@ function Signup() {
             localStorage.setItem('session-token', data.login.token);
             navigate('/dashboard');
         },
-        onError: (error) => console.log(error),
+        onError: (error) => setSignUpError(error.message),
     });
 
     const handleClick = async (
