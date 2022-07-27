@@ -1,11 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider';
 import '../../public/styles.css';
 
 export default function Navbar() {
     // const { pathname } = useLocation();
+    const navigate = useNavigate();
     // todo: query to check auth status
     const { user, setUser } = useAuth();
     // FIXME: navbar show only on scroll up, not down
@@ -21,6 +22,7 @@ export default function Navbar() {
     function logout() {
         setUser({ user: null, setUser: '', loading: true });
         localStorage.clear();
+        navigate('/');
     }
 
     useEffect(() => {
