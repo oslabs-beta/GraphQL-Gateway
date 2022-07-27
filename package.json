@@ -28,6 +28,7 @@
     "dependencies": {
         "@apollo/client": "^3.6.5",
         "@graphql-tools/utils": "^8.6.10",
+        "apollo-errors": "^1.9.0",
         "apollo-server-express": "^3.7.0",
         "axios": "^0.27.2",
         "bcrypt": "^5.0.1",

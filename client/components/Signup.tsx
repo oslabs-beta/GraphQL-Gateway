@@ -29,6 +29,7 @@ function Signup() {
         email: '',
         password: '',
     });
+    const [signUpError, setSignUpError] = useState<null | string>(null);
     const { setUser: setUserAuth } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +64,7 @@ function Signup() {
     return (
         <div className="box">
             <h1 className="text">Signup</h1>
-
+            {signUpError && <small className="authError">{signUpError}</small>}
             <div className="form-wrapper">
                 <input
                     className="input"

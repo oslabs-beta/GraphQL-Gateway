@@ -2,11 +2,12 @@
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 import randomString from 'randomstring';
-
+import { ApolloError } from 'apollo-errors';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 import sessions from '../utilities/sessions';
+import { WrongCredentialsError } from './errors';
 
 const resolvers: IResolvers = {
     Query: {
@@ -105,41 +106,40 @@ const resolvers: IResolvers = {
          */
         login: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
-
             return UserDB.findOne({ email })
                 .then(async (user: any): Promise<User> => {
-                    if (!user.email) {
-                        throw new Error('Email not found.');
-                    }
+                    if (!user) throw new WrongCredentialsError();
                     const verifyPassword: boolean = await bcrypt.compare(password, user.password);
                     if (!verifyPassword) {
-                        throw new Error('Password you entered is incorrect.');
+                        throw new WrongCredentialsError();
                     }
-
-                    const token = sessions.create({ id: user._id });
+                    const token = sessions.create({ id: user.id });
                     return {
                         token,
                         email: user.email,
                         password: user.password,
-                        id: user._id,
+                        id: user.id,
                         projects: [],
                     };
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+                .catch((err: Error): Error => {
+                    if (err instanceof ApolloError) throw new Error(`${err}`);
+                    else throw new Error('Try Again Later');
+                });
         },
         signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
             return UserDB.findOne({ email })
                 .then(async (user: User): Promise<User> => {
-                    if (user) throw new Error('User already exists');
+                    if (user) throw new Error('Account already exists for this email');
                     const newUser = new UserDB({
                         email,
                         password: hash,
                         projects: [],
                     });
                     const savedUser = await newUser.save();
-                    if (!savedUser) throw new Error('Could not save user. Try again later.');
+                    if (!savedUser) throw new Error('Try again later.');
                     const token = sessions.create({ id: savedUser._id });
                     return {
                         token,
@@ -149,7 +149,7 @@ const resolvers: IResolvers = {
                         projects: [],
                     };
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+                .catch((err: Error): Error => new Error(`Try again later.`));
         },
         updateUser: async (
             parent: undefined,

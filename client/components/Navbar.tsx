@@ -7,7 +7,6 @@ import '../../public/styles.css';
 export default function Navbar() {
     // const { pathname } = useLocation();
     const navigate = useNavigate();
-    // todo: query to check auth status
     const { user, setUser } = useAuth();
     // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
@@ -20,6 +19,7 @@ export default function Navbar() {
     };
 
     function logout() {
+        console.log('logging out');
         setUser({ user: null, setUser: '', loading: true });
         localStorage.clear();
         navigate('/');
