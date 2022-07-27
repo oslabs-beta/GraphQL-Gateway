@@ -56,7 +56,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                 ? listOfQueries.slice(currentLength, currentLength + 150)
                 : [];
             setList([...list, ...nextResults]);
-            console.log('list', list);
             setLoadMore(false);
         }
     }, [loadMore, hasMore]);

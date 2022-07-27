@@ -65,9 +65,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     useEffect(() => {
         /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
         if (!projectLoading && selectedProject) {
-            console.log('days', days, 'previous', previousDays);
             if (days > previousDays) {
-                console.log('fetching queries ');
                 getProjectQueries({
                     variables: {
                         projectId: selectedProject!.id,
@@ -83,21 +81,15 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                     )
                 );
             }
-
-            console.log('offset', offset);
-            console.log('startTime', startTime);
             setPreviousDays(days);
             setOffset(startTime);
         }
     }, [selectedProject, days]);
-    useEffect(() => console.log(queries), [queries]);
     useEffect(() => {
         /** Once the queries are done loading and there is data, set the queries in state */
         if (!queriesLoading && data) {
             setQueries(queries.concat(data.projectQueries));
         }
-
-        console.log('data', data);
     }, [data]);
 
     /**
