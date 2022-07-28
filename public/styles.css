@@ -395,9 +395,9 @@ section#pageThree {
     color: #324da6;
     background-color: #fff;
     margin-top: 64px;
-    padding-top: 11px;
     border-bottom: 1px solid #324da6;
     transition: all 0.2s ease-out;
+    z-index: 1;
 }
 .toolBar.closed {
     left: -350px;
