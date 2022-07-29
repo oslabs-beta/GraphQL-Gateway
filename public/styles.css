@@ -24,6 +24,7 @@ a:link {
 
 .container {
     height: 100%;
+    min-width: 457px;
 }
 
 section {
@@ -33,6 +34,7 @@ section {
     width: 100%;
     height: 100vh;
     max-height: 900px;
+    min-width: 457px;
 }
 
 section#pageOne {
@@ -223,7 +225,7 @@ section#pageThree {
     margin: 0;
     opacity: 1;
     outline: 0;
-    padding: 1.5em 2.2em;
+    padding: 1.5em;
     /* position: relative; */
     text-align: center;
     text-decoration: none;
@@ -270,12 +272,20 @@ section#pageThree {
     z-index: 11;
     position: fixed;
     background-color: #fff;
-    width: 100%;
+    width: 70%;
     top: 0;
     border-bottom: 1px solid #324da6;
     text-align: center;
 }
-
+#side-navbar {
+    z-index: 11;
+    position: fixed;
+    background-color: #fff;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 30%;
+}
 #footer {
     background-color: #092173;
     color: #fff;
@@ -623,14 +633,6 @@ section#pageThree {
     cursor: pointer;
 }
 @media (min-width: 641px) {
-    #side-navbar {
-        z-index: 11;
-        position: fixed;
-        background-color: #fff;
-        top: 0;
-        right: 0;
-        display: block;
-    }
 }
 @media (max-width: 640px) {
     .loggerBox {
@@ -648,7 +650,13 @@ section#pageThree {
         min-width: 457px;
     }
     #side-navbar {
-        display: none;
+        width: 30%;
+        float: right;
+        min-width: 191px;
+    }
+    #navbar {
+        display: block;
+        min-width: 327px;
     }
     .chartBox {
         width: 100%;
@@ -674,5 +682,63 @@ section#pageThree {
     .loggerSortButtons {
         min-width: 100px;
         width: 100%;
+    }
+    #pageOneTextBox {
+        width: 435px;
+        margin-top: 0px;
+    }
+    #pageOneTextBox h1 {
+        font-size: 40px;
+    }
+    #pageOneTextBox h2 {
+        font-size: 30px;
+    }
+    #pageOneTextBox p {
+        font-size: 25px;
+    }
+    .algorithmCard {
+        display: none;
+    }
+    #demoCard {
+        top: 617px;
+        height: 645px;
+        width: 100%;
+        min-width: 554px;
+    }
+    #pageThreeRight {
+        display: block;
+        width: 100%;
+    }
+    #pageThreeLeft {
+        display: block;
+        width: 100%;
+    }
+    #pageThreeLeft p {
+        padding: 0px;
+        font-size: 12px;
+    }
+    #pageThreeRight p {
+        padding: 0px;
+        font-size: 12px;
+    }
+    .icon {
+        display: flex;
+        height: 110px;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+    .iconImg {
+        width: 60px;
+    }
+    .centeredSentence h1 {
+        margin: 58px;
+        font-size: 30px;
+    }
+    .video_wrapper {
+        display: none;
+    }
+    .container {
+        min-width: 554px;
     }
 }
