@@ -283,6 +283,7 @@ section#pageThree {
     padding: 40px 0;
     bottom: 0px;
     width: 100%;
+    min-width: 550px;
 }
 .form-wrapper {
     text-align: center;
@@ -673,9 +674,5 @@ section#pageThree {
     .loggerSortButtons {
         min-width: 100px;
         width: 100%;
-    }
-
-    #footer {
-        min-width: 457px;
     }
 }
