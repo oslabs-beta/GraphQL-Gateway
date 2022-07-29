@@ -25,7 +25,7 @@ export default function Navbar() {
     }, []);
 
     return (
-        <div>
+        <div id="navBarWrapper">
             <div
                 id="navbar"
                 style={{
@@ -43,22 +43,32 @@ export default function Navbar() {
                 <Link to="/about" type="submit" className="linkBtn">
                     About
                 </Link>
+                <div
+                    id="side-navbar"
+                    style={{
+                        display: show,
+                        //     // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
+                        //     // color: pathname === '/dashboard' ? '#fff' : '#092173',
+                    }}
+                >
+                    <Link to="/login" type="submit" className="linkBtn">
+                        Login
+                    </Link>
+                    <Link to="/signup" type="submit" className="linkBtn">
+                        Signup
+                    </Link>
+                </div>
             </div>
-            <div
+            {/* <div
                 id="side-navbar"
                 style={{
                     display: show,
-                    // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
-                    // color: pathname === '/dashboard' ? '#fff' : '#092173',
+                    //     // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
+                    //     // color: pathname === '/dashboard' ? '#fff' : '#092173',
                 }}
             >
-                <Link to="/login" type="submit" className="linkBtn">
-                    Login
-                </Link>
-                <Link to="/signup" type="submit" className="linkBtn">
-                    Signup
-                </Link>
-            </div>
+
+            </div> */}
         </div>
     );
 }

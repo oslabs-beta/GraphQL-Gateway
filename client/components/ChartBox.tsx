@@ -48,10 +48,11 @@ export interface ISState {
 
 export interface IProps {
     queries: ProjectQuery[];
+    setDaysFn: any;
 }
 
 // eslint-disable-next-line react/function-component-definition
-const ChartBox: React.FC<IProps> = ({ queries }) => {
+const ChartBox: React.FC<IProps> = ({ queries, setDaysFn }) => {
     /** create the state required for the chart */
     const [depthData, setDepthData] = useState<number[]>([]);
     const [complexityData, setComplexityData] = useState<number[]>([]);
@@ -287,20 +288,24 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartSix: 'block',
         });
     };
+    const multipleFnOne = (num: any) => {
+        setDaysFn(num);
+        setTimeRangeDays(num);
+    };
     return (
         <div id="chartBoxInside">
             <div className="projectSelector">
-                <button onClick={() => setTimeRangeDays(1)} className="chartBtn" type="button">
-                    Last 24 h
+                <button onClick={() => multipleFnOne(1)} className="chartBtn" type="button">
+                    24 h
                 </button>
-                <button onClick={() => setTimeRangeDays(7)} className="chartBtn" type="button">
-                    Last Week
+                <button onClick={() => multipleFnOne(7)} className="chartBtn" type="button">
+                    7 days
                 </button>
-                <button onClick={() => setTimeRangeDays(30)} className="chartBtn" type="button">
-                    Last Month
+                <button onClick={() => multipleFnOne(30)} className="chartBtn" type="button">
+                    30 days
                 </button>
-                <button onClick={() => setTimeRangeDays(360)} className="chartBtn" type="button">
-                    Last Year
+                <button onClick={() => multipleFnOne(360)} className="chartBtn" type="button">
+                    365 days
                 </button>
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
                     Smooth 1
@@ -341,7 +346,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                     Depth
                 </button>
                 <button onClick={() => chartThreeFn()} className="chartBtn" type="button">
-                    Complexity
+                    Complex
                 </button>
                 <button onClick={() => chartFourFn()} className="chartBtn" type="button">
                     % Blocked
@@ -350,7 +355,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                     Volume
                 </button>
                 <button onClick={() => chartSixFn()} className="chartBtn" type="button">
-                    Combined
+                    All
                 </button>
             </div>
         </div>
