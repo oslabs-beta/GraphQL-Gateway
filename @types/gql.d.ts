@@ -8,6 +8,8 @@ type User = {
 
 type QueryByID = {
     id: string;
+    date: any;
+    offset: any;
 };
 
 type GetUserArgs = {
