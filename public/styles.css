@@ -71,14 +71,10 @@ section#pageOne {
 #loading {
     font-size: 30px;
     color: #d3d3d3;
-    margin-top: 150px;
-    margin-bottom: 100px;
-    border-radius: 2px;
-    flex: 50%;
-    margin-left: 10px;
-    height: 580px;
-    min-width: 900px;
-    max-width: 900px;
+    margin: 265px auto;
+}
+#loading h3 {
+    text-align: center;
 }
 #demoCardWrapper {
     position: absolute;
@@ -199,22 +195,7 @@ section#pageThree {
     display: flex;
     justify-content: center;
 } */
-#navbar {
-    z-index: 11;
-    position: fixed;
-    background-color: #fff;
-    width: 100%;
-    top: 0;
-    border-bottom: 1px solid #324da6;
-    text-align: center;
-}
-#side-navbar {
-    z-index: 11;
-    position: fixed;
-    background-color: #fff;
-    top: 0;
-    right: 0;
-}
+
 .logoText {
     font-size: 150%;
     color: #ffffff;
@@ -285,6 +266,15 @@ section#pageThree {
     z-index: 1;
     position: relative;
 } */
+#navbar {
+    z-index: 11;
+    position: fixed;
+    background-color: #fff;
+    width: 100%;
+    top: 0;
+    border-bottom: 1px solid #324da6;
+    text-align: center;
+}
 
 #footer {
     background-color: #092173;
@@ -384,12 +374,16 @@ section#pageThree {
 /* #chartBoxInside {
     height: 1000px;
 } */
+.toolBarWrapper {
+    width: 100%;
+    margin: 0px auto;
+}
 .toolBar {
     position: absolute;
     display: flex;
     flex-direction: column;
-    height: 754px;
-    width: 400px;
+    height: 765px;
+    width: 380px;
     top: 0px;
     left: 0;
     color: #324da6;
@@ -400,7 +394,7 @@ section#pageThree {
     z-index: 1;
 }
 .toolBar.closed {
-    left: -350px;
+    left: -380px;
 }
 #toolBarMenu {
     display: flex;
@@ -460,7 +454,7 @@ section#pageThree {
     display: inline-block;
     padding: 15px;
     position: absolute;
-    right: 15px;
+    right: -25px;
     top: 15px;
     cursor: pointer;
     transition: all 0.3s ease-out;
@@ -474,6 +468,7 @@ section#pageThree {
 .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
+    right: 0px;
 }
 .chartBox {
     margin-top: 150px;
@@ -484,7 +479,6 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.7);
     height: 580px;
     min-width: 900px;
-    max-width: 900px;
 }
 .loggerBox {
     margin-top: 150px;
@@ -510,6 +504,7 @@ section#pageThree {
     background-color: #b6bcd6;
     height: 60px;
     border-bottom: 1px solid #092173;
+    max-width: 410px;
 }
 .chartBtn {
     width: 100px;
@@ -625,4 +620,62 @@ section#pageThree {
 }
 .projectLabel {
     cursor: pointer;
+}
+@media (min-width: 641px) {
+    #side-navbar {
+        z-index: 11;
+        position: fixed;
+        background-color: #fff;
+        top: 0;
+        right: 0;
+        display: block;
+    }
+}
+@media (max-width: 640px) {
+    .loggerBox {
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, 0.7);
+        max-height: 580px;
+        margin: 80px auto;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+    #dashWrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 457px;
+    }
+    #side-navbar {
+        display: none;
+    }
+    .chartBox {
+        width: 100%;
+        margin: 100px auto;
+        border-radius: 2px;
+        margin-left: 0px;
+        background-color: rgba(255, 255, 255, 0.7);
+        min-width: 457px;
+        height: 100%;
+        min-height: 316px;
+    }
+    .chartBtn {
+        width: 40px;
+        color: #353535;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        padding: 5px 1px;
+        border-radius: 5px;
+        transition: 0.5s;
+        font-size: 9px;
+    }
+    .loggerSortButtons {
+        min-width: 100px;
+        width: 100%;
+    }
+
+    #footer {
+        min-width: 457px;
+    }
 }

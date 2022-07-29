@@ -296,16 +296,16 @@ const ChartBox: React.FC<IProps> = ({ queries, setDaysFn }) => {
         <div id="chartBoxInside">
             <div className="projectSelector">
                 <button onClick={() => multipleFnOne(1)} className="chartBtn" type="button">
-                    Last 24 h
+                    24 h
                 </button>
                 <button onClick={() => multipleFnOne(7)} className="chartBtn" type="button">
-                    Last Week
+                    7 days
                 </button>
                 <button onClick={() => multipleFnOne(30)} className="chartBtn" type="button">
-                    Last Month
+                    30 days
                 </button>
                 <button onClick={() => multipleFnOne(360)} className="chartBtn" type="button">
-                    Last Year
+                    365 days
                 </button>
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
                     Smooth 1
@@ -346,7 +346,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setDaysFn }) => {
                     Depth
                 </button>
                 <button onClick={() => chartThreeFn()} className="chartBtn" type="button">
-                    Complexity
+                    Complex
                 </button>
                 <button onClick={() => chartFourFn()} className="chartBtn" type="button">
                     % Blocked
@@ -355,7 +355,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setDaysFn }) => {
                     Volume
                 </button>
                 <button onClick={() => chartSixFn()} className="chartBtn" type="button">
-                    Combined
+                    All
                 </button>
             </div>
         </div>

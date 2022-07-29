@@ -123,7 +123,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
     };
 
     return (
-        <>
+        <div>
             <div className="loggerSortButtonsWrapper">
                 <div className="loggerSortButtons">
                     <div
@@ -196,7 +196,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                     <p>No more results</p>
                 )}
             </div>
-        </>
+        </div>
     );
 };
 

@@ -41,7 +41,7 @@ export default function Dashboard() {
     }, [loading, data]);
 
     return (
-        <div>
+        <div className="toolBarWrapper">
             <ToolBar
                 projects={allProjects}
                 setSelectedProject={setSelectedProject}

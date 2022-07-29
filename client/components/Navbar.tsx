@@ -48,8 +48,8 @@ export default function Navbar() {
                 id="side-navbar"
                 style={{
                     display: show,
-                    // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
-                    // color: pathname === '/dashboard' ? '#fff' : '#092173',
+                    //     // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
+                    //     // color: pathname === '/dashboard' ? '#fff' : '#092173',
                 }}
             >
                 <Link to="/login" type="submit" className="linkBtn">

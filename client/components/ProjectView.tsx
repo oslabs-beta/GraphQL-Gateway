@@ -103,7 +103,14 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
             <div id="dashWrapper">
                 <div className="loggerBox" />
                 <div className="chartBox">
-                    {projectLoading ? <Loading /> : <div id="loading"> Select a project</div>}
+                    {projectLoading ? (
+                        <Loading />
+                    ) : (
+                        <div id="loading">
+                            {' '}
+                            <h3>Select a project</h3>
+                        </div>
+                    )}
                 </div>
                 ;
             </div>
