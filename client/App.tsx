@@ -48,7 +48,8 @@ export default function HomePage() {
                     Signup
                 </Link>
             </div> */}
-            <div className="container">
+            {/* FIXME: "container" class was breaking the display in Chrome */}
+            <div className="">
                 <section id="pageOne">
                     <div className="blue-filter" />
                     <div className="video_wrapper">

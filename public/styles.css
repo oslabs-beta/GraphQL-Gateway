@@ -6,13 +6,17 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .loggerBox {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
+
 html {
     background-color: #092173;
     font-family: 'Roboto', sans-serif;
 }
+
 body {
     margin: 0 auto;
     background-repeat: no-repeat;
@@ -42,6 +46,7 @@ section#pageOne {
     background-color: #092173;
     overflow: hidden;
 }
+
 .blue-filter {
     z-index: 9;
     width: 100%;
@@ -49,11 +54,13 @@ section#pageOne {
     position: absolute;
     background-color: rgba(9, 33, 115, 0.7);
 }
+
 .video_wrapper {
     position: absolute;
     height: 100%;
     width: 100%;
 }
+
 #demoCard {
     z-index: 11;
     position: absolute;
@@ -80,11 +87,13 @@ section#pageOne {
     min-width: 900px;
     max-width: 900px;
 }
+
 #demoCardWrapper {
     position: absolute;
     top: 0;
     height: 300px;
 }
+
 .algorithmCard {
     display: inline-block;
     padding: 20px;
@@ -94,21 +103,26 @@ section#pageOne {
     width: 200px;
     transition: 0.3s;
 }
+
 .algorithmCard > img {
     -webkit-transition: -webkit-transform 0.8s ease-in-out;
     transition: transform 0.8s ease-in-out;
 }
+
 .algorithmCard:hover > img {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
 }
+
 .algorithmCard:hover {
     background-color: #3574f3;
 }
+
 #pageOne h1 {
     font-size: 60px;
     margin-bottom: 10px;
 }
+
 #pageOne h2 {
     margin: 10px 0 50px 0;
     font-size: 30px;
@@ -142,6 +156,7 @@ section#pageThree {
 .icon {
     padding: 20px;
 }
+
 .centeredSentence {
     text-align: center;
     color: #fff;
@@ -150,19 +165,23 @@ section#pageThree {
     width: 100%;
     background-color: #092173;
 }
+
 .centeredSentence h1 {
     margin: 52px;
     font-size: 40px;
 }
+
 #pageThreeWrapper {
     width: 100%;
     text-align: center;
 }
+
 #pageThreeLeft {
     display: inline-block;
     width: 700px;
     text-align: center;
 }
+
 #pageThreeRight {
     display: inline-block;
     width: 700px;
@@ -173,11 +192,13 @@ section#pageThree {
     width: 100px;
     padding: 30px;
 }
+
 #pageThreeLeft p {
     float: right;
     width: 50%;
     padding: 50px;
 }
+
 #pageThreeRight p {
     float: right;
     width: 50%;
@@ -207,6 +228,7 @@ section#pageThree {
     top: 0;
     text-align: center;
 }
+
 #side-navbar {
     z-index: 11;
     position: fixed;
@@ -214,6 +236,7 @@ section#pageThree {
     top: 0;
     right: 0;
 }
+
 .logoText {
     font-size: 150%;
     color: #ffffff;
@@ -293,9 +316,11 @@ section#pageThree {
     bottom: 0px;
     width: 100%;
 }
+
 .form-wrapper {
     text-align: center;
 }
+
 .input {
     width: 240px;
     height: 10px;
@@ -308,9 +333,11 @@ section#pageThree {
     border-radius: 5px;
     transition: 0.2s linear;
 }
+
 .input:nth-of-type(2) {
     margin-top: 10px;
 }
+
 /* .input:focus {
     border: 1px solid #353535;
 } */
@@ -325,9 +352,11 @@ section#pageThree {
     margin: 10px;
     transition: 0.5s;
 }
+
 .btn:hover {
     background-color: #e8a4ffc1;
 }
+
 .box {
     margin: 150px auto;
     text-align: center;
@@ -350,6 +379,7 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0);
     transition: 0.5s;
 }
+
 .transferBtn:hover {
     color: #3574f3;
     background-color: rgba(255, 255, 255, 0);
@@ -374,12 +404,15 @@ section#pageThree {
     margin: 2rem auto 1rem;
     display: inline-block;
 }
+
 .app h1 {
     margin: 50px;
 }
+
 .dashboard {
     width: 100%;
 }
+
 /* #chartBoxInside {
     height: 1000px;
 } */
@@ -394,41 +427,57 @@ section#pageThree {
     background-color: #f5f5f5;
     padding-top: 75px;
 }
+
 #toolBarMenu {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px 50px 0px 50px;
 }
+
 .projectButton {
     border: none;
     background: none;
     padding: 10px 0px 10px 30px;
     font-size: 20px;
 }
+
 .projectContent {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 10px 0px 10px 60px;
 }
+
 .selectProjectButton {
     border: none;
     background: none;
     padding-top: 10px;
     font-size: 20px;
 }
+
 .projectButton:hover,
 .selectProjectButton:hover {
     color: #00259e;
     font-weight: bold;
 }
+
 .fa-bars {
     align-self: end;
     padding: 15px;
     border: none;
     background: none;
+    padding-right: 16px;
 }
+
+.fa-gear {
+    align-self: end;
+    padding: 15px;
+    border: none;
+    background: none;
+    margin-top: 10px;
+}
+
 .chartBox {
     margin-top: 150px;
     margin-bottom: 100px;
@@ -440,6 +489,7 @@ section#pageThree {
     min-width: 900px;
     max-width: 900px;
 }
+
 .loggerBox {
     margin-top: 150px;
     margin-bottom: 100px;
@@ -453,15 +503,18 @@ section#pageThree {
     min-width: 410px;
     max-width: 410px;
 }
+
 .loggerSortButtonsWrapper {
     width: 410px;
     order: 3;
     position: absolute;
     height: 33px;
 }
+
 .loggerSortButtons {
     text-align: center;
 }
+
 .chartBtn {
     width: 100px;
     color: #353535;
@@ -474,6 +527,7 @@ section#pageThree {
     border-radius: 5px;
     transition: 0.5s;
 }
+
 .loggerBtn {
     display: inline-block;
     font-size: 12px;
@@ -491,12 +545,15 @@ section#pageThree {
     border-radius: 5px;
     transition: 0.5s;
 }
+
 .loggerBtn:hover {
     background-color: #a496e3;
 }
+
 .active {
     background-color: #a496e3;
 }
+
 .projectSelector {
     display: flex;
     justify-content: space-between;
@@ -507,13 +564,16 @@ section#pageThree {
 .chartBtn:hover {
     background-color: #a496e3;
 }
+
 .h4chart {
     color: #353535;
     text-align: center;
 }
+
 .chartVisual {
     margin: 0 auto;
 }
+
 #dashWrapper {
     display: flex;
     flex-direction: row;
@@ -521,6 +581,7 @@ section#pageThree {
     justify-content: center;
     overflow: none;
 }
+
 .Collapsible {
     color: #545353;
     background-color: rgba(255, 255, 255, 0.2);
@@ -535,18 +596,21 @@ section#pageThree {
     border-top: 1px solid #999999;
     border-bottom: 0px;
 }
+
 .label {
     font-size: 10px;
     font-weight: bold;
     display: inline-block;
     margin-right: 10px;
 }
+
 .value {
     font-size: 10px;
     text-align: center;
     display: inline-block;
     margin-right: 25px;
 }
+
 .queryProps {
     display: inline-block;
     border-bottom: 1px solid #092173;
@@ -556,9 +620,11 @@ section#pageThree {
     cursor: pointer;
     width: 100%;
 }
+
 .individualQuery {
     display: inline-block;
 }
+
 .space {
     height: 60px;
     border-bottom: 1px solid #092173;
@@ -567,6 +633,64 @@ section#pageThree {
 .queryProps:hover {
     background-color: rgb(9, 32, 116, 0.1);
 }
+
 .projectLabel {
     cursor: pointer;
+}
+
+.slidecontainer {
+    width: 100%;
+    /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    appearance: none;
+    width: 100%;
+    /* Full-width */
+    height: 25px;
+    /* Specified height */
+    background: #d3d3d3;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 0.7;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: 0.2s;
+    /* 0.2 seconds transition on hover */
+    transition: opacity 0.2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;
+    /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #04aa6d;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #04aa6d;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
 }
