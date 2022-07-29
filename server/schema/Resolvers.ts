@@ -296,8 +296,6 @@ const resolvers: IResolvers = {
             context: Context
         ): Promise<ProjectQuery | Error> => {
             const { projectID } = args.projectQuery;
-            const { authenticated } = context;
-            if (authenticated === null) return new Error('Unauthorized to make this request');
             const newQueryProps = args.projectQuery;
 
             // only add latency to the query object if it was passed into variables
