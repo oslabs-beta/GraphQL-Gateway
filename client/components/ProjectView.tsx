@@ -42,30 +42,18 @@ const GET_QUERY_DATA = gql`
 export default function ProjectView({ selectedProject, projectLoading }: ProjectViewProps) {
     /** State requirments for this component */
     const [queries, setQueries] = useState<ProjectQuery[]>([]);
-    const [days, setDays] = useState<1 | 7 | 30 | 365>(7);
-    const [previousDays, setPreviousDays] = useState<1 | 7 | 30 | 365 | 0>(0);
+    const [numberOfDaysToView, setNumberOfDaysToView] = useState<ChartSelectionDays>(7);
+    const [previousDays, setPreviousDays] = useState<ChartSelectionDays | 0>(0);
     const [offset, setOffset] = useState(0);
 
-    const setDaysFn = (param: number): any => {
-        if (param === 1) {
-            setDays(1);
-        } else if (param === 7) {
-            setDays(7);
-        } else if (param === 30) {
-            setDays(30);
-        } else {
-            setDays(365);
-        }
-    };
-
     /** Get the query ready to get query information for this project */
-    const startTime: number = new Date().valueOf() - days * 24 * 60 * 60 * 1000;
+    const startTime: number = new Date().valueOf() - numberOfDaysToView * 24 * 60 * 60 * 1000;
     const [getProjectQueries, { data, loading: queriesLoading }] = useLazyQuery(GET_QUERY_DATA);
 
     useEffect(() => {
         /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
         if (!projectLoading && selectedProject) {
-            if (days > previousDays) {
+            if (numberOfDaysToView > previousDays) {
                 getProjectQueries({
                     variables: {
                         projectId: selectedProject!.id,
@@ -81,10 +69,10 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                     )
                 );
             }
-            setPreviousDays(days);
+            setPreviousDays(numberOfDaysToView);
             setOffset(startTime);
         }
-    }, [selectedProject, days]);
+    }, [selectedProject, numberOfDaysToView]);
     useEffect(() => {
         /** Once the queries are done loading and there is data, set the queries in state */
         if (!queriesLoading && data) {
@@ -124,7 +112,11 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                 <Queries rawQueries={queries} />
             </div>
             <div className="chartBox">
-                <ChartBox queries={queries} setDaysFn={setDaysFn} />
+                <ChartBox
+                    queries={queries}
+                    numberOfDaysToView={numberOfDaysToView}
+                    setNumberOfDaysToView={setNumberOfDaysToView}
+                />
             </div>
         </div>
     );
