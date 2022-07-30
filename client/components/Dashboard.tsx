@@ -46,6 +46,7 @@ export default function Dashboard() {
                 projects={allProjects}
                 setSelectedProject={setSelectedProject}
                 projectLoading={loading}
+                setAllProjects={setAllProjects}
             />
             <ProjectView selectedProject={selectedProject} projectLoading={loading} />
         </div>

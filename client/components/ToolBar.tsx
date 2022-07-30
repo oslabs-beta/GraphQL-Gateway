@@ -1,24 +1,66 @@
-import React, { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
 import Loading from './Loading';
 import ProjectItem from './ProjectItem';
+import { useAuth } from '../auth/AuthProvider';
+import Form from './Form';
 
 interface ToolbarProps {
     projects: Project[] | undefined;
     setSelectedProject: React.Dispatch<React.SetStateAction<Project | undefined>>;
     projectLoading: boolean;
+    setAllProjects: React.Dispatch<React.SetStateAction<Project[] | undefined>>;
 }
-export default function ToolBar({ projects, setSelectedProject, projectLoading }: ToolbarProps) {
+
+const CREATE_PROJECT = gql`
+    mutation createProjectMutation($project: CreateProjectInput!) {
+        createProject(project: $project) {
+            name
+            id
+            userID
+            apiKey
+        }
+    }
+`;
+
+export default function ToolBar({
+    projects,
+    setSelectedProject,
+    projectLoading,
+    setAllProjects,
+}: ToolbarProps) {
     /** State for the component */
     const [extended, setExtended] = useState(true);
-    /** Allow users to select a project from a list and have the data for that proejct dispaly in the project view */
-    // const handleSelectProject = (e: any) => {
-    //     setSelectedProject(projects![e.target.id]);
-    // };
+
+    /** GraphQL mutation for creating a project */
+    const [createProjectMutation] = useMutation(CREATE_PROJECT, {
+        onCompleted: (data: any) => {
+            console.log('typeof data', typeof data.createProject);
+            let newProjects: Project[];
+            if (projects instanceof Array) {
+                newProjects = [...projects, data.createProject];
+                setAllProjects(newProjects);
+            }
+            // console.log('newprojects', newProjects);
+        },
+        onError: (err) => console.log(err),
+    });
+
+    useEffect(() => {
+        console.log('projects type', typeof projects);
+    }, [projects]);
+
+    const { user } = useAuth();
 
     /** render the toolbar
      * while the GET_PROJECT_DATA query is loading, render the loading component
      * instead of the project list */
 
+    // this is a state for the form
+    const [isOpen, setIsOpen] = useState(false);
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    };
     return (
         <div className={`toolBar${extended ? ' closed' : ''}`}>
             {/** //ToDo: make the tool bar look nice. 
@@ -37,17 +79,28 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
                     <Loading />
                 ) : (
                     <>
-                        {projects?.map((project) => (
+                        {projects?.map((project: Project) => (
                             <ProjectItem
                                 project={project}
                                 setSelectedProject={setSelectedProject}
                                 setExtended={setExtended}
                             />
                         ))}
-                        <button className="selectProjectButton newProject" type="button">
+                        <button
+                            onClick={togglePopup}
+                            className="selectProjectButton newProject"
+                            type="button"
+                        >
                             New Project
                         </button>
                         <div>Menu toSee/update profile info</div>
+                        {isOpen && (
+                            <Form
+                                togglePopup={togglePopup}
+                                createProjectMutation={createProjectMutation}
+                                userID={user!.id}
+                            />
+                        )}
                     </>
                 )}
             </div>
