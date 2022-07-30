@@ -17,6 +17,7 @@ const typeDefs = gql`
         queries: [ProjectQuery]!
         query: ProjectQuery
         apiKey: String
+        rateLimiterConfig: RateLimiterConfig
     }
 
     type ProjectQuery {
@@ -31,6 +32,23 @@ const typeDefs = gql`
         timestamp: Float!
         loggedOn: Float!
         latency: Int
+    }
+
+    type BucketOptions {
+        refillRate: Int!
+        capacity: Int!
+    }
+
+    type WindowOptions {
+        windowSize: Int!
+        capacity: Int!
+    }
+
+    union RateLimiterOptions = BucketOptions | WindowOptions
+
+    type RateLimiterConfig {
+        type: String!
+        options: RateLimiterOptions!
     }
 
     type Query {
@@ -77,6 +95,14 @@ const typeDefs = gql`
     input UpdateProjectInput {
         id: String!
         name: String
+        rateLimiterConfig: RateLimiterConfigInput
+    }
+
+    input RateLimiterConfigInput {
+        type: String!
+        capacity: Int!
+        rate: Int
+        windowSize: Int
     }
 
     input CreateProjectQueryInput {

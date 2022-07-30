@@ -7,10 +7,13 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
+import { merge } from 'lodash';
 
 import connectDB from './config/db';
 import typeDefs from './schema/TypeDefs';
-import resolvers from './schema/Resolvers';
+import ProjectResolvers from './schema/ProjectResolvers';
+import UserResolvers from './schema/UserResolvers';
+import ProjectQueryResolvers from './schema/ProjectQueryResolvers';
 import authRouter from './routes/Auth';
 import userRouter from './routes/User';
 import ProjectDB from './models/Project';
@@ -23,7 +26,7 @@ const PORT: number | string = process.env.PORT || 3000;
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: merge(ProjectResolvers, UserResolvers, ProjectQueryResolvers),
     context: async ({ req }) => {
         const authHeader = req.headers.authorization || null;
         if (!authHeader) return { authenticated: false, user: null };
