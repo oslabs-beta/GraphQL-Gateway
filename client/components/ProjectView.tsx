@@ -43,6 +43,7 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     /** State requirments for this component */
     const [queries, setQueries] = useState<ProjectQuery[]>([]);
     const [days, setDays] = useState<1 | 7 | 30 | 365>(7);
+    const [previousDays, setPreviousDays] = useState<1 | 7 | 30 | 365 | 0>(0);
     const [offset, setOffset] = useState(0);
 
     const setDaysFn = (param: number): any => {
@@ -64,18 +65,26 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
     useEffect(() => {
         /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
         if (!projectLoading && selectedProject) {
-            getProjectQueries({
-                variables: {
-                    projectId: selectedProject!.id,
-                    date: startTime,
-                    offset,
-                    // date: 1655918025713,
-                },
-            });
+            if (days > previousDays) {
+                getProjectQueries({
+                    variables: {
+                        projectId: selectedProject!.id,
+                        date: startTime,
+                        offset,
+                    },
+                });
+            } else {
+                setQueries(
+                    queries.slice(
+                        0,
+                        queries.findIndex((el) => el.timestamp < startTime)
+                    )
+                );
+            }
+            setPreviousDays(days);
             setOffset(startTime);
         }
     }, [selectedProject, days]);
-
     useEffect(() => {
         /** Once the queries are done loading and there is data, set the queries in state */
         if (!queriesLoading && data) {
