@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { RateLimiterConfig, SettingsPaneProps } from '../../@types/dashboard';
 
 /**
  *

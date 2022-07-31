@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { ProjectQuery } from '../../@types/Interfaces';
-import { SortOrder } from '../../@types/dashboard';
 import Query from './Query';
 
 export interface ISState {

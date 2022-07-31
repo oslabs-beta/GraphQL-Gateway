@@ -1,10 +1,10 @@
-export type SortOrder = '↑' | '↓' | '';
+type SortOrder = '↑' | '↓' | '';
 
-export interface SeriesData {
+interface SeriesData {
     readonly name: string;
     data: number[];
 }
-export interface ChartData {
+interface ChartData {
     options: {
         readonly chart: {
             id: string;
@@ -15,29 +15,6 @@ export interface ChartData {
     };
     series: SeriesData[];
 }
-
-type BucketType = 'TOKEN_BUCKET' | 'LEAKY_BUCKET';
-
-type WindowType = 'FIXED_WINDOW' | 'SLIDING_WINDOW_LOG' | 'SLIDING_WINDOW_COUNTER';
-
-type BucketRateLimiter = {
-    type: BucketType;
-    options: {
-        refillRate: number;
-        capacity: number;
-    };
-};
-
-type WindowRateLimiter = {
-    type: WindowType;
-    options: {
-        windowSize: number;
-        capacity: number;
-    };
-};
-
-type RateLimiterConfig = WindowRateLimiter | BucketRateLImiter;
-
 interface ProjectPaneProps {
     projects: Project[] | undefined;
     setSelectedProject: React.Dispatch<React.SetStateAction<Project | undefined>>;

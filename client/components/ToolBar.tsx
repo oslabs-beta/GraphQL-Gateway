@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ToolbarProps } from '../../@types/dashboard';
 import Loading from './Loading';
 import ProjectsPane from './ProjectsPane';
 import SettingsPane from './SettingsPane';

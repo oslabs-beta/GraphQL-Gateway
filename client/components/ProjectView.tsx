@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useLazyQuery, gql } from '@apollo/client';
 import Queries from './Queries';
 import ChartBox from './ChartBox';
-import { SortOrder } from '../../@types/dashboard';
 import Loading from './Loading';
 
 export interface ISState {

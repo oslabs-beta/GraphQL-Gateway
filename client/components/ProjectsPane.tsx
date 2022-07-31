@@ -1,5 +1,4 @@
 import React from 'react';
-import { ProjectPaneProps } from '../../@types/dashboard';
 import Loading from './Loading';
 import ProjectItem from './ProjectItem';
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Project } from '../../@types/Interfaces';
 
 interface ProjectItemProps {
     project: Project;
