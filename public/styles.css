@@ -500,10 +500,17 @@ section#pageThree {
     padding: 5px;
 }
 
-.selectProjectButton {
+.panelButtonGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.panelButton {
     background: none;
     border: 1px solid #324da6;
-    width: 100px;
+    /* width: 100px; */
     margin: 10px 0;
     padding: 5px;
     color: #324da6;
@@ -513,7 +520,7 @@ section#pageThree {
     display: inline-block;
 }
 
-.selectProjectButton:hover {
+.panelButton:hover {
     background: #324da6;
     color: #fff;
     cursor: pointer;

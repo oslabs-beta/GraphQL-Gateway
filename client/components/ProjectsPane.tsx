@@ -21,7 +21,7 @@ export default function ProjectsPane({
                             setSelectedProject={setSelectedProject}
                         />
                     ))}
-                    <button className="selectProjectButton newProject" type="button">
+                    <button className="panelButton newProject" type="button">
                         New Project
                     </button>
                     <div>Menu toSee/update profile info</div>

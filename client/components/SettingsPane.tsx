@@ -95,7 +95,7 @@ export default function SettingsPane({
 
     return (
         <>
-            <h1>Settings</h1>
+            <h3>Settings</h3>
             {rateLimiterLoading ? (
                 <div className="loader" />
             ) : (
@@ -120,19 +120,32 @@ export default function SettingsPane({
                             onChange={onWindowSizeChange}
                         />
                     )}
-                    <button id="updateDefault" type="button" onClick={(e) => onUpdate(e, true)}>
-                        Update Project Default
-                    </button>
-                    {/* TODO: Implement functionality for the below buttons */}
-                    <button disabled id="resetDefault" type="button">
-                        Reset
-                    </button>
-                    <button disabled id="resetQueries" type="button">
-                        Reset Query Data
-                    </button>
-                    <button disabled id="updateSettings" type="button" onClick={onUpdate}>
-                        Update Queries
-                    </button>
+                    <div className="panelButtonGroup">
+                        <button
+                            className="panelButton"
+                            disabled
+                            id="updateSettings"
+                            type="button"
+                            onClick={onUpdate}
+                        >
+                            Apply
+                        </button>
+                        <button className="panelButton" disabled id="resetQueries" type="button">
+                            Clear
+                        </button>
+                        <button
+                            className="panelButton"
+                            id="updateDefault"
+                            type="button"
+                            onClick={(e) => onUpdate(e, true)}
+                        >
+                            Update Project Default
+                        </button>
+                        {/* TODO: Implement functionality for the below buttons */}
+                        <button className="panelButton" disabled id="resetDefault" type="button">
+                            Reset Project Default
+                        </button>
+                    </div>
                 </>
             )}
         </>
