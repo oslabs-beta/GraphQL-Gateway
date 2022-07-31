@@ -21,6 +21,7 @@ import React, { useState } from 'react';
 function Slider({
     name,
     value,
+    displayValue,
     onChange,
     min,
     max,
@@ -28,6 +29,7 @@ function Slider({
 }: {
     name: string;
     value: number;
+    displayValue: number;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
     min: number;
     max: number;
@@ -35,7 +37,7 @@ function Slider({
 }) {
     return (
         <div id={`${name}Slider`} className="slidecontainer">
-            {name} : {value} {unit}
+            {name} : {displayValue} {unit}
             <input
                 type="range"
                 min={min}
@@ -124,6 +126,7 @@ export default function SettingsPane({
                     <Slider
                         name="Capacity"
                         value={capacity}
+                        displayValue={capacity}
                         onChange={onCapacityChange}
                         min={0}
                         max={500}
@@ -133,6 +136,7 @@ export default function SettingsPane({
                         <Slider
                             name="Rate"
                             value={refillRate}
+                            displayValue={refillRate}
                             onChange={onRefillRateChange}
                             min={0}
                             max={100}
@@ -142,10 +146,11 @@ export default function SettingsPane({
                         <Slider
                             name="Window Size"
                             value={windowSize * 1000} // Slider goes down to millisecond for granularity
+                            displayValue={windowSize} // Slider goes down to millisecond for granularity
                             onChange={onWindowSizeChange}
                             min={0}
-                            max={1000} // 10 minutes
-                            unit="ms"
+                            max={600000} // 10 minutes
+                            unit="s"
                         />
                     )}
                     <div className="panelButtonGroup">
