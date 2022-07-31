@@ -15,6 +15,8 @@ interface ChartData {
     };
     series: SeriesData[];
 }
+
+type ChartSelectionDays = 1 | 7 | 30 | 365;
 interface ProjectPaneProps {
     projects: Project[] | undefined;
     setSelectedProject: React.Dispatch<React.SetStateAction<Project | undefined>>;

@@ -28,6 +28,7 @@ a:link {
 
 .container {
     height: 100%;
+    min-width: 457px;
 }
 
 section {
@@ -37,6 +38,7 @@ section {
     width: 100%;
     height: 100vh;
     max-height: 900px;
+    min-width: 457px;
 }
 
 section#pageOne {
@@ -78,14 +80,11 @@ section#pageOne {
 #loading {
     font-size: 30px;
     color: #d3d3d3;
-    margin-top: 150px;
-    margin-bottom: 100px;
-    border-radius: 2px;
-    flex: 50%;
-    margin-left: 10px;
-    height: 580px;
-    min-width: 900px;
-    max-width: 900px;
+    margin: 265px auto;
+}
+
+#loading h3 {
+    text-align: center;
 }
 
 #demoCardWrapper {
@@ -264,7 +263,7 @@ section#pageThree {
     margin: 0;
     opacity: 1;
     outline: 0;
-    padding: 1.5em 2.2em;
+    padding: 1.5em;
     /* position: relative; */
     text-align: center;
     text-decoration: none;
@@ -307,6 +306,25 @@ section#pageThree {
     z-index: 1;
     position: relative;
 } */
+#navbar {
+    z-index: 11;
+    position: fixed;
+    background-color: #fff;
+    width: 70%;
+    top: 0;
+    border-bottom: 1px solid #324da6;
+    text-align: center;
+}
+
+#side-navbar {
+    z-index: 11;
+    position: fixed;
+    background-color: #fff;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 30%;
+}
 
 #footer {
     background-color: #092173;
@@ -315,6 +333,7 @@ section#pageThree {
     padding: 40px 0;
     bottom: 0px;
     width: 100%;
+    min-width: 550px;
 }
 
 .form-wrapper {
@@ -416,16 +435,34 @@ section#pageThree {
 /* #chartBoxInside {
     height: 1000px;
 } */
-#toolBar {
-    position: absolute;
+.toolBarWrapper {
+    width: 100%;
+    margin: 0px auto;
+}
+
+.toolBarButtons {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 400px;
+}
+
+.toolBar {
+    position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
+    height: 765px;
+    width: 380px;
     top: 0px;
-    z-index: 10;
-    background-color: #f5f5f5;
-    padding-top: 75px;
+    left: 0;
+    color: #324da6;
+    background-color: #fff;
+    margin-top: 64px;
+    border-bottom: 1px solid #324da6;
+    transition: all 0.2s ease-out;
+    z-index: 1;
+}
+
+.toolBar.closed {
+    left: -380px;
 }
 
 #toolBarMenu {
@@ -433,49 +470,101 @@ section#pageThree {
     flex-direction: column;
     align-items: flex-start;
     padding: 0px 50px 0px 50px;
+    transition: all 1s ease;
+
+    flex-grow: 1;
 }
 
 .projectButton {
     border: none;
     background: none;
-    padding: 10px 0px 10px 30px;
     font-size: 20px;
+    color: #324da6;
+    margin: 10px 0px;
+    cursor: pointer;
+}
+
+.projectButton:hover {
+    cursor: pointer;
+    color: #1134a7;
 }
 
 .projectContent {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 0px 10px 60px;
+    text-align: center;
+    margin: 0px auto;
+}
+
+.apiDiv {
+    width: 200px;
+    text-align: center;
+    padding: 5px;
 }
 
 .selectProjectButton {
-    border: none;
     background: none;
-    padding-top: 10px;
-    font-size: 20px;
+    border: 1px solid #324da6;
+    width: 100px;
+    margin: 10px 0;
+    padding: 5px;
+    color: #324da6;
+    font-size: 15px;
+    transition: all 0.5s ease;
+    border-radius: 5px;
+    display: inline-block;
 }
 
-.projectButton:hover,
 .selectProjectButton:hover {
-    color: #00259e;
-    font-weight: bold;
+    background: #324da6;
+    color: #fff;
+    cursor: pointer;
 }
 
-.fa-bars {
+/* .fa-bars {
     align-self: end;
     padding: 15px;
     border: none;
     background: none;
     padding-right: 16px;
-}
+} */
 
 .fa-gear {
     align-self: end;
-    padding: 15px;
+    padding: 10px;
     border: none;
     background: none;
-    margin-top: 10px;
+    margin-top: 75px;
+    color: #324da6;
+    cursor: pointer;
+}
+
+.newProject {
+    margin: 30px auto;
+    width: 150px;
+    padding: 10px;
+}
+
+.arrow {
+    background: none;
+    border: solid #324da6;
+    border-width: 0 6px 6px 0;
+    display: inline-block;
+    padding: 15px;
+    position: absolute;
+    right: -25px;
+    top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    right: 0px;
 }
 
 .chartBox {
@@ -487,7 +576,6 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.7);
     height: 580px;
     min-width: 900px;
-    max-width: 900px;
 }
 
 .loggerBox {
@@ -513,6 +601,10 @@ section#pageThree {
 
 .loggerSortButtons {
     text-align: center;
+    background-color: #b6bcd6;
+    height: 60px;
+    border-bottom: 1px solid #092173;
+    max-width: 410px;
 }
 
 .chartBtn {
@@ -621,6 +713,15 @@ section#pageThree {
     width: 100%;
 }
 
+.loggerGUI {
+    text-align: center;
+}
+
+.loadMoreBtn {
+    margin: 50px;
+    display: inline-block;
+}
+
 .individualQuery {
     display: inline-block;
 }
@@ -713,5 +814,138 @@ section#pageThree {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 641px) {
+}
+
+@media (max-width: 640px) {
+    .loggerBox {
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, 0.7);
+        max-height: 580px;
+        margin: 80px auto;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    #dashWrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 457px;
+    }
+
+    #side-navbar {
+        width: 30%;
+        float: right;
+        min-width: 191px;
+    }
+
+    #navbar {
+        display: block;
+        min-width: 327px;
+    }
+
+    .chartBox {
+        width: 100%;
+        margin: 100px auto;
+        border-radius: 2px;
+        margin-left: 0px;
+        background-color: rgba(255, 255, 255, 0.7);
+        min-width: 457px;
+        height: 100%;
+        min-height: 316px;
+    }
+
+    .chartBtn {
+        width: 40px;
+        color: #353535;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        padding: 5px 1px;
+        border-radius: 5px;
+        transition: 0.5s;
+        font-size: 9px;
+    }
+
+    .loggerSortButtons {
+        min-width: 100px;
+        width: 100%;
+    }
+
+    #pageOneTextBox {
+        width: 435px;
+        margin-top: 0px;
+    }
+
+    #pageOneTextBox h1 {
+        font-size: 40px;
+    }
+
+    #pageOneTextBox h2 {
+        font-size: 30px;
+    }
+
+    #pageOneTextBox p {
+        font-size: 25px;
+    }
+
+    .algorithmCard {
+        display: none;
+    }
+
+    #demoCard {
+        top: 617px;
+        height: 645px;
+        width: 100%;
+        min-width: 554px;
+    }
+
+    #pageThreeRight {
+        display: block;
+        width: 100%;
+    }
+
+    #pageThreeLeft {
+        display: block;
+        width: 100%;
+    }
+
+    #pageThreeLeft p {
+        padding: 0px;
+        font-size: 12px;
+    }
+
+    #pageThreeRight p {
+        padding: 0px;
+        font-size: 12px;
+    }
+
+    .icon {
+        display: flex;
+        height: 110px;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .iconImg {
+        width: 60px;
+    }
+
+    .centeredSentence h1 {
+        margin: 58px;
+        font-size: 30px;
+    }
+
+    .video_wrapper {
+        display: none;
+    }
+
+    .container {
+        min-width: 554px;
     }
 }

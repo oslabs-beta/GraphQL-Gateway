@@ -48,10 +48,12 @@ export interface ISState {
 
 export interface IProps {
     queries: ProjectQuery[];
+    setNumberOfDaysToView: React.Dispatch<React.SetStateAction<ChartSelectionDays>>;
+    numberOfDaysToView: ChartSelectionDays;
 }
 
 // eslint-disable-next-line react/function-component-definition
-const ChartBox: React.FC<IProps> = ({ queries }) => {
+const ChartBox: React.FC<IProps> = ({ queries, setNumberOfDaysToView, numberOfDaysToView }) => {
     /** create the state required for the chart */
     const [depthData, setDepthData] = useState<number[]>([]);
     const [complexityData, setComplexityData] = useState<number[]>([]);
@@ -60,7 +62,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
     const [volumeData, setVolumeData] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]);
     const [smoothingFactor, setSmoothingFactor] = useState<1 | 3 | 6 | 12>(12);
-    const [timeRangeDays, setTimeRangeDays] = useState<1 | 7 | 30 | 360>(30);
+    // const [timeRangeDays, setTimeRangeDays] = useState<ChartSelectionDays>(30);
 
     /** useEffect will create the chart data to display form the query data */
     useMemo(() => {
@@ -77,8 +79,8 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         /** layout the begining of the chart and time increments for each point */
         const currentTime = new Date().valueOf();
         // the time block is determined by: taking the smallest block of 15 minutes and multiplying that by a user conctrolled smoothing factor
-        const timeBlock = 900000 * smoothingFactor * ((timeRangeDays + 30) / 30);
-        let startTime = currentTime - timeRangeDays * 86400000; // 1 day * number of days for the time frame
+        const timeBlock = 900000 * smoothingFactor * ((numberOfDaysToView + 30) / 30);
+        let startTime = currentTime - numberOfDaysToView * 86400000; // 1 day * number of days for the time frame
 
         /** process time blocks for the chart while the start time of the current time block is less than the current date */
         // The counter i will track the index we are on in the queries array
@@ -127,7 +129,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
         setblockedData(blockedArray);
         setLabels(labelsArray);
         setVolumeData(volumeArray);
-    }, [queries, timeRangeDays, smoothingFactor]);
+    }, [queries, numberOfDaysToView, smoothingFactor]);
 
     /** Configure the datasets for Chart.js */
     // apply these prooperties to all datasets
@@ -287,19 +289,28 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
             chartSix: 'block',
         });
     };
+
     return (
         <div id="chartBoxInside">
             <div className="projectSelector">
-                <button onClick={() => setTimeRangeDays(1)} className="chartBtn" type="button">
+                <button onClick={() => setNumberOfDaysToView(1)} className="chartBtn" type="button">
                     Last 24 h
                 </button>
-                <button onClick={() => setTimeRangeDays(7)} className="chartBtn" type="button">
-                    Last Week
+                <button onClick={() => setNumberOfDaysToView(7)} className="chartBtn" type="button">
+                    7 days
                 </button>
-                <button onClick={() => setTimeRangeDays(30)} className="chartBtn" type="button">
+                <button
+                    onClick={() => setNumberOfDaysToView(30)}
+                    className="chartBtn"
+                    type="button"
+                >
                     Last Month
                 </button>
-                <button onClick={() => setTimeRangeDays(360)} className="chartBtn" type="button">
+                <button
+                    onClick={() => setNumberOfDaysToView(365)}
+                    className="chartBtn"
+                    type="button"
+                >
                     Last Year
                 </button>
                 <button onClick={() => setSmoothingFactor(1)} className="chartBtn" type="button">
@@ -350,7 +361,7 @@ const ChartBox: React.FC<IProps> = ({ queries }) => {
                     Volume
                 </button>
                 <button onClick={() => chartSixFn()} className="chartBtn" type="button">
-                    Combined
+                    All
                 </button>
             </div>
         </div>

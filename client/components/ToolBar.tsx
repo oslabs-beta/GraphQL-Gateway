@@ -57,13 +57,12 @@ export default function ToolBar({
     }
 
     return (
-        <div id="toolBar" style={showToolbar ? { left: '0px' } : { left: '-340px' }}>
+        <div id="toolBar" className={`toolBar ${!showToolbar ? 'closed' : ''}`}>
             {/** //TODO: make the tool bar look nice. 
                    -toggle in and out from the right hand side. 
                    - sylethe project buttons */}
-
             <button
-                className="fa-solid fa-bars fa-2xl"
+                className={`arrow ${showToolbar ? 'left' : 'right'}`}
                 type="button"
                 aria-label="switch"
                 onClick={() => {
@@ -78,22 +77,24 @@ export default function ToolBar({
                     }
                 }}
             />
-            <button
-                className="fa-solid fa-gear fa-2xl fa-bars"
-                type="button"
-                aria-label="switch"
-                onClick={() => {
-                    if (showToolbar && toolbarContent === 'SETTINGS') {
-                        // panel is open to projects. Close the panel
-                        setShowToolbar(false);
-                        setToolbarContent('');
-                    } else {
-                        // panel was either closed or on the settings view
-                        setShowToolbar(true);
-                        setToolbarContent('SETTINGS');
-                    }
-                }}
-            />
+            <div id="toolBarButtons">
+                <button
+                    className="fa-solid fa-gear fa-2xl fa-bars"
+                    type="button"
+                    aria-label="switch"
+                    onClick={() => {
+                        if (showToolbar && toolbarContent === 'SETTINGS') {
+                            // panel is open to projects. Close the panel
+                            setShowToolbar(false);
+                            setToolbarContent('');
+                        } else {
+                            // panel was either closed or on the settings view
+                            setShowToolbar(true);
+                            setToolbarContent('SETTINGS');
+                        }
+                    }}
+                />
+            </div>
             <div id="toolBarMenu">{projectLoading ? <Loading /> : selectedPane}</div>
         </div>
     );

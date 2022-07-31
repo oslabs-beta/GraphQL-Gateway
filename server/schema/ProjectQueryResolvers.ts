@@ -6,8 +6,8 @@ import ProjectDB from '../models/Project';
 const resolvers: IResolvers = {
     Query: {
         projectQueries: (parent: undefined, args: QueryByID): Promise<ProjectQuery[] | Error> => {
-            const { id } = args;
-            return QueryDB.find({ projectID: id })
+            const { id, date, offset } = args;
+            return QueryDB.find({ projectID: id, timestamp: { $gte: date, $lt: offset } })
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },

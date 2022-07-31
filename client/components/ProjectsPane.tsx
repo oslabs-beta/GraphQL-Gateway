@@ -9,7 +9,7 @@ export default function ProjectsPane({
 }: ProjectPaneProps) {
     return (
         <>
-            Projects{' '}
+            <h3>Projects:</h3>
             {projectLoading ? (
                 <Loading />
             ) : (
@@ -21,7 +21,9 @@ export default function ProjectsPane({
                             setSelectedProject={setSelectedProject}
                         />
                     ))}
-                    <button type="button">Create a new Project</button>
+                    <button className="selectProjectButton newProject" type="button">
+                        New Project
+                    </button>
                     <div>Menu toSee/update profile info</div>
                 </>
             )}

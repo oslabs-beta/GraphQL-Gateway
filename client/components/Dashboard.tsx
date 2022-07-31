@@ -151,7 +151,7 @@ export default function Dashboard() {
     };
 
     return (
-        <div>
+        <main className="toolBarWrapper">
             <ToolBar
                 projects={userData?.data?.user.projects}
                 setSelectedProject={setSelectedProject}
@@ -164,6 +164,6 @@ export default function Dashboard() {
                 selectedProject={selectedProject}
                 projectLoading={userData ? userData.loading : false}
             />
-        </div>
+        </main>
     );
 }

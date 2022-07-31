@@ -19,7 +19,7 @@ export default function ProjectItem({ project, setSelectedProject }: ProjectItem
             </button>
             {dropdown && (
                 <div className="projectContent">
-                    <div>
+                    <div className="apiDiv">
                         <b>API Key:</b> {project.apiKey}
                     </div>
                     <button
