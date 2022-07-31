@@ -22,16 +22,20 @@ function Slider({
     name,
     value,
     onChange,
+    min,
+    max,
+    unit,
 }: {
     name: string;
     value: number;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
+    min: number;
+    max: number;
+    unit: string;
 }) {
-    const min = 0;
-    const max = 100;
     return (
         <div id={`${name}Slider`} className="slidecontainer">
-            {name}
+            {name} : {value} {unit}
             <input
                 type="range"
                 min={min}
@@ -54,14 +58,19 @@ export default function SettingsPane({
         React.Dispatch<React.SetStateAction<RateLimiterType>>
     ] = useState(rateLimiterConfig?.type || 'None');
 
+    // Bucket or window capacity in tokens
     const [capacity, setCapacity]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig?.options.capacity || 50
+        rateLimiterConfig?.options.capacity || 10
     );
+
+    // Rate for bucket algos in tokens / second
     const [refillRate, setRefillRate]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig?.options?.refillRate || 50
+        rateLimiterConfig?.options?.refillRate || 1
     );
+
+    // Window size in seconds
     const [windowSize, setWindowSize]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig?.options.windowSize || 50
+        rateLimiterConfig?.options.windowSize || 1
     );
 
     const onCapacityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +82,8 @@ export default function SettingsPane({
     };
 
     const onWindowSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setWindowSize(Number(e.target.value));
+        // convert from ms to seconds
+        setWindowSize(Number(e.target.value) / 1000);
     };
 
     const onRateLimiterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -82,11 +92,12 @@ export default function SettingsPane({
 
     const onUpdate = (e: React.FormEvent<HTMLButtonElement>, saveSettings = false) => {
         e.preventDefault();
+        // TODO: Window size math
         const updatedConfig: RateLimiterConfig = {
             type: rateLimiterType,
             options: {
                 capacity,
-                ...((rateLimiterType as WindowType) && { windowSize }),
+                ...((rateLimiterType as WindowType) && { windowSize: windowSize * 1000 }),
                 ...((rateLimiterType as BucketType) && { refillRate }),
             },
         };
@@ -110,14 +121,31 @@ export default function SettingsPane({
                         <option value="SLIDING_WINDOW_LOG">Sliding Window Log</option>
                         <option value="SLIDING_WINDOW_COUNTER">Sliding Window Counter</option>
                     </select>
-                    <Slider name="Capacity" value={capacity} onChange={onCapacityChange} />
+                    <Slider
+                        name="Capacity"
+                        value={capacity}
+                        onChange={onCapacityChange}
+                        min={0}
+                        max={500}
+                        unit="tokens"
+                    />
                     {['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterType) ? (
-                        <Slider name="Rate" value={refillRate} onChange={onRefillRateChange} />
+                        <Slider
+                            name="Rate"
+                            value={refillRate}
+                            onChange={onRefillRateChange}
+                            min={0}
+                            max={100}
+                            unit="tokens/s"
+                        />
                     ) : (
                         <Slider
                             name="Window Size"
-                            value={windowSize}
+                            value={windowSize * 1000} // Slider goes down to millisecond for granularity
                             onChange={onWindowSizeChange}
+                            min={0}
+                            max={1000} // 10 minutes
+                            unit="ms"
                         />
                     )}
                     <div className="panelButtonGroup">

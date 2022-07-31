@@ -748,6 +748,7 @@ section#pageThree {
 
 .slidecontainer {
     width: 100%;
+    padding: 20px;
     /* Width of the outside container */
 }
 
@@ -786,8 +787,8 @@ section#pageThree {
     /* Set a specific slider handle width */
     height: 25px;
     /* Slider handle height */
-    background: #04aa6d;
-    /* Green background */
+    background: #092173;
+    /* Blue background */
     cursor: pointer;
     /* Cursor on hover */
 }
