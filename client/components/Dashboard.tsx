@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { gql } from 'apollo-server-express';
-import { useQuery, useLazyQuery, gql, LazyQueryResultTuple, useMutation } from '@apollo/client';
-// import { useQuery } from '@apollo/client';
+import { useLazyQuery, gql, useMutation } from '@apollo/client';
 import ToolBar from './ToolBar';
 import ProjectView from './ProjectView';
 import { useAuth } from '../auth/AuthProvider';
@@ -76,48 +74,48 @@ export default function Dashboard() {
     /** Bring the user context into this component */
     const { user } = useAuth();
 
-    /** State requirments for this component */
+    /** State requirements for this component */
     const [selectedProject, setSelectedProject] = useState<Project>();
-    const [allProjects, setAllProjects] = useState<Project[]>();
-    const [rateLimiterConfig, setRateLimiterConfig] = useState<RateLimiterConfig>(
-        DEFAULT_RATE_LIMITER_OPTIONS
-    );
-    const [rateLimiterLoading, setRateLimiterLoading] = useState<boolean>(false);
 
     // Apollo graphql hooks
-    // FIXME: Need to refetch data since useQuery will cache
+    /** Send query to get project information for this user */
+    const [getUserData, userData] = useLazyQuery<{ user: User }, { userId: string }>(
+        GET_PROJECT_DATA
+    );
+
+    useEffect(() => {
+        if (user?.id) {
+            getUserData({
+                variables: {
+                    userId: user.id,
+                },
+            });
+        }
+    }, [user]);
+
     const [getRateLimiterConfig, rateLimitResponse] = useLazyQuery<
         { project: Project },
         RateLimiterVars
-    >(GET_RATE_LIMITER_CONFIG_QUERY, {
-        variables: {
-            projectId: selectedProject?.id || '1',
-        },
-    });
+    >(GET_RATE_LIMITER_CONFIG_QUERY, { fetchPolicy: 'network-only' });
 
-    const [udpateRateLimiter, udpateRateLimiterResponse] = useMutation(
-        UPDATE_RATE_LIMITER_CONFIG_MUTATION
-    );
+    const [udpateRateLimiter] = useMutation(UPDATE_RATE_LIMITER_CONFIG_MUTATION);
 
     useEffect(() => {
-        // FIXME: check component is still mounted
-        const fetchData = async () => {
-            const { data, error } = await getRateLimiterConfig();
-            if (error) {
-                console.error(error);
-            } else if (data) {
-                setRateLimiterConfig(data.project.rateLimiterConfig);
-            }
-        };
-
+        // Fetches Rate Limiter settings whenever project is changed
         if (selectedProject?.id) {
-            fetchData(); // FIXME: Use IIFE
+            (async () => {
+                // FIXME: We can conditionally render an error component and remove the IIFE
+                const { error } = await getRateLimiterConfig({
+                    variables: {
+                        projectId: selectedProject.id,
+                    },
+                });
+                if (error) {
+                    console.error(error);
+                }
+            })();
         }
     }, [selectedProject]);
-
-    useEffect(() => {
-        setRateLimiterLoading(false);
-    }, [rateLimitResponse]);
 
     const handleRateLimiterConfigChange = (
         updatedConfig: RateLimiterConfig,
@@ -126,12 +124,18 @@ export default function Dashboard() {
         if (saveConfig) {
             // Save config in database
             if (selectedProject) {
-                // TODO: save config to state
                 udpateRateLimiter({
                     variables: {
                         projectId: selectedProject.id,
                         rateLimiterConfig: updatedConfig,
                     },
+                    // Refetch rate limiter data. The rate limiter query bypasses the cache so we can't just update the cache here.
+                    refetchQueries: [
+                        {
+                            query: GET_RATE_LIMITER_CONFIG_QUERY,
+                            variables: { projectId: selectedProject.id },
+                        },
+                    ],
                 });
             }
         } else {
@@ -143,32 +147,27 @@ export default function Dashboard() {
             // feed all of the data into the rate limiter
             // update quey data in the view
         }
-        setRateLimiterConfig(updatedConfig);
+        // setRateLimiterConfig(updatedConfig);
     };
-
-    /** Send query to get project information for this user */
-    const { data, loading } = useQuery(GET_PROJECT_DATA, {
-        variables: {
-            userId: user!.id,
-        },
-    });
-    useEffect(() => {
-        if (!loading && data) {
-            setAllProjects(data.user.projects);
-        }
-    }, [loading, data]);
 
     return (
         <div>
             <ToolBar
-                projects={allProjects}
+                projects={userData?.data?.user.projects}
                 setSelectedProject={setSelectedProject}
-                projectLoading={loading}
-                rateLimiterConfig={rateLimiterConfig}
-                rateLimiterLoading={rateLimiterLoading}
+                projectLoading={userData ? userData.loading : false}
+                rateLimiterConfig={
+                    rateLimitResponse && rateLimitResponse.data
+                        ? rateLimitResponse.data.project.rateLimiterConfig
+                        : DEFAULT_RATE_LIMITER_OPTIONS
+                }
+                rateLimiterLoading={rateLimitResponse ? rateLimitResponse.loading : false}
                 setRateLimiterConfig={handleRateLimiterConfigChange}
             />
-            <ProjectView selectedProject={selectedProject} projectLoading={loading} />
+            <ProjectView
+                selectedProject={selectedProject}
+                projectLoading={userData ? userData.loading : false}
+            />
         </div>
     );
 }
