@@ -57,8 +57,15 @@ const GET_RATE_LIMITER_CONFIG_QUERY = gql`
     }
 `;
 
-interface RateLimiterVars {
+interface ProjectResult {
+    project: Project;
+}
+interface ProjectVars {
     projectId: string;
+}
+
+interface UpdateRateLimiterVars extends ProjectVars {
+    rateLimiterConfig: RateLimiterConfig;
 }
 
 export default function Dashboard() {
@@ -74,6 +81,15 @@ export default function Dashboard() {
         GET_PROJECT_DATA
     );
 
+    const [getRateLimiterConfig, rateLimitResponse] = useLazyQuery<ProjectResult, ProjectVars>(
+        GET_RATE_LIMITER_CONFIG_QUERY,
+        { fetchPolicy: 'network-only' }
+    );
+
+    const [udpateRateLimiter] = useMutation<ProjectResult, UpdateRateLimiterVars>(
+        UPDATE_RATE_LIMITER_CONFIG_MUTATION
+    );
+
     useEffect(() => {
         if (user?.id) {
             getUserData({
@@ -83,13 +99,6 @@ export default function Dashboard() {
             });
         }
     }, [user]);
-
-    const [getRateLimiterConfig, rateLimitResponse] = useLazyQuery<
-        { project: Project },
-        RateLimiterVars
-    >(GET_RATE_LIMITER_CONFIG_QUERY, { fetchPolicy: 'network-only' });
-
-    const [udpateRateLimiter] = useMutation(UPDATE_RATE_LIMITER_CONFIG_MUTATION);
 
     useEffect(() => {
         // Fetches Rate Limiter settings whenever project is changed
