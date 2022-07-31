@@ -25,6 +25,7 @@ interface ProjectViewProps {
 const GET_QUERY_DATA = gql`
     query getQueryData($projectId: String!) {
         projectQueries(id: $projectId) {
+            id
             number
             latency
             complexity

@@ -143,7 +143,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                 <div id="loggerBtnWrapper">
                     <div className="space" />
                     {listOfQueries?.map((query: ProjectQuery) => (
-                        <Query query={query} />
+                        <Query query={query} key={query.id} />
                     ))}
                 </div>
             </div>
