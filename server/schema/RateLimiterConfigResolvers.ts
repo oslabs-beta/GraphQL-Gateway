@@ -4,8 +4,8 @@ const resolvers = {
     },
     RateLimiterOptions: {
         // eslint-disable-next-line no-underscore-dangle
-        __resolveType(data: any) {
-            if (data.refillRate) {
+        __resolveType(data: RateLimiterConfig) {
+            if (data.type in ['TOKEN_BUCKET', 'LEAKY_BUCKET']) {
                 return 'BucketOptions';
             }
             return 'WindowOptions';

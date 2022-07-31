@@ -23,7 +23,8 @@ interface ProjectPaneProps {
 
 interface SettingsPaneProps {
     rateLimiterConfig: RateLimiterConfig;
-    setRateLimiterConfig: React.Dispatch<RateLimiterConfig>;
+    rateLimiterLoading: boolean;
+    setRateLimiterConfig: (config: RateLimiterConfig, saveConfig: boolean) => void;
 }
 
 type ToolbarProps = ProjePaneProps & SettingsPaneProps;

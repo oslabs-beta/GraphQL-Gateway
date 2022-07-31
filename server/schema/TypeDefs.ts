@@ -69,7 +69,7 @@ const typeDefs = gql`
         deleteUser(id: String!): User
 
         createProject(project: CreateProjectInput!): Project
-        updateProject(project: UpdateProjectInput!): Project
+        updateProject(id: String!, name: String, rateLimiterConfig: RateLimiterConfigInput): Project
         deleteProject(id: String!): Project
 
         createProjectQuery(projectQuery: CreateProjectQueryInput!): ProjectQuery
@@ -100,23 +100,14 @@ const typeDefs = gql`
 
     input RateLimiterConfigInput {
         type: String!
-        # options: RateLimiterOptionsInput
+        options: RateLimiterOptionsInput
+    }
+
+    input RateLimiterOptionsInput {
         capacity: Int!
         refillRate: Int
         windowSize: Int
     }
-
-    # RateLimiterOptionsInput = BucketOptionsInput | WindowOptionsInput
-
-    # input BucketOptionsInput {
-    #     refillRate: Int!
-    #     capacity: Int!
-    # }
-
-    # input WindowOptionsInput {
-    #     windowSize: Int!
-    #     capacity: Int!
-    # }
 
     input CreateProjectQueryInput {
         projectID: String!

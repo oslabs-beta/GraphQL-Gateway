@@ -7,6 +7,16 @@ import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 
+function isBucketLimiter(rateLimiter: RateLimiterType): rateLimiter is BucketType {
+    return ['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiter as BucketType);
+}
+
+function isWindowLimiter(rateLimiter: RateLimiterType): rateLimiter is WindowType {
+    return ['FIXED_WINDOW', 'SLIDING_WINDOW_LOG', 'SLIDING_WINDOW_COUNTER'].includes(
+        rateLimiter as WindowType
+    );
+}
+
 const resolvers: IResolvers = {
     /*
      * To query nested Query Data in Project Object
@@ -17,8 +27,7 @@ const resolvers: IResolvers = {
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
 
-        rateLimiterConfig: (parent: Project): Promise<RateLimiterConfig | null> =>
-            parent.rateLimiterConfig,
+        rateLimiterConfig: (parent: Project): RateLimiterConfig => parent.rateLimiterConfig,
         // query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> =>
         //     QueryDB.findOne({ _id: args.id, userID: parent.id })
         //         .then((query: ProjectQuery): ProjectQuery => {
@@ -101,32 +110,35 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: UpdateProjectArgs
         ): Promise<Project | null> => {
-            const { id, name, rateLimiterConfig } = args.project;
-
-            const newRateLimiterConfig: RateLimiterConfig = {
-                type: rateLimiterConfig.type,
-                options: {
-                    capacity: rateLimiterConfig.capacity,
-                },
-            };
-
-            if (['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterConfig.type)) {
-                newRateLimiterConfig.options.refillRate = rateLimiterConfig.refillRate;
-            } else {
-                newRateLimiterConfig.options.windowSize = rateLimiterConfig.windowSize;
-            }
+            const { id, name, rateLimiterConfig } = args;
 
             try {
                 const project: (Document & Project) | null = await ProjectDB.findById(id);
-                // FIXME: How to send a 404 in graphql
                 if (!project) {
                     console.log('[mongoose]: updateProject not found');
                 } else {
                     if (name) project.name = name;
+
+                    // FIXME: TYPING
                     if (rateLimiterConfig) {
-                        // TODO: Validate rate limiter config
-                        project.rateLimiterConfig = newRateLimiterConfig;
+                        const rateLimiterType = rateLimiterConfig.type;
+
+                        if (
+                            (isBucketLimiter(rateLimiterType) &&
+                                !Object.prototype.hasOwnProperty.call(
+                                    rateLimiterConfig,
+                                    'refillRate'
+                                )) ||
+                            (isWindowLimiter(rateLimiterType) &&
+                                !Object.prototype.hasOwnProperty.call(
+                                    rateLimiterConfig,
+                                    'windowSize'
+                                ))
+                        ) {
+                            project.rateLimiterConfig = rateLimiterConfig;
+                        }
                     }
+
                     await project.save();
                 }
                 return project;

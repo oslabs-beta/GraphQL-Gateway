@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 
 /**
  *
@@ -46,14 +46,19 @@ function Slider({
 
 export default function SettingsPane({
     rateLimiterConfig,
+    rateLimiterLoading,
     setRateLimiterConfig,
 }: SettingsPaneProps) {
-    const [rateLimiterType, setRateLimiterType] = useState(rateLimiterConfig.type);
+    const [rateLimiterType, setRateLimiterType]: [
+        RateLimiterType,
+        React.Dispatch<React.SetStateAction<RateLimiterType>>
+    ] = useState(rateLimiterConfig.type);
+
     const [capacity, setCapacity]: [number, React.Dispatch<number>] = useState(
         rateLimiterConfig.options.capacity || 50
     );
     const [refillRate, setRefillRate]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig.options.refillRate || 50
+        rateLimiterConfig.options?.refillRate || 50
     );
     const [windowSize, setWindowSize]: [number, React.Dispatch<number>] = useState(
         rateLimiterConfig.options.windowSize || 50
@@ -72,50 +77,59 @@ export default function SettingsPane({
     };
 
     const onRateLimiterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setRateLimiterType(e.target.value);
+        setRateLimiterType(e.target.value as RateLimiterType);
     };
 
-    const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+    const onUpdate = (e: React.FormEvent<HTMLButtonElement>, saveSettings = false) => {
+        console.log('clicked update');
         e.preventDefault();
         const updatedConfig: RateLimiterConfig = {
             type: rateLimiterType,
             options: {
                 capacity,
+                ...((rateLimiterType as WindowType) && { windowSize }),
+                ...((rateLimiterType as BucketType) && { refillRate }),
             },
         };
-        // FIXME: Better way to type guard?
-        if (['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterType)) {
-            updatedConfig.options.rate = refillRate;
-        } else {
-            updatedConfig.options.windowSize = windowSize;
-        }
-
-        setRateLimiterConfig(updatedConfig);
+        setRateLimiterConfig(updatedConfig, saveSettings);
         // TODO: Consider closing the side pane
     };
 
     return (
         <>
             <h1>Settings</h1>
-            <select value={rateLimiterType} onChange={onRateLimiterChange}>
-                <option value="TOKEN_BUCKET">Fixed Window</option>
-                <option value="LEAKY_BUCKET">Leaky Bucket</option>
-                <option value="TOKEN_BUCKET">Token Bucket</option>
-                <option value="SLIDING_WINDOW_LOG">Sliding Window Log</option>
-                <option value="SLIDING_WINDOW_COUNTER">Sliding Window Counter</option>
-            </select>
-            <Slider name="Capacity" value={capacity} onChange={onCapacityChange} />
-            {['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterType) ? (
-                <Slider name="Rate" value={refillRate} onChange={onRefillRateChange} />
+            {rateLimiterLoading ? (
+                <div className="loader" />
             ) : (
-                <Slider name="Window Size" value={windowSize} onChange={onWindowSizeChange} />
+                <>
+                    <select value={rateLimiterType} onChange={onRateLimiterChange}>
+                        <option value="FIXED_WINDOW">Fixed Window</option>
+                        <option value="LEAKY_BUCKET">Leaky Bucket</option>
+                        <option value="TOKEN_BUCKET">Token Bucket</option>
+                        <option value="SLIDING_WINDOW_LOG">Sliding Window Log</option>
+                        <option value="SLIDING_WINDOW_COUNTER">Sliding Window Counter</option>
+                    </select>
+                    <Slider name="Capacity" value={capacity} onChange={onCapacityChange} />
+                    {['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterType) ? (
+                        <Slider name="Rate" value={refillRate} onChange={onRefillRateChange} />
+                    ) : (
+                        <Slider
+                            name="Window Size"
+                            value={windowSize}
+                            onChange={onWindowSizeChange}
+                        />
+                    )}
+                    <button id="updateSettings" type="submit" onClick={onUpdate}>
+                        Update Queries
+                    </button>
+                    <button id="updateDefault" type="submit" onClick={(e) => onUpdate(e, true)}>
+                        Update Project Default
+                    </button>
+                    {/* TODO: Add button to set as project default */}
+                    {/* TODO: Add button to reset to raw data */}
+                    {/* TODO: Add button to reset to project default */}
+                </>
             )}
-            <button id="updateSettings" type="submit" onSubmit={onSubmit}>
-                Update
-            </button>
-            {/* TODO: Add button to set as project default */}
-            {/* TODO: Add button to reset to raw data */}
-            {/* TODO: Add button to reset to project default */}
         </>
     );
 }

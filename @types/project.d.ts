@@ -25,9 +25,9 @@ type CreateProjectArgs = {
 };
 
 type UpdateProjectArgs = {
-    project: {
-        id: string;
-        name: string;
-        rateLimiterConfig: RateLimiterUpdateArgs;
-    };
+    // project: {
+    id: string;
+    name?: string;
+    rateLimiterConfig?: RateLimiterUpdateArgs;
+    // };
 };

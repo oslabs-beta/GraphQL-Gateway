@@ -8,6 +8,7 @@ export default function ToolBar({
     setSelectedProject,
     projectLoading,
     rateLimiterConfig,
+    rateLimiterLoading,
     setRateLimiterConfig,
 }: ToolbarProps) {
     /** State for the component */
@@ -44,6 +45,7 @@ export default function ToolBar({
                 <SettingsPane
                     // TODO: Move this into state and get it from the db
                     rateLimiterConfig={rateLimiterConfig}
+                    rateLimiterLoading={rateLimiterLoading}
                     setRateLimiterConfig={setRateLimiterConfig}
                 />
             );
