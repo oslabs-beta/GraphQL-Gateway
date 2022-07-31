@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 
 /**
  *
@@ -7,7 +7,7 @@ import React, { SetStateAction, useState } from 'react';
  *
  * It should have:
  *  a drop-down to select a rate limiting algo
- *  a slider for capacity ingegers
+ *  a slider for capacity integers
  *  a slider for refresh rate (bucket algos) tokends / s
  *  a slider for window size (ms) (displayed as seconds)
  *
@@ -52,16 +52,16 @@ export default function SettingsPane({
     const [rateLimiterType, setRateLimiterType]: [
         RateLimiterType,
         React.Dispatch<React.SetStateAction<RateLimiterType>>
-    ] = useState(rateLimiterConfig.type);
+    ] = useState(rateLimiterConfig?.type || 'None');
 
     const [capacity, setCapacity]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig.options.capacity || 50
+        rateLimiterConfig?.options.capacity || 50
     );
     const [refillRate, setRefillRate]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig.options?.refillRate || 50
+        rateLimiterConfig?.options?.refillRate || 50
     );
     const [windowSize, setWindowSize]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig.options.windowSize || 50
+        rateLimiterConfig?.options.windowSize || 50
     );
 
     const onCapacityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +81,6 @@ export default function SettingsPane({
     };
 
     const onUpdate = (e: React.FormEvent<HTMLButtonElement>, saveSettings = false) => {
-        console.log('clicked update');
         e.preventDefault();
         const updatedConfig: RateLimiterConfig = {
             type: rateLimiterType,
@@ -92,7 +91,6 @@ export default function SettingsPane({
             },
         };
         setRateLimiterConfig(updatedConfig, saveSettings);
-        // TODO: Consider closing the side pane
     };
 
     return (
@@ -103,6 +101,9 @@ export default function SettingsPane({
             ) : (
                 <>
                     <select value={rateLimiterType} onChange={onRateLimiterChange}>
+                        <option disabled value="None">
+                            Select an Option
+                        </option>
                         <option value="FIXED_WINDOW">Fixed Window</option>
                         <option value="LEAKY_BUCKET">Leaky Bucket</option>
                         <option value="TOKEN_BUCKET">Token Bucket</option>
@@ -119,15 +120,19 @@ export default function SettingsPane({
                             onChange={onWindowSizeChange}
                         />
                     )}
-                    <button id="updateSettings" type="submit" onClick={onUpdate}>
-                        Update Queries
-                    </button>
-                    <button id="updateDefault" type="submit" onClick={(e) => onUpdate(e, true)}>
+                    <button id="updateDefault" type="button" onClick={(e) => onUpdate(e, true)}>
                         Update Project Default
                     </button>
-                    {/* TODO: Add button to set as project default */}
-                    {/* TODO: Add button to reset to raw data */}
-                    {/* TODO: Add button to reset to project default */}
+                    {/* TODO: Implement functionality for the below buttons */}
+                    <button disabled id="resetDefault" type="button">
+                        Reset
+                    </button>
+                    <button disabled id="resetQueries" type="button">
+                        Reset Query Data
+                    </button>
+                    <button disabled id="updateSettings" type="button" onClick={onUpdate}>
+                        Update Queries
+                    </button>
                 </>
             )}
         </>

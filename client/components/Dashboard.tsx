@@ -61,15 +61,6 @@ interface RateLimiterVars {
     projectId: string;
 }
 
-// TODO: Start with blank for clarity
-const DEFAULT_RATE_LIMITER_OPTIONS: RateLimiterConfig = {
-    type: 'TOKEN_BUCKET',
-    options: {
-        capacity: 10,
-        refillRate: 1,
-    },
-};
-
 export default function Dashboard() {
     /** Bring the user context into this component */
     const { user } = useAuth();
@@ -156,11 +147,7 @@ export default function Dashboard() {
                 projects={userData?.data?.user.projects}
                 setSelectedProject={setSelectedProject}
                 projectLoading={userData ? userData.loading : false}
-                rateLimiterConfig={
-                    rateLimitResponse && rateLimitResponse.data
-                        ? rateLimitResponse.data.project.rateLimiterConfig
-                        : DEFAULT_RATE_LIMITER_OPTIONS
-                }
+                rateLimiterConfig={rateLimitResponse?.data?.project.rateLimiterConfig}
                 rateLimiterLoading={rateLimitResponse ? rateLimitResponse.loading : false}
                 setRateLimiterConfig={handleRateLimiterConfigChange}
             />
