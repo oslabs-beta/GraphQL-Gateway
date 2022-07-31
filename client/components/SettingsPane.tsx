@@ -112,8 +112,12 @@ export default function SettingsPane({
             {rateLimiterLoading ? (
                 <div className="loader" />
             ) : (
-                <>
-                    <select value={rateLimiterType} onChange={onRateLimiterChange}>
+                <div className="panelColumn">
+                    <select
+                        className="panelDropdown"
+                        value={rateLimiterType}
+                        onChange={onRateLimiterChange}
+                    >
                         <option disabled value="None">
                             Select an Option
                         </option>
@@ -179,7 +183,7 @@ export default function SettingsPane({
                             Reset Project Default
                         </button>
                     </div>
-                </>
+                </div>
             )}
         </>
     );

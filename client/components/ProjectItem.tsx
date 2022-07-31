@@ -23,7 +23,7 @@ export default function ProjectItem({ project, setSelectedProject }: ProjectItem
                         <b>API Key:</b> {project.apiKey}
                     </div>
                     <button
-                        className="selectProjectButton"
+                        className="panelButton"
                         type="button"
                         aria-label="switch"
                         onClick={() => {

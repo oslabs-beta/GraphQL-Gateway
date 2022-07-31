@@ -500,6 +500,22 @@ section#pageThree {
     padding: 5px;
 }
 
+.panelColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.panelDropdown {
+    border: 1px solid #324da6;
+    border-radius: 5px;
+    color: #324da6;
+    font-size: 15px;
+    margin: 10px 0;
+    padding: 5px 20px;
+    width: 100%;
+}
+
 .panelButtonGroup {
     display: flex;
     flex-direction: row;
@@ -748,7 +764,7 @@ section#pageThree {
 
 .slidecontainer {
     width: 100%;
-    padding: 20px;
+    padding: 20px 0px;
     /* Width of the outside container */
 }
 
