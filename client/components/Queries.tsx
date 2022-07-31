@@ -22,11 +22,12 @@ export interface IProps {
 
 // eslint-disable-next-line react/function-component-definition
 const Queries: React.FC<IProps> = ({ rawQueries }) => {
+    const queryDisplayIncrements = 150;
     // "rawQueries" is the raw, unfilter array of queries. "listOfQueries" is the filter list
     const [listOfQueries, setListOfQueries] = useState(rawQueries);
 
     // State for the list
-    const [list, setList] = useState([...listOfQueries.slice(0, 150)]);
+    const [list, setList] = useState([...listOfQueries.slice(0, queryDisplayIncrements)]);
 
     // State to trigger oad more
     const [loadMore, setLoadMore] = useState(false);
@@ -45,7 +46,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
     }, [rawQueries]);
 
     useEffect(() => {
-        setList(listOfQueries.slice(0, 150));
+        setList(listOfQueries.slice(0, queryDisplayIncrements));
     }, [listOfQueries]);
 
     useEffect(() => {
@@ -53,7 +54,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
             const currentLength = list.length;
             const isMore = currentLength < listOfQueries.length;
             const nextResults = isMore
-                ? listOfQueries.slice(currentLength, currentLength + 150)
+                ? listOfQueries.slice(currentLength, currentLength + queryDisplayIncrements)
                 : [];
             setList([...list, ...nextResults]);
             setLoadMore(false);
