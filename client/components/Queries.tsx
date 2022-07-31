@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ProjectQuery } from '../../@types/Interfaces';
 import { SortOrder } from '../../@types/dashboard';
 import Query from './Query';
@@ -22,7 +22,50 @@ export interface IProps {
 
 // eslint-disable-next-line react/function-component-definition
 const Queries: React.FC<IProps> = ({ rawQueries }) => {
+    const queryDisplayIncrements = 150;
+    // "rawQueries" is the raw, unfilter array of queries. "listOfQueries" is the filter list
+    const [listOfQueries, setListOfQueries] = useState(rawQueries);
+
+    // State for the list
+    const [list, setList] = useState([...listOfQueries.slice(0, queryDisplayIncrements)]);
+
+    // State to trigger oad more
+    const [loadMore, setLoadMore] = useState(false);
+
+    // State of whether there is more to load
+    const [hasMore, setHasMore] = useState(listOfQueries.length > 150);
+
+    // Load more button click
+    const handleLoadMore = () => {
+        setLoadMore(true);
+    };
     /** State requirments for this component */
+    useEffect(() => {
+        /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
+        setListOfQueries(rawQueries);
+    }, [rawQueries]);
+
+    useEffect(() => {
+        setList(listOfQueries.slice(0, queryDisplayIncrements));
+    }, [listOfQueries]);
+
+    useEffect(() => {
+        if (loadMore && hasMore) {
+            const currentLength = list.length;
+            const isMore = currentLength < listOfQueries.length;
+            const nextResults = isMore
+                ? listOfQueries.slice(currentLength, currentLength + queryDisplayIncrements)
+                : [];
+            setList([...list, ...nextResults]);
+            setLoadMore(false);
+        }
+    }, [loadMore, hasMore]);
+
+    useEffect(() => {
+        const isMore = list.length < listOfQueries.length;
+        setHasMore(isMore);
+    }, [list]);
+
     const [style, setStyle] = useState<ISState['style']>({
         time: false,
         depth: false,
@@ -34,9 +77,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
         depth: '',
         complexity: '',
     });
-    // "rawQueries" is the raw, unfilter array of queries. "listOfQueries" is the filter list
-    const [listOfQueries, setListOfQueries] = useState(rawQueries);
-
     /** Sort/filter the queries in the set the state of the filter arrows */
     const combinedSort = (field: keyof ISState['arrow'], sortOrder: SortOrder): void => {
         const newArr = [...listOfQueries];
@@ -142,12 +182,20 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                 </div>
             </div>
             <div className="loggerGUI">
+                <div className="space" />
                 <div id="loggerBtnWrapper">
-                    <div className="space" />
-                    {listOfQueries?.map((query: ProjectQuery) => (
+                    {list?.map((query: ProjectQuery) => (
                         <Query query={query} />
                     ))}
                 </div>
+                {hasMore ? (
+                    // eslint-disable-next-line react/button-has-type
+                    <button className="loadMoreBtn" onClick={handleLoadMore}>
+                        Load More
+                    </button>
+                ) : (
+                    <p>No more results</p>
+                )}
             </div>
         </>
     );

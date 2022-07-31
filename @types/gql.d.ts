@@ -6,8 +6,12 @@ type User = {
     token: string;
 };
 
+type ChartSelectionDays = 1 | 7 | 30 | 365;
+
 type QueryByID = {
     id: string;
+    date: number;
+    offset: number;
 };
 
 type GetUserArgs = {
