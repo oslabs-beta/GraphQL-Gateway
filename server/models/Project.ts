@@ -1,14 +1,14 @@
 import mongoose, { Schema } from 'mongoose';
 
-const RateLimitOptions = new Schema({
-    rate: { type: Number, required: true },
-    windowSize: { type: Number, required: true },
+const RateLimitOption = new Schema({
+    refillRate: { type: Number, required: true, default: 0 },
+    windowSize: { type: Number, required: true, default: 0 },
     capacity: { type: Number, required: true },
 });
 
 const RateLimiterConfig = new Schema({
     type: { type: String, required: true },
-    options: { type: RateLimitOptions, required: true },
+    options: { type: RateLimitOption, required: true },
 });
 
 const projectSchema = new Schema({

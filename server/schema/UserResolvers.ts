@@ -17,16 +17,18 @@ const resolvers: IResolvers = {
                 .then((projects: Project[]): Project[] => projects)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
 
-        project: (parent: User, args: QueryByID): Promise<Project | Error> =>
-            ProjectDB.findOne({ _id: args.id, userID: parent.id })
-                .then((project: Project): Project => {
-                    if (!project) throw new Error('Project not found');
-                    return project;
-                })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+        // FIXME: What is the use case for the project field on user?
+        // project: (parent: User, args: QueryByID): Promise<Project | Error> =>
+        //     ProjectDB.findOne({ _id: args.id, userID: parent.id })
+        //         .then((project: Project): Project => {
+        //             if (!project) throw new Error('Project not found');
+        //             return project;
+        //         })
+        //         .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
     },
 
     Query: {
+        // FIXME: What is the business case for returning a list of users?
         users: (): Promise<User[] | Error> =>
             UserDB.find()
                 .then((users: User[]): User[] => users)

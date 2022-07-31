@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { IResolvers } from '@graphql-tools/utils';
 import randomString from 'randomstring';
+import { Document } from 'mongoose';
 
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
@@ -15,15 +16,17 @@ const resolvers: IResolvers = {
             QueryDB.find({ projectID: parent.id })
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> =>
-            QueryDB.findOne({ _id: args.id, userID: parent.id })
-                .then((query: ProjectQuery): ProjectQuery => {
-                    if (!query) throw new Error('Query not found');
-                    return query;
-                })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-    },
 
+        rateLimiterConfig: (parent: Project): Promise<RateLimiterConfig | null> =>
+            parent.rateLimiterConfig,
+        // query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> =>
+        //     QueryDB.findOne({ _id: args.id, userID: parent.id })
+        //         .then((query: ProjectQuery): ProjectQuery => {
+        //             if (!query) throw new Error('Query not found');
+        //             return query;
+        //         })
+        //         .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+    },
     Query: {
         projects: (): Promise<Project[] | Error> =>
             ProjectDB.find()
@@ -97,17 +100,40 @@ const resolvers: IResolvers = {
         updateProject: async (
             parent: undefined,
             args: UpdateProjectArgs
-        ): Promise<Project | Error> => {
+        ): Promise<Project | null> => {
             const { id, name, rateLimiterConfig } = args.project;
 
-            if (name)
-                return ProjectDB.findByIdAndUpdate(id, { name, rateLimiterConfig }, { new: true })
-                    .then((project: Project): Project => {
-                        if (!project) throw new Error('Project not found');
-                        return project;
-                    })
-                    .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-            throw new Error('Updated name not provided');
+            const newRateLimiterConfig: RateLimiterConfig = {
+                type: rateLimiterConfig.type,
+                options: {
+                    capacity: rateLimiterConfig.capacity,
+                },
+            };
+
+            if (['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterConfig.type)) {
+                newRateLimiterConfig.options.refillRate = rateLimiterConfig.refillRate;
+            } else {
+                newRateLimiterConfig.options.windowSize = rateLimiterConfig.windowSize;
+            }
+
+            try {
+                const project: (Document & Project) | null = await ProjectDB.findById(id);
+                // FIXME: How to send a 404 in graphql
+                if (!project) {
+                    console.log('[mongoose]: updateProject not found');
+                } else {
+                    if (name) project.name = name;
+                    if (rateLimiterConfig) {
+                        // TODO: Validate rate limiter config
+                        project.rateLimiterConfig = newRateLimiterConfig;
+                    }
+                    await project.save();
+                }
+                return project;
+            } catch (err) {
+                console.log(`[mongoose]: updateProject error: ${err}`);
+            }
+            return null;
         },
 
         deleteProject: async (parent: undefined, args: QueryByID): Promise<Project | Error> => {

@@ -6,7 +6,7 @@ const typeDefs = gql`
         email: String!
         password: String!
         projects: [Project]!
-        project: Project
+        # project: Project
         token: String
     }
 
@@ -15,7 +15,7 @@ const typeDefs = gql`
         userID: String!
         name: String!
         queries: [ProjectQuery]!
-        query: ProjectQuery
+        # query: ProjectQuery
         apiKey: String
         rateLimiterConfig: RateLimiterConfig
     }
@@ -100,10 +100,23 @@ const typeDefs = gql`
 
     input RateLimiterConfigInput {
         type: String!
+        # options: RateLimiterOptionsInput
         capacity: Int!
-        rate: Int
+        refillRate: Int
         windowSize: Int
     }
+
+    # RateLimiterOptionsInput = BucketOptionsInput | WindowOptionsInput
+
+    # input BucketOptionsInput {
+    #     refillRate: Int!
+    #     capacity: Int!
+    # }
+
+    # input WindowOptionsInput {
+    #     windowSize: Int!
+    #     capacity: Int!
+    # }
 
     input CreateProjectQueryInput {
         projectID: String!

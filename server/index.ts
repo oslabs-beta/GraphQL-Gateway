@@ -10,10 +10,13 @@ import path from 'path';
 import { merge } from 'lodash';
 
 import connectDB from './config/db';
+
 import typeDefs from './schema/TypeDefs';
 import ProjectResolvers from './schema/ProjectResolvers';
 import UserResolvers from './schema/UserResolvers';
 import ProjectQueryResolvers from './schema/ProjectQueryResolvers';
+import RateLimiterConfigResolvers from './schema/RateLimiterConfigResolvers';
+
 import authRouter from './routes/Auth';
 import userRouter from './routes/User';
 import ProjectDB from './models/Project';
@@ -26,7 +29,12 @@ const PORT: number | string = process.env.PORT || 3000;
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers: merge(ProjectResolvers, UserResolvers, ProjectQueryResolvers),
+    resolvers: merge(
+        ProjectResolvers,
+        UserResolvers,
+        ProjectQueryResolvers,
+        RateLimiterConfigResolvers
+    ),
     context: async ({ req }) => {
         const authHeader = req.headers.authorization || null;
         if (!authHeader) return { authenticated: false, user: null };
