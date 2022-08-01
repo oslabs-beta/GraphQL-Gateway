@@ -107,7 +107,6 @@ export default function ProjectView({ selectedProject, projectLoading }: Project
                         <Loading />
                     ) : (
                         <div id="loading">
-                            {' '}
                             <h3>Select a project</h3>
                         </div>
                     )}

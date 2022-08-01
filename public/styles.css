@@ -12,6 +12,7 @@
 html {
     background-color: #092173;
     font-family: 'Roboto', sans-serif;
+    min-width: 550px;
 }
 body {
     margin: 0 auto;
@@ -276,6 +277,9 @@ section#pageThree {
     top: 0;
     border-bottom: 1px solid #324da6;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 #side-navbar {
     z-index: 11;
@@ -283,7 +287,7 @@ section#pageThree {
     background-color: #fff;
     top: 0;
     right: 0;
-    display: block;
+    justify-content: flex-end;
     width: 30%;
 }
 #footer {
@@ -386,7 +390,6 @@ section#pageThree {
     height: 1000px;
 } */
 .toolBarWrapper {
-    width: 100%;
     margin: 0px auto;
 }
 .toolBar {
@@ -405,7 +408,7 @@ section#pageThree {
     z-index: 1;
 }
 .toolBar.closed {
-    left: -380px;
+    left: -340px;
 }
 #toolBarMenu {
     display: flex;
@@ -468,7 +471,7 @@ section#pageThree {
     display: inline-block;
     padding: 15px;
     position: absolute;
-    right: -25px;
+    right: 10px;
     top: 15px;
     cursor: pointer;
     transition: all 0.3s ease-out;
@@ -639,22 +642,21 @@ section#pageThree {
 }
 @media (max-width: 640px) {
     .loggerBox {
-        border-radius: 2px;
+        border-radius: 0px;
         background-color: rgba(255, 255, 255, 0.7);
         max-height: 580px;
-        margin: 80px auto;
-        margin-bottom: 0px;
+        margin: 25px auto;
+        margin-bottom: 80px;
         width: 100%;
     }
     #dashWrapper {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         width: 100%;
-        min-width: 457px;
+        min-width: 550px;
+        margin-top: 100px;
     }
     #side-navbar {
-        width: 30%;
-        float: right;
         min-width: 191px;
     }
     #navbar {
@@ -663,13 +665,9 @@ section#pageThree {
     }
     .chartBox {
         width: 100%;
-        margin: 100px auto;
+        margin: 50px auto;
         border-radius: 2px;
-        margin-left: 0px;
-        background-color: rgba(255, 255, 255, 0.7);
         min-width: 457px;
-        height: 100%;
-        min-height: 316px;
     }
     .chartBtn {
         width: 40px;
@@ -743,5 +741,12 @@ section#pageThree {
     }
     .container {
         min-width: 554px;
+    }
+    .arrow {
+        top: 35px;
+        right: -30px;
+    }
+    .toolBar.closed {
+        left: -380px;
     }
 }

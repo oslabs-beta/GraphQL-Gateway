@@ -8,12 +8,12 @@ export default function Navbar() {
     // todo: query to check auth status
 
     // FIXME: navbar show only on scroll up, not down
-    const [show, setShow] = useState('block');
+    const [show, setShow] = useState('flex');
     const controlNavbar = () => {
         if (window.scrollY > 100) {
             setShow('none');
         } else {
-            setShow('block');
+            setShow('flex');
         }
     };
 
