@@ -26,7 +26,9 @@ export default function ProjectItem({
             {dropdown && (
                 <div className="projectContent">
                     <div className="apiDiv">
-                        <b>API Key:</b> {project.apiKey}
+                        <p className="toolBarLabel">Project ID:</p> {project.id}
+                        <hr />
+                        <p className="toolBarLabel">API Key:</p> {project.apiKey}
                     </div>
                     <button
                         className="selectProjectButton"

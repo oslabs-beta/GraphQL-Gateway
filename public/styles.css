@@ -431,11 +431,14 @@ section#pageThree {
     margin: 0px auto;
 }
 .apiDiv {
-    width: 200px;
+    width: 250px;
     text-align: center;
     padding: 5px;
 }
-
+.toolBarLabel {
+    font-weight: 500;
+    margin: 10px;
+}
 .selectProjectButton {
     background: none;
     border: 1px solid #324da6;
