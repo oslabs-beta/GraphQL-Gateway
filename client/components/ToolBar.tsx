@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import Loading from './Loading';
-import ProjectItem from './ProjectItem';
+import ProjectsPane from './ProjectsPane';
+import SettingsPane from './SettingsPane';
 
-interface ToolbarProps {
-    projects: Project[] | undefined;
-    setSelectedProject: React.Dispatch<React.SetStateAction<Project | undefined>>;
-    projectLoading: boolean;
-}
-export default function ToolBar({ projects, setSelectedProject, projectLoading }: ToolbarProps) {
+export default function ToolBar({
+    projects,
+    setSelectedProject,
+    projectLoading,
+    rateLimiterConfig,
+    rateLimiterLoading,
+    setRateLimiterConfig,
+}: ToolbarProps) {
     /** State for the component */
-    const [extended, setExtended] = useState(true);
+    const [showToolbar, setShowToolbar] = useState(false);
+    const [toolbarContent, setToolbarContent] = useState('');
     /** Allow users to select a project from a list and have the data for that proejct dispaly in the project view */
     // const handleSelectProject = (e: any) => {
     //     setSelectedProject(projects![e.target.id]);
@@ -19,36 +23,79 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
      * while the GET_PROJECT_DATA query is loading, render the loading component
      * instead of the project list */
 
+    let selectedPane;
+
+    switch (toolbarContent) {
+        case 'PROJECTS': {
+            selectedPane = (
+                <ProjectsPane
+                    projectLoading={projectLoading}
+                    projects={projects}
+                    setSelectedProject={(project) => {
+                        setSelectedProject(project);
+                        setShowToolbar(false);
+                        setToolbarContent('');
+                    }}
+                />
+            );
+            break;
+        }
+        case 'SETTINGS': {
+            selectedPane = (
+                <SettingsPane
+                    // TODO: Move this into state and get it from the db
+                    rateLimiterConfig={rateLimiterConfig}
+                    rateLimiterLoading={rateLimiterLoading}
+                    setRateLimiterConfig={setRateLimiterConfig}
+                />
+            );
+            break;
+        }
+        default: {
+            selectedPane = null;
+        }
+    }
+
     return (
-        <div id="toolBar" style={extended === true ? { left: '0px' } : { left: '-340px' }}>
-            {/** //ToDo: make the tool bar look nice. 
+        <div id="toolBar" className={`toolBar ${!showToolbar ? 'closed' : ''}`}>
+            {/** //TODO: make the tool bar look nice. 
                    -toggle in and out from the right hand side. 
                    - sylethe project buttons */}
-
             <button
-                className="fa-solid fa-bars fa-2xl"
+                className={`arrow ${showToolbar ? 'left' : 'right'}`}
                 type="button"
                 aria-label="switch"
-                onClick={() => setExtended(extended !== true)}
+                onClick={() => {
+                    if (showToolbar && toolbarContent === 'PROJECTS') {
+                        // panel is open to projects. Close the panel
+                        setShowToolbar(false);
+                        setToolbarContent('');
+                    } else {
+                        // panel was either closed or on the settings view
+                        setShowToolbar(true);
+                        setToolbarContent('PROJECTS');
+                    }
+                }}
             />
-            <div id="toolBarMenu">
-                Projects{' '}
-                {projectLoading ? (
-                    <Loading />
-                ) : (
-                    <>
-                        {projects?.map((project) => (
-                            <ProjectItem
-                                project={project}
-                                setSelectedProject={setSelectedProject}
-                                setExtended={setExtended}
-                            />
-                        ))}
-                        <button type="button">Create a new Project</button>
-                        <div>Menu toSee/update profile info</div>
-                    </>
-                )}
+            <div id="toolBarButtons">
+                <button
+                    className="fa-solid fa-gear fa-2xl fa-bars"
+                    type="button"
+                    aria-label="switch"
+                    onClick={() => {
+                        if (showToolbar && toolbarContent === 'SETTINGS') {
+                            // panel is open to projects. Close the panel
+                            setShowToolbar(false);
+                            setToolbarContent('');
+                        } else {
+                            // panel was either closed or on the settings view
+                            setShowToolbar(true);
+                            setToolbarContent('SETTINGS');
+                        }
+                    }}
+                />
             </div>
+            <div id="toolBarMenu">{projectLoading ? <Loading /> : selectedPane}</div>
         </div>
     );
 }

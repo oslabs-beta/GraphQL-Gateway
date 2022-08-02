@@ -7,14 +7,22 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
+import lodash from 'lodash';
 
 import connectDB from './config/db';
+
 import typeDefs from './schema/TypeDefs';
-import resolvers from './schema/Resolvers';
+import ProjectResolvers from './schema/ProjectResolvers';
+import UserResolvers from './schema/UserResolvers';
+import ProjectQueryResolvers from './schema/ProjectQueryResolvers';
+import RateLimiterConfigResolvers from './schema/RateLimiterConfigResolvers';
+
 import authRouter from './routes/Auth';
 import userRouter from './routes/User';
 import ProjectDB from './models/Project';
 import session from './utilities/sessions';
+
+import rateLimiterAnalysis from './utilities/rateLimiterAnalysis';
 
 connectDB();
 
@@ -23,7 +31,12 @@ const PORT: number | string = process.env.PORT || 3000;
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: lodash.merge(
+        ProjectResolvers,
+        UserResolvers,
+        ProjectQueryResolvers,
+        RateLimiterConfigResolvers
+    ),
     context: async ({ req }) => {
         const authHeader = req.headers.authorization || null;
         if (!authHeader) return { authenticated: false, user: null };
@@ -55,6 +68,11 @@ server.start().then((): void => {
         const projects = await ProjectDB.find();
         return res.json(projects);
     });
+
+    app.post('/api/projects/rateLimit/:projectId', rateLimiterAnalysis, (req, res) =>
+        // Send back re-analyzed data
+        res.json(res.locals)
+    );
 
     // for logger to cross reference project DB api key to request auth header
     app.get('/key/:projectID', async (req, res) => {

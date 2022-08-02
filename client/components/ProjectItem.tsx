@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import { Project } from '../../@types/Interfaces';
 
 interface ProjectItemProps {
     project: Project;
     setSelectedProject: any;
-    setExtended: any;
 }
 
-export default function ProjectItem({
-    project,
-    setSelectedProject,
-    setExtended,
-}: ProjectItemProps) {
+export default function ProjectItem({ project, setSelectedProject }: ProjectItemProps) {
     const [dropdown, setDropdown] = useState(false);
     return (
         <>
@@ -25,15 +19,14 @@ export default function ProjectItem({
             </button>
             {dropdown && (
                 <div className="projectContent">
-                    <div>
+                    <div className="apiDiv">
                         <b>API Key:</b> {project.apiKey}
                     </div>
                     <button
-                        className="selectProjectButton"
+                        className="panelButton"
                         type="button"
                         aria-label="switch"
                         onClick={() => {
-                            setExtended(false);
                             setSelectedProject(project);
                         }}
                     >

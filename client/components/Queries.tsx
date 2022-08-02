@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ProjectQuery } from '../../@types/Interfaces';
-import { SortOrder } from '../../@types/dashboard';
+import React, { useEffect, useState } from 'react';
 import Query from './Query';
 
 export interface ISState {
@@ -124,7 +122,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
     };
 
     return (
-        <>
+        <div>
             <div className="loggerSortButtonsWrapper">
                 <div className="loggerSortButtons">
                     <div
@@ -185,7 +183,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                 <div className="space" />
                 <div id="loggerBtnWrapper">
                     {list?.map((query: ProjectQuery) => (
-                        <Query query={query} />
+                        <Query query={query} key={query.id} />
                     ))}
                 </div>
                 {hasMore ? (
@@ -197,7 +195,7 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                     <p>No more results</p>
                 )}
             </div>
-        </>
+        </div>
     );
 };
 

@@ -297,7 +297,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setNumberOfDaysToView, numberOfDa
                     Last 24 h
                 </button>
                 <button onClick={() => setNumberOfDaysToView(7)} className="chartBtn" type="button">
-                    Last Week
+                    7 days
                 </button>
                 <button
                     onClick={() => setNumberOfDaysToView(30)}
@@ -361,7 +361,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setNumberOfDaysToView, numberOfDa
                     Volume
                 </button>
                 <button onClick={() => chartSixFn()} className="chartBtn" type="button">
-                    Combined
+                    All
                 </button>
             </div>
         </div>

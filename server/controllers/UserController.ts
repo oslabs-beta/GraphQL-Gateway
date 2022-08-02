@@ -46,6 +46,7 @@ export default class UserController {
                             return user.save();
                         })
                         .then((result: object) => {
+                            // FIXME: Don't send password back
                             res.locals.user = result;
                             return next();
                         })

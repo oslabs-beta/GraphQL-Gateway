@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
         "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
@@ -9,13 +13,16 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "module": "commonjs",
+        "module": "ESNext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": false,
         "jsx": "react-jsx",
-        "typeRoots": ["./@types", "node_modules/@types"]
+        "typeRoots": [
+            "./@types",
+            "node_modules/@types"
+        ]
     },
     "include": [
         "client/**/*.js",
@@ -24,6 +31,7 @@
         "client/**/*.tsx",
         "server/**/*.js",
         "server/**/*.ts",
-        "./@types/*"
+        "./@types/*",
+        "server/utilities/workerThread.cjs"
     ]
 }

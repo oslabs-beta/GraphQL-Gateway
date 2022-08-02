@@ -6,13 +6,17 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .loggerBox {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
+
 html {
     background-color: #092173;
     font-family: 'Roboto', sans-serif;
 }
+
 body {
     margin: 0 auto;
     background-repeat: no-repeat;
@@ -24,6 +28,7 @@ a:link {
 
 .container {
     height: 100%;
+    min-width: 457px;
 }
 
 section {
@@ -33,6 +38,7 @@ section {
     width: 100%;
     height: 100vh;
     max-height: 900px;
+    min-width: 457px;
 }
 
 section#pageOne {
@@ -42,6 +48,7 @@ section#pageOne {
     background-color: #092173;
     overflow: hidden;
 }
+
 .blue-filter {
     z-index: 9;
     width: 100%;
@@ -49,11 +56,13 @@ section#pageOne {
     position: absolute;
     background-color: rgba(9, 33, 115, 0.7);
 }
+
 .video_wrapper {
     position: absolute;
     height: 100%;
     width: 100%;
 }
+
 #demoCard {
     z-index: 11;
     position: absolute;
@@ -71,20 +80,19 @@ section#pageOne {
 #loading {
     font-size: 30px;
     color: #d3d3d3;
-    margin-top: 150px;
-    margin-bottom: 100px;
-    border-radius: 2px;
-    flex: 50%;
-    margin-left: 10px;
-    height: 580px;
-    min-width: 900px;
-    max-width: 900px;
+    margin: 265px auto;
 }
+
+#loading h3 {
+    text-align: center;
+}
+
 #demoCardWrapper {
     position: absolute;
     top: 0;
     height: 300px;
 }
+
 .algorithmCard {
     display: inline-block;
     padding: 20px;
@@ -94,21 +102,26 @@ section#pageOne {
     width: 200px;
     transition: 0.3s;
 }
+
 .algorithmCard > img {
     -webkit-transition: -webkit-transform 0.8s ease-in-out;
     transition: transform 0.8s ease-in-out;
 }
+
 .algorithmCard:hover > img {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
 }
+
 .algorithmCard:hover {
     background-color: #3574f3;
 }
+
 #pageOne h1 {
     font-size: 60px;
     margin-bottom: 10px;
 }
+
 #pageOne h2 {
     margin: 10px 0 50px 0;
     font-size: 30px;
@@ -142,6 +155,7 @@ section#pageThree {
 .icon {
     padding: 20px;
 }
+
 .centeredSentence {
     text-align: center;
     color: #fff;
@@ -150,19 +164,23 @@ section#pageThree {
     width: 100%;
     background-color: #092173;
 }
+
 .centeredSentence h1 {
     margin: 52px;
     font-size: 40px;
 }
+
 #pageThreeWrapper {
     width: 100%;
     text-align: center;
 }
+
 #pageThreeLeft {
     display: inline-block;
     width: 700px;
     text-align: center;
 }
+
 #pageThreeRight {
     display: inline-block;
     width: 700px;
@@ -173,11 +191,13 @@ section#pageThree {
     width: 100px;
     padding: 30px;
 }
+
 #pageThreeLeft p {
     float: right;
     width: 50%;
     padding: 50px;
 }
+
 #pageThreeRight p {
     float: right;
     width: 50%;
@@ -207,6 +227,7 @@ section#pageThree {
     top: 0;
     text-align: center;
 }
+
 #side-navbar {
     z-index: 11;
     position: fixed;
@@ -214,6 +235,7 @@ section#pageThree {
     top: 0;
     right: 0;
 }
+
 .logoText {
     font-size: 150%;
     color: #ffffff;
@@ -241,7 +263,7 @@ section#pageThree {
     margin: 0;
     opacity: 1;
     outline: 0;
-    padding: 1.5em 2.2em;
+    padding: 1.5em;
     /* position: relative; */
     text-align: center;
     text-decoration: none;
@@ -284,6 +306,25 @@ section#pageThree {
     z-index: 1;
     position: relative;
 } */
+#navbar {
+    z-index: 11;
+    position: fixed;
+    background-color: #fff;
+    width: 70%;
+    top: 0;
+    border-bottom: 1px solid #324da6;
+    text-align: center;
+}
+
+#side-navbar {
+    z-index: 11;
+    position: fixed;
+    background-color: #fff;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 30%;
+}
 
 #footer {
     background-color: #092173;
@@ -292,10 +333,13 @@ section#pageThree {
     padding: 40px 0;
     bottom: 0px;
     width: 100%;
+    min-width: 550px;
 }
+
 .form-wrapper {
     text-align: center;
 }
+
 .input {
     width: 240px;
     height: 10px;
@@ -308,9 +352,11 @@ section#pageThree {
     border-radius: 5px;
     transition: 0.2s linear;
 }
+
 .input:nth-of-type(2) {
     margin-top: 10px;
 }
+
 /* .input:focus {
     border: 1px solid #353535;
 } */
@@ -325,9 +371,11 @@ section#pageThree {
     margin: 10px;
     transition: 0.5s;
 }
+
 .btn:hover {
     background-color: #e8a4ffc1;
 }
+
 .box {
     margin: 150px auto;
     text-align: center;
@@ -350,6 +398,7 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0);
     transition: 0.5s;
 }
+
 .transferBtn:hover {
     color: #3574f3;
     background-color: rgba(255, 255, 255, 0);
@@ -374,63 +423,173 @@ section#pageThree {
     margin: 2rem auto 1rem;
     display: inline-block;
 }
+
 .app h1 {
     margin: 50px;
 }
+
 .dashboard {
     width: 100%;
 }
+
 /* #chartBoxInside {
     height: 1000px;
 } */
-#toolBar {
-    position: absolute;
+.toolBarWrapper {
+    width: 100%;
+    margin: 0px auto;
+}
+
+.toolBarButtons {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 400px;
+}
+
+.toolBar {
+    position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
+    height: 765px;
+    width: 380px;
     top: 0px;
-    z-index: 10;
+    left: 0;
     color: #324da6;
     background-color: #fff;
-    padding-top: 75px;
+    margin-top: 64px;
+    border-bottom: 1px solid #324da6;
+    transition: all 0.2s ease-out;
+    z-index: 1;
 }
+
+.toolBar.closed {
+    left: -380px;
+}
+
 #toolBarMenu {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px 50px 0px 50px;
     transition: all 1s ease;
+
+    flex-grow: 1;
 }
+
 .projectButton {
     border: none;
     background: none;
-    padding: 10px 0px 10px 30px;
     font-size: 20px;
+    color: #324da6;
+    margin: 10px 0px;
+    cursor: pointer;
 }
+
+.projectButton:hover {
+    cursor: pointer;
+    color: #1134a7;
+}
+
 .projectContent {
+    text-align: center;
+    margin: 0px auto;
+}
+
+.apiDiv {
+    width: 200px;
+    text-align: center;
+    padding: 5px;
+}
+
+.panelColumn {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 0px 10px 60px;
+    justify-content: center;
 }
-.selectProjectButton {
-    border: none;
+
+.panelDropdown {
+    border: 1px solid #324da6;
+    border-radius: 5px;
+    color: #324da6;
+    font-size: 15px;
+    margin: 10px 0;
+    padding: 5px 20px;
+    width: 100%;
+}
+
+.panelButtonGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.panelButton {
     background: none;
-    padding-top: 10px;
-    font-size: 20px;
+    border: 1px solid #324da6;
+    /* width: 100px; */
+    margin: 10px 0;
+    padding: 5px;
+    color: #324da6;
+    font-size: 15px;
+    transition: all 0.5s ease;
+    border-radius: 5px;
+    display: inline-block;
 }
-.projectButton:hover,
-.selectProjectButton:hover {
-    color: #00259e;
-    font-weight: bold;
+
+.panelButton:hover {
+    background: #324da6;
+    color: #fff;
+    cursor: pointer;
 }
-.fa-bars {
+
+/* .fa-bars {
     align-self: end;
     padding: 15px;
     border: none;
     background: none;
+    padding-right: 16px;
+} */
+
+.fa-gear {
+    align-self: end;
+    padding: 10px;
+    border: none;
+    background: none;
+    margin-top: 75px;
+    color: #324da6;
+    cursor: pointer;
 }
+
+.newProject {
+    margin: 30px auto;
+    width: 150px;
+    padding: 10px;
+}
+
+.arrow {
+    background: none;
+    border: solid #324da6;
+    border-width: 0 6px 6px 0;
+    display: inline-block;
+    padding: 15px;
+    position: absolute;
+    right: -25px;
+    top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    right: 0px;
+}
+
 .chartBox {
     margin-top: 150px;
     margin-bottom: 100px;
@@ -440,8 +599,8 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.7);
     height: 580px;
     min-width: 900px;
-    max-width: 900px;
 }
+
 .loggerBox {
     margin-top: 150px;
     margin-bottom: 100px;
@@ -455,18 +614,22 @@ section#pageThree {
     min-width: 410px;
     max-width: 410px;
 }
+
 .loggerSortButtonsWrapper {
     width: 410px;
     order: 3;
     position: absolute;
     height: 33px;
 }
+
 .loggerSortButtons {
     text-align: center;
     background-color: #b6bcd6;
     height: 60px;
     border-bottom: 1px solid #092173;
+    max-width: 410px;
 }
+
 .chartBtn {
     width: 100px;
     color: #353535;
@@ -479,6 +642,7 @@ section#pageThree {
     border-radius: 5px;
     transition: 0.5s;
 }
+
 .loggerBtn {
     display: inline-block;
     font-size: 12px;
@@ -496,12 +660,15 @@ section#pageThree {
     border-radius: 5px;
     transition: 0.5s;
 }
+
 .loggerBtn:hover {
     background-color: #a496e3;
 }
+
 .active {
     background-color: #a496e3;
 }
+
 .projectSelector {
     display: flex;
     justify-content: space-between;
@@ -512,13 +679,16 @@ section#pageThree {
 .chartBtn:hover {
     background-color: #a496e3;
 }
+
 .h4chart {
     color: #353535;
     text-align: center;
 }
+
 .chartVisual {
     margin: 0 auto;
 }
+
 #dashWrapper {
     display: flex;
     flex-direction: row;
@@ -526,6 +696,7 @@ section#pageThree {
     justify-content: center;
     overflow: none;
 }
+
 .Collapsible {
     color: #545353;
     background-color: rgba(255, 255, 255, 0.2);
@@ -540,18 +711,21 @@ section#pageThree {
     border-top: 1px solid #999999;
     border-bottom: 0px;
 }
+
 .label {
     font-size: 10px;
     font-weight: bold;
     display: inline-block;
     margin-right: 10px;
 }
+
 .value {
     font-size: 10px;
     text-align: center;
     display: inline-block;
     margin-right: 25px;
 }
+
 .queryProps {
     display: inline-block;
     border-bottom: 1px solid #092173;
@@ -561,16 +735,20 @@ section#pageThree {
     cursor: pointer;
     width: 100%;
 }
+
 .loggerGUI {
     text-align: center;
 }
+
 .loadMoreBtn {
     margin: 50px;
     display: inline-block;
 }
+
 .individualQuery {
     display: inline-block;
 }
+
 .space {
     height: 60px;
     border-bottom: 1px solid #092173;
@@ -579,6 +757,219 @@ section#pageThree {
 .queryProps:hover {
     background-color: rgb(9, 32, 116, 0.1);
 }
+
 .projectLabel {
     cursor: pointer;
+}
+
+.slidecontainer {
+    width: 100%;
+    padding: 20px 0px;
+    /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    appearance: none;
+    width: 100%;
+    /* Full-width */
+    height: 25px;
+    /* Specified height */
+    background: #d3d3d3;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 0.7;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: 0.2s;
+    /* 0.2 seconds transition on hover */
+    transition: opacity 0.2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;
+    /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #092173;
+    /* Blue background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #04aa6d;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    /* Light grey */
+    border-top: 16px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 641px) {
+}
+
+@media (max-width: 640px) {
+    .loggerBox {
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, 0.7);
+        max-height: 580px;
+        margin: 80px auto;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    #dashWrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 457px;
+    }
+
+    #side-navbar {
+        width: 30%;
+        float: right;
+        min-width: 191px;
+    }
+
+    #navbar {
+        display: block;
+        min-width: 327px;
+    }
+
+    .chartBox {
+        width: 100%;
+        margin: 100px auto;
+        border-radius: 2px;
+        margin-left: 0px;
+        background-color: rgba(255, 255, 255, 0.7);
+        min-width: 457px;
+        height: 100%;
+        min-height: 316px;
+    }
+
+    .chartBtn {
+        width: 40px;
+        color: #353535;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        padding: 5px 1px;
+        border-radius: 5px;
+        transition: 0.5s;
+        font-size: 9px;
+    }
+
+    .loggerSortButtons {
+        min-width: 100px;
+        width: 100%;
+    }
+
+    #pageOneTextBox {
+        width: 435px;
+        margin-top: 0px;
+    }
+
+    #pageOneTextBox h1 {
+        font-size: 40px;
+    }
+
+    #pageOneTextBox h2 {
+        font-size: 30px;
+    }
+
+    #pageOneTextBox p {
+        font-size: 25px;
+    }
+
+    .algorithmCard {
+        display: none;
+    }
+
+    #demoCard {
+        top: 617px;
+        height: 645px;
+        width: 100%;
+        min-width: 554px;
+    }
+
+    #pageThreeRight {
+        display: block;
+        width: 100%;
+    }
+
+    #pageThreeLeft {
+        display: block;
+        width: 100%;
+    }
+
+    #pageThreeLeft p {
+        padding: 0px;
+        font-size: 12px;
+    }
+
+    #pageThreeRight p {
+        padding: 0px;
+        font-size: 12px;
+    }
+
+    .icon {
+        display: flex;
+        height: 110px;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .iconImg {
+        width: 60px;
+    }
+
+    .centeredSentence h1 {
+        margin: 58px;
+        font-size: 30px;
+    }
+
+    .video_wrapper {
+        display: none;
+    }
+
+    .container {
+        min-width: 554px;
+    }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { ProjectQuery } from '../../@types/Interfaces';
 
 interface QueryProps {
     query: ProjectQuery;
