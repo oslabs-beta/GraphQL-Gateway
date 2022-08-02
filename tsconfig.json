@@ -13,7 +13,7 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "module": "commonjs",
+        "module": "ESNext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
@@ -31,6 +31,7 @@
         "client/**/*.tsx",
         "server/**/*.js",
         "server/**/*.ts",
-        "./@types/*"
+        "./@types/*",
+        "server/utilities/workerThread.cjs"
     ]
 }

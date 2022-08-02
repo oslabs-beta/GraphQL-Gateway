@@ -13,7 +13,7 @@
         "prettier"
     ],
     "ignorePatterns": [
-        "webpack.config.js"
+        "webpack.config.cjs"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
