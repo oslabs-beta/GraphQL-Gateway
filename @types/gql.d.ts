@@ -1,4 +1,5 @@
 type User = {
+    // _id?: string;
     id: string;
     email: string;
     password: string;
@@ -68,6 +69,11 @@ type ProjectQuery = {
     timestamp: number;
     loggedOn: number;
     latency?: number;
+};
+
+type Context = {
+    authenticated: boolean;
+    user: null | string | JwtPayload;
 };
 
 type CreateProjectQueryArgs = {

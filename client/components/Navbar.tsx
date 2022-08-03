@@ -1,12 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
 import '../../public/styles.css';
 
 export default function Navbar() {
-    const { pathname } = useLocation();
-    // todo: query to check auth status
-
+    // const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const { user, setUser, loading } = useAuth();
     // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
     const controlNavbar = () => {
@@ -16,6 +17,12 @@ export default function Navbar() {
             setShow('block');
         }
     };
+    console.log(user);
+    function logout() {
+        setUser(null);
+        localStorage.clear();
+        navigate('/');
+    }
 
     useEffect(() => {
         window.addEventListener('scroll', controlNavbar);
@@ -52,12 +59,26 @@ export default function Navbar() {
                     // color: pathname === '/dashboard' ? '#fff' : '#092173',
                 }}
             >
-                <Link to="/login" type="submit" className="linkBtn">
-                    Login
-                </Link>
-                <Link to="/signup" type="submit" className="linkBtn">
-                    Signup
-                </Link>
+                {loading === false &&
+                    (user === null ? (
+                        <>
+                            <Link to="/login" type="submit" className="linkBtn">
+                                Login
+                            </Link>
+                            <Link to="/signup" type="submit" className="linkBtn">
+                                Signup
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/dashboard" type="submit" className="linkBtn">
+                                Dashboard
+                            </Link>
+                            <button className="linkBtn" type="button" onClick={logout}>
+                                Logout
+                            </button>
+                        </>
+                    ))}
             </div>
         </div>
     );
