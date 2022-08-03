@@ -2,6 +2,8 @@ import path from 'path';
 import { Worker, isMainThread, parentPort } from 'worker_threads';
 import { Request, Response, NextFunction } from 'express';
 import { fileURLToPath } from 'url';
+// import * as graphqlgate from 'graphql-limiter';
+// import * as graphqlgate from 'graphqlgate';
 // import types as well
 // TODO: Recalcualte data for current projects.
 // import rate limiter
@@ -29,7 +31,7 @@ class RateLimiterWorker {
         const filename = fileURLToPath(import.meta.url);
 
         // FIXME: Establish a worker pool. Spawning a worker is expensive
-        this.worker = new Worker(`${path.dirname(filename)}/workerThread.cjs`, {
+        this.worker = new Worker(`${path.dirname(filename)}/workerThread.js`, {
             workerData: {
                 projectId,
                 config,

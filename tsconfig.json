@@ -22,16 +22,18 @@
         "typeRoots": [
             "./@types",
             "node_modules/@types"
-        ]
+        ],
+        "outDir": "build",
     },
     "include": [
         "client/**/*.js",
         "client/**/*.jsx",
         "client/**/*.ts",
         "client/**/*.tsx",
-        "server/**/*.js",
+        // "server/**/*.js",
         "server/**/*.ts",
         "./@types/*",
-        "server/utilities/workerThread.cjs"
+        "server/utilities/RedisMock.js",
+        "server/utilities/workerThread.js",
     ]
 }

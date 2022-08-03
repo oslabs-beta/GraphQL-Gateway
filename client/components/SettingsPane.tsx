@@ -160,7 +160,6 @@ export default function SettingsPane({
                     <div className="panelButtonGroup">
                         <button
                             className="panelButton"
-                            disabled
                             id="updateSettings"
                             type="button"
                             onClick={onUpdate}
