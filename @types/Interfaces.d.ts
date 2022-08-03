@@ -5,14 +5,18 @@ export interface ProjectQuery {
     depth: number;
     complexity: number;
     timestamp: number;
+    tokens: number;
+    // latency: number;
+    success: boolean;
 }
 
 export interface Project {
     id: string;
     userID: string;
     name: string;
-    queries: [ProjectQuery];
-    query: ProjectQuery;
+    apiKey: string;
+    // queries: [ProjectQuery];
+    // query: ProjectQuery;
 }
 export interface User {
     id: string;

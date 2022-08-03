@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import settings from '../public/settings.png';
 import intime from '../public/intime.png';
 import data from '../public/data.png';
@@ -8,66 +8,59 @@ import gear from '../public/gear.png';
 import '../public/styles.css';
 
 export default function HomePage() {
+    // todo: query to check auth status
+
     // FIXME: navbar show only on scroll up, not down
-    const [show, setShow] = useState('block');
-    const controlNavbar = () => {
-        if (window.scrollY > 100) {
-            setShow('none');
-        } else {
-            setShow('block');
-        }
-    };
+    // const [show, setShow] = useState('block');
+    // const controlNavbar = () => {
+    //     if (window.scrollY > 100) {
+    //         setShow('none');
+    //     } else {
+    //         setShow('block');
+    //     }
+    // };
 
-    useEffect(() => {
-        window.addEventListener('scroll', controlNavbar);
-        return () => {
-            window.removeEventListener('scroll', controlNavbar);
-        };
-    }, []);
-
-    const navigate = useNavigate();
-
-    const handleLogin = (): void => {
-        navigate('/login');
-    };
-    const handleSignup = (): void => {
-        navigate('/signup');
-    };
-    const handleHome = (): void => {
-        navigate('/');
-    };
-    const handleDemo = (): void => {
-        navigate('/demo');
-    };
-    const handleAbout = (): void => {
-        navigate('/about');
-    };
+    // useEffect(() => {
+    //     window.addEventListener('scroll', controlNavbar);
+    //     return () => {
+    //         window.removeEventListener('scroll', controlNavbar);
+    //     };
+    // }, []);
 
     return (
         <div>
-            <div id="navbar" style={{ display: show }}>
-                {/* <img src="logo.png" alt="logo" /> */}
-
-                <button type="submit" onClick={handleHome} className="linkBtn">
+            {/* <div id="navbar" style={{ display: show }}>
+                <Link to="/" type="submit" className="linkBtn">
                     Home
-                </button>
-                <button type="submit" onClick={handleDemo} className="linkBtn">
+                </Link>
+                <Link to="/demo" type="submit" className="linkBtn">
                     Demo
-                </button>
-                <button type="submit" onClick={handleAbout} className="linkBtn">
+                </Link>
+                <Link to="/about" type="submit" className="linkBtn">
                     About
-                </button>
+                </Link>
             </div>
             <div id="side-navbar" style={{ display: show }}>
-                <button type="submit" onClick={handleLogin} className="linkBtn">
+                <Link to="/login" type="submit" className="linkBtn">
                     Login
-                </button>
-                <button type="submit" onClick={handleSignup} className="linkBtn">
+                </Link>
+                <Link to="/signup" type="submit" className="linkBtn">
                     Signup
-                </button>
-            </div>
+                </Link>
+            </div> */}
             <div className="container">
                 <section id="pageOne">
+                    <div className="blue-filter" />
+                    <div className="video_wrapper">
+                        <iframe
+                            title="unique-title-1"
+                            className="modest-vid-embed__item"
+                            style={{ width: '100%', height: '130%' }}
+                            src="https://www.youtube.com/embed/BQ0mxQXmLsk?mute=1&autoplay=1&modestbranding=1&loop=1&rel=0&amp;controls=0&amp;showinfo=0&playlist=rwlzvGfGXn4"
+                            frameBorder="0"
+                            allowFullScreen
+                        />
+                    </div>
                     <div id="pageOneTextBox">
                         <h1>Graph QL Rate Limiter</h1>
                         <h2>Gateway visualisation tool</h2>
@@ -100,11 +93,11 @@ export default function HomePage() {
                     </div>
                 </section>
                 <section id="pageTwo" />
+                <div className="centeredSentence">
+                    <h1>What makes us different?</h1>
+                </div>
                 <section id="pageThree">
                     <div id="pageThreeWrapper">
-                        <div className="centeredSentence">
-                            <h1>What makes us different?</h1>
-                        </div>
                         <div id="pageThreeLeft">
                             <div className="icon">
                                 <img className="iconImg" src={settings} alt="settings-icon" />
@@ -139,11 +132,6 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                <div id="footer">
-                    <div>
-                        <h4>Copyright © Team Cat-Snake 2022</h4>
-                    </div>
-                </div>
             </div>
         </div>
     );
