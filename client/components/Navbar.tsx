@@ -1,27 +1,37 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable default-case */
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../public/styles.css';
 
 export default function Navbar() {
-    const { pathname } = useLocation();
-    // todo: query to check auth status
-
-    // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('flex');
-    const controlNavbar = () => {
-        if (window.scrollY > 100) {
-            setShow('none');
-        } else {
-            setShow('flex');
-        }
-    };
+    const [scrollPos, setScrollPos] = useState(0);
 
     useEffect(() => {
-        window.addEventListener('scroll', controlNavbar);
-        return () => {
-            window.removeEventListener('scroll', controlNavbar);
+        const controlNavbar = () => {
+            console.log('top', document.body.getBoundingClientRect().top);
+            setScrollPos(document.body.getBoundingClientRect().top);
+            console.log('sp', scrollPos);
+            if (document.body.getBoundingClientRect().top > scrollPos) {
+                console.log('yes');
+                setShow('none');
+            } else {
+                console.log('no');
+                setShow('flex');
+            }
         };
+
+        window.addEventListener('scroll', controlNavbar);
+        return () => window.removeEventListener('scroll', controlNavbar);
+    }, []);
+
+    useEffect(() => {
+        const url = window.location.href.split('/');
+        const target = url[url.length - 1].toLowerCase();
+        const element = document.getElementById(target);
+        element && element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, []);
 
     return (
@@ -30,25 +40,45 @@ export default function Navbar() {
                 id="navbar"
                 style={{
                     display: show,
-                    // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
-                    // color: pathname === '/dashboard' ? '#fff' : '#092173',
                 }}
             >
-                <Link to="/" type="submit" className="linkBtn">
+                <Link
+                    to="/"
+                    type="submit"
+                    className="linkBtn"
+                    onClick={() => {
+                        const hero = document.getElementById('pageOne');
+                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                >
                     Home
                 </Link>
-                <Link to="/demo" type="submit" className="linkBtn">
+                <Link
+                    to="/demo"
+                    type="submit"
+                    className="linkBtn"
+                    onClick={() => {
+                        const hero = document.getElementById('demoCard');
+                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                >
                     Demo
                 </Link>
-                <Link to="/about" type="submit" className="linkBtn">
+                <Link
+                    to="/about"
+                    type="submit"
+                    className="linkBtn"
+                    onClick={() => {
+                        const hero = document.getElementById('pageThree');
+                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                >
                     About
                 </Link>
                 <div
                     id="side-navbar"
                     style={{
                         display: show,
-                        //     // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
-                        //     // color: pathname === '/dashboard' ? '#fff' : '#092173',
                     }}
                 >
                     <Link to="/login" type="submit" className="linkBtn">
@@ -59,16 +89,6 @@ export default function Navbar() {
                     </Link>
                 </div>
             </div>
-            {/* <div
-                id="side-navbar"
-                style={{
-                    display: show,
-                    //     // backgroundColor: pathname === '/dashboard' ? '#092173' : '#fff',
-                    //     // color: pathname === '/dashboard' ? '#fff' : '#092173',
-                }}
-            >
-
-            </div> */}
         </div>
     );
 }

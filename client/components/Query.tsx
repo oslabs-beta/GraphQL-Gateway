@@ -24,10 +24,6 @@ export default function Query({ query }: QueryProps) {
                 <div className="label">Com: </div>
                 <div className="value">{query.complexity}</div>
             </div>
-            {/* <div className="individualQuery">
-                <div className="label">Latency: </div>
-                <div className="value">{query.latency}</div>
-            </div> */}
             <div className="individualQuery">
                 <div className="label">Blo: </div>
                 <div className="value">{(!query.success).toString()}</div>

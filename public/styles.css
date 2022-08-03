@@ -12,7 +12,6 @@
 html {
     background-color: #092173;
     font-family: 'Roboto', sans-serif;
-    min-width: 550px;
 }
 body {
     margin: 0 auto;
@@ -34,7 +33,6 @@ section {
     align-items: center;
     width: 100%;
     height: 100vh;
-    max-height: 900px;
     min-width: 457px;
 }
 
@@ -54,8 +52,8 @@ section#pageOne {
 }
 .video_wrapper {
     position: absolute;
-    height: 100%;
-    width: 100%;
+    height: 125%;
+    width: 2500px;
 }
 #demoCard {
     z-index: 11;
@@ -67,7 +65,7 @@ section#pageOne {
     top: 600px;
     background-color: #fff;
     width: 70%;
-    height: 700px;
+    height: 100%;
     box-shadow: 0px 0px 20px #00259e;
 }
 
@@ -83,11 +81,11 @@ section#pageOne {
     position: absolute;
     top: 0;
     height: 300px;
+    display: flex;
 }
 .algorithmCard {
     display: inline-block;
-    padding: 20px;
-    margin: 20px 12px;
+    margin: 20px;
     text-align: center;
     height: 200px;
     width: 200px;
@@ -104,6 +102,10 @@ section#pageOne {
 .algorithmCard:hover {
     background-color: #3574f3;
 }
+/* .demoCardImg {
+    width: 100%;
+    margin-top: 200px;
+} */
 #pageOne h1 {
     font-size: 60px;
     margin-bottom: 10px;
@@ -140,6 +142,10 @@ section#pageThree {
 
 .icon {
     padding: 20px;
+    display: flex;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
 }
 .centeredSentence {
     text-align: center;
@@ -159,12 +165,12 @@ section#pageThree {
 }
 #pageThreeLeft {
     display: inline-block;
-    width: 700px;
+    width: 50%;
     text-align: center;
 }
 #pageThreeRight {
     display: inline-block;
-    width: 700px;
+    width: 50%;
     text-align: center;
 }
 
@@ -270,7 +276,7 @@ section#pageThree {
     position: relative;
 } */
 #navbar {
-    z-index: 11;
+    z-index: 21;
     position: fixed;
     background-color: #fff;
     width: 70%;
@@ -289,6 +295,7 @@ section#pageThree {
     right: 0;
     justify-content: flex-end;
     width: 30%;
+    border-bottom: 1px solid #324da6;
 }
 #footer {
     background-color: #092173;
@@ -638,7 +645,52 @@ section#pageThree {
 .projectLabel {
     cursor: pointer;
 }
-@media (min-width: 641px) {
+@media (min-width: 2500px) {
+    .video_wrapper {
+        width: 3500px;
+        height: 265%;
+    }
+}
+
+@media (max-width: 1300px) {
+    .algorithmCard {
+        font-size: 14px;
+        width: 145px;
+    }
+    .algorithmCard img {
+        width: 50px;
+    }
+}
+@media (max-width: 1050px) {
+    .algorithmCard {
+        font-size: 10px;
+        width: 110px;
+    }
+    .algorithmCard img {
+        width: 30px;
+    }
+    .iconImg {
+        width: 70px;
+        padding: 10px;
+    }
+    #pageThreeRight p {
+        font-size: 14px;
+    }
+    #pageThreeLeft p {
+        font-size: 14px;
+    }
+}
+@media (max-width: 850px) {
+    .algorithmCard {
+        display: none;
+    }
+    .icon {
+        height: 80px;
+    }
+    #pageThreeLeft,
+    #pageThreeRight {
+        width: 100%;
+    }
 }
 @media (max-width: 640px) {
     .loggerBox {
@@ -702,7 +754,7 @@ section#pageThree {
     }
     #demoCard {
         top: 617px;
-        height: 645px;
+        height: 737px;
         width: 100%;
         min-width: 554px;
     }

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import { gql } from 'apollo-server-express';
 import { useQuery, gql } from '@apollo/client';
-// import { useQuery } from '@apollo/client';
 import ToolBar from './ToolBar';
 import ProjectView from './ProjectView';
 import { useAuth } from '../auth/AuthProvider';
-// import { SelectedProject, Projects } from '../../@types/Interfaces';
 
 const GET_PROJECT_DATA = gql`
     query getUserData($userId: String!) {

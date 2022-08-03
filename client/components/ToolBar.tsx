@@ -21,10 +21,6 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
 
     return (
         <div className={`toolBar${extended ? ' closed' : ''}`}>
-            {/** //ToDo: make the tool bar look nice. 
-                   -toggle in and out from the right hand side. 
-                   - sylethe project buttons */}
-
             <button
                 className={`arrow${extended ? ' right' : ' left'}`}
                 type="button"
