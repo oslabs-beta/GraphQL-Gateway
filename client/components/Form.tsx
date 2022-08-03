@@ -20,14 +20,20 @@ const Form: React.FC<IProps> = ({ togglePopup, userID, createProjectMutation }) 
     return (
         <form onSubmit={handleSubmit}>
             <div id="box">
-                <span className="close" onClick={togglePopup}>
-                    x
-                </span>
-                <label>
-                    Project name:
+                <div id="boxInside">
+                    <span className="close" onClick={togglePopup}>
+                        x
+                    </span>
+                    <h3>New project name:</h3>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    <button type="submit">Submit</button>
-                </label>
+                    <button
+                        style={{ marginTop: '20px', marginBottom: '20px' }}
+                        className="selectProjectButton"
+                        type="submit"
+                    >
+                        Submit
+                    </button>
+                </div>
             </div>
         </form>
     );
