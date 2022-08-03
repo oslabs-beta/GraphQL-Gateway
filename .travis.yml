@@ -1,9 +1,33 @@
 language: node_js
+
 node_js:
     - 16
+
 branches:
     only:
         - dev
+        - main
+
 script:
     - 'npm run lint'
+    - python3 -VV
+    - pip install --upgrade pip
+    - pip -V
     # - "npm run test"
+
+before_deploy:
+# install the aws cli
+  - python3 -m pip install --user awscli
+  # install the elastic beanstalk cli
+  - python3 -m pip install --user awsebcli
+  # Append exe location to our PATH
+  - export PATH=$PATH:$HOME/.local/bin
+
+env: PATH=/opt/python/3.7.1/bin:$PATH
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  on:
+    branch: main
+  script: sh $TRAVIS_BUILD_DIR/deploy.sh

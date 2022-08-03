@@ -21,6 +21,7 @@ const PORT: number | string = process.env.port || 3000;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    persistedQueries: false,
 });
 
 app.use(cors());
@@ -28,6 +29,12 @@ app.use(cors());
 app.use(cookieParser());
 app.use(compression());
 app.use(bodyParser.json());
+
+if (process.env.NODE_ENV?.trim() === 'production') {
+    app.use(express.static(path.join(__dirname, '../../build')));
+} else {
+    app.use(express.static(path.join(__dirname, '../client/')));
+}
 
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
@@ -50,7 +57,11 @@ server.start().then((): void => {
     app.all('/', (req, res) =>
         res
             .setHeader('Content-Type', 'text/html')
-            .sendFile(path.join(__dirname, '../public/index.html'))
+            .sendFile(
+                process.env.NODE_ENV?.trim() === 'production'
+                    ? path.join(__dirname, '../../public/index.html')
+                    : path.join(__dirname, '../public/index.html')
+            )
     );
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
