@@ -18,7 +18,29 @@
 
 4. Import and configure the [GraphQLGate logger package](https://www.npmjs.com/package/graphql-limiter)
 
+## Table of Contents
+
+-   [Getting Started](#getting-started)
+-   [How It Works](#how-it-works)
+-   [Contributions](#contributions)
+-   [Developers](#developers)
+-   [More Information](#for-more-information)
+
 ## <a name="getting-started"></a> Getting Started
+
+## <a name="contributions"></a> Contributions
+
+Contributions to the code, examples, documentation, etc. are very much appreciated.
+
+-   Please report issues and bugs directly in this [GitHub project](https://github.com/oslabs-beta/GraphQL-Gateway/issues).
+
+## <a name="developers"></a> Developers
+
+-   [Evan McNeely](https://github.com/evanmcneely)
+-   [Stephan Halarewicz](https://github.com/shalarewicz)
+-   [Flora Yufei Wu](https://github.com/feiw101)
+-   [Jon Dewey](https://github.com/donjewey)
+-   [Milos Popovic](https://github.com/milos381)
 
 ## <a name="for-more-information"></a> For More Information
 
