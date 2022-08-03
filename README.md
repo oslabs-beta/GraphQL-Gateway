@@ -2,7 +2,7 @@
    <img width="50px" src="https://user-images.githubusercontent.com/89324687/182067950-54c00964-2be4-481a-976b-773d9112a4c0.png"/>
    <h1>GraphQL Gateway Developer Portal</h1>
    <a href="https://github.com/oslabs-beta/GraphQL-Gateway"><img src="https://img.shields.io/badge/license-MIT-blue"/></a> <a href="https://github.com/oslabs-beta/graphql-gateway/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/oslabs-beta/graphql-gateway"></a> <a             href="https://github.com/oslabs-beta/Graphql-gateway/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/oslabs-beta/graphql-gateway"></a> <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/oslabs-beta/graphql-gateway">
-   <hr />
+   <br />
    </div>
 
 ## <a name=""></a> GraphQL Gateway developer portal
