@@ -3,6 +3,7 @@ import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 import randomString from 'randomstring';
 import { ApolloError } from 'apollo-errors';
+import { ObjectId } from 'mongoose';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
@@ -124,7 +125,6 @@ const resolvers: IResolvers = {
                         email: user.email,
                         password: user.password,
                         id: user.id,
-                        projects: [],
                     };
                 })
                 .catch((err: Error): Error => {
@@ -146,16 +146,16 @@ const resolvers: IResolvers = {
                     const savedUser = await newUser.save();
                     if (!savedUser) throw new Error('Try again later.');
                     const token = sessions.create({ id: savedUser._id.toString() });
+                    const idString = savedUser._id.toString();
+
                     return {
                         token,
                         email: savedUser.email,
                         password: savedUser.password,
-                        id: savedUser._id,
-                        projects: [],
+                        id: idString,
                     };
                 })
-                .then((newUser: any): User => newUser)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+                .catch((err: Error): Error => new Error(`${err}`));
         },
         updateUser: async (
             parent: undefined,
@@ -230,44 +230,29 @@ const resolvers: IResolvers = {
              * Checks if this project already exists under specified user, if not
              * creates a new project based on the mongoose model and saves it.
              */
-            return ProjectDB.findOne({ userID, name })
-                .then(async (project: any): Promise<Project | Error> => {
-                    if (project) throw new Error('Project already exists');
+            return ProjectDB.findOne({ userID, name }).then(async (project: any): Promise<any> => {
+                if (project) throw new Error('Project already exists');
 
-                    // random 10-char string generated and stored in projectDB
-                    // gate-logger library will cross-reference projects collection
-                    // to validate API call entered by user with auth key in header "log_key"
-                    const apiKey = randomString.generate(10);
+                // random 10-char string generated and stored in projectDB
+                // gate-logger library will cross-reference projects collection
+                // to validate API call entered by user with auth key in header "log_key"
+                const apiKey = randomString.generate(10);
 
-                    // save to DB
-                    const newProject = new ProjectDB({
-                        userID,
-                        name,
-                        apiKey,
-                    });
+                // save to DB
+                const newProject = new ProjectDB({
+                    userID,
+                    name,
+                    apiKey,
+                });
 
-                    // save project and store new ID
-                    const resultID: string | Error | undefined = await newProject
-                        .save()
-                        // eslint-disable-next-line no-underscore-dangle
-                        .then((res: any): string | undefined => res._id?.toString())
-                        .catch(
-                            (err: Error): Error =>
-                                new Error(`Saving project/receiving new ID from DB failed: ${err}`)
-                        );
-
-                    /* updates project in DB to include API endpoint for logger
-                     * endpoint (sans API Key) -> host.com/:userID?project=[projectID]
-                     * user enters this (along with API key in header) into their project's
-                     * src code with gate-logger library installed
-                     */
-                    return ProjectDB.findByIdAndUpdate(
-                        resultID,
-                        { endpoint: `/log?project=${resultID}` },
-                        { new: true }
-                    ).then((data: any): Project => data);
-                })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+                // save project
+                return newProject
+                    .save()
+                    .catch(
+                        (err: Error): Error =>
+                            new Error(`Saving project/receiving new ID from DB failed: ${err}`)
+                    );
+            });
         },
         /*
          *   updates project name
@@ -329,8 +314,8 @@ const resolvers: IResolvers = {
             /* checks if project exists given the projectID and
              * throws error if not
              */
-            const userID: string | undefined | Error = await ProjectDB.findById(projectID)
-                .then((project: any): string | undefined => {
+            const userID: ObjectId | Error = await ProjectDB.findById(projectID)
+                .then((project: any): ObjectId => {
                     if (!project) throw new Error('Project does not exist');
                     return project?.userID;
                 })
@@ -352,22 +337,6 @@ const resolvers: IResolvers = {
 
             return newQuery;
         },
-        // updateProjectQuery: (
-        //     parent: undefined,
-        //     args: UpdateProjectArgs
-        // ): Promise<ProjectQuery | Error> => {
-        //     const { id, number, depth, complexity, timestamp, tokens, success } = args.projectQuery;
-        //     return QueryDB.findByIdAndUpdate(
-        //         id,
-        //         { number, depth, complexity, timestamp, tokens, success },
-        //         { new: true }
-        //     )
-        //         .then((query: any): ProjectQuery => {
-        //             if (!query) throw new Error('Query not found');
-        //             return query;
-        //         })
-        //         .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-        // },
         deleteProjectQuery: async (
             parent: undefined,
             args: QueryByID,
