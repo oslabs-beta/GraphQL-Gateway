@@ -30,4 +30,4 @@ deploy:
   skip_cleanup: true
   on:
     branch: main
-  script: sh $TRAVIS_BUILD_DIR/deploy.sh
+  script: sh $TRAVIS_BUILD_DIR/scripts/deploy.sh

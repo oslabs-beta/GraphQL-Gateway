@@ -8,6 +8,7 @@ import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 import sessions from '../utilities/sessions';
 import { UserTakenError, WrongCredentialsError } from './errors';
+import { ObjectId } from 'mongoose';
 
 const resolvers: IResolvers = {
     Query: {
@@ -119,7 +120,6 @@ const resolvers: IResolvers = {
                         email: user.email,
                         password: user.password,
                         id: user.id,
-                        projects: [],
                     };
                 })
                 .catch((err: Error): Error => {
@@ -140,13 +140,14 @@ const resolvers: IResolvers = {
                     });
                     const savedUser = await newUser.save();
                     if (!savedUser) throw new Error('Try again later.');
-                    const token = sessions.create({ id: savedUser._id });
+                    const token = sessions.create({ id: savedUser._id.toString() });
+                    const idString = savedUser._id.toString();
+
                     return {
                         token,
                         email: savedUser.email,
                         password: savedUser.password,
-                        id: savedUser._id,
-                        projects: [],
+                        id: idString,
                     };
                 })
                 .catch((err: Error): Error => new Error(`${err}`));
@@ -224,32 +225,29 @@ const resolvers: IResolvers = {
              * Checks if this project already exists under specified user, if not
              * creates a new project based on the mongoose model and saves it.
              */
-            return ProjectDB.findOne({ userID, name }).then(
-                async (project: any): Promise<Project | Error> => {
-                    if (project) throw new Error('Project already exists');
+            return ProjectDB.findOne({ userID, name }).then(async (project: any): Promise<any> => {
+                if (project) throw new Error('Project already exists');
 
-                    // random 10-char string generated and stored in projectDB
-                    // gate-logger library will cross-reference projects collection
-                    // to validate API call entered by user with auth key in header "log_key"
-                    const apiKey = randomString.generate(10);
+                // random 10-char string generated and stored in projectDB
+                // gate-logger library will cross-reference projects collection
+                // to validate API call entered by user with auth key in header "log_key"
+                const apiKey = randomString.generate(10);
 
-                    // save to DB
-                    const newProject = new ProjectDB({
-                        userID,
-                        name,
-                        apiKey,
-                    });
+                // save to DB
+                const newProject = new ProjectDB({
+                    userID,
+                    name,
+                    apiKey,
+                });
 
-                    // save project
-                    return newProject
-                        .save()
-                        .catch(
-                            (err: Error): Error =>
-                                new Error(`Saving project/receiving new ID from DB failed: ${err}`)
-                        )
-                        .finally(() => newProject);
-                }
-            );
+                // save project
+                return newProject
+                    .save()
+                    .catch(
+                        (err: Error): Error =>
+                            new Error(`Saving project/receiving new ID from DB failed: ${err}`)
+                    );
+            });
         },
         /*
          *   updates project name
@@ -311,14 +309,14 @@ const resolvers: IResolvers = {
             /* checks if project exists given the projectID and
              * throws error if not
              */
-            const userID: string | undefined | Error = await ProjectDB.findById(projectID)
-                .then((project: any): string | undefined => {
+            const userID: ObjectId | Error = await ProjectDB.findById(projectID)
+                .then((project: any): ObjectId => {
                     if (!project) throw new Error('Project does not exist');
                     return project?.userID;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            const queries: string | ProjectQuery[] = await QueryDB.find({ projectID }).catch(
+            const queries: any = await QueryDB.find({ projectID }).catch(
                 (err) => `DB query failed: ${err}`
             );
             const newNumber: number = queries.length + 1;
