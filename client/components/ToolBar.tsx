@@ -20,19 +20,19 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
      * instead of the project list */
 
     return (
-        <div id="toolBar" style={extended === true ? { left: '0px' } : { left: '-340px' }}>
+        <div className={`toolBar${extended ? ' closed' : ''}`}>
             {/** //ToDo: make the tool bar look nice. 
                    -toggle in and out from the right hand side. 
                    - sylethe project buttons */}
 
             <button
-                className="fa-solid fa-bars fa-2xl"
+                className={`arrow${extended ? ' right' : ' left'}`}
                 type="button"
                 aria-label="switch"
                 onClick={() => setExtended(extended !== true)}
             />
             <div id="toolBarMenu">
-                Projects{' '}
+                <h3>Projects:</h3>
                 {projectLoading ? (
                     <Loading />
                 ) : (
@@ -44,7 +44,9 @@ export default function ToolBar({ projects, setSelectedProject, projectLoading }
                                 setExtended={setExtended}
                             />
                         ))}
-                        <button type="button">Create a new Project</button>
+                        <button className="selectProjectButton newProject" type="button">
+                            New Project
+                        </button>
                         <div>Menu toSee/update profile info</div>
                     </>
                 )}

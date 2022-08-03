@@ -25,7 +25,7 @@ export default function ProjectItem({
             </button>
             {dropdown && (
                 <div className="projectContent">
-                    <div>
+                    <div className="apiDiv">
                         <b>API Key:</b> {project.apiKey}
                     </div>
                     <button
@@ -33,7 +33,7 @@ export default function ProjectItem({
                         type="button"
                         aria-label="switch"
                         onClick={() => {
-                            setExtended(false);
+                            setExtended(true);
                             setSelectedProject(project);
                         }}
                     >
