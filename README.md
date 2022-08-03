@@ -3,7 +3,8 @@
    <h1>GraphQL Gateway Developer Portal</h1>
    <a href="https://github.com/oslabs-beta/GraphQL-Gateway"><img src="https://img.shields.io/badge/license-MIT-blue"/></a> <a href="https://github.com/oslabs-beta/graphql-gateway/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/oslabs-beta/graphql-gateway"></a> <a             href="https://github.com/oslabs-beta/Graphql-gateway/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/oslabs-beta/graphql-gateway"></a> <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/oslabs-beta/graphql-gateway">
    </div>
-## The-GraphQL-Gateway-developer-portal
+
+## <a name=""></a> The GraphQL Gateway developer portal
 
 is an easy-to-use web application designed for offering a visualization of how your GraphQL API endpoints secured using rate limits and depth limits. With this tool, users can:
 
