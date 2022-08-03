@@ -19,3 +19,7 @@
 4. Import and configure the [GraphQLGate logger package](https://www.npmjs.com/package/graphql-limiter)
 
 ## <a name="getting-started"></a> Getting Started
+
+## <a name="for-more-information"></a> For More Information
+
+[GraphQLGate rate-limiting package](https://github.com/oslabs-beta/GraphQL-Gate) [GraphQLGate logger package](https://github.com/oslabs-beta/Gate-Logger)
