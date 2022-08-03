@@ -145,7 +145,7 @@ const resolvers: IResolvers = {
                     });
                     const savedUser = await newUser.save();
                     if (!savedUser) throw new Error('Try again later.');
-                    const token = sessions.create({ id: savedUser._id });
+                    const token = sessions.create({ id: savedUser._id.toString() });
                     return {
                         token,
                         email: savedUser.email,
