@@ -4,6 +4,7 @@
    <a href="https://github.com/oslabs-beta/GraphQL-Gateway"><img src="https://img.shields.io/badge/license-MIT-blue"/></a> <a href="https://github.com/oslabs-beta/graphql-gateway/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/oslabs-beta/graphql-gateway"></a> <a             href="https://github.com/oslabs-beta/Graphql-gateway/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/oslabs-beta/graphql-gateway"></a> <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/oslabs-beta/graphql-gateway">
    <br />
    </div>
+&nbsp;
 
 ## <a name=""></a> GraphQL Gateway Developer Portal
 
@@ -12,8 +13,6 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 -   Visualize API call data and facilitate a tuning of rate limiting algorithm settings
 -   Seek for query resolution optimizations for GraphQL APIs
 -   View cached performance metrics
-
-&nbsp;
 
 ## <a name="prerequisites"></a> Prerequisites
 
