@@ -3,12 +3,12 @@ import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 import randomString from 'randomstring';
 import { ApolloError } from 'apollo-errors';
+import { ObjectId } from 'mongoose';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 import sessions from '../utilities/sessions';
 import { UserTakenError, WrongCredentialsError } from './errors';
-import { ObjectId } from 'mongoose';
 
 const resolvers: IResolvers = {
     Query: {
