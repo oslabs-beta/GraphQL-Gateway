@@ -22,4 +22,7 @@
 
 ## <a name="for-more-information"></a> For More Information
 
-[GraphQLGate rate-limiting package](https://github.com/oslabs-beta/GraphQL-Gate) [GraphQLGate logger package](https://github.com/oslabs-beta/Gate-Logger)
+GraphQLGate rate-limiting and Logger package documentation:
+
+-   [GraphQLGate rate-limiting package](https://github.com/oslabs-beta/GraphQL-Gate)
+-   [GraphQLGate logger package](https://github.com/oslabs-beta/Gate-Logger)
