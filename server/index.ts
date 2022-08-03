@@ -8,11 +8,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
 
-import connectDB from './config/db';
+import connectDB from './db';
 import typeDefs from './schema/TypeDefs';
 import resolvers from './schema/Resolvers';
-import authRouter from './routes/Auth';
-import userRouter from './routes/User';
 import ProjectDB from './models/Project';
 
 connectDB();
@@ -35,22 +33,14 @@ app.use(bodyParser.json());
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
 
-    // routers
-    app.use('/api/users', userRouter);
-    app.use('/auth', authRouter);
-
-    // for testing purposes
-    app.get('/api/projects', async (req, res) => {
-        const projects = await ProjectDB.find();
-        return res.json(projects);
-    });
-
     // for logger to cross reference project DB api key to request auth header
     app.get('/auth/:projectID', async (req, res) => {
         const project = await ProjectDB.findById(req.params.projectID).catch(
             (err) => new Error(`Project not found: ${err}`)
         );
-        return res.json(project.apiKey);
+        if (project && project.apiKey) {
+            return res.json(project.apiKey);
+        } else return res.status(500);
     });
 
     // serve homepage

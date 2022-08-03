@@ -99,12 +99,12 @@ const resolvers: IResolvers = {
 
             // delete each user project query from DB
             await QueryDB.deleteMany({ userID: id }).catch(
-                (err) => `DB user project query deletion failed ${err}`
+                (err: Error) => `DB user project query deletion failed ${err}`
             );
 
             // delete each user project from DB
             await ProjectDB.deleteMany({ userID: id }).catch(
-                (err) => `DB user project deletion failed ${err}`
+                (err: Error) => `DB user project deletion failed ${err}`
             );
 
             // deletes user from DB and returns user object
@@ -221,7 +221,7 @@ const resolvers: IResolvers = {
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
             const queries: any = await QueryDB.find({ projectID }).catch(
-                (err) => `DB query failed: ${err}`
+                (err: Error) => `DB query failed: ${err}`
             );
             const newNumber: number = queries.length + 1;
 
