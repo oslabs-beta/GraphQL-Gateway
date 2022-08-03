@@ -5,13 +5,13 @@
    <br />
    </div>
 
-## <a name=""></a> GraphQL Gateway developer portal
+## <a name=""></a> GraphQL Gateway Developer Portal
 
-is designed for offering a visualization of how your GraphQL API endpoints secured using rate limits and depth limits. With this tool, users can:
+GGDP is designed for offering a visualization of how your GraphQL API endpoints secured using rate limits and depth limits. With this tool, users can:
 
--   visualize API call data and facilitate a tuning of rate limiting algorithm settings
--   seek for query resolution optimizations for GraphQL APIs
--   view cached performance metrics
+-   Visualize API call data and facilitate a tuning of rate limiting algorithm settings
+-   Seek for query resolution optimizations for GraphQL APIs
+-   View cached performance metrics
 
 &nbsp;
 
