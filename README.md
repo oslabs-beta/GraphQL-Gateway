@@ -23,13 +23,13 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 3. Import and configure the [GraphQLGate logger package](https://www.npmjs.com/package/graphql-limiter)
 
 ```
-npm i graphql-limiter
+npm i gate-logger
 ```
 
 4. Import and configure the [GraphQLGate rate-limiting package](https://www.npmjs.com/package/graphql-limiter)
 
 ```
-npm i gate-logger
+npm i graphql-limiter
 ```
 
 ## Table of Contents
