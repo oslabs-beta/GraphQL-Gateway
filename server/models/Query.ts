@@ -6,9 +6,11 @@ const querySchema = new Schema({
     number: { type: Number, unique: true, required: true },
     depth: { type: Number, required: false },
     complexity: { type: Number, required: false },
-    timestamp: { type: Number, required: false },
-    logged_on: { type: Date },
+    success: { type: Boolean, required: true },
     tokens: { type: Number },
+    timestamp: { type: Number, required: true },
+    loggedOn: { type: Number, required: true },
+    latency: { type: Number },
 });
 
 export default mongoose.model('Query', querySchema, 'queries');

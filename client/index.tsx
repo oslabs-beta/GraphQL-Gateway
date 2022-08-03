@@ -1,25 +1,47 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 // import ReactDOM from 'react-dom/client';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { render } from 'react-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
+// import Dashboard from './components/Dashboard';
 import Dashboard from './components/Dashboard';
 import { AuthProvider } from './auth/AuthProvider';
+import Navbar from './components/Navbar';
 import RequireAuth from './components/RequireAuth';
 import App from './App';
+import Footer from './components/Footer';
+
+const httpLink = createHttpLink({
+    uri: '/gql',
+});
+// todo: add apollo link to check auth status
+const authLink = setContext((request, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token: string | null = localStorage.getItem('session-token');
+    // return the headers to the context so httpLink can read them
+    return {
+        headers: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ...headers,
+            authorization: token ? `Bearer ${token}` : '',
+        },
+    };
+});
 
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/gql',
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
 
 render(
     <ApolloProvider client={client}>
-        <React.StrictMode>
-            <BrowserRouter>
-                <AuthProvider>
+        <AuthProvider>
+            <React.StrictMode>
+                <BrowserRouter>
+                    <Navbar />
                     <Routes>
                         <Route path="/" element={<App />} />
                         <Route path="/about" element={<App />} />
@@ -30,17 +52,16 @@ render(
                             path="/dashboard"
                             element={
                                 <RequireAuth>
+                                    {/**  <Dashboard /> */}
                                     <Dashboard />
                                 </RequireAuth>
                             }
-                        >
-                            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-                        </Route>
-                        {/* <Route path="/dashboard" element={<RequireAuth />} /> */}
+                        />
                     </Routes>
-                </AuthProvider>
-            </BrowserRouter>
-        </React.StrictMode>
+                    <Footer />
+                </BrowserRouter>
+            </React.StrictMode>
+        </AuthProvider>
     </ApolloProvider>,
     document.getElementById('root')
 );

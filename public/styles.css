@@ -1,8 +1,24 @@
-@import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+.loggerBox::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.loggerBox {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.authError {
+    padding: 10px;
+    color: red;
+    background-color: pink;
+    border-radius: 5px;
+}
 
 html {
-    background-image: linear-gradient(-180deg, #092173 0%, #00259f 100%);
-    height: 100%;
+    background-color: #092173;
+    font-family: 'Roboto', sans-serif;
 }
 body {
     margin: 0 auto;
@@ -14,7 +30,6 @@ a:link {
 }
 
 .container {
-    width: 100%;
     height: 100%;
 }
 
@@ -22,20 +37,32 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
+    max-height: 900px;
 }
 
 section#pageOne {
     color: #fff;
     text-align: center;
-    /* background-color: #092173; */
-    background-image: linear-gradient(-180deg, #092173 0%, #00259f 100%);
-    background-size: 100% 100%;
+    position: relative;
+    background-color: #092173;
+    overflow: hidden;
 }
-
+.blue-filter {
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(9, 33, 115, 0.7);
+}
+.video_wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
 #demoCard {
-    z-index: 1;
+    z-index: 11;
     position: absolute;
     left: 0;
     right: 0;
@@ -46,6 +73,19 @@ section#pageOne {
     width: 70%;
     height: 700px;
     box-shadow: 0px 0px 20px #00259e;
+}
+
+#loading {
+    font-size: 30px;
+    color: #d3d3d3;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    border-radius: 2px;
+    flex: 50%;
+    margin-left: 10px;
+    height: 580px;
+    min-width: 900px;
+    max-width: 900px;
 }
 #demoCardWrapper {
     position: absolute;
@@ -88,19 +128,22 @@ section#pageOne {
 #pageOneTextBox {
     margin-top: -100px;
     width: 650px;
+    position: absolute;
+    z-index: 10;
 }
 
 section#pageTwo {
     /* background-image: linear-gradient(180deg, rgb(228, 255, 146) 0%, #ffe684 40%, #94afe9 100%); */
     /* background-color: rgb(225, 225, 225);
     */
-    background-image: linear-gradient(-180deg, #00259f 30%, #fff 30%);
-    background-size: 100% 100%;
+    background-image: url('./white.webp');
+    background-size: cover;
 }
 
 section#pageThree {
     /* background-image: linear-gradient(180deg, #94afe9 0%, #e9a6df 66%, #b57cff 100%); */
-    background-color: #fff;
+    background: #fff;
+    height: 500px;
 }
 
 .icon {
@@ -112,22 +155,24 @@ section#pageThree {
     display: inline-block;
     height: 150px;
     width: 100%;
-    background-color: #00259f;
+    background-color: #092173;
 }
 .centeredSentence h1 {
-    font-size: 50px;
+    margin: 52px;
+    font-size: 40px;
 }
 #pageThreeWrapper {
     width: 100%;
+    text-align: center;
 }
 #pageThreeLeft {
     display: inline-block;
-    width: 50%;
+    width: 700px;
     text-align: center;
 }
 #pageThreeRight {
     display: inline-block;
-    width: 50%;
+    width: 700px;
     text-align: center;
 }
 
@@ -162,15 +207,16 @@ section#pageThree {
     justify-content: center;
 } */
 #navbar {
-    z-index: 3;
+    z-index: 11;
     position: fixed;
     background-color: #fff;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    top: 0;
+    border-bottom: 1px solid #324da6;
+    text-align: center;
 }
 #side-navbar {
-    z-index: 3;
+    z-index: 11;
     position: fixed;
     background-color: #fff;
     top: 0;
@@ -178,7 +224,6 @@ section#pageThree {
 }
 .logoText {
     font-size: 150%;
-    font-family: 'Playfair Display', serif;
     color: #ffffff;
     text-align: center;
     margin-left: 50px;
@@ -187,7 +232,6 @@ section#pageThree {
 
 .text {
     font-size: 250%;
-    font-family: 'Playfair Display', serif;
     color: #3e403f;
 }
 
@@ -199,7 +243,6 @@ section#pageThree {
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    font-family: 'Playfair Display', serif;
     font-size: 16px;
     letter-spacing: 0;
     line-height: 1em;
@@ -251,7 +294,7 @@ section#pageThree {
 } */
 
 #footer {
-    background-color: #00259f;
+    background-color: #092173;
     color: #fff;
     text-align: center;
     padding: 40px 0;
@@ -260,6 +303,7 @@ section#pageThree {
 }
 .form-wrapper {
     text-align: center;
+    margin-top: 20px;
 }
 .input {
     width: 240px;
@@ -348,23 +392,132 @@ section#pageThree {
 /* #chartBoxInside {
     height: 1000px;
 } */
+.toolBar {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 754px;
+    width: 400px;
+    top: 0px;
+    left: 0;
+    color: #324da6;
+    background-color: #fff;
+    margin-top: 64px;
+    border-bottom: 1px solid #324da6;
+    transition: all 0.2s ease-out;
+    z-index: 1;
+}
+.toolBar.closed {
+    left: -350px;
+}
+#toolBarMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 50px 0px 50px;
+    transition: all 1s ease;
+}
+.projectButton {
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: #324da6;
+    margin: 10px 0px;
+    cursor: pointer;
+}
+.projectButton:hover {
+    cursor: pointer;
+    color: #1134a7;
+}
+.projectContent {
+    text-align: center;
+    margin: 0px auto;
+}
+.apiDiv {
+    width: 200px;
+    text-align: center;
+    padding: 5px;
+}
 
+.selectProjectButton {
+    background: none;
+    border: 1px solid #324da6;
+    width: 100px;
+    margin: 10px 0;
+    padding: 5px;
+    color: #324da6;
+    font-size: 15px;
+    transition: all 0.5s ease;
+    border-radius: 5px;
+    display: inline-block;
+}
+.selectProjectButton:hover {
+    background: #324da6;
+    color: #fff;
+    cursor: pointer;
+}
+.newProject {
+    margin: 30px auto;
+    width: 150px;
+    padding: 10px;
+}
+.arrow {
+    background: none;
+    border: solid #324da6;
+    border-width: 0 6px 6px 0;
+    display: inline-block;
+    padding: 15px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
 .chartBox {
-    border-radius: 10px;
-    padding: 20px;
-    width: 800px;
-    margin: 10px;
-    margin-left: 5px;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    border-radius: 2px;
+    flex: 50%;
+    margin-left: 10px;
     background-color: rgba(255, 255, 255, 0.7);
+    height: 580px;
+    min-width: 900px;
+    max-width: 900px;
 }
 .loggerBox {
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    margin-left: 100px;
+    border-radius: 2px;
     margin-right: 5px;
     background-color: rgba(255, 255, 255, 0.7);
-    width: 510px;
+    height: 580px;
     overflow: scroll;
+    flex: 50%;
+    min-width: 410px;
+    max-width: 410px;
+}
+.loggerSortButtonsWrapper {
+    width: 410px;
+    order: 3;
+    position: absolute;
+    height: 33px;
+}
+.loggerSortButtons {
+    text-align: center;
+    background-color: #b6bcd6;
+    height: 60px;
+    border-bottom: 1px solid #092173;
 }
 .chartBtn {
     width: 100px;
@@ -378,12 +531,8 @@ section#pageThree {
     border-radius: 5px;
     transition: 0.5s;
 }
-#loggerBtnWrapper {
-    display: flex;
-    justify-content: space-between;
-}
-
 .loggerBtn {
+    display: inline-block;
     font-size: 12px;
     text-align: center;
     width: 70px;
@@ -392,8 +541,10 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
     padding: 5px;
-    margin-top: 5px;
+    margin-top: 20px;
     margin-bottom: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 5px;
     transition: 0.5s;
 }
@@ -406,6 +557,8 @@ section#pageThree {
 .projectSelector {
     display: flex;
     justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .chartBtn:hover {
@@ -420,10 +573,10 @@ section#pageThree {
 }
 #dashWrapper {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    max-height: 620px;
+    overflow: none;
 }
 .Collapsible {
     color: #545353;
@@ -440,21 +593,41 @@ section#pageThree {
     border-bottom: 0px;
 }
 .label {
-    float: left;
+    font-size: 10px;
     font-weight: bold;
-    width: 100px;
+    display: inline-block;
+    margin-right: 10px;
 }
 .value {
+    font-size: 10px;
     text-align: center;
+    display: inline-block;
+    margin-right: 25px;
 }
 .queryProps {
-    border-radius: 7px;
-    padding: 5px;
-    margin: 5px 0;
-    background-color: #a496e32f;
+    display: inline-block;
+    border-bottom: 1px solid #092173;
+    padding: 10px;
+    background-color: #b6bcd6;
     transition: 0.5s;
     cursor: pointer;
+    width: 100%;
 }
+.loggerGUI {
+    text-align: center;
+}
+.loadMoreBtn {
+    margin: 50px;
+    display: inline-block;
+}
+.individualQuery {
+    display: inline-block;
+}
+.space {
+    height: 60px;
+    border-bottom: 1px solid #092173;
+}
+
 .queryProps:hover {
     background-color: rgb(9, 32, 116, 0.1);
 }
