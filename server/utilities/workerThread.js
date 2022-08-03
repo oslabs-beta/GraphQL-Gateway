@@ -2,7 +2,6 @@
 import { workerData, parentPort, SHARE_ENV } from 'worker_threads';
 
 import nodeFetch from 'node-fetch';
-// import * as RateLimiter from 'graphqlgate';
 import * as RateLimiter from 'graphql-limiter';
 
 // eslint-disable-next-line import/extensions
@@ -44,7 +43,7 @@ getProjectQueries(projectId).then((queries) => {
 
     data.sort((a, b) => a.timestamp - b.timestamp);
 
-    const limiter = RateLimiter.Setup(
+    const limiter = RateLimiter.rateLimiter(
         {
             type: 'TOKEN_BUCKET',
             option: {

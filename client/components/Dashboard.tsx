@@ -72,7 +72,6 @@ export default function Dashboard() {
     /** Bring the user context into this component */
     const { user } = useAuth();
 
-    /** State requirements for this component */
     const [selectedProject, setSelectedProject] = useState<Project>();
 
     // Apollo graphql hooks
@@ -90,6 +89,7 @@ export default function Dashboard() {
         UPDATE_RATE_LIMITER_CONFIG_MUTATION
     );
 
+    // User data whenever the user changes
     useEffect(() => {
         if (user?.id) {
             getUserData({
@@ -100,6 +100,7 @@ export default function Dashboard() {
         }
     }, [user]);
 
+    // RateLimiter Settings whenever the proejct changes
     useEffect(() => {
         // Fetches Rate Limiter settings whenever project is changed
         if (selectedProject?.id) {
@@ -121,9 +122,9 @@ export default function Dashboard() {
         updatedConfig: RateLimiterConfig,
         saveConfig: boolean
     ) => {
-        if (saveConfig) {
-            // Save config in database
-            if (selectedProject) {
+        if (selectedProject) {
+            if (saveConfig) {
+                // Save config in database
                 udpateRateLimiter({
                     variables: {
                         projectId: selectedProject.id,
@@ -137,17 +138,19 @@ export default function Dashboard() {
                         },
                     ],
                 });
+            } else {
+                // const updatedQueries: ProjectQuery[] = fetch(
+                //     `/api/projects/rateLimit/${selectedProject.id}`,
+                //     {
+                //         method: 'POST',
+                //         body: JSON.stringify({
+                //             config: updatedConfig,
+                //         }),
+                //     }
+                // ).then((res) => res.json());
+                // // update quey data in the view
             }
-        } else {
-            console.error('Query preview not available');
-            // TODO: Recalcualte data for current projects.
-            // import rate limiter
-            // connect to mock redis store
-            // configure the selected rate limiter
-            // feed all of the data into the rate limiter
-            // update quey data in the view
         }
-        // setRateLimiterConfig(updatedConfig);
     };
 
     return (
@@ -163,6 +166,7 @@ export default function Dashboard() {
             <ProjectView
                 selectedProject={selectedProject}
                 projectLoading={userData ? userData.loading : false}
+                rateLimiterConfig={rateLimitResponse?.data?.project.rateLimiterConfig}
             />
         </main>
     );

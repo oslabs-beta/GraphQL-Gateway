@@ -69,6 +69,9 @@ module.exports = {
         hot: true,
         historyApiFallback: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        proxy: { '/gql': 'http://localhost:3000' },
+        proxy: {
+            '/gql': 'http://localhost:3000',
+            '/api/*': 'http://localhost:3000'
+        },
     },
 };

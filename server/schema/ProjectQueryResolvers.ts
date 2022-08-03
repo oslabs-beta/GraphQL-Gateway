@@ -5,9 +5,10 @@ import ProjectDB from '../models/Project';
 
 const resolvers: IResolvers = {
     Query: {
+        // TODO: Add option to apply rate limiter analysis
         projectQueries: (parent: undefined, args: QueryByID): Promise<ProjectQuery[] | Error> => {
-            const { id, date, offset } = args;
-            return QueryDB.find({ projectID: id, timestamp: { $gte: date, $lt: offset } })
+            const { id, minDate, maxDate } = args;
+            return QueryDB.find({ projectID: id, timestamp: { $gte: minDate, $lt: maxDate } })
                 .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },

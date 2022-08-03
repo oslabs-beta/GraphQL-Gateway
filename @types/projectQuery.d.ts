@@ -40,6 +40,6 @@ type CreateProjectQueryArgs = {
 
 type QueryByID = {
     id: string;
-    date: number;
-    offset: number;
+    minDate: number;
+    maxDate: number;
 };

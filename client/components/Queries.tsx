@@ -39,7 +39,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
     };
     /** State requirments for this component */
     useEffect(() => {
-        /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
         setListOfQueries(rawQueries);
     }, [rawQueries]);
 

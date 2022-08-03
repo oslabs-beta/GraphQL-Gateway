@@ -48,7 +48,7 @@ export interface ISState {
 
 export interface IProps {
     queries: ProjectQuery[];
-    setNumberOfDaysToView: React.Dispatch<React.SetStateAction<ChartSelectionDays>>;
+    setNumberOfDaysToView: (days: ChartSelectionDays) => void;
     numberOfDaysToView: ChartSelectionDays;
 }
 
@@ -67,7 +67,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setNumberOfDaysToView, numberOfDa
     /** useEffect will create the chart data to display form the query data */
     useMemo(() => {
         /** create storage for the */
-        // y-akis data
+        // y-axis data
         const depthArray: number[] = [];
         const complexityArray: number[] = [];
         const tokenArray: number[] = [];

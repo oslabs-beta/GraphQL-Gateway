@@ -58,7 +58,7 @@ const typeDefs = gql`
         projects: [Project]!
         project(id: String!): Project
 
-        projectQueries(id: String, date: Float, offset: Float): [ProjectQuery]!
+        projectQueries(id: String, minDate: Float, maxDate: Float): [ProjectQuery]!
         projectQuery(id: String!): ProjectQuery
     }
 
