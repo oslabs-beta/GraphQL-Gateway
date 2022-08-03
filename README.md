@@ -23,7 +23,7 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 -   [Developers](#developers)
 -   [More Information](#for-more-information)
 
-## <a name="prerequisites"></a> Prerequisites
+## <a name="prerequisites"></a> 📖Prerequisites
 
 1. Signup/login to the [Gateway developer portal](graphqlgate.io).
 
@@ -41,17 +41,17 @@ npm i gate-logger
 npm i graphql-limiter
 ```
 
-## <a name="getting-started"></a> Getting Started
+## <a name="getting-started"></a>📍Getting Started
 
-## <a name="how-it-works"></a> How It Works
+## <a name="how-it-works"></a> 📊How It Works
 
-## <a name="contributions"></a> Contributions
+## <a name="contributions"></a> 🧠Contributions
 
 👩‍💻🧑‍💻 Contributions to the code, examples, documentation, etc. are very much appreciated.
 
 -   Please report issues and bugs directly in this [GitHub project](https://github.com/oslabs-beta/GraphQL-Gateway/issues).
 
-## <a name="developers"></a> Developers
+## <a name="developers"></a> 💻Developers
 
 -   [Evan McNeely](https://github.com/evanmcneely)
 -   [Stephan Halarewicz](https://github.com/shalarewicz)
@@ -59,7 +59,7 @@ npm i graphql-limiter
 -   [Jon Dewey](https://github.com/donjewey)
 -   [Milos Popovic](https://github.com/milos381)
 
-## <a name="for-more-information"></a> For More Information
+## <a name="for-more-information"></a> 🔍For More Information
 
 GraphQLGate rate-limiting and Logger package documentation:
 
