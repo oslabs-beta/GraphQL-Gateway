@@ -14,6 +14,15 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 -   Seek for query resolution optimizations for GraphQL APIs
 -   View cached performance metrics
 
+## Table of Contents
+
+-   [Prerequisites](#prerequisites)
+-   [Getting Started](#getting-started)
+-   [How It Works](#how-it-works)
+-   [Contributions](#contributions)
+-   [Developers](#developers)
+-   [More Information](#for-more-information)
+
 ## <a name="prerequisites"></a> Prerequisites
 
 1. Signup/login to the [Gateway developer portal](graphqlgate.io).
@@ -31,14 +40,6 @@ npm i gate-logger
 ```
 npm i graphql-limiter
 ```
-
-## Table of Contents
-
--   [Getting Started](#getting-started)
--   [How It Works](#how-it-works)
--   [Contributions](#contributions)
--   [Developers](#developers)
--   [More Information](#for-more-information)
 
 ## <a name="getting-started"></a> Getting Started
 
