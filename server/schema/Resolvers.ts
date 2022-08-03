@@ -11,62 +11,47 @@ const resolvers: IResolvers = {
         /*
          * User queries
          */
-        users: async (): Promise<User[] | Error> => {
-            const usersResult = await UserDB.find()
-                .then((users: User[]): User[] => users)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return usersResult;
-        },
-        user: async (parent: undefined, args: QueryByID): Promise<User | Error> => {
+        users: (): Promise<User[] | Error> =>
+            UserDB.find()
+                .then((users: any): User[] => users)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+        user: (parent: undefined, args: QueryByID): Promise<User | Error> => {
             const { id } = args;
 
-            const userResult = await UserDB.findOne({ _id: id })
-                .then((user: User): User => {
+            return UserDB.findOne({ _id: id })
+                .then((user: any): User => {
                     if (!user) throw new Error('User does not exist');
                     return user;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return userResult;
         },
-        projects: async (): Promise<Project[] | Error> => {
-            const projectsResult = await ProjectDB.find()
-                .then((projects: Project[]): Project[] => projects)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return projectsResult;
-        },
-        project: async (parent: undefined, args: QueryByID): Promise<Project | Error> => {
+        projects: (): Promise<Project[] | Error> =>
+            ProjectDB.find()
+                .then((projects: any): Project[] => projects)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+        project: (parent: undefined, args: QueryByID): Promise<Project | Error> => {
             const { id } = args;
 
-            const projectResult = await ProjectDB.findOne({ _id: id })
-                .then((project: Project): Project => {
+            return ProjectDB.findOne({ _id: id })
+                .then((project: any): Project => {
                     if (!project) throw new Error('Project does not exist');
                     return project;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return projectResult;
         },
-        projectQueries: async (): Promise<ProjectQuery[] | Error> => {
-            const projectQueriesResult = await QueryDB.find()
-                .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return projectQueriesResult;
-        },
-        projectQuery: async (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
+        projectQueries: (): Promise<ProjectQuery[] | Error> =>
+            QueryDB.find()
+                .then((queries: any): ProjectQuery[] => queries)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+        projectQuery: (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
             const { id } = args;
 
-            const projectQueryResult = await QueryDB.findOne({ _id: id })
-                .then((query: ProjectQuery): ProjectQuery => {
+            return QueryDB.findOne({ _id: id })
+                .then((query: any): ProjectQuery => {
                     if (!query) throw new Error('Query does not exist');
                     return query;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return projectQueryResult;
         },
     },
     Mutation: {
@@ -77,8 +62,8 @@ const resolvers: IResolvers = {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
 
-            const newUser = await UserDB.findOne({ email })
-                .then((user: User): User => {
+            return UserDB.findOne({ email })
+                .then((user: any): any => {
                     if (user) throw new Error('User already exists');
                     const newUser = new UserDB({
                         email,
@@ -87,10 +72,8 @@ const resolvers: IResolvers = {
                     });
                     return newUser.save();
                 })
-                .then((newUser: User): User => newUser)
+                .then((newUser: any): User => newUser)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return newUser;
         },
         updateUser: async (parent: undefined, args: UpdateUserArgs): Promise<User | Error> => {
             const { id, email, password } = args.user;
@@ -104,14 +87,12 @@ const resolvers: IResolvers = {
                 Object.assign(updateBody, { password: hash });
             }
 
-            const updatedUser = await UserDB.findByIdAndUpdate(id, updateBody, { new: true })
-                .then((user: User): User => {
+            return UserDB.findByIdAndUpdate(id, updateBody, { new: true })
+                .then((user: any): User => {
                     if (!user) throw new Error('User not found');
                     return user;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return updatedUser;
         },
         deleteUser: async (parent: undefined, args: QueryByID): Promise<User | Error> => {
             const { id } = args;
@@ -127,11 +108,9 @@ const resolvers: IResolvers = {
             );
 
             // deletes user from DB and returns user object
-            const deletedUser = await UserDB.findByIdAndRemove(id)
-                .then((user: User): User => user)
+            return UserDB.findByIdAndRemove(id)
+                .then((user: any): User => user)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return deletedUser;
         },
         /*
          *  Project Mutations
@@ -146,7 +125,7 @@ const resolvers: IResolvers = {
              * throws error otherwise
              */
             await UserDB.findById(userID)
-                .then((user: User): void => {
+                .then((user: any): void => {
                     if (!user) throw new Error('User does not exist');
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
@@ -156,8 +135,8 @@ const resolvers: IResolvers = {
              * creates a new project based on the mongoose model and saves it.
              * result is stored to update project's query array with new project query ID
              */
-            const newProject = await ProjectDB.findOne({ userID, name })
-                .then(async (project: Project): Promise<Project | Error> => {
+            return ProjectDB.findOne({ userID, name })
+                .then(async (project: any): Promise<Project | Error> => {
                     if (project) throw new Error('Project already exists');
 
                     // random 10-char string generated and stored in projectDB
@@ -173,10 +152,10 @@ const resolvers: IResolvers = {
                     });
 
                     // save project and store new ID
-                    const resultID: string | undefined = await newProject
+                    const resultID: string | Error | undefined = await newProject
                         .save()
                         // eslint-disable-next-line no-underscore-dangle
-                        .then((res: Project): string | undefined => res._id?.toString())
+                        .then((res: any): string | undefined => res._id?.toString())
                         .catch(
                             (err: Error): Error =>
                                 new Error(`Saving project/receiving new ID from DB failed: ${err}`)
@@ -191,11 +170,9 @@ const resolvers: IResolvers = {
                         resultID,
                         { endpoint: `/log?project=${resultID}` },
                         { new: true }
-                    ).then((data: Project): Project => data);
+                    ).then((data: any): Project => data);
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return newProject;
         },
         /*
          *   updates project name
@@ -212,7 +189,7 @@ const resolvers: IResolvers = {
                     { name },
                     { new: true }
                 )
-                    .then((project: Project): Project => {
+                    .then((project: any): Project => {
                         if (!project) throw new Error('Project not found');
                         return project;
                     })
@@ -226,11 +203,9 @@ const resolvers: IResolvers = {
             const { id } = args;
             await QueryDB.deleteMany({ projectID: id });
 
-            const deletedProject = await ProjectDB.findByIdAndRemove(id)
-                .then(async (project: Project): Promise<Project> => project)
+            return ProjectDB.findByIdAndRemove(id)
+                .then(async (project: any): Promise<Project> => project)
                 .catch((err: Error): Error => new Error(`Project deletion failed: ${err}`));
-
-            return deletedProject;
         },
         /*
          * Project Query Mutations
@@ -246,7 +221,7 @@ const resolvers: IResolvers = {
              * throws error if not
              */
             const userID: string | undefined | Error = await ProjectDB.findById(projectID)
-                .then((project: Project): string | undefined => {
+                .then((project: any): string | undefined => {
                     if (!project) throw new Error('Project does not exist');
                     return project?.userID;
                 })
@@ -268,84 +243,66 @@ const resolvers: IResolvers = {
                 timestamp,
             })
                 .save()
-                .then((res: ProjectQuery): ProjectQuery => res)
+                .then((res: any): ProjectQuery => res)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
             return newQuery;
         },
-        updateProjectQuery: async (
+        updateProjectQuery: (
             parent: undefined,
             args: UpdateProjectQueryArgs
         ): Promise<ProjectQuery | Error> => {
             const { id, number, depth, complexity, timestamp, tokens, success } = args.projectQuery;
-            const updatedProjectQuery = QueryDB.findByIdAndUpdate(
+            return QueryDB.findByIdAndUpdate(
                 id,
                 { number, depth, complexity, timestamp, tokens, success },
                 { new: true }
             )
-                .then((query: ProjectQuery): ProjectQuery => {
+                .then((query: any): ProjectQuery => {
                     if (!query) throw new Error('Query not found');
                     return query;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return updatedProjectQuery;
         },
-        deleteProjectQuery: async (
-            parent: undefined,
-            args: QueryByID
-        ): Promise<ProjectQuery | Error> => {
+        deleteProjectQuery: (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
             const { id } = args;
-            const deletedProjectQuery = await QueryDB.findByIdAndRemove(id)
-                .then(async (query: ProjectQuery): Promise<ProjectQuery | Error> => query)
+            return QueryDB.findByIdAndRemove(id)
+                .then(async (query: any): Promise<ProjectQuery | Error> => query)
                 .catch((err: Error): Error => new Error(`Query deletion failed: ${err}`));
-
-            return deletedProjectQuery;
         },
     },
     /*
      * To query nested Project Data in User Object
      */
     User: {
-        projects: async (parent: User): Promise<Project[] | Error> => {
-            const projects = await ProjectDB.find({ userID: parent.id })
-                .then((projects: Project[]): Project[] => projects)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return projects;
-        },
-        project: async (parent: User, args: QueryByID): Promise<Project | Error> => {
-            const project = await ProjectDB.findOne({ _id: args.id, userID: parent.id })
-                .then((project: Project): Project => {
+        projects: (parent: User): Promise<Project[] | Error> =>
+            ProjectDB.find({ userID: parent.id })
+                .then((projects: any): Project[] => projects)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+        project: (parent: User, args: QueryByID): Promise<Project | Error> =>
+            ProjectDB.findOne({ _id: args.id, userID: parent.id })
+                .then((project: any): Project => {
                     if (!project) throw new Error('Project not found');
                     return project;
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return project;
-        },
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
     },
     /*
      * To query nested Query Data in Project Object
      */
     Project: {
-        queries: async (parent: Project): Promise<ProjectQuery[] | Error> => {
-            const queries = await QueryDB.find({ projectID: parent.id })
-                .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        queries: (parent: any): Promise<ProjectQuery[] | Error> =>
+            QueryDB.find({ projectID: parent.id })
+                .then((queries: any): ProjectQuery[] => queries)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
 
-            return queries;
-        },
-        query: async (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> => {
-            const query = await QueryDB.findOne({ _id: args.id, userID: parent.id })
-                .then((query: ProjectQuery): ProjectQuery => {
+        query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> =>
+            QueryDB.findOne({ _id: args.id, userID: parent.id })
+                .then((query: any): ProjectQuery => {
                     if (!query) throw new Error('Query not found');
                     return query;
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-
-            return query;
-        },
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
     },
 };
 
