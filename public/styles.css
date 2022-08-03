@@ -205,6 +205,7 @@ section#pageThree {
     background-color: #fff;
     width: 100%;
     top: 0;
+    border-bottom: 1px solid #324da6;
     text-align: center;
 }
 #side-navbar {
@@ -383,17 +384,23 @@ section#pageThree {
 /* #chartBoxInside {
     height: 1000px;
 } */
-#toolBar {
+.toolBar {
     position: absolute;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 754px;
     width: 400px;
     top: 0px;
-    z-index: 10;
+    left: 0;
     color: #324da6;
     background-color: #fff;
-    padding-top: 75px;
+    margin-top: 64px;
+    border-bottom: 1px solid #324da6;
+    transition: all 0.2s ease-out;
+    z-index: 1;
+}
+.toolBar.closed {
+    left: -350px;
 }
 #toolBarMenu {
     display: flex;
@@ -405,31 +412,68 @@ section#pageThree {
 .projectButton {
     border: none;
     background: none;
-    padding: 10px 0px 10px 30px;
     font-size: 20px;
+    color: #324da6;
+    margin: 10px 0px;
+    cursor: pointer;
+}
+.projectButton:hover {
+    cursor: pointer;
+    color: #1134a7;
 }
 .projectContent {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 0px 10px 60px;
+    text-align: center;
+    margin: 0px auto;
 }
+.apiDiv {
+    width: 200px;
+    text-align: center;
+    padding: 5px;
+}
+
 .selectProjectButton {
-    border: none;
     background: none;
-    padding-top: 10px;
-    font-size: 20px;
+    border: 1px solid #324da6;
+    width: 100px;
+    margin: 10px 0;
+    padding: 5px;
+    color: #324da6;
+    font-size: 15px;
+    transition: all 0.5s ease;
+    border-radius: 5px;
+    display: inline-block;
 }
-.projectButton:hover,
 .selectProjectButton:hover {
-    color: #00259e;
-    font-weight: bold;
+    background: #324da6;
+    color: #fff;
+    cursor: pointer;
 }
-.fa-bars {
-    align-self: end;
-    padding: 15px;
-    border: none;
+.newProject {
+    margin: 30px auto;
+    width: 150px;
+    padding: 10px;
+}
+.arrow {
     background: none;
+    border: solid #324da6;
+    border-width: 0 6px 6px 0;
+    display: inline-block;
+    padding: 15px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 .chartBox {
     margin-top: 150px;
