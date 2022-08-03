@@ -14,7 +14,7 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 -   Seek for query resolution optimizations for GraphQL APIs
 -   View cached performance metrics
 
-## Table of Contents
+## ✏️Table of Contents
 
 -   [Prerequisites](#prerequisites)
 -   [Getting Started](#getting-started)
