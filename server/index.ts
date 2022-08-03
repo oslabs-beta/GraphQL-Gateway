@@ -38,9 +38,7 @@ server.start().then((): void => {
         const project = await ProjectDB.findById(req.params.projectID).catch(
             (err) => new Error(`Project not found: ${err}`)
         );
-        if (project && project.apiKey) {
-            return res.json(project.apiKey);
-        } else return res.status(500);
+        return res.json(project?.apiKey);
     });
 
     // serve homepage
