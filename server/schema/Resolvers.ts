@@ -8,6 +8,7 @@ import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 import sessions from '../utilities/sessions';
 import { UserTakenError, WrongCredentialsError } from './errors';
+
 interface Context {
     authenticated: boolean;
     user: null | string;
@@ -135,7 +136,7 @@ const resolvers: IResolvers = {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
             return UserDB.findOne({ email })
-                .then((user: any): any => {
+                .then(async (user: any): Promise<any> => {
                     if (user) throw new Error('User already exists');
                     const newUser = new UserDB({
                         email,
@@ -351,22 +352,22 @@ const resolvers: IResolvers = {
 
             return newQuery;
         },
-        updateProjectQuery: (
-            parent: undefined,
-            args: UpdateProjectQueryArgs
-        ): Promise<ProjectQuery | Error> => {
-            const { id, number, depth, complexity, timestamp, tokens, success } = args.projectQuery;
-            return QueryDB.findByIdAndUpdate(
-                id,
-                { number, depth, complexity, timestamp, tokens, success },
-                { new: true }
-            )
-                .then((query: any): ProjectQuery => {
-                    if (!query) throw new Error('Query not found');
-                    return query;
-                })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
-        },
+        // updateProjectQuery: (
+        //     parent: undefined,
+        //     args: UpdateProjectArgs
+        // ): Promise<ProjectQuery | Error> => {
+        //     const { id, number, depth, complexity, timestamp, tokens, success } = args.projectQuery;
+        //     return QueryDB.findByIdAndUpdate(
+        //         id,
+        //         { number, depth, complexity, timestamp, tokens, success },
+        //         { new: true }
+        //     )
+        //         .then((query: any): ProjectQuery => {
+        //             if (!query) throw new Error('Query not found');
+        //             return query;
+        //         })
+        //         .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        // },
         deleteProjectQuery: async (
             parent: undefined,
             args: QueryByID,
