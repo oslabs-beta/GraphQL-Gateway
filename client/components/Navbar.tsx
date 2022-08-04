@@ -17,7 +17,7 @@ export default function Navbar() {
             setShow('block');
         }
     };
-    console.log(user);
+
     function logout() {
         setUser(null);
         localStorage.clear();

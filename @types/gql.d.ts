@@ -3,7 +3,6 @@ type User = {
     id: string;
     email: string;
     password: string;
-    projects: Array<string>;
     token: string;
 };
 
@@ -39,7 +38,6 @@ type Project = {
     userID: string;
     name: string;
     apiKey: string;
-    queries: Array<string>;
 };
 
 type CreateProjectArgs = {

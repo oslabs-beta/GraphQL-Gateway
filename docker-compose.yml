@@ -1,0 +1,38 @@
+# this file is for installing new dependencies to the docker image
+
+# to run:
+# install new package with:
+# docker-compose run --rm --service-ports bash npm install --save (or --save-dev) [package-name]
+
+# remove current image
+# docker image rm graphqlgate/gateway-dev --force
+
+# delete /node_modules, then build new image with updated package.json
+# docker build -t graphqlgate/gateway-dev -f Dockerfile-dev .
+
+# push the new image
+# docker push graphqlgate/gateway-dev
+
+
+version: "3"
+services:
+  bash:
+    image: graphqlgate/gateway-dev
+    container_name: gateway-dev
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+  dev:
+    image: graphqlgate/gateway-dev
+    container_name: gateway-dev-hot
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    command: npm run dev
+
+volumes:
+  node_modules:

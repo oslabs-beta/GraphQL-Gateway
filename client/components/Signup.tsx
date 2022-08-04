@@ -44,10 +44,10 @@ function Signup() {
     const [signupMutation] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
             setUserAuth({
-                email: data.login.email,
-                id: data.login.id,
+                email: data.signup.email,
+                id: data.signup.id,
             });
-            localStorage.setItem('session-token', data.login.token);
+            localStorage.setItem('session-token', data.signup.token);
             navigate('/dashboard');
         },
         onError: (error) => setSignUpError(error.message),
