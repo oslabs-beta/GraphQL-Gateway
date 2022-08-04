@@ -5,7 +5,7 @@
     "main": "build/bundle.js",
     "scripts": {
         "start": "cross-env NODE_ENV=development nodemon --exec ts-node --files ./server/index.ts",
-        "start:docker": "cross-env NODE_ENV=production nodemon ./ts-build/server/index.js",
+        "start:docker": "cross-env NODE_ENV=production nodemon ./server/index.js",
         "start:dockerTS": "cross-env NODE_ENV=production nodemon --exec ts-node --files ./server/index.ts",
         "build": "cross-env NODE_ENV=production webpack",
         "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon --exec ts-node --files ./server/index.ts\" ",
