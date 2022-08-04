@@ -50,7 +50,7 @@ npm i graphql-limiter
 
 ## <a name="contributions"></a> 🧠 Contributions
 
-Contributions to the code, examples, documentation, etc. are very much appreciated.🧑‍💻👩‍💻
+Contributions to the code, examples, documentation, etc. are very much appreciated🧑‍💻👩‍💻
 
 -   Please report issues and bugs directly in this [GitHub project](https://github.com/oslabs-beta/GraphQL-Gateway/issues).
 
