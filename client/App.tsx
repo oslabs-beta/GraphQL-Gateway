@@ -3,7 +3,7 @@ import settings from '../public/settings.png';
 import intime from '../public/intime.png';
 import data from '../public/data.png';
 import barchart from '../public/barchart.png';
-import gear from '../public/gear.png';
+import snippet from '../public/code-snippet.png';
 import '../public/styles.css';
 
 export default function HomePage() {
@@ -35,28 +35,13 @@ export default function HomePage() {
                 </section>
                 <section id="demoCard">
                     <div id="demoCardWrapper">
-                        <div className="algorithmCard">
+                        {/* <div className="algorithmCard">
                             <h3>Alghorhitm</h3>
                             <h1>Token Bucket</h1>
                             <img src={gear} alt="settings" />
-                        </div>
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Sliding Window</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Leacky Bucket</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Leacky Bucket</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
+                        </div> */}
+                        <img src={snippet} alt="settings" />
                     </div>
-                    {/* <div className="demoCardImg" /> */}
                 </section>
                 <section id="pageTwo" />
                 <div className="centeredSentence">
