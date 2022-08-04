@@ -9,16 +9,13 @@ import cors from 'cors';
 import path from 'path';
 import lodash from 'lodash';
 
-import connectDB from './config/db';
-
 import typeDefs from './schema/TypeDefs';
 import ProjectResolvers from './schema/ProjectResolvers';
 import UserResolvers from './schema/UserResolvers';
 import ProjectQueryResolvers from './schema/ProjectQueryResolvers';
 import RateLimiterConfigResolvers from './schema/RateLimiterConfigResolvers';
 
-import authRouter from './routes/Auth';
-import userRouter from './routes/User';
+import connectDB from './db';
 import ProjectDB from './models/Project';
 import session from './utilities/sessions';
 
@@ -37,6 +34,7 @@ const server = new ApolloServer({
         ProjectQueryResolvers,
         RateLimiterConfigResolvers
     ),
+    persistedQueries: false,
     context: async ({ req }) => {
         const authHeader = req.headers.authorization || null;
         if (!authHeader) return { authenticated: false, user: null };
@@ -55,19 +53,15 @@ app.use(cookieParser());
 app.use(compression());
 app.use(bodyParser.json());
 
+if (process.env.NODE_ENV?.trim() === 'production') {
+    app.use(express.static(path.join(__dirname, '../build')));
+} else {
+    app.use(express.static(path.join(__dirname, '../client/')));
+}
+
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
-
-    // routers
-    app.use('/api/users', userRouter);
-    app.use('/auth', authRouter);
-
-    // for testing purposes
-    app.get('/api/projects', async (req, res) => {
-        const projects = await ProjectDB.find();
-        return res.json(projects);
-    });
 
     app.post('/api/projects/rateLimit/:projectId', rateLimiterAnalysis, (req, res) =>
         // Send back re-analyzed data
@@ -75,19 +69,29 @@ server.start().then((): void => {
     );
 
     // for logger to cross reference project DB api key to request auth header
-    app.get('/key/:projectID', async (req, res) => {
-        const project = await ProjectDB.findById(req.params.projectID).catch(
+    app.get('/auth/:projectID', async (req, res) => {
+        const projectResult = await ProjectDB.findById(req.params.projectID).catch(
             (err) => new Error(`Project not found: ${err}`)
         );
-        return res.json(project.apiKey);
+
+        let apiKey = null;
+
+        if (projectResult && !(projectResult instanceof Error)) apiKey = projectResult.apiKey;
+
+        return res.json(apiKey);
     });
 
+    // ! this is not serving the homepage in production or development
     // serve homepage
-    app.all('/', (req, res) =>
-        res
-            .setHeader('Content-Type', 'text/html')
-            .sendFile(path.join(__dirname, '../public/index.html'))
-    );
+    // app.all('/', (req, res) =>
+    //     res
+    //         .setHeader('Content-Type', 'text/html')
+    //         .sendFile(
+    //             process.env.NODE_ENV?.trim() === 'production'
+    //                 ? path.join(__dirname, '../../public/index.html')
+    //                 : path.join(__dirname, '../public/index.html')
+    //         )
+    // );
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console

@@ -23,7 +23,7 @@
             "./@types",
             "node_modules/@types"
         ],
-        "outDir": "build",
+        "outDir": "ts-build"
     },
     "include": [
         "client/**/*.js",
