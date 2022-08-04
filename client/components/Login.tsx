@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Logo from './Logo';
+import { useNavigate, Link } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
+import { useAuth } from '../auth/AuthProvider';
 
 export interface ISState {
     user: {
@@ -9,12 +10,23 @@ export interface ISState {
     };
 }
 
+const LOGIN_MUTATION = gql`
+    mutation loginMutation($user: UserInput!) {
+        login(user: $user) {
+            token
+            email
+            id
+        }
+    }
+`;
+
 function Login() {
     const [user, setUser] = useState<ISState['user']>({
         email: '',
         password: '',
     });
-
+    const [loginError, setloginError] = useState<null | string>(null);
+    const { setUser: setUserAuth } = useAuth();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
@@ -24,24 +36,33 @@ function Login() {
 
     const navigate = useNavigate();
 
-    const switchForm = () => {
-        navigate('/signup');
-    };
+    const [loginMutation] = useMutation(LOGIN_MUTATION, {
+        onCompleted: (data) => {
+            setUserAuth({
+                email: data.login.email,
+                id: data.login.id,
+            });
+            localStorage.setItem('session-token', data.login.token);
+            navigate('/dashboard');
+        },
+        onError: (error) => setloginError(error.message),
+    });
 
-    const handleClick = (e: any) => {
+    const handleClick = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        userData: ISState['user']
+    ) => {
         e.preventDefault();
-        navigate('/dashboard');
-        // console.log(user);
+        loginMutation({ variables: { user: userData } });
     };
 
     return (
         <div className="box">
-            <Logo />
             <h1 className="text">Login</h1>
-
+            {loginError && <small className="authError">{loginError}</small>}
             <div className="form-wrapper">
                 <input
-                    className="email"
+                    className="input"
                     type="text"
                     onChange={handleChange}
                     name="email"
@@ -49,7 +70,7 @@ function Login() {
                     placeholder="Type your email"
                 />
                 <input
-                    className="password"
+                    className="input"
                     type="password"
                     onChange={handleChange}
                     name="password"
@@ -57,16 +78,27 @@ function Login() {
                     placeholder="Type your password"
                 />
                 <br />
-                <button className="formBtn" type="submit" onClick={handleClick}>
+                <button className="formBtn" type="submit" onClick={(e) => handleClick(e, user)}>
                     Login
                 </button>
                 <br />
                 <span className="paragraph">
                     Not a member?
-                    <button className="btn transferBtn" type="button" onClick={switchForm}>
+                    <Link to="/signup" className="btn transferBtn" type="button">
                         Register here
-                    </button>
+                    </Link>
                 </span>
+                {/* <span>
+                    or log in using your
+                    <a
+                        // href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
+                        href="http://localhost:3000/auth"
+                    >
+                        {' '}
+                        github{' '}
+                    </a>
+                    account
+                </span> */}
             </div>
         </div>
     );

@@ -7,6 +7,7 @@ const typeDefs = gql`
         password: String!
         projects: [Project]!
         project: Project
+        token: String
     }
 
     type Project {
@@ -15,30 +16,37 @@ const typeDefs = gql`
         name: String!
         queries: [ProjectQuery]!
         query: ProjectQuery
+        apiKey: String
     }
 
     type ProjectQuery {
         id: ID!
-        name: String!
+        userID: String!
         projectID: String!
-        depth: Int!
+        number: Int!
         complexity: Int!
-        time: Int!
+        depth: Int!
+        tokens: Int!
+        success: Boolean!
+        timestamp: Float!
+        loggedOn: Float!
+        latency: Int
     }
 
     type Query {
         users: [User!]!
         user(id: String!): User
-
-        projects: [Project]
+        checkAuth: User
+        projects: [Project]!
         project(id: String!): Project
 
-        projectQueries: [ProjectQuery]
-        projectQuery: ProjectQuery
+        projectQueries(id: String, date: Float, offset: Float): [ProjectQuery]!
+        projectQuery(id: String!): ProjectQuery
     }
 
     type Mutation {
-        createUser(user: CreateUserInput!): User
+        login(user: UserInput!): User
+        signup(user: UserInput!): User
         updateUser(user: UpdateUserInput!): User
         deleteUser(id: String!): User
 
@@ -47,14 +55,12 @@ const typeDefs = gql`
         deleteProject(id: String!): Project
 
         createProjectQuery(projectQuery: CreateProjectQueryInput!): ProjectQuery
-        updateProjectQuery(projectQuery: UpdateProjectQueryInput!): ProjectQuery
         deleteProjectQuery(id: String!): ProjectQuery
     }
 
-    input CreateUserInput {
+    input UserInput {
         email: String!
         password: String!
-        projects: [String]
     }
 
     input UpdateUserInput {
@@ -66,7 +72,6 @@ const typeDefs = gql`
     input CreateProjectInput {
         userID: String!
         name: String!
-        queries: [String]
     }
 
     input UpdateProjectInput {
@@ -76,18 +81,13 @@ const typeDefs = gql`
 
     input CreateProjectQueryInput {
         projectID: String!
-        name: String!
-        depth: Int!
         complexity: Int!
-        time: Int!
-    }
-
-    input UpdateProjectQueryInput {
-        id: String!
-        name: String
-        depth: Int
-        complexity: Int
-        time: Int
+        depth: Int!
+        tokens: Int!
+        success: Boolean!
+        timestamp: Float!
+        loggedOn: Float!
+        latency: Int
     }
 `;
 

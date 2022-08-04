@@ -1,12 +1,24 @@
 type User = {
+    // _id?: string;
     id: string;
     email: string;
     password: string;
-    projects: Array<string>;
+    token: string;
 };
+
+type ChartSelectionDays = 1 | 7 | 30 | 365;
 
 type QueryByID = {
     id: string;
+    date: number;
+    offset: number;
+};
+
+type GetUserArgs = {
+    user: {
+        email: string;
+        password: string;
+    };
 };
 
 type CreateUserArgs = {
@@ -22,11 +34,10 @@ type UpdateUserArgs = {
 };
 
 type Project = {
-    _id?: string;
     id: string;
     userID: string;
     name: string;
-    queries: Array<string>;
+    apiKey: string;
 };
 
 type CreateProjectArgs = {
@@ -45,31 +56,34 @@ type UpdateProjectArgs = {
 };
 
 type ProjectQuery = {
-    _id?: string;
     id: string;
+    userID: string;
     projectID: string;
-    name: string;
+    number: number;
     depth: number;
     complexity: number;
-    time: number;
+    tokens: number;
+    success: boolean;
+    timestamp: number;
+    loggedOn: number;
+    latency?: number;
+};
+
+type Context = {
+    authenticated: boolean;
+    user: null | string | JwtPayload;
 };
 
 type CreateProjectQueryArgs = {
     projectQuery: {
         projectID: string;
-        name: string;
-        depth: number;
+        number: string;
         complexity: number;
-        time: number;
-    };
-};
-
-type UpdateProjectQueryArgs = {
-    projectQuery: {
-        id: string;
-        name: string;
         depth: number;
-        complexity: number;
-        time: number;
+        tokens: number;
+        success: boolean;
+        timestamp: number;
+        loggedOn: number;
+        latency?: number;
     };
 };

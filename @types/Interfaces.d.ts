@@ -1,25 +1,25 @@
 export interface ProjectQuery {
     id: string;
-    name: string;
+    number: number;
     projectID: string;
     depth: number;
     complexity: number;
-    time: number;
+    timestamp: number;
+    tokens: number;
+    // latency: number;
+    success: boolean;
 }
 
 export interface Project {
     id: string;
     userID: string;
     name: string;
-    queries: [ProjectQuery];
-    query: ProjectQuery;
+    apiKey: string;
 }
 export interface User {
     id: string;
     email: string;
     password: string;
-    projects: [Project];
-    project: Project;
 }
 
 export interface Data {

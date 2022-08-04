@@ -52,17 +52,6 @@ module.exports = {
                     },
                 ],
             },
-            {
-                test: /\.(jpe?g|gif|png|svg)$/i,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10000,
-                        },
-                    },
-                ],
-            },
         ],
     },
     plugins: [
@@ -75,11 +64,11 @@ module.exports = {
 
     devServer: {
         // add all routes here
-        host: 'localhost',
+        host: '0.0.0.0',
         port: 8080,
         hot: true,
         historyApiFallback: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        proxy: {},
+        proxy: { '/gql': 'http://localhost:3000' },
     },
 };

@@ -16,10 +16,7 @@
         "noEmit": false,
         "jsx": "react-jsx",
         "typeRoots": ["./@types", "node_modules/@types"],
-        "baseUrl": "./"
-        // "paths": {
-        //     "*": ["/@types/*"]
-        // }
+        "outDir": "ts-build"
     },
     "include": [
         "client/**/*.js",

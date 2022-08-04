@@ -1,84 +1,53 @@
 import React, { useState, useEffect } from 'react';
+// import { gql } from 'apollo-server-express';
 import { useQuery, gql } from '@apollo/client';
-import Logger from './Logger';
-import ChartBox from './ChartBox';
-import { Projects, SelectedProject } from './Interfaces';
+// import { useQuery } from '@apollo/client';
+import ToolBar from './ToolBar';
+import ProjectView from './ProjectView';
+import { useAuth } from '../auth/AuthProvider';
+// import { SelectedProject, Projects } from '../../@types/Interfaces';
 
-const GET_USER_DATA = gql`
+const GET_PROJECT_DATA = gql`
     query getUserData($userId: String!) {
         user(id: $userId) {
-            email
-            password
             projects {
+                name
                 id
                 userID
-                name
-                queries {
-                    id
-                    projectID
-                    name
-                    complexity
-                    depth
-                    time
-                }
+                apiKey
             }
         }
     }
 `;
 
-const GET_PROJECT = gql`
-    query Query($projectId: String!) {
-        project(id: $projectId) {
-            id
-            queries {
-                time
-                depth
-                complexity
-            }
-        }
-    }
-`;
+export default function Dashboard() {
+    /** Bring the user context into this component */
+    const { user } = useAuth();
 
-function Dashboard() {
-    const { data: dataR, loading: loadingR } = useQuery(GET_USER_DATA, {
+    /** State requirments for this component */
+    const [selectedProject, setSelectedProject] = useState<Project>();
+    const [allProjects, setAllProjects] = useState<Project[]>();
+
+    /** Send query to get project information for this user */
+    const { data, loading } = useQuery(GET_PROJECT_DATA, {
         variables: {
-            userId: '6286978e12716d47e6884194',
+            userId: user!.id,
         },
     });
-    const { data, loading } = useQuery(GET_PROJECT, {
-        variables: {
-            projectId: '628e864e76cdbbec53f36010',
-        },
-    });
-
-    const [projects, setProjects] = useState<Projects['projects']>();
-    const [selectedProject, selectProject] = useState<SelectedProject['project']>();
-
-    const test = (pr: any): void => {
-        selectProject(pr);
-    };
-
     useEffect(() => {
-        if (!loadingR && dataR) {
-            setProjects(dataR.user.projects);
-        }
         if (!loading && data) {
-            selectProject(data.project);
+            setAllProjects(data.user.projects);
         }
-    }, [loadingR, dataR, loading, data]);
+    }, [loading, data]);
 
     return (
-        <div id="dashWrapper">
-            <div className="loggerBox">
-                <div className="loggerGUI">
-                    <Logger test={test} projects={projects} />
-                </div>
-            </div>
-            <div className="chartBox">
-                <ChartBox project={selectedProject} />
-            </div>
+        <div>
+            <ToolBar
+                projects={allProjects}
+                setSelectedProject={setSelectedProject}
+                projectLoading={loading}
+            />
+            <ProjectView selectedProject={selectedProject} projectLoading={loading} />
         </div>
     );
 }
-
-export default Dashboard;
