@@ -149,7 +149,7 @@ section#pageTwo {
     height: 50px;
     width: 900px;
 }
-.algorithmCard > img {
+/* .algorithmCard > img {
     -webkit-transition: -webkit-transform 0.8s ease-in-out;
     transition: transform 0.8s ease-in-out;
 }
@@ -159,7 +159,7 @@ section#pageTwo {
 }
 .algorithmCard:hover {
     background-color: rgba(255, 255, 255, 0.322);
-}
+} */
 .algorithmCard button {
     cursor: pointer;
     background-color: white;
