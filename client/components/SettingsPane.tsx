@@ -153,7 +153,7 @@ export default function SettingsPane({
                             displayValue={windowSize} // Slider goes down to millisecond for granularity
                             onChange={onWindowSizeChange}
                             min={0}
-                            max={600000} // 10 minutes
+                            max={60000} // 1 minutes
                             unit="s"
                         />
                     )}
@@ -175,11 +175,11 @@ export default function SettingsPane({
                             type="button"
                             onClick={(e) => onUpdate(e, true)}
                         >
-                            Update Project Default
+                            Update Project Settings
                         </button>
                         {/* TODO: Implement functionality for the below buttons */}
                         <button className="panelButton" disabled id="resetDefault" type="button">
-                            Reset Project Default
+                            Restore Project Settings
                         </button>
                     </div>
                 </div>
