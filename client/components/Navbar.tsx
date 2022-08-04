@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable default-case */
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../public/styles.css';
@@ -13,11 +10,10 @@ export default function Navbar() {
     const [show, setShow] = useState('flex');
     const scrollPos = useRef(window.scrollY);
 
-    const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setUser(null);
         localStorage.removeItem('session-token');
-        // TODO: send logout reqeust to end session
         navigate('/');
     };
 
@@ -38,7 +34,7 @@ export default function Navbar() {
         const url = window.location.href.split('/');
         const target = url[url.length - 1].toLowerCase();
         const element = document.getElementById(target);
-        element && element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, []);
 
     return (
@@ -55,7 +51,7 @@ export default function Navbar() {
                     className="linkBtn"
                     onClick={() => {
                         const hero = document.getElementById('pageOne');
-                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
                     Home
@@ -66,7 +62,7 @@ export default function Navbar() {
                     className="linkBtn"
                     onClick={() => {
                         const hero = document.getElementById('demoCard');
-                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
                     Demo
@@ -77,36 +73,32 @@ export default function Navbar() {
                     className="linkBtn"
                     onClick={() => {
                         const hero = document.getElementById('pageThree');
-                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
                     About
                 </Link>
-                {user && (
-                    <Link to="/dashboard" type="submit" className="linkBtn">
-                        Dashboard
-                    </Link>
-                )}
-                <div
-                    id="side-navbar"
-                    style={{
-                        display: show,
-                    }}
-                >
-                    {user ? (
-                        <Link to="/logout" type="submit" className="linkBtn" onClick={handleLogout}>
-                            Logout
-                        </Link>
-                    ) : (
-                        <>
-                            <Link to="/login" type="submit" className="linkBtn">
-                                Login
-                            </Link>
-                            <Link to="/signup" type="submit" className="linkBtn">
-                                Signup
-                            </Link>
-                        </>
-                    )}
+                <div id="side-navbar" style={{ display: show }}>
+                    {loading === false &&
+                        (user === null ? (
+                            <>
+                                <Link to="/login" type="submit" className="linkBtn">
+                                    Login
+                                </Link>
+                                <Link to="/signup" type="submit" className="linkBtn">
+                                    Signup
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/dashboard" type="submit" className="linkBtn">
+                                    Dashboard
+                                </Link>
+                                <button className="linkBtn" type="button" onClick={logout}>
+                                    Logout
+                                </button>
+                            </>
+                        ))}
                 </div>
             </div>
         </div>

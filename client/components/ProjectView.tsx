@@ -65,8 +65,7 @@ export default function ProjectView({
     // Raw query data without updated rate limiter settings or paginated for view
     const [rawQueries, setRawQueries] = useState<ProjectQuery[]>([]);
 
-    const [getProjectQueries, { data: queryData, loading: queriesLoading }] =
-        useLazyQuery(GET_QUERY_DATA);
+    const [getProjectQueries, { loading: queriesLoading }] = useLazyQuery(GET_QUERY_DATA);
 
     const fetchQueryData = async (projectId: string, minDate: number, maxDate: number) =>
         getProjectQueries({

@@ -21,12 +21,15 @@ interface ProjectPaneProps {
     projects: Project[] | undefined;
     setSelectedProject: React.Dispatch<React.SetStateAction<Project | undefined>>;
     projectLoading: boolean;
+    getUserData: any;
 }
 
 interface SettingsPaneProps {
     rateLimiterConfig: RateLimiterConfig;
     rateLimiterLoading: boolean;
     setRateLimiterConfig: (config: RateLimiterConfig, saveConfig: boolean) => void;
+    onRawQueriesClick: () => void;
+    showSettings: boolean;
 }
 
 type ToolbarProps = ProjePaneProps & SettingsPaneProps;

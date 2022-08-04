@@ -45,8 +45,10 @@ const resolvers: IResolvers = {
         createProjectQuery: async (
             parent: undefined,
             args: CreateProjectQueryArgs,
-            context: Context // FIXME: This is unused. Was authentication intended here?
+            context: Context
         ): Promise<ProjectQuery | Error> => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             const { projectID } = args.projectQuery;
             const newQueryProps = args.projectQuery;
 
