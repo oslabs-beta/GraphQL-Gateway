@@ -1,10 +1,13 @@
-type User = {
+interface AuthUser {
     id: string;
     email: string;
     password: string;
-    projects: Array<Project>;
     token: string;
-};
+}
+
+interface User extends AuthUser {
+    projects: Array<Project>;
+}
 // interface User {
 //     id: string;
 //     email: string;
@@ -13,21 +16,26 @@ type User = {
 //     project: Project; // FIXME: iS this ever used?
 // }
 
-type GetUserArgs = {
+interface GetUserArgs {
     user: {
         email: string;
         password: string;
     };
-};
+}
 
-type CreateUserArgs = {
+interface CreateUserArgs {
     user: { email: string; password: string; projects: Array<string> };
-};
+}
 
-type UpdateUserArgs = {
+interface UpdateUserArgs {
     user: {
         id: number;
         email: string;
         password: string;
     };
-};
+}
+
+interface Context {
+    authenticated: boolean;
+    user: null | string | JwtPayload;
+}

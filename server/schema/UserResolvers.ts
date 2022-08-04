@@ -82,10 +82,10 @@ const resolvers: IResolvers = {
         /*
          *  User Mutations
          */
-        login: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
+        login: async (parent: undefined, args: GetUserArgs): Promise<AuthUser | Error> => {
             const { email, password } = args.user;
             return UserDB.findOne({ email })
-                .then(async (user: MongoUser): Promise<User> => {
+                .then(async (user: MongoUser): Promise<AuthUser> => {
                     if (!user) throw new WrongCredentialsError();
                     const verifyPassword: boolean = await bcrypt.compare(password, user.password);
                     if (!verifyPassword) {
@@ -104,11 +104,11 @@ const resolvers: IResolvers = {
                     else throw new Error('Try Again Later');
                 });
         },
-        signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
+        signup: async (parent: undefined, args: CreateUserArgs): Promise<AuthUser | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
             return UserDB.findOne({ email })
-                .then(async (user: MongoUser): Promise<User> => {
+                .then(async (user: MongoUser): Promise<AuthUser> => {
                     if (user) throw new Error('User already exists');
                     const newUser = new UserDB({
                         email,
