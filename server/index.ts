@@ -64,9 +64,12 @@ server.start().then((): void => {
         return res.json(apiKey);
     });
 
-    // load balancer health check
-    // app.all('/', (req, res) => res.sendStatus(200));
-
+    // serve homepage
+    app.all('/', (req, res) =>
+        res
+            .setHeader('Content-Type', 'text/html')
+            .sendFile(path.join(__dirname, '../public/index.html'))
+    );
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console
         console.log(`[Server] Started on port :${PORT}`)
