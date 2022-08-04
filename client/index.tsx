@@ -52,7 +52,6 @@ render(
                             path="/dashboard"
                             element={
                                 <RequireAuth>
-                                    {/**  <Dashboard /> */}
                                     <Dashboard />
                                 </RequireAuth>
                             }

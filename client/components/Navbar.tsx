@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable default-case */
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../public/styles.css';
 import { useAuth } from '../auth/AuthProvider';
@@ -11,28 +11,25 @@ export default function Navbar() {
     const { user, setUser, loading } = useAuth();
 
     const [show, setShow] = useState('flex');
-    const [scrollPos, setScrollPos] = useState(0);
+    const scrollPos = useRef(window.scrollY);
 
-    function logout() {
+    const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
         setUser(null);
-        localStorage.clear();
+        localStorage.removeItem('session-token');
+        // TODO: send logout reqeust to end session
         navigate('/');
-    }
+    };
 
     useEffect(() => {
         const controlNavbar = () => {
-            console.log('top', document.body.getBoundingClientRect().top);
-            setScrollPos(document.body.getBoundingClientRect().top);
-            console.log('sp', scrollPos);
-            if (document.body.getBoundingClientRect().top > scrollPos) {
-                console.log('yes');
+            if (window.scrollY > scrollPos.current) {
                 setShow('none');
             } else {
-                console.log('no');
                 setShow('flex');
             }
+            scrollPos.current = window.scrollY;
         };
-
         window.addEventListener('scroll', controlNavbar);
         return () => window.removeEventListener('scroll', controlNavbar);
     }, []);
@@ -85,6 +82,11 @@ export default function Navbar() {
                 >
                     About
                 </Link>
+                {user && (
+                    <Link to="/dashboard" type="submit" className="linkBtn">
+                        Dashboard
+                    </Link>
+                )}
                 <div
                     id="side-navbar"
                     style={{
@@ -92,7 +94,7 @@ export default function Navbar() {
                     }}
                 >
                     {user ? (
-                        <Link to="/logout" type="submit" className="linkBtn">
+                        <Link to="/logout" type="submit" className="linkBtn" onClick={handleLogout}>
                             Logout
                         </Link>
                     ) : (
