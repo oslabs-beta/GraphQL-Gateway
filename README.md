@@ -43,10 +43,13 @@ npm i graphql-limiter
 ## <a name="getting-started"></a>📍 Getting Started
 
 -   Register if you are first-time user, otherwise, login to the portal with your email and password
--   Select your existing project or create a new project from the toolbar on your left
--   Use features on the chart and view your cached performance metrics sorted by time periods/algorithms
-
 <div align="center"><img src='./public/login.GIF'></div>
+
+-   Select your existing project or create a new project from the toolbar on your left
+<div align="center"><img src='./public/project.GIF'></div>
+
+-   Use features on the chart and view your cached performance metrics sorted by time periods/algorithms
+<div align="center"><img src='./public/queries.GIF'></div>
 
 ## <a name="contributions"></a> 🧠 Contributions
 
