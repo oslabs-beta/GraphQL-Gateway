@@ -8,7 +8,7 @@
 
 ## <a name=""></a> 🛡 GraphQL Gateway Developer Portal
 
-GGDP is designed for offering a visualization of how your GraphQL API endpoints secured using rate limits and depth limits. With this tool, users can:
+GGDP is designed for offering a visualization of how your GraphQL API endpoints is secured using rate limits and depth limits. With this tool, users can:
 
 -   Visualize API call data and facilitate a tuning of rate limiting algorithm settings
 -   Seek for query resolution optimizations for GraphQL APIs
@@ -23,7 +23,7 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 -   [Developers](#developers)
 -   [More Information](#for-more-information)
 
-## <a name="prerequisites"></a> 📖Prerequisites
+## <a name="prerequisites"></a> 📖 Prerequisites
 
 1. Signup/login to the [Gateway developer portal](graphqlgate.io).
 
@@ -42,6 +42,10 @@ npm i graphql-limiter
 ```
 
 ## <a name="getting-started"></a>📍 Getting Started
+
+Register if you are first-time user, otherwise, login to the portal with your email and password.
+
+<div><img src='./public/login.GIF'></div>
 
 ## <a name="how-it-works"></a> 📊 How It Works
 
