@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Query from './Query';
+import Query, { QueryHeader } from './Query';
 
 export interface ISState {
     style: {
@@ -128,7 +128,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                         aria-hidden="true"
                         className={`loggerBtn${style.time ? ' active' : ''}`}
                         onClick={() => {
-                            // sortByTime();
                             let sortOrder: SortOrder;
                             if (arrow.timestamp === '' || arrow.timestamp === '↓') {
                                 sortOrder = '↑';
@@ -146,7 +145,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                         aria-hidden="true"
                         className={`loggerBtn${style.depth ? ' active' : ''}`}
                         onClick={() => {
-                            // sortByDepth();
                             let sortOrder: SortOrder;
                             if (arrow.depth === '' || arrow.depth === '↓') {
                                 sortOrder = '↑';
@@ -163,7 +161,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                         aria-hidden="true"
                         className={`loggerBtn${arrow.complexity ? ' active' : ''}`}
                         onClick={() => {
-                            // sortByComplexity();
                             let sortOrder: SortOrder;
                             if (arrow.complexity === '' || arrow.complexity === '↓') {
                                 sortOrder = '↑';
@@ -180,14 +177,15 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
             </div>
             <div className="loggerGUI">
                 <div className="space" />
-                <div id="loggerBtnWrapper">
+                <div id="queryGrid">
+                    <QueryHeader />
                     {list?.map((query: ProjectQuery) => (
                         <Query query={query} key={query.id} />
                     ))}
                 </div>
                 {hasMore ? (
                     // eslint-disable-next-line react/button-has-type
-                    <button className="loadMoreBtn" onClick={handleLoadMore}>
+                    <button className="loadMoreBtn panelButton" onClick={handleLoadMore}>
                         Load More
                     </button>
                 ) : (
