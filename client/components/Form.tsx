@@ -28,7 +28,7 @@ const Form: React.FC<IProps> = ({ togglePopup, userID, createProjectMutation }) 
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                     <button
                         style={{ marginTop: '20px', marginBottom: '20px' }}
-                        className="selectProjectButton"
+                        className="panelButton"
                         type="submit"
                     >
                         Submit

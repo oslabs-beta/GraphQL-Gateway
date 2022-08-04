@@ -23,10 +23,10 @@ export default function ProjectsPane({
     getUserData,
 }: ProjectPaneProps) {
     // this is a state for the form
-    const [isOpen, setIsOpen] = useState(false);
+    const [showForm, setShowForm] = useState(false);
 
     const togglePopup = () => {
-        setIsOpen(!isOpen);
+        setShowForm(!showForm);
     };
 
     const { user } = useAuth();
@@ -57,14 +57,10 @@ export default function ProjectsPane({
                             setSelectedProject={setSelectedProject}
                         />
                     ))}
-                    <button
-                        onClick={togglePopup}
-                        className="selectProjectButton newProject"
-                        type="button"
-                    >
+                    <button onClick={togglePopup} className="panelButton newProject" type="button">
                         New Project
                     </button>
-                    {isOpen && (
+                    {showForm && (
                         <Form
                             togglePopup={togglePopup}
                             createProjectMutation={createProjectMutation}
