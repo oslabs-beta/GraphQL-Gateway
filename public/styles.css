@@ -248,31 +248,6 @@ section#pageThree {
     width: 100%;
 }
 
-#aboutSection {
-    color: #fff;
-    text-align: center;
-    position: relative;
-    background-color: #092173;
-    overflow: hidden;
-}
-#aboutDiv {
-    margin-top: -100px;
-    width: 90%;
-    position: absolute;
-    z-index: 10;
-}
-
-#aboutSection h1 {
-    color: white;
-    font-size: 60px;
-    margin-bottom: 10px;
-}
-
-#aboutSection p {
-    color: white;
-    font-size: 24px;
-}
-
 .form-wrapper {
     text-align: center;
     margin-top: 20px;

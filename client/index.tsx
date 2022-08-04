@@ -6,7 +6,6 @@ import { setContext } from '@apollo/client/link/context';
 import { render } from 'react-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import About from './components/About';
 // import Dashboard from './components/Dashboard';
 import Dashboard from './components/Dashboard';
 import { AuthProvider } from './auth/AuthProvider';
@@ -45,7 +44,7 @@ render(
                     <Navbar />
                     <Routes>
                         <Route path="/" element={<App />} />
-                        <Route path="/about" element={<About />} />
+                        <Route path="/about" element={<App />} />
                         <Route path="/demo" element={<App />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
