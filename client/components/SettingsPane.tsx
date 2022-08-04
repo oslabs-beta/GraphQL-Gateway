@@ -54,6 +54,7 @@ export default function SettingsPane({
     rateLimiterConfig,
     rateLimiterLoading,
     setRateLimiterConfig,
+    onRawQueriesClick,
 }: SettingsPaneProps) {
     const [rateLimiterType, setRateLimiterType]: [
         RateLimiterType,
@@ -166,8 +167,14 @@ export default function SettingsPane({
                         >
                             Apply
                         </button>
-                        <button className="panelButton" disabled id="resetQueries" type="button">
-                            Clear
+                        <button
+                            className="panelButton"
+                            id="resetQueries"
+                            type="button"
+                            title="View raw query data"
+                            onClick={onRawQueriesClick}
+                        >
+                            View Raw
                         </button>
                         <button
                             className="panelButton"

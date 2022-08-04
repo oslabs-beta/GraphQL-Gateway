@@ -27,6 +27,7 @@ interface SettingsPaneProps {
     rateLimiterConfig: RateLimiterConfig;
     rateLimiterLoading: boolean;
     setRateLimiterConfig: (config: RateLimiterConfig, saveConfig: boolean) => void;
+    onRawQueriesClick: () => void;
 }
 
 type ToolbarProps = ProjePaneProps & SettingsPaneProps;

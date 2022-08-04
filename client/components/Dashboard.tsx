@@ -177,6 +177,7 @@ export default function Dashboard() {
                 rateLimiterConfig={rateLimitResponse?.data?.project.rateLimiterConfig}
                 rateLimiterLoading={rateLimitResponse ? rateLimitResponse.loading : false}
                 setRateLimiterConfig={handleRateLimiterConfigChange}
+                onRawQueriesClick={() => setRateLimitedQueries([])}
             />
             <ProjectView
                 selectedProject={selectedProject}

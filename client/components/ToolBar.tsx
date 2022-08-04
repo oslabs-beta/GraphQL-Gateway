@@ -10,6 +10,7 @@ export default function ToolBar({
     rateLimiterConfig,
     rateLimiterLoading,
     setRateLimiterConfig,
+    onRawQueriesClick,
 }: ToolbarProps) {
     /** State for the component */
     const [showToolbar, setShowToolbar] = useState(false);
@@ -47,6 +48,7 @@ export default function ToolBar({
                     rateLimiterConfig={rateLimiterConfig}
                     rateLimiterLoading={rateLimiterLoading}
                     setRateLimiterConfig={setRateLimiterConfig}
+                    onRawQueriesClick={onRawQueriesClick}
                 />
             );
             break;
