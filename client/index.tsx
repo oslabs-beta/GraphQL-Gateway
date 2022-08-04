@@ -54,6 +54,7 @@ render(
                                 </RequireAuth>
                             }
                         />
+                        <Route path="/*" element={<App />} />
                     </Routes>
                     <Footer />
                 </BrowserRouter>
