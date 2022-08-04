@@ -42,7 +42,7 @@ app.use(compression());
 app.use(bodyParser.json());
 
 if (process.env.NODE_ENV?.trim() === 'production') {
-    app.use(express.static(path.join(__dirname, '../build')));
+    app.use(express.static(path.join(__dirname, '../../build')));
 } else {
     app.use(express.static(path.join(__dirname, '../client/')));
 }
@@ -69,7 +69,7 @@ server.start().then((): void => {
         res
             .setHeader('Content-Type', 'text/html')
             .sendFile(
-                process.env.NODE_ENV === 'production'
+                process.env.NODE_ENV?.trim() === 'production'
                     ? path.join(__dirname, '../../build/index.html')
                     : path.join(__dirname, '../public/index.html')
             )
