@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import settings from '../public/settings.png';
@@ -8,48 +9,9 @@ import gear from '../public/gear.png';
 import '../public/styles.css';
 
 export default function HomePage() {
-    // todo: query to check auth status
-
-    // FIXME: navbar show only on scroll up, not down
-    // const [show, setShow] = useState('block');
-    // const controlNavbar = () => {
-    //     if (window.scrollY > 100) {
-    //         setShow('none');
-    //     } else {
-    //         setShow('block');
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     window.addEventListener('scroll', controlNavbar);
-    //     return () => {
-    //         window.removeEventListener('scroll', controlNavbar);
-    //     };
-    // }, []);
-
     return (
         <div>
-            {/* <div id="navbar" style={{ display: show }}>
-                <Link to="/" type="submit" className="linkBtn">
-                    Home
-                </Link>
-                <Link to="/demo" type="submit" className="linkBtn">
-                    Demo
-                </Link>
-                <Link to="/about" type="submit" className="linkBtn">
-                    About
-                </Link>
-            </div>
-            <div id="side-navbar" style={{ display: show }}>
-                <Link to="/login" type="submit" className="linkBtn">
-                    Login
-                </Link>
-                <Link to="/signup" type="submit" className="linkBtn">
-                    Signup
-                </Link>
-            </div> */}
-            {/* FIXME: "container" class was breaking the display in Chrome */}
-            <div className="">
+            <div className="container">
                 <section id="pageOne">
                     <div className="blue-filter" />
                     <div className="video_wrapper">
@@ -90,8 +52,13 @@ export default function HomePage() {
                             <h1>Leacky Bucket</h1>
                             <img src={gear} alt="settings" />
                         </div>
-                        <div className="demoCardImg" />
+                        <div className="algorithmCard">
+                            <h3>Alghorhitm</h3>
+                            <h1>Leacky Bucket</h1>
+                            <img src={gear} alt="settings" />
+                        </div>
                     </div>
+                    {/* <div className="demoCardImg" /> */}
                 </section>
                 <section id="pageTwo" />
                 <div className="centeredSentence">

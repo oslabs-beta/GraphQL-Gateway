@@ -44,7 +44,6 @@ section {
     align-items: center;
     width: 100%;
     height: 100vh;
-    max-height: 900px;
     min-width: 457px;
 }
 
@@ -66,8 +65,8 @@ section#pageOne {
 
 .video_wrapper {
     position: absolute;
-    height: 100%;
-    width: 100%;
+    height: 125%;
+    width: 2500px;
 }
 
 #demoCard {
@@ -80,7 +79,7 @@ section#pageOne {
     top: 600px;
     background-color: #fff;
     width: 70%;
-    height: 700px;
+    height: 100%;
     box-shadow: 0px 0px 20px #00259e;
 }
 
@@ -98,12 +97,12 @@ section#pageOne {
     position: absolute;
     top: 0;
     height: 300px;
+    display: flex;
 }
 
 .algorithmCard {
     display: inline-block;
-    padding: 20px;
-    margin: 20px 12px;
+    margin: 20px;
     text-align: center;
     height: 200px;
     width: 200px;
@@ -124,6 +123,10 @@ section#pageOne {
     background-color: #3574f3;
 }
 
+/* .demoCardImg {
+    width: 100%;
+    margin-top: 200px;
+} */
 #pageOne h1 {
     font-size: 60px;
     margin-bottom: 10px;
@@ -161,6 +164,10 @@ section#pageThree {
 
 .icon {
     padding: 20px;
+    display: flex;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
 }
 
 .centeredSentence {
@@ -184,13 +191,13 @@ section#pageThree {
 
 #pageThreeLeft {
     display: inline-block;
-    width: 700px;
+    width: 50%;
     text-align: center;
 }
 
 #pageThreeRight {
     display: inline-block;
-    width: 700px;
+    width: 50%;
     text-align: center;
 }
 
@@ -314,13 +321,16 @@ section#pageThree {
     position: relative;
 } */
 #navbar {
-    z-index: 11;
+    z-index: 21;
     position: fixed;
     background-color: #fff;
     width: 70%;
     top: 0;
     border-bottom: 1px solid #324da6;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 #side-navbar {
@@ -329,8 +339,9 @@ section#pageThree {
     background-color: #fff;
     top: 0;
     right: 0;
-    display: block;
+    justify-content: flex-end;
     width: 30%;
+    border-bottom: 1px solid #324da6;
 }
 
 #footer {
@@ -444,7 +455,6 @@ section#pageThree {
     height: 1000px;
 } */
 .toolBarWrapper {
-    width: 100%;
     margin: 0px auto;
 }
 
@@ -470,7 +480,7 @@ section#pageThree {
 }
 
 .toolBar.closed {
-    left: -380px;
+    left: -340px;
 }
 
 #toolBarMenu {
@@ -503,7 +513,7 @@ section#pageThree {
 }
 
 .apiDiv {
-    width: 200px;
+    width: 250px;
     text-align: center;
     padding: 5px;
 }
@@ -529,6 +539,11 @@ section#pageThree {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.toolBarLabel {
+    font-weight: 500;
+    margin: 10px;
 }
 
 .panelButton {
@@ -581,7 +596,7 @@ section#pageThree {
     display: inline-block;
     padding: 15px;
     position: absolute;
-    right: -25px;
+    right: 10px;
     top: 15px;
     cursor: pointer;
     transition: all 0.3s ease-out;
@@ -850,134 +865,194 @@ section#pageThree {
 }
 
 @media (min-width: 641px) {
-}
-
-@media (max-width: 640px) {
-    .loggerBox {
-        border-radius: 2px;
-        background-color: rgba(255, 255, 255, 0.7);
-        max-height: 580px;
-        margin: 80px auto;
-        margin-bottom: 0px;
-        width: 100%;
+    @media (min-width: 2500px) {
+        .video_wrapper {
+            width: 3500px;
+            height: 265%;
+        }
     }
 
-    #dashWrapper {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        min-width: 457px;
+    @media (max-width: 1300px) {
+        .algorithmCard {
+            font-size: 14px;
+            width: 145px;
+        }
+
+        .algorithmCard img {
+            width: 50px;
+        }
     }
 
-    #side-navbar {
-        width: 30%;
-        float: right;
-        min-width: 191px;
+    @media (max-width: 1050px) {
+        .algorithmCard {
+            font-size: 10px;
+            width: 110px;
+        }
+
+        .algorithmCard img {
+            width: 30px;
+        }
+
+        .iconImg {
+            width: 70px;
+            padding: 10px;
+        }
+
+        #pageThreeRight p {
+            font-size: 14px;
+        }
+
+        #pageThreeLeft p {
+            font-size: 14px;
+        }
     }
 
-    #navbar {
-        display: block;
-        min-width: 327px;
+    @media (max-width: 850px) {
+        .algorithmCard {
+            display: none;
+        }
+
+        .icon {
+            height: 80px;
+        }
+
+        #pageThreeLeft,
+        #pageThreeRight {
+            width: 100%;
+        }
     }
 
-    .chartBox {
-        width: 100%;
-        margin: 100px auto;
-        border-radius: 2px;
-        margin-left: 0px;
-        background-color: rgba(255, 255, 255, 0.7);
-        min-width: 457px;
-        height: 100%;
-        min-height: 316px;
-    }
+    @media (max-width: 640px) {
+        .loggerBox {
+            border-radius: 0px;
+            background-color: rgba(255, 255, 255, 0.7);
+            max-height: 580px;
+            margin: 25px auto;
+            margin-bottom: 80px;
+            width: 100%;
+        }
 
-    .chartBtn {
-        width: 40px;
-        color: #353535;
-        cursor: pointer;
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        padding: 5px 1px;
-        border-radius: 5px;
-        transition: 0.5s;
-        font-size: 9px;
-    }
+        #dashWrapper {
+            display: flex;
+            flex-direction: column-reverse;
+            width: 100%;
+            min-width: 550px;
+            margin-top: 100px;
+        }
 
-    .loggerSortButtons {
-        min-width: 100px;
-        width: 100%;
-    }
+        #side-navbar {
+            min-width: 191px;
+        }
 
-    #pageOneTextBox {
-        width: 435px;
-        margin-top: 0px;
-    }
+        #navbar {
+            display: block;
+            min-width: 327px;
+        }
 
-    #pageOneTextBox h1 {
-        font-size: 40px;
-    }
+        .chartBox {
+            width: 100%;
+            margin: 50px auto;
+            border-radius: 2px;
+            min-width: 457px;
+        }
 
-    #pageOneTextBox h2 {
-        font-size: 30px;
-    }
+        .chartBtn {
+            width: 40px;
+            color: #353535;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 5px 1px;
+            border-radius: 5px;
+            transition: 0.5s;
+            font-size: 9px;
+        }
 
-    #pageOneTextBox p {
-        font-size: 25px;
-    }
+        .loggerSortButtons {
+            min-width: 100px;
+            width: 100%;
+        }
 
-    .algorithmCard {
-        display: none;
-    }
+        #pageOneTextBox {
+            width: 435px;
+            margin-top: 0px;
+        }
 
-    #demoCard {
-        top: 617px;
-        height: 645px;
-        width: 100%;
-        min-width: 554px;
-    }
+        #pageOneTextBox h1 {
+            font-size: 40px;
+        }
 
-    #pageThreeRight {
-        display: block;
-        width: 100%;
-    }
+        #pageOneTextBox h2 {
+            font-size: 30px;
+        }
 
-    #pageThreeLeft {
-        display: block;
-        width: 100%;
-    }
+        #pageOneTextBox p {
+            font-size: 25px;
+        }
 
-    #pageThreeLeft p {
-        padding: 0px;
-        font-size: 12px;
-    }
+        .algorithmCard {
+            display: none;
+        }
 
-    #pageThreeRight p {
-        padding: 0px;
-        font-size: 12px;
-    }
+        #demoCard {
+            top: 617px;
+            height: 737px;
+            width: 100%;
+            min-width: 554px;
+        }
 
-    .icon {
-        display: flex;
-        height: 110px;
-        justify-content: center;
-        align-items: center;
-        padding: 5px;
-    }
+        #pageThreeRight {
+            display: block;
+            width: 100%;
+        }
 
-    .iconImg {
-        width: 60px;
-    }
+        #pageThreeLeft {
+            display: block;
+            width: 100%;
+        }
 
-    .centeredSentence h1 {
-        margin: 58px;
-        font-size: 30px;
-    }
+        #pageThreeLeft p {
+            padding: 0px;
+            font-size: 12px;
+        }
 
-    .video_wrapper {
-        display: none;
-    }
+        #pageThreeRight p {
+            padding: 0px;
+            font-size: 12px;
+        }
 
-    .container {
-        min-width: 554px;
+        .icon {
+            display: flex;
+            height: 110px;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .iconImg {
+            width: 60px;
+        }
+
+        .centeredSentence h1 {
+            margin: 58px;
+            font-size: 30px;
+        }
+
+        .video_wrapper {
+            display: none;
+        }
+
+        .container {
+            min-width: 554px;
+        }
+
+        .arrow {
+            top: 35px;
+            right: -30px;
+        }
+
+        .toolBar.closed {
+            left: -380px;
+        }
     }
 }
