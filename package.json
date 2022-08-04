@@ -1,11 +1,12 @@
 {
     "name": "graphql-gateway",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "A developer portal for GraphQL-Gate providing charts of allowed/blocked queries and their data as well as a multitude of configurable rate limiters to choose from.",
+    "main": "build/bundle.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "cross-env NODE_ENV=development nodemon --exec ts-node --files ./server/index.ts",
+        "start:docker": "cross-env NODE_ENV=production nodemon ./ts-build/server/index.js",
         "build": "cross-env NODE_ENV=production webpack",
         "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon --exec ts-node --files ./server/index.ts\" ",
         "dev-client": "cross-env NODE_ENV=development webpack serve --open",
@@ -16,15 +17,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/oslabs-beta/graphql-beaver-view.git"
+        "url": "https://github.com/oslabs-beta/GraphQL-Gateway"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/oslabs-beta/graphql-beaver-view/issues"
+        "url": "https://github.com/oslabs-beta/GraphQL-Gatewayissues"
     },
-    "homepage": "https://github.com/oslabs-beta/graphql-beaver-view#readme",
+    "homepage": "https://github.com/oslabs-beta/GraphQL-Gateway#readme",
     "dependencies": {
         "@apollo/client": "^3.6.5",
         "@graphql-tools/utils": "^8.6.10",
@@ -37,6 +38,7 @@
         "compression": "^1.7.4",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
+        "cross-env": "^7.0.3",
         "dotenv": "^16.0.1",
         "email-validator": "^2.0.4",
         "express": "^4.18.1",
@@ -61,7 +63,6 @@
         "@types/compression": "^1.7.2",
         "@types/cookie-parser": "^1.4.3",
         "@types/express": "^4.17.13",
-        "@types/graphql": "^14.5.0",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/node": "^17.0.33",
         "@types/randomstring": "^1.1.8",
@@ -71,7 +72,6 @@
         "@typescript-eslint/parser": "^5.23.0",
         "babel-loader": "^8.2.3",
         "concurrently": "^7.0.0",
-        "cross-env": "^7.0.3",
         "css-loader": "^6.7.1",
         "eslint": "^8.16.0",
         "eslint-config-airbnb": "^19.0.4",
@@ -89,7 +89,7 @@
         "lint-staged": "^12.4.1",
         "mini-css-extract-plugin": "^2.6.0",
         "nodemon": "^2.0.15",
-        "prettier": "2.6.2",
+        "prettier": "^2.6.2",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.49.9",
         "sass-loader": "^12.6.0",
@@ -97,7 +97,8 @@
         "ts-loader": "^9.3.0",
         "ts-node": "^10.8.2",
         "typescript": "^4.6.4",
-        "webpack-cli": "^4.9.2",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.7.4"
     },
     "lint-staged": {
