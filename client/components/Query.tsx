@@ -4,29 +4,50 @@ interface QueryProps {
     query: ProjectQuery;
 }
 
-export default function Query({ query }: QueryProps) {
+export function QueryHeader() {
     return (
-        <div className="queryProps">
+        // <div className="queryHeader">
+        <>
             <div className="individualQuery">
-                <div className="label">Num: </div>
-                <div className="value">{query.number}</div>
+                <div className="label">ID</div>
             </div>
             <div className="individualQuery">
-                <div className="label">Tok: </div>
-                <div className="value">{query.tokens}</div>
+                <div className="label">Tokens</div>
             </div>
             <div className="individualQuery">
-                <div className="label">Dep: </div>
-                <div className="value">{query.depth}</div>
+                <div className="label">Depth</div>
             </div>
             <div className="individualQuery">
-                <div className="label">Com: </div>
-                <div className="value">{query.complexity}</div>
+                <div className="label">Complexity</div>
             </div>
             <div className="individualQuery">
-                <div className="label">Blo: </div>
-                <div className="value">{(!query.success).toString()}</div>
+                <div className="label">Blocked</div>
             </div>
-        </div>
+        </>
+        // </div>
+    );
+}
+export default function Query({ query }: QueryProps) {
+    const blocked = !query.success ? 'blocked' : '';
+    return (
+        // <div className="queryProps">
+        <>
+            <div className="individualQuery">
+                <div className={`value ${blocked}`}>{query.number}</div>
+            </div>
+            <div className="individualQuery">
+                <div className={`value ${blocked}`}>{query.tokens}</div>
+            </div>
+            <div className="individualQuery">
+                <div className={`value ${blocked}`}>{query.depth}</div>
+            </div>
+            <div className="individualQuery">
+                <div className={`value ${blocked}`}>{query.complexity}</div>
+            </div>
+            <div className="individualQuery">
+                <div className={`value ${blocked}`}>{(!query.success).toString()}</div>
+            </div>
+        </>
+        // </div>
     );
 }
