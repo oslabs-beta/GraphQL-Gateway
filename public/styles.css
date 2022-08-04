@@ -96,8 +96,10 @@ section#pageOne {
 #demoCardWrapper {
     position: absolute;
     top: 0;
-    height: 300px;
+    /* height: 300px;
     display: flex;
+    flex-direction: column;
+    margin: 5px; */
 }
 
 .algorithmCard {
@@ -128,17 +130,23 @@ section#pageOne {
     margin-top: 200px;
 } */
 #pageOne h1 {
-    font-size: 60px;
-    margin-bottom: 10px;
+    font-size: 70px;
+    margin-bottom: 30px;
+}
+
+.icon p {
+    font-size: 17px;
 }
 
 #pageOne h2 {
     margin: 10px 0 50px 0;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 #pageOne p {
-    color: rgb(177, 175, 175);
+    /* color: rgb(177, 175, 175); */
+    color: white;
+    font-size: 20px;
 }
 
 #pageOneTextBox {
@@ -248,6 +256,10 @@ section#pageThree {
     background-color: #fff;
     top: 0;
     right: 0;
+}
+#codesnippet {
+    width: 100%;
+    height: auto;
 }
 
 .logoText {
@@ -995,7 +1007,8 @@ section#pageThree {
 
         #demoCard {
             top: 617px;
-            height: 737px;
+            /* height: 737px; */
+            /* height: 300px; */
             width: 100%;
             min-width: 554px;
         }
