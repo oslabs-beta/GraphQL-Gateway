@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 interface UserContext {
@@ -8,14 +8,14 @@ interface UserContext {
 
 interface AuthContextType {
     user: UserContext | null;
-    // better typed but erroring --> setUser: React.Dispatch<React.SetStateAction<boolean>> | null
+    // better typed but erroring --> setUser: React.Dispatch<React.SetStateAction<User | null>> | null
     setUser: any;
     loading: boolean;
 }
 
 const AuthContext = React.createContext<AuthContextType>({
     user: null,
-    setUser: '',
+    setUser: null,
     loading: true,
 });
 
@@ -46,7 +46,7 @@ function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
             setLoading(false);
         },
         onError: (error) => {
-            console.log(error);
+            console.error(error);
             localStorage.removeItem('session-token');
             setLoading(false);
         },

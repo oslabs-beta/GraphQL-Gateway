@@ -56,7 +56,7 @@ async function rateLimiterAnalysis(
         return res.status(400).send('[server] Bad request: Failed to initialize rate limiter');
     }
 
-    const workerIsDone = new Promise((resolve, reject) => {
+    const workerIsDone = new Promise((resolve) => {
         worker.onmessage((data: any) => {
             // Wait for "DONE"
             if (data === 'DONE') {

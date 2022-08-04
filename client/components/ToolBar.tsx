@@ -15,10 +15,6 @@ export default function ToolBar({
     /** State for the component */
     const [showToolbar, setShowToolbar] = useState(false);
     const [toolbarContent, setToolbarContent] = useState('');
-    /** Allow users to select a project from a list and have the data for that proejct dispaly in the project view */
-    // const handleSelectProject = (e: any) => {
-    //     setSelectedProject(projects![e.target.id]);
-    // };
 
     /** render the toolbar
      * while the GET_PROJECT_DATA query is loading, render the loading component
@@ -44,7 +40,6 @@ export default function ToolBar({
         case 'SETTINGS': {
             selectedPane = (
                 <SettingsPane
-                    // TODO: Move this into state and get it from the db
                     rateLimiterConfig={rateLimiterConfig}
                     rateLimiterLoading={rateLimiterLoading}
                     setRateLimiterConfig={setRateLimiterConfig}
@@ -60,9 +55,6 @@ export default function ToolBar({
 
     return (
         <div id="toolBar" className={`toolBar ${!showToolbar ? 'closed' : ''}`}>
-            {/** //TODO: make the tool bar look nice. 
-                   -toggle in and out from the right hand side. 
-                   - sylethe project buttons */}
             <button
                 className={`arrow ${showToolbar ? 'left' : 'right'}`}
                 type="button"

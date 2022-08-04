@@ -163,7 +163,7 @@ export default function Dashboard() {
                         ).then((res) => res.json());
                         setRateLimitedQueries(data.queries);
                     } catch (err) {
-                        return console.log(err);
+                        return console.error(err);
                     }
                 })();
             }

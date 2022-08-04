@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable default-case */
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../public/styles.css';
@@ -8,7 +5,7 @@ import { useAuth } from '../auth/AuthProvider';
 
 export default function Navbar() {
     const navigate = useNavigate();
-    const { user, setUser, loading } = useAuth();
+    const { user, setUser } = useAuth();
 
     const [show, setShow] = useState('flex');
     const scrollPos = useRef(window.scrollY);
@@ -17,7 +14,6 @@ export default function Navbar() {
         e.preventDefault();
         setUser(null);
         localStorage.removeItem('session-token');
-        // TODO: send logout reqeust to end session
         navigate('/');
     };
 
@@ -38,7 +34,7 @@ export default function Navbar() {
         const url = window.location.href.split('/');
         const target = url[url.length - 1].toLowerCase();
         const element = document.getElementById(target);
-        element && element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, []);
 
     return (
@@ -55,7 +51,7 @@ export default function Navbar() {
                     className="linkBtn"
                     onClick={() => {
                         const hero = document.getElementById('pageOne');
-                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
                     Home
@@ -66,7 +62,7 @@ export default function Navbar() {
                     className="linkBtn"
                     onClick={() => {
                         const hero = document.getElementById('demoCard');
-                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
                     Demo
@@ -77,7 +73,7 @@ export default function Navbar() {
                     className="linkBtn"
                     onClick={() => {
                         const hero = document.getElementById('pageThree');
-                        hero && hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
                     About
