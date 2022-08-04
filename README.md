@@ -46,7 +46,7 @@ npm i graphql-limiter
 -   Select your existing project or create a new project from the toolbar on your left
 -   Use features on the chart and view your cached performance metrics sorted by time periods/algorithms
 
-<div><img src='./public/login.GIF'></div>
+<div align="center"><img src='./public/login.GIF'></div>
 
 ## <a name="contributions"></a> 🧠 Contributions
 
