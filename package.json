@@ -43,6 +43,7 @@
         "email-validator": "^2.0.4",
         "express": "^4.18.1",
         "graphql": "^16.5.0",
+        "graphql-limiter": "^1.0.2",
         "http": "^0.0.1-security",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.3.3",
