@@ -494,12 +494,76 @@ section#pageThree {
     flex-grow: 1;
 }
 
+#box {
+    position: fixed;
+    background: #00000050;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+#boxInside {
+    position: relative;
+    width: 30%;
+    margin: 0 auto;
+    height: 200px;
+    max-height: 70vh;
+    margin-top: calc(120vh - 85vh - 20px);
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px;
+    border: 1px solid #999;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+#boxInside input {
+    width: 80%;
+    border-radius: 4px;
+    color: #324da6;
+}
+.close {
+    content: 'x';
+    cursor: pointer;
+    position: fixed;
+    right: calc(35% - 30px);
+    top: calc(120vh - 85vh - 33px);
+    background-color: red;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #999;
+    font-size: 20px;
+}
 .projectButton {
     border: none;
     background: none;
     font-size: 20px;
     color: #324da6;
     margin: 10px 0px;
+    cursor: pointer;
+}
+.selectProjectButton {
+    background: none;
+    border: 1px solid #324da6;
+    width: 100px;
+    margin: 10px 0;
+    padding: 5px;
+    color: #324da6;
+    font-size: 15px;
+    transition: all 0.5s ease;
+    border-radius: 5px;
+    display: inline-block;
+}
+.selectProjectButton:hover {
+    background: #324da6;
+    color: #fff;
     cursor: pointer;
 }
 
@@ -580,6 +644,7 @@ section#pageThree {
     border: none;
     background: none;
     margin-top: 75px;
+    margin-right: -6px;
     color: #324da6;
     cursor: pointer;
 }

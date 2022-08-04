@@ -76,6 +76,7 @@ export default function ToolBar({
             {showSettings && (
                 <div id="toolBarButtons">
                     <button
+                        id="projectGear"
                         className="fa-solid fa-gear fa-2xl fa-bars"
                         type="button"
                         aria-label="switch"
