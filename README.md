@@ -44,6 +44,7 @@ npm i graphql-limiter
 
 -   Register if you are first-time user, otherwise, login to the portal with your email and password.
 -   Select your existing project or create a new project from the toolbar on your left
+-   Use features on the chart and view your cached performance metrics sorted by different time periods/algorithms
 
 <div><img src='./public/login.GIF'></div>
 
