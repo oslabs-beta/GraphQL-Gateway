@@ -24,7 +24,6 @@ export default function ProjectsPane({
                     <button className="panelButton newProject" type="button">
                         New Project
                     </button>
-                    <div>Menu toSee/update profile info</div>
                 </>
             )}
         </>
