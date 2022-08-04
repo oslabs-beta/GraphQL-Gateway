@@ -14,12 +14,12 @@ COPY . .
 
 RUN npm run build
 
-# RUN cd server
+RUN cd server
 
-# RUN tsc
+RUN tsc
 
-# RUN cd ..
+RUN cd ..
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dockerTS"]
+CMD ["npm", "run", "start:docker"]
