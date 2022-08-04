@@ -6,6 +6,7 @@ import { Document } from 'mongoose';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
+import { MongoProject, MongoProjectQuery, MongoUser } from '../../@types/resolver';
 
 function isBucketLimiter(rateLimiter: RateLimiterType): rateLimiter is BucketType {
     return ['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiter as BucketType);
@@ -22,30 +23,52 @@ const resolvers: IResolvers = {
      * To query nested Query Data in Project Object
      */
     Project: {
-        queries: (parent: Project): Promise<ProjectQuery[] | Error> =>
-            QueryDB.find({ projectID: parent.id })
-                .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-
+        queries: (
+            parent: Project,
+            args,
+            context: Context
+        ): Promise<ProjectQuery[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return QueryDB.find({ projectID: parent.id })
+                .then((queries: MongoProjectQuery[]): ProjectQuery[] => queries)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
         rateLimiterConfig: (parent: Project): RateLimiterConfig => parent.rateLimiterConfig,
-        // query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> =>
-        //     QueryDB.findOne({ _id: args.id, userID: parent.id })
-        //         .then((query: ProjectQuery): ProjectQuery => {
+        // query: (
+        //     parent: Project,
+        //     args: QueryByID,
+        //     context: Context
+        // ): Promise<ProjectQuery | Error> | Error => {
+        //     const { authenticated } = context;
+        //     if (authenticated === false) return new Error('Unauthorized to make this request');
+        //     return QueryDB.findOne({ _id: args.id, userID: parent.id })
+        //         .then((query: any): ProjectQuery => {
         //             if (!query) throw new Error('Query not found');
         //             return query;
         //         })
-        //         .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+        //         .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        // },
     },
     Query: {
-        projects: (): Promise<Project[] | Error> =>
-            ProjectDB.find()
-                .then((projects: Project[]): Project[] => projects)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        project: (parent: undefined, args: QueryByID): Promise<Project | Error> => {
+        projects: (parent, args, context: Context): Promise<Project[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return ProjectDB.find()
+                .then((projects: MongoProject[]): Project[] => projects)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        project: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<Project | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             const { id } = args;
 
             return ProjectDB.findOne({ _id: id })
-                .then((project: Project): Project => {
+                .then((project: MongoProject): Project => {
                     if (!project) throw new Error('Project does not exist');
                     return project;
                 })
@@ -59,15 +82,18 @@ const resolvers: IResolvers = {
          */
         createProject: async (
             parent: undefined,
-            args: CreateProjectArgs
+            args: CreateProjectArgs,
+            context: Context
         ): Promise<Project | Error> => {
             const { userID, name } = args.project;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
 
             /* checks if user exists given the userID,
              * throws error otherwise
              */
             await UserDB.findById(userID)
-                .then((user: User): void => {
+                .then((user: MongoUser): void => {
                     if (!user) throw new Error('User does not exist');
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
@@ -77,7 +103,7 @@ const resolvers: IResolvers = {
              * creates a new project based on the mongoose model and saves it.
              */
             return ProjectDB.findOne({ userID, name }).then(
-                async (project: Project): Promise<Project | Error> => {
+                async (project: MongoProject): Promise<Project> => {
                     if (project) throw new Error('Project already exists');
 
                     // random 10-char string generated and stored in projectDB
@@ -98,8 +124,7 @@ const resolvers: IResolvers = {
                         .catch(
                             (err: Error): Error =>
                                 new Error(`Saving project/receiving new ID from DB failed: ${err}`)
-                        )
-                        .finally(() => newProject);
+                        );
                 }
             );
         },
@@ -108,14 +133,19 @@ const resolvers: IResolvers = {
          */
         updateProject: async (
             parent: undefined,
-            args: UpdateProjectArgs
+            args: UpdateProjectArgs,
+            context: Context
         ): Promise<Project | null> => {
             const { id, name, rateLimiterConfig } = args;
+            const { authenticated } = context;
+            // TODO: CHECK the difference between throw and return
+            if (authenticated === false) throw new Error('Unauthorized to make this request');
 
             try {
+                // FIXME: Use Document to type it
                 const project: (Document & Project) | null = await ProjectDB.findById(id);
                 if (!project) {
-                    console.log('[mongoose]: updateProject not found');
+                    throw new Error('[mongoose]: updateProject not found');
                 } else {
                     if (name) project.name = name;
 
@@ -143,17 +173,23 @@ const resolvers: IResolvers = {
                 }
                 return project;
             } catch (err) {
-                console.log(`[mongoose]: updateProject error: ${err}`);
+                throw new Error(`[mongoose]: updateProject error: ${err}`);
             }
             return null;
         },
 
-        deleteProject: async (parent: undefined, args: QueryByID): Promise<Project | Error> => {
+        deleteProject: async (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<Project | Error> => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             await QueryDB.deleteMany({ projectID: id });
 
             return ProjectDB.findByIdAndRemove(id)
-                .then(async (project: Project): Promise<Project> => project)
+                .then(async (project: MongoProject): Promise<Project> => project)
                 .catch((err: Error): Error => new Error(`Project deletion failed: ${err}`));
         },
     },

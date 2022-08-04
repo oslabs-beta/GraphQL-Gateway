@@ -2,22 +2,34 @@ import { IResolvers } from '@graphql-tools/utils';
 
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
+import { MongoProjectQuery } from '../../@types/resolver';
 
 const resolvers: IResolvers = {
     Query: {
         // TODO: Add option to apply rate limiter analysis
-        projectQueries: (parent: undefined, args: QueryByID): Promise<ProjectQuery[] | Error> => {
+        projectQueries: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<ProjectQuery[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             const { id, minDate, maxDate } = args;
             return QueryDB.find({ projectID: id, timestamp: { $gte: minDate, $lt: maxDate } })
-                .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
+                .then((queries: MongoProjectQuery[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-
-        projectQuery: (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
+        projectQuery: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<ProjectQuery | Error> | Error => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
 
             return QueryDB.findOne({ _id: id })
-                .then((query: ProjectQuery): ProjectQuery => {
+                .then((query: MongoProjectQuery): ProjectQuery => {
                     if (!query) throw new Error('Query does not exist');
                     return query;
                 })
@@ -32,7 +44,8 @@ const resolvers: IResolvers = {
          */
         createProjectQuery: async (
             parent: undefined,
-            args: CreateProjectQueryArgs
+            args: CreateProjectQueryArgs,
+            context: Context // FIXME: This is unused. Was authentication intended here?
         ): Promise<ProjectQuery | Error> => {
             const { projectID } = args.projectQuery;
             const newQueryProps = args.projectQuery;
@@ -43,15 +56,15 @@ const resolvers: IResolvers = {
             /* checks if project exists given the projectID and
              * throws error if not
              */
-            const userID: string | undefined | Error = await ProjectDB.findById(projectID)
-                .then((project: Project): string | undefined => {
+            const userID: string | Error = await ProjectDB.findById(projectID)
+                .then((project: MongoProjectQuery): string => {
                     if (!project) throw new Error('Project does not exist');
                     return project?.userID;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            const queries: string | ProjectQuery[] = await QueryDB.find({ projectID }).catch(
-                (err) => `DB query failed: ${err}`
+            const queries: string | MongoProjectQuery[] = await QueryDB.find({ projectID }).catch(
+                (err: Error) => `DB query failed: ${err}`
             );
             const newNumber: number = queries.length + 1;
 
@@ -61,18 +74,21 @@ const resolvers: IResolvers = {
                 number: newNumber,
             })
                 .save()
-                .then((res: ProjectQuery): ProjectQuery => res)
+                .then((res: MongoProjectQuery): ProjectQuery => res)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
             return newQuery;
         },
         deleteProjectQuery: async (
             parent: undefined,
-            args: QueryByID
+            args: QueryByID,
+            context: Context
         ): Promise<ProjectQuery | Error> => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             return QueryDB.findByIdAndRemove(id)
-                .then(async (query: ProjectQuery): Promise<ProjectQuery | Error> => query)
+                .then(async (query: MongoProjectQuery): Promise<ProjectQuery | Error> => query)
                 .catch((err: Error): Error => new Error(`Query deletion failed: ${err}`));
         },
     },

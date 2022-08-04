@@ -9,6 +9,7 @@ import cors from 'cors';
 import path from 'path';
 import lodash from 'lodash';
 
+import { fileURLToPath } from 'url';
 import typeDefs from './schema/TypeDefs';
 import ProjectResolvers from './schema/ProjectResolvers';
 import UserResolvers from './schema/UserResolvers';
@@ -53,10 +54,12 @@ app.use(cookieParser());
 app.use(compression());
 app.use(bodyParser.json());
 
+const filename = fileURLToPath(import.meta.url);
+
 if (process.env.NODE_ENV?.trim() === 'production') {
-    app.use(express.static(path.join(__dirname, '../build')));
+    app.use(express.static(path.join(path.dirname(filename), '../build')));
 } else {
-    app.use(express.static(path.join(__dirname, '../client/')));
+    app.use(express.static(path.join(path.dirname(filename), '../client/')));
 }
 
 // localhost:3000/gql -> graphQL sandbox

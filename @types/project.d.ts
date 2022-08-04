@@ -7,6 +7,13 @@ type Project = {
     rateLimiterConfig: RateLimiterConfig;
 };
 
+// export interface Project {
+//     id: string;
+//     userID: string;
+//     name: string;
+//     apiKey: string;
+// }
+
 // interface Project {
 //     id: string;
 //     userID: string;
