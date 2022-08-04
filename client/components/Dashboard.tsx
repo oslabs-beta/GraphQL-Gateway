@@ -150,6 +150,9 @@ export default function Dashboard() {
                                 method: 'POST',
                                 headers: {
                                     'content-type': 'application/json',
+                                    authorization: `BEARER: ${localStorage.getItem(
+                                        'session-token'
+                                    )}`,
                                 },
                                 body: JSON.stringify({
                                     config: updatedConfig,

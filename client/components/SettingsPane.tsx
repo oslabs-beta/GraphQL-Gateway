@@ -132,7 +132,7 @@ export default function SettingsPane({
                         value={capacity}
                         displayValue={capacity}
                         onChange={onCapacityChange}
-                        min={0}
+                        min={1}
                         max={500}
                         unit="tokens"
                     />
@@ -142,7 +142,7 @@ export default function SettingsPane({
                             value={refillRate}
                             displayValue={refillRate}
                             onChange={onRefillRateChange}
-                            min={0}
+                            min={1}
                             max={100}
                             unit="tokens/s"
                         />
@@ -152,7 +152,7 @@ export default function SettingsPane({
                             value={windowSize * 1000} // Slider goes down to millisecond for granularity
                             displayValue={windowSize} // Slider goes down to millisecond for granularity
                             onChange={onWindowSizeChange}
-                            min={0}
+                            min={1}
                             max={60000} // 1 minutes
                             unit="s"
                         />

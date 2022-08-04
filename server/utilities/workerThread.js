@@ -10,11 +10,13 @@ import RedisMock from './RedisMock.js';
 const redis = new RedisMock();
 
 // worker threads can share memory via transfer of Array Buffer instances
+const { projectId, config, authorization } = workerData;
 
-async function getProjectQueries(projectId) {
-    const query = `query {project(id: "${projectId}") {
+async function getProjectQueries(id) {
+    const query = `query {project(id: "${id}") {
         queries {
             id
+            userID
             projectID
             number
             complexity
@@ -25,12 +27,12 @@ async function getProjectQueries(projectId) {
             loggedOn
             latency
         }}}`;
-    return nodeFetch(`http://localhost:${process.env.PORT}/gql/?query=${query}`).then((res) =>
-        res.json()
-    );
+    return nodeFetch(`http://localhost:${process.env.PORT}/gql/?query=${query}`, {
+        headers: {
+            authorization,
+        },
+    }).then((res) => res.json());
 }
-
-const { projectId, config } = workerData;
 
 getProjectQueries(projectId).then(async (queries) => {
     const data = queries?.data?.project?.queries;
@@ -40,7 +42,15 @@ getProjectQueries(projectId).then(async (queries) => {
     }
 
     data.sort((a, b) => a.timestamp - b.timestamp);
-    const limiter = RateLimiter.rateLimiter(config, redis);
+    const limiter = RateLimiter.rateLimiter(
+        {
+            type: config.type,
+            capacity: config.options.capacity,
+            windowSize: config.options.windowSize,
+            refillRate: config.options.refillRate,
+        },
+        redis
+    );
 
     for (let i = 0; i < data.length; i += 1) {
         const query = data[i];
@@ -48,7 +58,7 @@ getProjectQueries(projectId).then(async (queries) => {
         // only the middleware is throttled in this way.
         // eslint-disable-next-line no-await-in-loop
         const response = await limiter.processRequest(
-            query.id, // FIXME: This needs to be a user's uuid
+            query.userID,
             query.timestamp,
             query.complexity
         );

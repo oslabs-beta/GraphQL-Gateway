@@ -1,5 +1,3 @@
-// const redis = new ioredis();
-
 export default class RedisMock {
     constructor() {
         // this.client = new ioredis();
@@ -7,7 +5,7 @@ export default class RedisMock {
     }
 
     get(key) {
-        return this.store[key];
+        return this.store[key] || '[]';
     }
 
     setex(key, value) {

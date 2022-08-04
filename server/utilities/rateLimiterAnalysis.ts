@@ -16,13 +16,14 @@ import { fileURLToPath } from 'url';
 class RateLimiterWorker {
     private worker: Worker;
 
-    constructor(projectId: string, config: RateLimiterConfig) {
+    constructor(projectId: string, config: RateLimiterConfig, authorization: string | undefined) {
         const filename = fileURLToPath(import.meta.url);
         // FIXME: Establish a worker pool. Spawning a worker is expensive
         this.worker = new Worker(`${path.dirname(filename)}/workerThread.js`, {
             workerData: {
                 projectId,
                 config,
+                authorization,
             },
         });
     }
@@ -33,13 +34,27 @@ class RateLimiterWorker {
     }
 }
 
-async function rateLimiterAnalysis(req: Request, res: Response, next: NextFunction) {
+async function rateLimiterAnalysis(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void | Response<any, Record<string, any>>> {
+    if (!req.headers.authorization) return res.sendStatus(401);
     if (!req.params.projectId) return res.status(400).send('Bad Request: missing projectID');
 
     // TODO: Validate the config
 
     // Obtain a new worker
-    const worker = new RateLimiterWorker(req.params.projectId, req.body.config);
+    let worker: RateLimiterWorker;
+    try {
+        worker = new RateLimiterWorker(
+            req.params.projectId,
+            req.body.config,
+            req.headers.authorization
+        );
+    } catch (err) {
+        return res.status(400).send('[server] Bad request: Failed to initialize rate limiter');
+    }
 
     const workerIsDone = new Promise((resolve, reject) => {
         worker.onmessage((data: any) => {

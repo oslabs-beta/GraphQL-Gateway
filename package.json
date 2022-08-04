@@ -47,8 +47,6 @@
         "graphql": "^16.5.0",
         "graphql-limiter": "^1.0.2",
         "http": "^0.0.1-security",
-        "ioredis": "^5.2.2",
-        "ioredis-mock": "^8.2.2",
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.21",
         "mongoose": "^6.3.3",
@@ -60,10 +58,7 @@
         "react-collapsible": "^2.9.0",
         "react-dom": "^17.0.2",
         "react-router": "^6.3.0",
-        "react-router-dom": "^6.3.0",
-        "redis": "^4.2.0",
-        "redis-mock": "^0.56.3",
-        "redis-mockify": "^1.0.0"
+        "react-router-dom": "^6.3.0"
     },
     "devDependencies": {
         "@babel/core": "^7.17.7",
@@ -74,7 +69,6 @@
         "@types/cookie-parser": "^1.4.3",
         "@types/express": "^4.17.13",
         "@types/graphql": "^14.5.0",
-        "@types/ioredis-mock": "^5.6.0",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/lodash": "^4.14.182",
         "@types/mongoose": "^5.11.97",
