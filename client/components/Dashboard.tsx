@@ -86,9 +86,22 @@ export default function Dashboard() {
         { fetchPolicy: 'network-only' }
     );
 
-    const [udpateRateLimiter] = useMutation<ProjectResult, UpdateRateLimiterVars>(
-        UPDATE_RATE_LIMITER_CONFIG_MUTATION
-    );
+    const [udpateRateLimiter, { loading: updateLoading }] = useMutation<
+        ProjectResult,
+        UpdateRateLimiterVars
+    >(UPDATE_RATE_LIMITER_CONFIG_MUTATION);
+
+    const fetchRateLimiterConfig = async (projectId: string) => {
+        // FIXME: We can conditionally render an error component
+        const { error } = await getRateLimiterConfig({
+            variables: {
+                projectId,
+            },
+        });
+        if (error) {
+            console.error(error);
+        }
+    };
 
     // User data whenever the user changes
     useEffect(() => {
@@ -105,19 +118,8 @@ export default function Dashboard() {
     useEffect(() => {
         // Fetches Rate Limiter settings whenever project is changed
         if (selectedProject?.id) {
-            (async () => {
-                // FIXME: We can conditionally render an error component and remove the IIFE
-                const { error } = await getRateLimiterConfig({
-                    variables: {
-                        projectId: selectedProject.id,
-                    },
-                });
-                if (error) {
-                    console.error(error);
-                }
-            })();
+            fetchRateLimiterConfig(selectedProject.id).then(() => setRateLimitedQueries([]));
         }
-        setRateLimitedQueries([]);
     }, [selectedProject]);
 
     const handleRateLimiterConfigChange = (
@@ -175,7 +177,7 @@ export default function Dashboard() {
                 setSelectedProject={setSelectedProject}
                 projectLoading={userData ? userData.loading : false}
                 rateLimiterConfig={rateLimitResponse?.data?.project.rateLimiterConfig}
-                rateLimiterLoading={rateLimitResponse ? rateLimitResponse.loading : false}
+                rateLimiterLoading={rateLimitResponse?.loading || updateLoading}
                 setRateLimiterConfig={handleRateLimiterConfigChange}
                 onRawQueriesClick={() => setRateLimitedQueries([])}
             />

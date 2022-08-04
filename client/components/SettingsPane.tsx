@@ -73,7 +73,7 @@ export default function SettingsPane({
 
     // Window size in seconds
     const [windowSize, setWindowSize]: [number, React.Dispatch<number>] = useState(
-        rateLimiterConfig?.options.windowSize || 1
+        (rateLimiterConfig.options.windowSize || 1000) / 1000
     );
 
     const onCapacityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,6 +107,14 @@ export default function SettingsPane({
         setRateLimiterConfig(updatedConfig, saveSettings);
     };
 
+    const onRestoreProjectSettingsClick = () => {
+        setCapacity(rateLimiterConfig?.options.capacity || 10);
+        setRefillRate(rateLimiterConfig?.options?.refillRate || 1);
+        setWindowSize(
+            rateLimiterConfig?.options?.windowSize ? rateLimiterConfig.options.windowSize / 1000 : 1
+        );
+    };
+
     return (
         <>
             <h3>Settings</h3>
@@ -123,7 +131,7 @@ export default function SettingsPane({
                             Select an Option
                         </option>
                         <option value="FIXED_WINDOW">Fixed Window</option>
-                        <option value="LEAKY_BUCKET">Leaky Bucket</option>
+                        {/* <option value="LEAKY_BUCKET">Leaky Bucket</option> */}
                         <option value="TOKEN_BUCKET">Token Bucket</option>
                         <option value="SLIDING_WINDOW_LOG">Sliding Window Log</option>
                         <option value="SLIDING_WINDOW_COUNTER">Sliding Window Counter</option>
@@ -164,6 +172,7 @@ export default function SettingsPane({
                             id="updateSettings"
                             type="button"
                             onClick={onUpdate}
+                            title="Apply settings to current query data"
                         >
                             Apply
                         </button>
@@ -171,8 +180,8 @@ export default function SettingsPane({
                             className="panelButton"
                             id="resetQueries"
                             type="button"
-                            title="View raw query data"
                             onClick={onRawQueriesClick}
+                            title="View raw query data"
                         >
                             View Raw
                         </button>
@@ -181,11 +190,18 @@ export default function SettingsPane({
                             id="updateDefault"
                             type="button"
                             onClick={(e) => onUpdate(e, true)}
+                            title="Save the settings for this project"
                         >
                             Update Project Settings
                         </button>
                         {/* TODO: Implement functionality for the below buttons */}
-                        <button className="panelButton" disabled id="resetDefault" type="button">
+                        <button
+                            className="panelButton"
+                            id="resetDefault"
+                            type="button"
+                            onClick={onRestoreProjectSettingsClick}
+                            title="Restore to current project settings"
+                        >
                             Restore Project Settings
                         </button>
                     </div>
