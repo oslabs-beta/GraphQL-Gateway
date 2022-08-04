@@ -20,7 +20,7 @@ export interface ISState {
 interface ProjectViewProps {
     selectedProject: Project | undefined;
     projectLoading: boolean;
-    rateLimiterConfig: RateLimiterConfig | undefined;
+    rateLimiterQueries: ProjectQuery[];
 }
 
 const GET_QUERY_DATA = gql`
@@ -45,7 +45,7 @@ const MS_IN_DAY = 24 * 60 * 60 * 1000;
 export default function ProjectView({
     selectedProject,
     projectLoading,
-    rateLimiterConfig,
+    rateLimiterQueries,
 }: ProjectViewProps) {
     // Lookback perioud for query data. DEFAULT to 1 week
     const [numberOfDaysToView, setNumberOfDaysToView] = useState<ChartSelectionDays>(DEFAULT_DAYS);
@@ -64,9 +64,6 @@ export default function ProjectView({
 
     // Raw query data without updated rate limiter settings or paginated for view
     const [rawQueries, setRawQueries] = useState<ProjectQuery[]>([]);
-
-    // Rate Limited Query data. Only present if custom rate limiter seetings have been applied
-    const [rateLimitedQueries, setRateLimitedQueries] = useState<ProjectQuery[]>([]);
 
     const [getProjectQueries, { data: queryData, loading: queriesLoading }] =
         useLazyQuery(GET_QUERY_DATA);
@@ -92,12 +89,10 @@ export default function ProjectView({
                 setNumberOfDaysToView(DEFAULT_DAYS);
                 setLastFetchDate(currentTime);
                 setEarliestQueryDate(startDate);
-                setRateLimitedQueries([]);
 
                 // The project has changed refetch query data for this project
                 const { data } = await fetchQueryData(selectedProject.id, startDate, currentTime);
                 // TODO: Error handling
-
                 // Display these queries and clear rate limited queries
                 setVisibleQueries(data.projectQueries);
                 setRawQueries(data.projectQueries);
@@ -106,14 +101,26 @@ export default function ProjectView({
     }, [selectedProject]);
 
     // Fetch new queries and reslice the data whenever the number of days to view changes
+    // to minimize delay and ease computation costs rateLimiterQueries are only viewed historically
+    // new queries will not be fectched. The purpose of this is to view the effect on historical data
+    // and not monitor incoming data.
     useEffect(() => {
         (async () => {
             // FIXME: check if component is mounted prior to state updates
 
-            if (selectedProject) {
-                const currentTime = new Date().valueOf();
-                const cutoffDate = currentTime - numberOfDaysToView * MS_IN_DAY;
+            if (!selectedProject) return;
 
+            const currentTime = new Date().valueOf();
+            const cutoffDate = currentTime - numberOfDaysToView * MS_IN_DAY;
+
+            if (rateLimiterQueries.length > 0) {
+                setVisibleQueries(
+                    // Sort queries by timestamp and filter for current view
+                    rateLimiterQueries
+                        .filter((a: ProjectQuery) => a.timestamp > cutoffDate)
+                        .sort((a: ProjectQuery, b: ProjectQuery) => a.timestamp - b.timestamp)
+                );
+            } else {
                 // Fetch any queries that have come in since the last time we fetched
                 const { data: newQueries } = await fetchQueryData(
                     selectedProject.id,
@@ -163,6 +170,20 @@ export default function ProjectView({
         })();
     }, [numberOfDaysToView]);
 
+    // Update visible queries whenever rateLimiterQueries changes
+    useEffect(() => {
+        const currentTime = new Date().valueOf();
+        const cutoffDate = currentTime - numberOfDaysToView * MS_IN_DAY;
+
+        const newVisibleQueries = rateLimiterQueries.length > 0 ? rateLimiterQueries : rawQueries;
+
+        setVisibleQueries(
+            [...newVisibleQueries]
+                .filter((a: ProjectQuery) => a.timestamp > cutoffDate)
+                .sort((a: ProjectQuery, b: ProjectQuery) => a.timestamp - b.timestamp)
+        );
+    }, [rateLimiterQueries]);
+
     const handleDayChange = (newDays: ChartSelectionDays) => {
         setPreviousDays(numberOfDaysToView);
         setNumberOfDaysToView(newDays);
@@ -191,7 +212,7 @@ export default function ProjectView({
                 ;
             </div>
         );
-    if (projectLoading || !visibleQueries)
+    if (queriesLoading || !visibleQueries)
         return (
             <div id="dashWrapper">
                 <div className="loggerBox" />

@@ -73,6 +73,7 @@ export default function Dashboard() {
     const { user } = useAuth();
 
     const [selectedProject, setSelectedProject] = useState<Project>();
+    const [rateLimitedQueries, setRateLimitedQueries] = useState<ProjectQuery[]>([]);
 
     // Apollo graphql hooks
     /** Send query to get project information for this user */
@@ -116,6 +117,7 @@ export default function Dashboard() {
                 }
             })();
         }
+        setRateLimitedQueries([]);
     }, [selectedProject]);
 
     const handleRateLimiterConfigChange = (
@@ -139,16 +141,26 @@ export default function Dashboard() {
                     ],
                 });
             } else {
-                // const updatedQueries: ProjectQuery[] = fetch(
-                //     `/api/projects/rateLimit/${selectedProject.id}`,
-                //     {
-                //         method: 'POST',
-                //         body: JSON.stringify({
-                //             config: updatedConfig,
-                //         }),
-                //     }
-                // ).then((res) => res.json());
-                // // update quey data in the view
+                // eslint-disable-next-line consistent-return
+                (async () => {
+                    try {
+                        const data: { queries: ProjectQuery[] } = await fetch(
+                            `/api/projects/rateLimit/${selectedProject.id}`,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'content-type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    config: updatedConfig,
+                                }),
+                            }
+                        ).then((res) => res.json());
+                        setRateLimitedQueries(data.queries);
+                    } catch (err) {
+                        return console.log(err);
+                    }
+                })();
             }
         }
     };
@@ -166,7 +178,7 @@ export default function Dashboard() {
             <ProjectView
                 selectedProject={selectedProject}
                 projectLoading={userData ? userData.loading : false}
-                rateLimiterConfig={rateLimitResponse?.data?.project.rateLimiterConfig}
+                rateLimiterQueries={rateLimitedQueries}
             />
         </main>
     );
