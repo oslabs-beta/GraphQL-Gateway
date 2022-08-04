@@ -18,7 +18,6 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 
 -   [Prerequisites](#prerequisites)
 -   [Getting Started](#getting-started)
--   [How It Works](#how-it-works)
 -   [Contributions](#contributions)
 -   [Developers](#developers)
 -   [More Information](#for-more-information)
@@ -47,8 +46,6 @@ npm i graphql-limiter
 -   Select your existing project or create a new project from the toolbar on your left
 
 <div><img src='./public/login.GIF'></div>
-
-## <a name="how-it-works"></a> 📊 How It Works
 
 ## <a name="contributions"></a> 🧠 Contributions
 
