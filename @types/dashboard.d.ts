@@ -21,6 +21,7 @@ interface ProjectPaneProps {
     projects: Project[] | undefined;
     setSelectedProject: React.Dispatch<React.SetStateAction<Project | undefined>>;
     projectLoading: boolean;
+    getUserData: any;
 }
 
 interface SettingsPaneProps {
