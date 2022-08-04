@@ -4,9 +4,9 @@ EB_BUCKET=elasticbeanstalk-us-west-1-346649815440
 # Set the default region for aws cli
 aws configure set default.region us-west-1
 # Set Access Key ID with Travis env var
-aws configure set aws_access_key_id $TRAVIS_AWS_ACCESS_KEY_ID 
+aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID 
 # Set Secret Key with Travis env var
-aws configure set aws_secret_access_key $TRAVIS_AWS_SECRET_ACCESS_KEY
+aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 # Log in to ECR
 eval $(aws ecr get-login --no-include-email --region us-west-1)
 # Build docker image based on our production Dockerfile
