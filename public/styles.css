@@ -393,9 +393,9 @@ section#pageThree {
 .dashboard {
     width: 100%;
 }
-/* #chartBoxInside {
-    height: 1000px;
-} */
+#chartBoxInside canvas {
+    max-height: 450px;
+}
 .toolBarWrapper {
     margin: 0px auto;
 }
@@ -495,11 +495,9 @@ section#pageThree {
     right: 0px;
 }
 .chartBox {
-    margin-top: 150px;
-    margin-bottom: 100px;
+    margin: 150px 100px 100px 10px;
     border-radius: 2px;
     flex: 50%;
-    margin-left: 10px;
     background-color: rgba(255, 255, 255, 0.7);
     height: 580px;
     min-width: 900px;
