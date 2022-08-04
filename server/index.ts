@@ -64,16 +64,6 @@ server.start().then((): void => {
         return res.json(apiKey);
     });
 
-    // serve homepage
-    // app.all('/', (req, res) =>
-    //     res
-    //         .setHeader('Content-Type', 'text/html')
-    //         .sendFile(
-    //             process.env.NODE_ENV?.trim() === 'production'
-    //                 ? path.join(__dirname, '../../build/index.html')
-    //                 : path.join(__dirname, '../public/index.html')
-    //         )
-    // );
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console
         console.log(`[Server] Started on port :${PORT}`)
