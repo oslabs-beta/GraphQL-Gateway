@@ -65,7 +65,7 @@ server.start().then((): void => {
     });
 
     // load balancer health check
-    app.all('/', (req, res) => res.sendStatus(200));
+    // app.all('/', (req, res) => res.sendStatus(200));
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console
