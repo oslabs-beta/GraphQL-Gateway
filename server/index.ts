@@ -68,7 +68,11 @@ server.start().then((): void => {
     app.all('/', (req, res) =>
         res
             .setHeader('Content-Type', 'text/html')
-            .sendFile(path.join(__dirname, '../public/index.html'))
+            .sendFile(
+                process.env.NODE_ENV === 'production'
+                    ? path.join(__dirname, '../build/index.html')
+                    : path.join(__dirname, '../public/index.html')
+            )
     );
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console
