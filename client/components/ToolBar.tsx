@@ -12,6 +12,7 @@ export default function ToolBar({
     setRateLimiterConfig,
     onRawQueriesClick,
     showSettings,
+    getUserData,
 }: ToolbarProps) {
     /** State for the component */
     const [showToolbar, setShowToolbar] = useState(false);
@@ -34,6 +35,7 @@ export default function ToolBar({
                         setShowToolbar(false);
                         setToolbarContent('');
                     }}
+                    getUserData={getUserData}
                 />
             );
             break;
@@ -76,6 +78,7 @@ export default function ToolBar({
             {showSettings && (
                 <div id="toolBarButtons">
                     <button
+                        id="projectGear"
                         className="fa-solid fa-gear fa-2xl fa-bars"
                         type="button"
                         aria-label="switch"

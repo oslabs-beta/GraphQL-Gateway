@@ -181,6 +181,7 @@ export default function Dashboard() {
                 setRateLimiterConfig={handleRateLimiterConfigChange}
                 onRawQueriesClick={() => setRateLimitedQueries([])}
                 showSettings={selectedProject != null}
+                getUserData={getUserData}
             />
             <ProjectView
                 selectedProject={selectedProject}
