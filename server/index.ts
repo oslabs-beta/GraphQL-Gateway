@@ -24,15 +24,14 @@ const server = new ApolloServer({
     resolvers,
     persistedQueries: false,
     context: async ({ req }) => {
-        return { authenticated: true, user: null };
-        // const authHeader = req.headers.authorization || null;
-        // if (!authHeader) return { authenticated: false, user: null };
+        const authHeader = req.headers.authorization || null;
+        if (!authHeader) return { authenticated: false, user: null };
 
-        // const token = authHeader?.split(' ')[1];
-        // if (!token) return { authenticated: false, user: null };
+        const token = authHeader?.split(' ')[1];
+        if (!token) return { authenticated: false, user: null };
 
-        // const user = await session.verify(token);
-        // return { authenticated: user.authenticated, user: user.data };
+        const user = await session.verify(token);
+        return { authenticated: user.authenticated, user: user.data };
     },
 });
 
