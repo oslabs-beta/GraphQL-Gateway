@@ -1,16 +1,7 @@
 import path from 'path';
-import { Worker, isMainThread, parentPort } from 'worker_threads';
+import { Worker } from 'worker_threads';
 import { Request, Response, NextFunction } from 'express';
 import { fileURLToPath } from 'url';
-// import * as graphqlgate from 'graphql-limiter';
-// import * as graphqlgate from 'graphqlgate';
-// import types as well
-// TODO: Recalcualte data for current projects.
-// import rate limiter
-// connect to mock redis store
-// configure the selected rate limiter
-// feed all of the data into the rate limiter
-// update quey data in the view
 
 /**
  * A Rate Limiter class that can be used to re-analyze query data with updated rate limiter settings
@@ -26,10 +17,7 @@ class RateLimiterWorker {
     private worker: Worker;
 
     constructor(projectId: string, config: RateLimiterConfig) {
-        // TODO: Validate the config
-
         const filename = fileURLToPath(import.meta.url);
-
         // FIXME: Establish a worker pool. Spawning a worker is expensive
         this.worker = new Worker(`${path.dirname(filename)}/workerThread.js`, {
             workerData: {
@@ -47,6 +35,9 @@ class RateLimiterWorker {
 
 async function rateLimiterAnalysis(req: Request, res: Response, next: NextFunction) {
     if (!req.params.projectId) return res.status(400).send('Bad Request: missing projectID');
+
+    // TODO: Validate the config
+
     // Obtain a new worker
     const worker = new RateLimiterWorker(req.params.projectId, req.body.config);
 

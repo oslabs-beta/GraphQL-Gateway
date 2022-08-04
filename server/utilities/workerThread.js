@@ -30,11 +30,9 @@ async function getProjectQueries(projectId) {
     );
 }
 
-// const { projectId, config } = workerData;
-const { projectId } = workerData;
+const { projectId, config } = workerData;
 
-// TODO: Configure the rate limiter
-getProjectQueries(projectId).then((queries) => {
+getProjectQueries(projectId).then(async (queries) => {
     const data = queries?.data?.project?.queries;
     if (!data) {
         // TODO: Send a 404 response
@@ -42,25 +40,22 @@ getProjectQueries(projectId).then((queries) => {
     }
 
     data.sort((a, b) => a.timestamp - b.timestamp);
+    const limiter = RateLimiter.rateLimiter(config, redis);
 
-    const limiter = RateLimiter.rateLimiter(
-        {
-            type: 'TOKEN_BUCKET',
-            option: {
-                refillRate: 10,
-                capacity: 100,
-            },
-        },
-        redis
-    );
-    data.forEach((query) => {
-        // TODO: Uncomment these lines once limiter is imported
-        const response = limiter.processRequest(query.timestamp, query.complexity);
+    for (let i = 0; i < data.length; i += 1) {
+        const query = data[i];
+        // FIXME: Use a for loop here since requests need to be handled sequentially by user
+        // only the middleware is throttled in this way.
+        // eslint-disable-next-line no-await-in-loop
+        const response = await limiter.processRequest(
+            query.id, // FIXME: This needs to be a user's uuid
+            query.timestamp,
+            query.complexity
+        );
         // mutate the original array for the sake of efficiency
         query.success = response.success;
         query.tokens = response.tokens;
-        return query;
-    });
+    }
 
     parentPort.postMessage(data);
     parentPort.postMessage('DONE');
