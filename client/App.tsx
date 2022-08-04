@@ -114,7 +114,8 @@ export default function HomePage() {
                         type="submit"
                         onClick={(e) => {
                             e.preventDefault();
-                            window.location.href = 'https://medium.com/@evanmcneely/graphqlgate-rate-limiting-with-query-complexity-for-node-js-bd85195b0c0f';
+                            window.location.href =
+                                'https://medium.com/@evanmcneely/graphqlgate-rate-limiting-with-query-complexity-for-node-js-bd85195b0c0f';
                         }}
                     >
                         Learn more <ArrowRightCircle size={25} />
