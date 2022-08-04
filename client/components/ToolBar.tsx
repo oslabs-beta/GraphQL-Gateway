@@ -12,6 +12,7 @@ export default function ToolBar({
     setRateLimiterConfig,
     onRawQueriesClick,
     showSettings,
+    getUserData,
 }: ToolbarProps) {
     /** State for the component */
     const [showToolbar, setShowToolbar] = useState(false);
@@ -34,6 +35,7 @@ export default function ToolBar({
                         setShowToolbar(false);
                         setToolbarContent('');
                     }}
+                    getUserData={getUserData}
                 />
             );
             break;

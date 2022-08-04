@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import Loading from './Loading';
 import ProjectItem from './ProjectItem';
 import Form from './Form';
+import { useAuth } from '../auth/AuthProvider';
 
 const CREATE_PROJECT = gql`
     mutation createProjectMutation($project: CreateProjectInput!) {
@@ -19,13 +20,28 @@ export default function ProjectsPane({
     projectLoading,
     projects,
     setSelectedProject,
+    getUserData,
 }: ProjectPaneProps) {
     // this is a state for the form
-    const [isOpen, setIsOpen] = useState(false);
+    const [showForm, setShowForm] = useState(false);
+
     const togglePopup = () => {
-        console.log('clicked');
-        setIsOpen(!isOpen);
+        setShowForm(!showForm);
     };
+
+    const { user } = useAuth();
+
+    const [createProjectMutation] = useMutation(CREATE_PROJECT, {
+        onCompleted: (data: any) => {
+            getUserData({
+                variables: {
+                    userId: user?.id,
+                },
+            });
+            window.location.reload();
+        },
+        onError: (err) => console.log(err),
+    });
 
     return (
         <>
@@ -41,20 +57,14 @@ export default function ProjectsPane({
                             setSelectedProject={setSelectedProject}
                         />
                     ))}
-                    <button
-                        onClick={togglePopup}
-                        className="selectProjectButton newProject"
-                        type="button"
-                    >
+                    <button onClick={togglePopup} className="panelButton newProject" type="button">
                         New Project
                     </button>
-                    {isOpen && (
+                    {showForm && (
                         <Form
                             togglePopup={togglePopup}
-                            // createProjectMutation={createProjectMutation}
-                            // userID={user!.id}
-                            createProjectMutation={console.log('hello')}
-                            userID={1}
+                            createProjectMutation={createProjectMutation}
+                            userID={user!.id}
                         />
                     )}
                 </>
