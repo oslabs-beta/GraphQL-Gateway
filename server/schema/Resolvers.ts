@@ -2,11 +2,18 @@
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';
 import randomString from 'randomstring';
-
+import { ApolloError } from 'apollo-errors';
+import { ObjectId } from 'mongoose';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
 import sessions from '../utilities/sessions';
+import { UserTakenError, WrongCredentialsError } from './errors';
+
+interface Context {
+    authenticated: boolean;
+    user: null | string;
+}
 
 const resolvers: IResolvers = {
     Query: {
@@ -16,7 +23,7 @@ const resolvers: IResolvers = {
         checkAuth: (parent, args, context): Promise<User | Error> | null => {
             if (context.authenticated) {
                 return UserDB.findOne({ _id: context.user.id })
-                    .then((user: User): User => {
+                    .then((user: any): User => {
                         if (!user) throw new Error('User does not exist');
                         return user;
                     })
@@ -24,45 +31,75 @@ const resolvers: IResolvers = {
             }
             return null;
         },
-        users: (): Promise<User[] | Error> =>
-            UserDB.find()
-                .then((users: User[]): User[] => users)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        user: (parent: undefined, args: QueryByID): Promise<User | Error> => {
+        users: (parent, args, context: Context): Promise<User[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return UserDB.find()
+                .then((users: any): User[] => users)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        user: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<User | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             const { id } = args;
 
             return UserDB.findOne({ _id: id })
-                .then((user: User): User => {
+                .then((user: any): User => {
                     if (!user) throw new Error('User does not exist');
                     return user;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        projects: (): Promise<Project[] | Error> =>
-            ProjectDB.find()
-                .then((projects: Project[]): Project[] => projects)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        project: (parent: undefined, args: QueryByID): Promise<Project | Error> => {
+        projects: (parent, args, context: Context): Promise<Project[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return ProjectDB.find()
+                .then((projects: any): Project[] => projects)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        project: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<Project | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             const { id } = args;
 
             return ProjectDB.findOne({ _id: id })
-                .then((project: Project): Project => {
+                .then((project: any): Project => {
                     if (!project) throw new Error('Project does not exist');
                     return project;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        projectQueries: (parent: undefined, args: QueryByID): Promise<ProjectQuery[] | Error> => {
+        projectQueries: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<ProjectQuery[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             const { id, date, offset } = args;
             return QueryDB.find({ projectID: id, timestamp: { $gte: date, $lt: offset } })
-                .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
+                .then((queries: any): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        projectQuery: (parent: undefined, args: QueryByID): Promise<ProjectQuery | Error> => {
+        projectQuery: (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<ProjectQuery | Error> | Error => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
 
             return QueryDB.findOne({ _id: id })
-                .then((query: ProjectQuery): ProjectQuery => {
+                .then((query: any): ProjectQuery => {
                     if (!query) throw new Error('Query does not exist');
                     return query;
                 })
@@ -75,33 +112,31 @@ const resolvers: IResolvers = {
          */
         login: async (parent: undefined, args: GetUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
-
             return UserDB.findOne({ email })
                 .then(async (user: any): Promise<User> => {
-                    if (!user.email) {
-                        throw new Error('Email not found.');
-                    }
+                    if (!user) throw new WrongCredentialsError();
                     const verifyPassword: boolean = await bcrypt.compare(password, user.password);
                     if (!verifyPassword) {
-                        throw new Error('Password you entered is incorrect.');
+                        throw new WrongCredentialsError();
                     }
-
-                    const token = sessions.create({ id: user._id });
+                    const token = sessions.create({ id: user.id });
                     return {
                         token,
                         email: user.email,
                         password: user.password,
-                        id: user._id,
-                        projects: [],
+                        id: user.id,
                     };
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+                .catch((err: Error): Error => {
+                    if (err instanceof ApolloError) throw new Error(`${err}`);
+                    else throw new Error('Try Again Later');
+                });
         },
         signup: async (parent: undefined, args: CreateUserArgs): Promise<User | Error> => {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
             return UserDB.findOne({ email })
-                .then(async (user: User): Promise<User> => {
+                .then(async (user: any): Promise<any> => {
                     if (user) throw new Error('User already exists');
                     const newUser = new UserDB({
                         email,
@@ -109,21 +144,27 @@ const resolvers: IResolvers = {
                         projects: [],
                     });
                     const savedUser = await newUser.save();
-                    if (!savedUser) throw new Error('Could not save user. Try again later.');
-                    const token = sessions.create({ id: savedUser._id });
+                    if (!savedUser) throw new Error('Try again later.');
+                    const token = sessions.create({ id: savedUser._id.toString() });
+                    const idString = savedUser._id.toString();
+
                     return {
                         token,
                         email: savedUser.email,
                         password: savedUser.password,
-                        id: savedUser._id,
-                        projects: [],
+                        id: idString,
                     };
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+                .catch((err: Error): Error => new Error(`${err}`));
         },
-        updateUser: async (parent: undefined, args: UpdateUserArgs): Promise<User | Error> => {
+        updateUser: async (
+            parent: undefined,
+            args: UpdateUserArgs,
+            context: Context
+        ): Promise<User | Error> => {
             const { id, email, password } = args.user;
-
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             // update object depends on what user passes into the mutation variables
             const updateBody: object = {};
 
@@ -134,28 +175,34 @@ const resolvers: IResolvers = {
             }
 
             return UserDB.findByIdAndUpdate(id, updateBody, { new: true })
-                .then((user: User): User => {
+                .then((user: any): User => {
                     if (!user) throw new Error('User not found');
                     return user;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
-        deleteUser: async (parent: undefined, args: QueryByID): Promise<User | Error> => {
+        deleteUser: async (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<User | Error> => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
 
             // delete each user project query from DB
             await QueryDB.deleteMany({ userID: id }).catch(
-                (err) => `DB user project query deletion failed ${err}`
+                (err: Error) => `DB user project query deletion failed ${err}`
             );
 
             // delete each user project from DB
             await ProjectDB.deleteMany({ userID: id }).catch(
-                (err) => `DB user project deletion failed ${err}`
+                (err: Error) => `DB user project deletion failed ${err}`
             );
 
             // deletes user from DB and returns user object
             return UserDB.findByIdAndRemove(id)
-                .then((user: User): User => user)
+                .then((user: any): User => user)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         /*
@@ -163,15 +210,18 @@ const resolvers: IResolvers = {
          */
         createProject: async (
             parent: undefined,
-            args: CreateProjectArgs
+            args: CreateProjectArgs,
+            context: Context
         ): Promise<Project | Error> => {
             const { userID, name } = args.project;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
 
             /* checks if user exists given the userID,
              * throws error otherwise
              */
             await UserDB.findById(userID)
-                .then((user: User): void => {
+                .then((user: any): void => {
                     if (!user) throw new Error('User does not exist');
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
@@ -180,57 +230,70 @@ const resolvers: IResolvers = {
              * Checks if this project already exists under specified user, if not
              * creates a new project based on the mongoose model and saves it.
              */
-            return ProjectDB.findOne({ userID, name }).then(
-                async (project: Project): Promise<Project | Error> => {
-                    if (project) throw new Error('Project already exists');
+            return ProjectDB.findOne({ userID, name }).then(async (project: any): Promise<any> => {
+                if (project) throw new Error('Project already exists');
 
-                    // random 10-char string generated and stored in projectDB
-                    // gate-logger library will cross-reference projects collection
-                    // to validate API call entered by user with auth key in header "log_key"
-                    const apiKey = randomString.generate(10);
+                // random 10-char string generated and stored in projectDB
+                // gate-logger library will cross-reference projects collection
+                // to validate API call entered by user with auth key in header "log_key"
+                const apiKey = randomString.generate(10);
 
-                    // save to DB
-                    const newProject = new ProjectDB({
-                        userID,
-                        name,
-                        apiKey,
-                    });
+                // save to DB
+                const newProject = new ProjectDB({
+                    userID,
+                    name,
+                    apiKey,
+                });
 
-                    // save project
-                    return newProject
-                        .save()
-                        .catch(
-                            (err: Error): Error =>
-                                new Error(`Saving project/receiving new ID from DB failed: ${err}`)
-                        )
-                        .finally(() => newProject);
-                }
-            );
+                // save project
+                return newProject
+                    .save()
+                    .catch(
+                        (err: Error): Error =>
+                            new Error(`Saving project/receiving new ID from DB failed: ${err}`)
+                    );
+            });
         },
         /*
          *   updates project name
          */
         updateProject: async (
             parent: undefined,
-            args: UpdateProjectArgs
+            args: UpdateProjectArgs,
+            context: Context
         ): Promise<Project | Error> => {
             const { id, name } = args.project;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
 
-            if (name)
-                return ProjectDB.findByIdAndUpdate(id, { name }, { new: true })
-                    .then((project: Project): Project => {
+            if (name) {
+                const updatedProject = await ProjectDB.findByIdAndUpdate(
+                    id,
+                    { name },
+                    { new: true }
+                )
+                    .then((project: any): Project => {
                         if (!project) throw new Error('Project not found');
                         return project;
                     })
                     .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+
+                return updatedProject;
+            }
             throw new Error('Updated name not provided');
         },
-        deleteProject: async (parent: undefined, args: QueryByID): Promise<Project | Error> => {
+        deleteProject: async (
+            parent: undefined,
+            args: QueryByID,
+            context: Context
+        ): Promise<Project | Error> => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             await QueryDB.deleteMany({ projectID: id });
 
             return ProjectDB.findByIdAndRemove(id)
-                .then(async (project: Project): Promise<Project> => project)
+                .then(async (project: any): Promise<Project> => project)
                 .catch((err: Error): Error => new Error(`Project deletion failed: ${err}`));
         },
         /*
@@ -239,7 +302,8 @@ const resolvers: IResolvers = {
          */
         createProjectQuery: async (
             parent: undefined,
-            args: CreateProjectQueryArgs
+            args: CreateProjectQueryArgs,
+            context: Context
         ): Promise<ProjectQuery | Error> => {
             const { projectID } = args.projectQuery;
             const newQueryProps = args.projectQuery;
@@ -250,15 +314,15 @@ const resolvers: IResolvers = {
             /* checks if project exists given the projectID and
              * throws error if not
              */
-            const userID: string | undefined | Error = await ProjectDB.findById(projectID)
-                .then((project: Project): string | undefined => {
+            const userID: ObjectId | Error = await ProjectDB.findById(projectID)
+                .then((project: any): ObjectId => {
                     if (!project) throw new Error('Project does not exist');
                     return project?.userID;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            const queries: string | ProjectQuery[] = await QueryDB.find({ projectID }).catch(
-                (err) => `DB query failed: ${err}`
+            const queries: any = await QueryDB.find({ projectID }).catch(
+                (err: Error) => `DB query failed: ${err}`
             );
             const newNumber: number = queries.length + 1;
 
@@ -268,18 +332,21 @@ const resolvers: IResolvers = {
                 number: newNumber,
             })
                 .save()
-                .then((res: ProjectQuery): ProjectQuery => res)
+                .then((res: any): ProjectQuery => res)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
             return newQuery;
         },
         deleteProjectQuery: async (
             parent: undefined,
-            args: QueryByID
+            args: QueryByID,
+            context: Context
         ): Promise<ProjectQuery | Error> => {
             const { id } = args;
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
             return QueryDB.findByIdAndRemove(id)
-                .then(async (query: ProjectQuery): Promise<ProjectQuery | Error> => query)
+                .then(async (query: any): Promise<ProjectQuery | Error> => query)
                 .catch((err: Error): Error => new Error(`Query deletion failed: ${err}`));
         },
     },
@@ -287,33 +354,57 @@ const resolvers: IResolvers = {
      * To query nested Project Data in User Object
      */
     User: {
-        projects: (parent: User): Promise<Project[] | Error> =>
-            ProjectDB.find({ userID: parent.id })
-                .then((projects: Project[]): Project[] => projects)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        project: (parent: User, args: QueryByID): Promise<Project | Error> =>
-            ProjectDB.findOne({ _id: args.id, userID: parent.id })
-                .then((project: Project): Project => {
+        projects: (parent: User, args, context: Context): Promise<Project[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return ProjectDB.find({ userID: parent.id })
+                .then((projects: any): Project[] => projects)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        project: (
+            parent: User,
+            args: QueryByID,
+            context: Context
+        ): Promise<Project | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return ProjectDB.findOne({ _id: args.id, userID: parent.id })
+                .then((project: any): Project => {
                     if (!project) throw new Error('Project not found');
                     return project;
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
     },
     /*
      * To query nested Query Data in Project Object
      */
     Project: {
-        queries: (parent: Project): Promise<ProjectQuery[] | Error> =>
-            QueryDB.find({ projectID: parent.id })
-                .then((queries: ProjectQuery[]): ProjectQuery[] => queries)
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
-        query: (parent: Project, args: QueryByID): Promise<ProjectQuery | Error> =>
-            QueryDB.findOne({ _id: args.id, userID: parent.id })
-                .then((query: ProjectQuery): ProjectQuery => {
+        queries: (
+            parent: Project,
+            args,
+            context: Context
+        ): Promise<ProjectQuery[] | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return QueryDB.find({ projectID: parent.id })
+                .then((queries: any): ProjectQuery[] => queries)
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
+        query: (
+            parent: Project,
+            args: QueryByID,
+            context: Context
+        ): Promise<ProjectQuery | Error> | Error => {
+            const { authenticated } = context;
+            if (authenticated === false) return new Error('Unauthorized to make this request');
+            return QueryDB.findOne({ _id: args.id, userID: parent.id })
+                .then((query: any): ProjectQuery => {
                     if (!query) throw new Error('Query not found');
                     return query;
                 })
-                .catch((err: Error): Error => new Error(`DB query failed: ${err}`)),
+                .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
+        },
     },
 };
 

@@ -15,15 +15,11 @@ export interface Project {
     userID: string;
     name: string;
     apiKey: string;
-    // queries: [ProjectQuery];
-    // query: ProjectQuery;
 }
 export interface User {
     id: string;
     email: string;
     password: string;
-    projects: [Project];
-    project: Project;
 }
 
 export interface Data {

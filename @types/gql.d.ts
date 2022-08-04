@@ -1,8 +1,8 @@
 type User = {
+    // _id?: string;
     id: string;
     email: string;
     password: string;
-    projects: Array<string>;
     token: string;
 };
 
@@ -38,7 +38,6 @@ type Project = {
     userID: string;
     name: string;
     apiKey: string;
-    queries: Array<string>;
 };
 
 type CreateProjectArgs = {
@@ -68,6 +67,11 @@ type ProjectQuery = {
     timestamp: number;
     loggedOn: number;
     latency?: number;
+};
+
+type Context = {
+    authenticated: boolean;
+    user: null | string | JwtPayload;
 };
 
 type CreateProjectQueryArgs = {

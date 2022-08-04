@@ -15,7 +15,8 @@
         "isolatedModules": true,
         "noEmit": false,
         "jsx": "react-jsx",
-        "typeRoots": ["./@types", "node_modules/@types"]
+        "typeRoots": ["./@types", "node_modules/@types"],
+        "outDir": "ts-build"
     },
     "include": [
         "client/**/*.js",

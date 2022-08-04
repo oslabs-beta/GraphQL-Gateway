@@ -25,6 +25,7 @@ function Login() {
         email: '',
         password: '',
     });
+    const [loginError, setloginError] = useState<null | string>(null);
     const { setUser: setUserAuth } = useAuth();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({
@@ -44,7 +45,7 @@ function Login() {
             localStorage.setItem('session-token', data.login.token);
             navigate('/dashboard');
         },
-        onError: (error) => console.log(error),
+        onError: (error) => setloginError(error.message),
     });
 
     const handleClick = async (
@@ -58,7 +59,7 @@ function Login() {
     return (
         <div className="box">
             <h1 className="text">Login</h1>
-
+            {loginError && <small className="authError">{loginError}</small>}
             <div className="form-wrapper">
                 <input
                     className="input"
