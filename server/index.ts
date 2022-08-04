@@ -70,7 +70,7 @@ server.start().then((): void => {
             .setHeader('Content-Type', 'text/html')
             .sendFile(
                 process.env.NODE_ENV === 'production'
-                    ? path.join(__dirname, '../build/index.html')
+                    ? path.join(__dirname, '../../build/index.html')
                     : path.join(__dirname, '../public/index.html')
             )
     );
