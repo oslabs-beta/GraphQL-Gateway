@@ -180,6 +180,7 @@ export default function Dashboard() {
                 rateLimiterLoading={rateLimitResponse?.loading || updateLoading}
                 setRateLimiterConfig={handleRateLimiterConfigChange}
                 onRawQueriesClick={() => setRateLimitedQueries([])}
+                showSettings={selectedProject != null}
             />
             <ProjectView
                 selectedProject={selectedProject}

@@ -55,6 +55,7 @@ export default function SettingsPane({
     rateLimiterLoading,
     setRateLimiterConfig,
     onRawQueriesClick,
+    showSettings,
 }: SettingsPaneProps) {
     const [rateLimiterType, setRateLimiterType]: [
         RateLimiterType,
@@ -118,94 +119,97 @@ export default function SettingsPane({
     return (
         <>
             <h3>Settings</h3>
+            {!showSettings && <div>Select a project</div>}
             {rateLimiterLoading ? (
                 <div className="loader" />
             ) : (
-                <div className="panelColumn">
-                    <select
-                        className="panelDropdown"
-                        value={rateLimiterType}
-                        onChange={onRateLimiterChange}
-                    >
-                        <option disabled value="None">
-                            Select an Option
-                        </option>
-                        <option value="FIXED_WINDOW">Fixed Window</option>
-                        {/* <option value="LEAKY_BUCKET">Leaky Bucket</option> */}
-                        <option value="TOKEN_BUCKET">Token Bucket</option>
-                        <option value="SLIDING_WINDOW_LOG">Sliding Window Log</option>
-                        <option value="SLIDING_WINDOW_COUNTER">Sliding Window Counter</option>
-                    </select>
-                    <Slider
-                        name="Capacity"
-                        value={capacity}
-                        displayValue={capacity}
-                        onChange={onCapacityChange}
-                        min={1}
-                        max={500}
-                        unit="tokens"
-                    />
-                    {['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterType) ? (
+                showSettings && (
+                    <div className="panelColumn">
+                        <select
+                            className="panelDropdown"
+                            value={rateLimiterType}
+                            onChange={onRateLimiterChange}
+                        >
+                            <option disabled value="None">
+                                Select an Option
+                            </option>
+                            <option value="FIXED_WINDOW">Fixed Window</option>
+                            {/* <option value="LEAKY_BUCKET">Leaky Bucket</option> */}
+                            <option value="TOKEN_BUCKET">Token Bucket</option>
+                            <option value="SLIDING_WINDOW_LOG">Sliding Window Log</option>
+                            <option value="SLIDING_WINDOW_COUNTER">Sliding Window Counter</option>
+                        </select>
                         <Slider
-                            name="Rate"
-                            value={refillRate}
-                            displayValue={refillRate}
-                            onChange={onRefillRateChange}
+                            name="Capacity"
+                            value={capacity}
+                            displayValue={capacity}
+                            onChange={onCapacityChange}
                             min={1}
-                            max={100}
-                            unit="tokens/s"
+                            max={500}
+                            unit="tokens"
                         />
-                    ) : (
-                        <Slider
-                            name="Window Size"
-                            value={windowSize * 1000} // Slider goes down to millisecond for granularity
-                            displayValue={windowSize} // Slider goes down to millisecond for granularity
-                            onChange={onWindowSizeChange}
-                            min={1}
-                            max={60000} // 1 minutes
-                            unit="s"
-                        />
-                    )}
-                    <div className="panelButtonGroup">
-                        <button
-                            className="panelButton"
-                            id="updateSettings"
-                            type="button"
-                            onClick={onUpdate}
-                            title="Apply settings to current query data"
-                        >
-                            Apply
-                        </button>
-                        <button
-                            className="panelButton"
-                            id="resetQueries"
-                            type="button"
-                            onClick={onRawQueriesClick}
-                            title="View raw query data"
-                        >
-                            View Raw
-                        </button>
-                        <button
-                            className="panelButton"
-                            id="updateDefault"
-                            type="button"
-                            onClick={(e) => onUpdate(e, true)}
-                            title="Save the settings for this project"
-                        >
-                            Update Project Settings
-                        </button>
-                        {/* TODO: Implement functionality for the below buttons */}
-                        <button
-                            className="panelButton"
-                            id="resetDefault"
-                            type="button"
-                            onClick={onRestoreProjectSettingsClick}
-                            title="Restore to current project settings"
-                        >
-                            Restore Project Settings
-                        </button>
+                        {['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiterType) ? (
+                            <Slider
+                                name="Rate"
+                                value={refillRate}
+                                displayValue={refillRate}
+                                onChange={onRefillRateChange}
+                                min={1}
+                                max={100}
+                                unit="tokens/s"
+                            />
+                        ) : (
+                            <Slider
+                                name="Window Size"
+                                value={windowSize * 1000} // Slider goes down to millisecond for granularity
+                                displayValue={windowSize} // Slider goes down to millisecond for granularity
+                                onChange={onWindowSizeChange}
+                                min={1}
+                                max={60000} // 1 minutes
+                                unit="s"
+                            />
+                        )}
+                        <div className="panelButtonGroup">
+                            <button
+                                className="panelButton"
+                                id="updateSettings"
+                                type="button"
+                                onClick={onUpdate}
+                                title="Apply settings to current query data"
+                            >
+                                Apply
+                            </button>
+                            <button
+                                className="panelButton"
+                                id="resetQueries"
+                                type="button"
+                                onClick={onRawQueriesClick}
+                                title="View raw query data"
+                            >
+                                View Raw
+                            </button>
+                            <button
+                                className="panelButton"
+                                id="updateDefault"
+                                type="button"
+                                onClick={(e) => onUpdate(e, true)}
+                                title="Save the settings for this project"
+                            >
+                                Update Project Settings
+                            </button>
+                            {/* TODO: Implement functionality for the below buttons */}
+                            <button
+                                className="panelButton"
+                                id="resetDefault"
+                                type="button"
+                                onClick={onRestoreProjectSettingsClick}
+                                title="Restore to current project settings"
+                            >
+                                Restore Project Settings
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )
             )}
         </>
     );

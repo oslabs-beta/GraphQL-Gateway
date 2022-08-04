@@ -11,6 +11,7 @@ export default function ToolBar({
     rateLimiterLoading,
     setRateLimiterConfig,
     onRawQueriesClick,
+    showSettings,
 }: ToolbarProps) {
     /** State for the component */
     const [showToolbar, setShowToolbar] = useState(false);
@@ -44,6 +45,7 @@ export default function ToolBar({
                     rateLimiterLoading={rateLimiterLoading}
                     setRateLimiterConfig={setRateLimiterConfig}
                     onRawQueriesClick={onRawQueriesClick}
+                    showSettings
                 />
             );
             break;
@@ -71,24 +73,23 @@ export default function ToolBar({
                     }
                 }}
             />
-            <div id="toolBarButtons">
-                <button
-                    className="fa-solid fa-gear fa-2xl fa-bars"
-                    type="button"
-                    aria-label="switch"
-                    onClick={() => {
-                        if (showToolbar && toolbarContent === 'SETTINGS') {
-                            // panel is open to projects. Close the panel
-                            setShowToolbar(false);
-                            setToolbarContent('');
-                        } else {
-                            // panel was either closed or on the settings view
-                            setShowToolbar(true);
-                            setToolbarContent('SETTINGS');
-                        }
-                    }}
-                />
-            </div>
+            {showSettings && (
+                <div id="toolBarButtons">
+                    <button
+                        className="fa-solid fa-gear fa-2xl fa-bars"
+                        type="button"
+                        aria-label="switch"
+                        onClick={() => {
+                            if (!showToolbar) setShowToolbar(true);
+                            if (toolbarContent === 'SETTINGS') {
+                                setToolbarContent('PROJECTS');
+                            } else {
+                                setToolbarContent('SETTINGS');
+                            }
+                        }}
+                    />
+                </div>
+            )}
             <div id="toolBarMenu">{projectLoading ? <Loading /> : selectedPane}</div>
         </div>
     );
