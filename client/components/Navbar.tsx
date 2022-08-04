@@ -10,23 +10,21 @@ export default function Navbar() {
     const [scrollPos, setScrollPos] = useState(0);
 
     useEffect(() => {
-        const controlNavbar = () => {
-            console.log('top', document.body.getBoundingClientRect().top);
-            setScrollPos(document.body.getBoundingClientRect().top);
-            console.log('sp', scrollPos);
+        const controlNavbar = (e: any) => {
             if (document.body.getBoundingClientRect().top > scrollPos) {
-                console.log('yes');
                 setShow('none');
             } else {
-                console.log('no');
                 setShow('flex');
             }
+            setScrollPos(document.body.getBoundingClientRect().top);
         };
 
         window.addEventListener('scroll', controlNavbar);
         return () => window.removeEventListener('scroll', controlNavbar);
     }, []);
-
+    useEffect(() => {
+        console.log('scrollPos', scrollPos);
+    }, [scrollPos]);
     useEffect(() => {
         const url = window.location.href.split('/');
         const target = url[url.length - 1].toLowerCase();
