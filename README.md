@@ -29,7 +29,7 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 
 2. Create a new project to recieve a project ID and API key.
 
-3. Import and configure the [GraphQLGate logger package](https://www.npmjs.com/package/graphql-limiter)
+3. Import and configure the [GraphQLGate logger package](https://www.npmjs.com/package/gate-logger)
 
 ```
 npm i gate-logger
@@ -43,7 +43,8 @@ npm i graphql-limiter
 
 ## <a name="getting-started"></a>📍 Getting Started
 
-Register if you are first-time user, otherwise, login to the portal with your email and password.
+-   Register if you are first-time user, otherwise, login to the portal with your email and password.
+-   Select your existing project or create a new project from the toolbar on your left
 
 <div><img src='./public/login.GIF'></div>
 
