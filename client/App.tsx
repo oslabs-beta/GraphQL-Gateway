@@ -103,12 +103,9 @@ export default function HomePage() {
                     </h2>
                     <p>
                         An Open Source GraphQL rate-limiter with query complexity analysis for
-                        Node.js and Express.
-                    </p>
-                    <p>
-                        Estimate the upper bound of the response size before resolving the query and
-                        optionally log query data to our Gateway Developer Portal to monitor and
-                        tune rate limiting settings.
+                        Node.js and Express. Estimate the upper bound of the response size before
+                        resolving the query and optionally log query data to our Gateway Developer
+                        Portal to monitor and tune rate limiting settings.
                     </p>
                     <button
                         type="submit"
@@ -136,9 +133,9 @@ export default function HomePage() {
                     </div>
 
                     <div id="gifCard">
-                        <img src="./login.gif" alt="./login.gif" />
-                        <img src="./project.gif" alt="./project.gif" />
-                        <img src="./queries.gif" alt="./queries.gif" />
+                        {/* <img src="./login.gif" alt="./login.gif" />
+                        <img src="./project.gif" alt="./project.gif" /> */}
+                        <img src="./demo.gif" alt="./demo.gif" />
                     </div>
                     {/* <div className="algorithmCard">
                         <h1>Token Bucket</h1>
@@ -161,7 +158,7 @@ export default function HomePage() {
             </section>
 
             <div className="centeredSentence">
-                <h1>WHAT MAKES US DIFFERENT?</h1>
+                <h1>CORE CAPABALITIES</h1>
             </div>
             <section id="pageThree">
                 <div id="pageThreeWrapper">

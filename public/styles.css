@@ -131,19 +131,17 @@ section#pageTwo {
     max-width: 900px;
 }
 #demoCardWrapper {
-    /* position: absolute;
-    top: 0;
-    height: 300px; */
     width: 100%;
     background: transparent;
     border-radius: 64px;
     text-align: left;
     padding: 60px 50px;
-    margin-top: -10px;
+    /* change this if one screenshot at last */
+    margin-top: -5%;
+    margin-right: 5%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-right: 5%;
 }
 .algorithmCard {
     height: 50px;
@@ -171,30 +169,34 @@ section#pageTwo {
 
 .algorithmCard img {
     border: 1px solid #555;
+    width: 90%;
+    height: auto;
 }
 
-#gifCard {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
+#gifCard img {
+    position: relative;
+    height: auto;
+    width: 100%;
+    /* max-height: 500px; */
 }
 
 section#pageThree {
     /* background-image: linear-gradient(180deg, #94afe9 0%, #e9a6df 66%, #b57cff 100%); */
-    background-image: url('./white.webp');
+    /* background-image: url('./white.webp'); */
+    background-color: white;
 }
 
 .icon {
     padding: 20px;
 }
 .centeredSentence {
-    margin-top: 5%;
+    margin-top: -10%;
     text-align: center;
-    /* color: #fff; */
+    color: #fff;
     display: inline-block;
     height: 150px;
     width: 100%;
-    /* background-color: #181818; */
+    background-color: #181818;
 }
 .centeredSentence h1 {
     margin: 52px;
@@ -203,32 +205,28 @@ section#pageThree {
 #pageThreeWrapper {
     width: 100%;
     text-align: center;
+    margin-top: -3%;
+    font-size: 1.3em;
+    display: flex;
+    flex-direction: row;
 }
 #pageThreeLeft {
     display: inline-block;
-    width: 700px;
+    width: 40%;
     text-align: center;
+    padding: 5%;
 }
 #pageThreeRight {
     display: inline-block;
-    width: 700px;
+    width: 40%;
     text-align: center;
+    padding: 5%;
 }
 
 .iconImg {
     width: 100px;
     padding: 30px;
 }
-/* #pageThreeLeft p {
-    float: right;
-    width: 50%;
-    padding: 50px;
-}
-#pageThreeRight p {
-    float: right;
-    width: 50%;
-    padding: 50px;
-} */
 
 #navbar {
     z-index: 11;
