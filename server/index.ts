@@ -58,10 +58,15 @@ server.start().then((): void => {
 
     // for logger to cross reference project DB api key to request auth header
     app.get('/key/:projectID', async (req, res) => {
-        const project = await ProjectDB.findById(req.params.projectID).catch(
-            (err) => new Error(`Project not found: ${err}`)
+        const project = await ProjectDB.findById(req.params.projectID).catch((err) =>
+            res.status(500).send(new Error(`Project not found: ${err}`))
         );
-        return res.json(project.apiKey);
+
+        const apiKey = { project };
+
+        if (project && apiKey) return res.json(apiKey);
+        if (project) return res.status(500).send('Error: Project in DB does not contain API key');
+        return res.status(500).send('DB returned project as null');
     });
 
     // serve homepage
