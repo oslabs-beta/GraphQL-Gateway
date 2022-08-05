@@ -24,12 +24,14 @@ export default function HomePage() {
                     </div>
                     <div id="pageOneTextBox">
                         <h1>Graph QL Rate Limiter</h1>
-                        <h2>Gateway visualisation tool</h2>
+                        <h2>
+                            An Open Source GraphQL rate-limiter with query complexity analysis for
+                            Node.js and Express
+                        </h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
+                            Estimate the upper bound of the response size before resolving the query
+                            and optionally log query data to our Gateway Developer Portal to monitor
+                            and tune rate limiting settings.
                         </p>
                     </div>
                 </section>
@@ -43,7 +45,7 @@ export default function HomePage() {
                         <img src={snippet} alt="settings" />
                     </div>
                 </section>
-                <section id="pageTwo" />
+                <section style={{ height: '555px' }} id="pageTwo" />
                 <div className="centeredSentence">
                     <h1>What makes us different?</h1>
                 </div>

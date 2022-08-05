@@ -22,6 +22,7 @@
 html {
     background-color: #092173;
     font-family: 'Roboto', sans-serif;
+    min-width: 600px;
 }
 
 body {
@@ -76,11 +77,12 @@ section#pageOne {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    top: 600px;
+    top: 730px;
     background-color: #fff;
     width: 70%;
-    height: 100%;
+    height: 620px;
     box-shadow: 0px 0px 20px #00259e;
+    max-width: 794px;
 }
 
 #loading {
@@ -96,7 +98,7 @@ section#pageOne {
 #demoCardWrapper {
     position: absolute;
     top: 0;
-    height: 300px;
+    /* height: 300px; */
     display: flex;
 }
 
@@ -107,6 +109,9 @@ section#pageOne {
     height: 200px;
     width: 200px;
     transition: 0.3s;
+}
+#demoCardWrapper img {
+    margin: 8px auto;
 }
 
 .algorithmCard > img {
@@ -925,195 +930,166 @@ section#pageThree {
     }
 }
 
-@media (min-width: 641px) {
-    @media (min-width: 2500px) {
-        .video_wrapper {
-            width: 3500px;
-            height: 265%;
-        }
+@media (min-width: 2500px) {
+    .video_wrapper {
+        width: 3500px;
+        height: 265%;
+    }
+}
+
+@media (max-width: 1300px) {
+    .algorithmCard {
+        font-size: 14px;
+        width: 145px;
+    }
+    .algorithmCard img {
+        width: 50px;
+    }
+}
+@media (max-width: 1050px) {
+    #demoCard {
+        width: 100%;
     }
 
-    @media (max-width: 1300px) {
-        .algorithmCard {
-            font-size: 14px;
-            width: 145px;
-        }
-
-        .algorithmCard img {
-            width: 50px;
-        }
+    .algorithmCard {
+        font-size: 10px;
+        width: 110px;
     }
-
-    @media (max-width: 1050px) {
-        .algorithmCard {
-            font-size: 10px;
-            width: 110px;
-        }
-
-        .algorithmCard img {
-            width: 30px;
-        }
-
-        .iconImg {
-            width: 70px;
-            padding: 10px;
-        }
-
-        #pageThreeRight p {
-            font-size: 14px;
-        }
-
-        #pageThreeLeft p {
-            font-size: 14px;
-        }
+    .algorithmCard img {
+        width: 30px;
     }
-
-    @media (max-width: 850px) {
-        .algorithmCard {
-            display: none;
-        }
-
-        .icon {
-            height: 80px;
-        }
-
-        #pageThreeLeft,
-        #pageThreeRight {
-            width: 100%;
-        }
+    .iconImg {
+        width: 70px;
+        padding: 10px;
     }
-
-    @media (max-width: 640px) {
-        .loggerBox {
-            border-radius: 0px;
-            background-color: rgba(255, 255, 255, 0.7);
-            max-height: 580px;
-            margin: 25px auto;
-            margin-bottom: 80px;
-            width: 100%;
-        }
-
-        #dashWrapper {
-            display: flex;
-            flex-direction: column-reverse;
-            width: 100%;
-            min-width: 550px;
-            margin-top: 100px;
-        }
-
-        #side-navbar {
-            min-width: 191px;
-        }
-
-        #navbar {
-            display: block;
-            min-width: 327px;
-        }
-
-        .chartBox {
-            width: 100%;
-            margin: 50px auto;
-            border-radius: 2px;
-            min-width: 457px;
-        }
-
-        .chartBtn {
-            width: 40px;
-            color: #353535;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            padding: 5px 1px;
-            border-radius: 5px;
-            transition: 0.5s;
-            font-size: 9px;
-        }
-
-        .loggerSortButtons {
-            min-width: 100px;
-            width: 100%;
-        }
-
-        #pageOneTextBox {
-            width: 435px;
-            margin-top: 0px;
-        }
-
-        #pageOneTextBox h1 {
-            font-size: 40px;
-        }
-
-        #pageOneTextBox h2 {
-            font-size: 30px;
-        }
-
-        #pageOneTextBox p {
-            font-size: 25px;
-        }
-
-        .algorithmCard {
-            display: none;
-        }
-
-        #demoCard {
-            top: 617px;
-            height: 737px;
-            width: 100%;
-            min-width: 554px;
-        }
-
-        #pageThreeRight {
-            display: block;
-            width: 100%;
-        }
-
-        #pageThreeLeft {
-            display: block;
-            width: 100%;
-        }
-
-        #pageThreeLeft p {
-            padding: 0px;
-            font-size: 12px;
-        }
-
-        #pageThreeRight p {
-            padding: 0px;
-            font-size: 12px;
-        }
-
-        .icon {
-            display: flex;
-            height: 110px;
-            justify-content: center;
-            align-items: center;
-            padding: 5px;
-        }
-
-        .iconImg {
-            width: 60px;
-        }
-
-        .centeredSentence h1 {
-            margin: 58px;
-            font-size: 30px;
-        }
-
-        .video_wrapper {
-            display: none;
-        }
-
-        .container {
-            min-width: 554px;
-        }
-
-        .arrow {
-            top: 35px;
-            right: -30px;
-        }
-
-        .toolBar.closed {
-            left: -380px;
-        }
+    #pageThreeRight p {
+        font-size: 14px;
+    }
+    #pageThreeLeft p {
+        font-size: 14px;
+    }
+}
+@media (max-width: 850px) {
+    #demoCardWrapper img {
+        width: 500px;
+    }
+    .algorithmCard {
+        display: none;
+    }
+    .icon {
+        height: 80px;
+    }
+    #pageThreeLeft,
+    #pageThreeRight {
+        width: 100%;
+    }
+}
+@media (max-width: 640px) {
+    .loggerBox {
+        border-radius: 0px;
+        background-color: rgba(255, 255, 255, 0.7);
+        max-height: 580px;
+        margin: 25px auto;
+        margin-bottom: 80px;
+        width: 100%;
+    }
+    #dashWrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        min-width: 550px;
+        margin-top: 100px;
+    }
+    #side-navbar {
+        min-width: 191px;
+    }
+    #navbar {
+        display: block;
+        min-width: 327px;
+    }
+    .chartBox {
+        width: 100%;
+        margin: 50px auto;
+        border-radius: 2px;
+        min-width: 457px;
+    }
+    .chartBtn {
+        width: 40px;
+        color: #353535;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        padding: 5px 1px;
+        border-radius: 5px;
+        transition: 0.5s;
+        font-size: 9px;
+    }
+    .loggerSortButtons {
+        min-width: 100px;
+        width: 100%;
+    }
+    #pageOneTextBox {
+        width: 435px;
+        margin-top: 0px;
+    }
+    #pageOneTextBox h1 {
+        font-size: 40px;
+    }
+    #pageOneTextBox h2 {
+        font-size: 30px;
+    }
+    #pageOneTextBox p {
+        font-size: 25px;
+    }
+    .algorithmCard {
+        display: none;
+    }
+    #demoCard {
+        top: 882px;
+        height: 481px;
+        width: 100%;
+    }
+    #pageThreeRight {
+        display: block;
+        width: 100%;
+    }
+    #pageThreeLeft {
+        display: block;
+        width: 100%;
+    }
+    #pageThreeLeft p {
+        padding: 0px;
+        font-size: 12px;
+    }
+    #pageThreeRight p {
+        padding: 0px;
+        font-size: 12px;
+    }
+    .icon {
+        display: flex;
+        height: 110px;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+    .iconImg {
+        width: 60px;
+    }
+    .centeredSentence h1 {
+        margin: 58px;
+        font-size: 30px;
+    }
+    .video_wrapper {
+        display: none;
+    }
+    .container {
+        min-width: 554px;
+    }
+    .arrow {
+        top: 35px;
+        right: -30px;
+    }
+    .toolBar.closed {
+        left: -380px;
     }
 }
