@@ -11,13 +11,16 @@ export default function Navbar() {
     // FIXME: navbar show only on scroll up, not down
     const [show, setShow] = useState('block');
     const controlNavbar = () => {
-        if (window.scrollY > 100) {
+        if (window.scrollY > 50) {
             setShow('none');
         } else {
             setShow('block');
         }
     };
+<<<<<<< HEAD
 
+=======
+>>>>>>> redesign
     function logout() {
         setUser(null);
         localStorage.clear();
@@ -33,6 +36,14 @@ export default function Navbar() {
 
     return (
         <div>
+            <div
+                id="logo"
+                style={{
+                    display: show,
+                }}
+            >
+                <div>GraphQL Gate</div>
+            </div>
             <div
                 id="navbar"
                 style={{

@@ -17,15 +17,15 @@ export default function Footer() {
                             ? '#fff'
                             : pathname === '/dashboard'
                                 ? '#fff'
-                                : '#092173',
+                                : '#181818',
                 color:
                     // eslint-disable-next-line no-nested-ternary
                     pathname === '/signup'
-                        ? '#092173'
+                        ? '#181818'
                         : pathname === '/login'
-                            ? '#092173'
+                            ? '#181818'
                             : pathname === '/dashboard'
-                                ? '#092173'
+                                ? '#181818'
                                 : '#fff',
             }}
         >

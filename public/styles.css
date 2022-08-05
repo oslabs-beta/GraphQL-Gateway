@@ -17,8 +17,8 @@
 }
 
 html {
-    background-color: #092173;
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
 }
 body {
     margin: 0 auto;
@@ -43,36 +43,79 @@ section {
 }
 
 section#pageOne {
-    color: #fff;
-    text-align: center;
+    margin-top: -70px;
+    padding-left: 5%;
+    text-align: left;
     position: relative;
-    background-color: #092173;
     overflow: hidden;
 }
-.blue-filter {
-    z-index: 9;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: rgba(9, 33, 115, 0.7);
+
+#pageOne h1 {
+    font-size: 65px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 1;
+    margin-bottom: 20px;
+    display: block;
 }
-.video_wrapper {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+
+#pageOne p {
+    color: #181818;
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    line-height: 1.5em;
+    width: 65%;
 }
-#demoCard {
-    z-index: 11;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    top: 600px;
-    background-color: #fff;
-    width: 70%;
-    height: 700px;
-    box-shadow: 0px 0px 20px #00259e;
+#pageOne button {
+    color: #181818;
+    font-weight: 700;
+    font-size: 20px;
+    margin-top: 60px;
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: center;
+}
+
+#pageOne button svg {
+    font-size: 25px;
+    margin-left: 5px;
+    transition: 0.3s ease-in-out;
+    line-height: 1;
+}
+#pageOne button:hover svg {
+    margin-left: 25px;
+}
+
+#pageOne img {
+    animation: updown 3s linear infinite;
+    margin-right: 10%;
+}
+
+@keyframes updown {
+    0% {
+        transform: translateY(-20px);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+#pageOneTextBox {
+    column-gap: 40px;
+}
+.txt-rotate > .wrap {
+    border-right: 0.08em solid #666;
+}
+
+section#pageTwo {
+    /* background-image: linear-gradient(180deg, rgb(228, 255, 146) 0%, #ffe684 40%, #94afe9 100%); */
+    /* background-color: rgb(225, 225, 225);
+    */
+    margin-top: -100px;
+    position: relative;
+    padding-left: 3%;
 }
 
 #loading {
@@ -88,20 +131,23 @@ section#pageOne {
     max-width: 900px;
 }
 #demoCardWrapper {
-    position: absolute;
-    top: 0;
-    height: 300px;
+    width: 100%;
+    background: transparent;
+    border-radius: 64px;
+    text-align: left;
+    padding: 60px 50px;
+    /* change this if one screenshot at last */
+    margin-top: -5%;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .algorithmCard {
-    display: inline-block;
-    padding: 20px;
-    margin: 20px 12px;
-    text-align: center;
-    height: 200px;
-    width: 200px;
-    transition: 0.3s;
+    height: 50px;
+    width: 900px;
 }
-.algorithmCard > img {
+/* .algorithmCard > img {
     -webkit-transition: -webkit-transform 0.8s ease-in-out;
     transition: transform 0.8s ease-in-out;
 }
@@ -110,52 +156,47 @@ section#pageOne {
     transform: rotate(360deg);
 }
 .algorithmCard:hover {
-    background-color: #3574f3;
-}
-#pageOne h1 {
-    font-size: 60px;
-    margin-bottom: 10px;
-}
-#pageOne h2 {
-    margin: 10px 0 50px 0;
-    font-size: 30px;
-}
-
-#pageOne p {
-    color: rgb(177, 175, 175);
+    background-color: rgba(255, 255, 255, 0.322);
+} */
+.algorithmCard button {
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    font-size: medium;
+    line-height: 1.2em;
+    margin: 5px 0;
 }
 
-#pageOneTextBox {
-    margin-top: -100px;
-    width: 650px;
-    position: absolute;
-    z-index: 10;
+.algorithmCard img {
+    border: 1px solid #555;
+    width: 90%;
+    height: auto;
 }
 
-section#pageTwo {
-    /* background-image: linear-gradient(180deg, rgb(228, 255, 146) 0%, #ffe684 40%, #94afe9 100%); */
-    /* background-color: rgb(225, 225, 225);
-    */
-    background-image: url('./white.webp');
-    background-size: cover;
+#gifCard img {
+    position: relative;
+    height: auto;
+    width: 100%;
+    /* max-height: 500px; */
 }
 
 section#pageThree {
     /* background-image: linear-gradient(180deg, #94afe9 0%, #e9a6df 66%, #b57cff 100%); */
-    background: #fff;
-    height: 500px;
+    /* background-image: url('./white.webp'); */
+    background-color: white;
 }
 
 .icon {
     padding: 20px;
 }
 .centeredSentence {
+    margin-top: -10%;
     text-align: center;
     color: #fff;
     display: inline-block;
     height: 150px;
     width: 100%;
-    background-color: #092173;
+    background-color: #181818;
 }
 .centeredSentence h1 {
     margin: 52px;
@@ -164,31 +205,27 @@ section#pageThree {
 #pageThreeWrapper {
     width: 100%;
     text-align: center;
+    margin-top: -3%;
+    font-size: 1.3em;
+    display: flex;
+    flex-direction: row;
 }
 #pageThreeLeft {
     display: inline-block;
-    width: 700px;
+    width: 40%;
     text-align: center;
+    padding: 5%;
 }
 #pageThreeRight {
     display: inline-block;
-    width: 700px;
+    width: 40%;
     text-align: center;
+    padding: 5%;
 }
 
 .iconImg {
     width: 100px;
     padding: 30px;
-}
-#pageThreeLeft p {
-    float: right;
-    width: 50%;
-    padding: 50px;
-}
-#pageThreeRight p {
-    float: right;
-    width: 50%;
-    padding: 50px;
 }
 
 #navbar {
@@ -197,7 +234,7 @@ section#pageThree {
     background-color: #fff;
     width: 100%;
     top: 0;
-    border-bottom: 1px solid #324da6;
+    border-bottom: 1px solid #181818;
     text-align: center;
 }
 #side-navbar {
@@ -223,7 +260,7 @@ section#pageThree {
 .linkBtn {
     background-color: transparent;
     border-width: 0;
-    color: #00259f;
+    color: #181818;
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
@@ -236,11 +273,37 @@ section#pageThree {
     padding: 1.5em 2.2em;
     text-align: center;
     text-decoration: none;
+    font-weight: 100;
+}
+
+#logo {
+    z-index: 100;
+    position: fixed;
+    background-color: rgb(255, 255, 255);
+    top: 0;
+    left: 0;
+}
+#logo div {
+    background-color: transparent;
+    border-width: 0;
+    color: #181818;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 1em;
+    margin: 0;
+    opacity: 1;
+    outline: 0;
+    padding: 1em 1em;
+    text-align: left;
+    text-decoration: none;
     font-weight: 500;
 }
 
 #footer {
-    background-color: #092173;
+    background-color: #181818;
     color: #fff;
     text-align: center;
     padding: 40px 0;
@@ -248,7 +311,34 @@ section#pageThree {
     width: 100%;
 }
 
-.form-wrapper {
+<<<<<<< HEAD ======= #aboutSection {
+    color: #181818;
+    text-align: center;
+    position: relative;
+    background-image: url('./WAVES.PNG');
+    overflow: hidden;
+    text-transform: uppercase;
+}
+#aboutDiv {
+    margin-top: -100px;
+    width: 70%;
+    position: absolute;
+    z-index: 10;
+}
+
+#aboutSection h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+#aboutSection p {
+    font-size: 24px;
+}
+
+#aboutSection span {
+    font-size: 24px;
+}
+
+>>>>>>>redesign .form-wrapper {
     text-align: center;
     margin-top: 20px;
 }
@@ -288,11 +378,11 @@ section#pageThree {
     width: 450px;
     border-radius: 5px;
     padding: 50px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(0, 0, 0, 0.109);
 }
 
 .transferBtn {
-    color: #324da6;
+    color: #181818;
     font-size: 15px;
     padding: 0 5px 0 5px;
     margin: 0;
@@ -310,7 +400,7 @@ section#pageThree {
     width: 100px;
     height: 30px;
     padding: 0 20px;
-    background: #324da6;
+    background: #181818;
     border-radius: 5px;
     outline: none;
     border: none;
@@ -338,10 +428,10 @@ section#pageThree {
     width: 400px;
     top: 0px;
     left: 0;
-    color: #324da6;
+    color: #181818;
     background-color: #fff;
     margin-top: 64px;
-    border-bottom: 1px solid #324da6;
+    border-bottom: 1px solid #181818;
     transition: all 0.2s ease-out;
     z-index: 1;
 }
@@ -359,13 +449,13 @@ section#pageThree {
     border: none;
     background: none;
     font-size: 20px;
-    color: #324da6;
+    color: #181818;
     margin: 10px 0px;
     cursor: pointer;
 }
 .projectButton:hover {
     cursor: pointer;
-    color: #1134a7;
+    color: #181818;
 }
 .projectContent {
     text-align: center;
@@ -379,11 +469,11 @@ section#pageThree {
 
 .selectProjectButton {
     background: none;
-    border: 1px solid #324da6;
+    border: 1px solid #181818;
     width: 100px;
     margin: 10px 0;
     padding: 5px;
-    color: #324da6;
+    color: #181818;
     font-size: 15px;
     transition: all 0.5s ease;
     border-radius: 5px;
@@ -401,7 +491,7 @@ section#pageThree {
 }
 .arrow {
     background: none;
-    border: solid #324da6;
+    border: solid #181818;
     border-width: 0 6px 6px 0;
     display: inline-block;
     padding: 15px;
@@ -438,7 +528,7 @@ section#pageThree {
     margin-left: 100px;
     border-radius: 2px;
     margin-right: 5px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.817);
     height: 580px;
     overflow: scroll;
     flex: 50%;
@@ -453,15 +543,15 @@ section#pageThree {
 }
 .loggerSortButtons {
     text-align: center;
-    background-color: #b6bcd6;
+    background-color: #00000035;
     height: 60px;
-    border-bottom: 1px solid #092173;
+    border-bottom: 1px solid #181818;
 }
 .chartBtn {
     width: 100px;
     color: #353535;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #00000035;
     border: none;
     padding: 5px;
     margin-top: 20px;
@@ -476,7 +566,7 @@ section#pageThree {
     width: 70px;
     color: #353535;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #00000035;
     border: none;
     padding: 5px;
     margin-top: 20px;
@@ -487,10 +577,10 @@ section#pageThree {
     transition: 0.5s;
 }
 .loggerBtn:hover {
-    background-color: #a496e3;
+    background-color: #b5aae3;
 }
 .active {
-    background-color: #a496e3;
+    background-color: #b5aae3;
 }
 .projectSelector {
     display: flex;
@@ -500,7 +590,7 @@ section#pageThree {
 }
 
 .chartBtn:hover {
-    background-color: #a496e3;
+    background-color: #b5aae3;
 }
 .h4chart {
     color: #353535;
@@ -527,7 +617,7 @@ section#pageThree {
 }
 
 #cardHr {
-    border-top: 1px solid #999999;
+    border-top: 1px solid #ffffff;
     border-bottom: 0px;
 }
 .label {
@@ -544,9 +634,9 @@ section#pageThree {
 }
 .queryProps {
     display: inline-block;
-    border-bottom: 1px solid #092173;
+    border-bottom: 1px solid #181818;
     padding: 10px;
-    background-color: #b6bcd6;
+    background-color: #00000035;
     transition: 0.5s;
     cursor: pointer;
     width: 100%;
@@ -563,11 +653,11 @@ section#pageThree {
 }
 .space {
     height: 60px;
-    border-bottom: 1px solid #092173;
+    border-bottom: 1px solid #181818;
 }
 
 .queryProps:hover {
-    background-color: rgb(9, 32, 116, 0.1);
+    background-color: #00000035;
 }
 .projectLabel {
     cursor: pointer;
