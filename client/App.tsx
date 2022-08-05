@@ -23,7 +23,7 @@ export default function HomePage() {
                         />
                     </div>
                     <div id="pageOneTextBox">
-                        <h1>Graph QL Rate Limiter</h1>
+                        <h1>GraphQLGate</h1>
                         <h2>
                             An Open Source GraphQL rate-limiter with query complexity analysis for
                             Node.js and Express
@@ -37,11 +37,6 @@ export default function HomePage() {
                 </section>
                 <section id="demoCard">
                     <div id="demoCardWrapper">
-                        {/* <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Token Bucket</h1>
-                            <img src={gear} alt="settings" />
-                        </div> */}
                         <img src={snippet} alt="settings" />
                     </div>
                 </section>
