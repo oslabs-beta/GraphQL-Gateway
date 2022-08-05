@@ -25,5 +25,5 @@ zip -r $ZIP_FILE Dockerrun.aws.json .ebextensions
 aws s3 cp $ZIP_FILE s3://$EB_BUCKET/$ZIP_FILE
 # Create a new application version with new Dockerrun
 aws elasticbeanstalk create-application-version --application-name GraphQLGateway --version-label $TRAVIS_COMMIT --source-bundle S3Bucket=$EB_BUCKET,S3Key=$ZIP_FILE
-# Update environment to use new version number
+# Update environment to use new version number.
 aws elasticbeanstalk update-environment --environment-name gateway-prod --version-label $TRAVIS_COMMIT

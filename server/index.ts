@@ -42,7 +42,7 @@ app.use(compression());
 app.use(bodyParser.json());
 
 if (process.env.NODE_ENV?.trim() === 'production') {
-    app.use(express.static(path.join(__dirname, '../build')));
+    app.use(express.static(path.join(__dirname, '../../build')));
 } else {
     app.use(express.static(path.join(__dirname, '../client/')));
 }
@@ -63,9 +63,6 @@ server.start().then((): void => {
 
         return res.json(apiKey);
     });
-
-    // load balancer health check
-    app.all('/', (req, res) => res.sendStatus(200));
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console
