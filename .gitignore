@@ -105,5 +105,6 @@ dist
 .tern-port
 
 build
+ts-build
 
 gateway.zip

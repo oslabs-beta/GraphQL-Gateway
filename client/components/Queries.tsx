@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ProjectQuery } from '../../@types/Interfaces';
-import { SortOrder } from '../../@types/dashboard';
-import Query from './Query';
+import React, { useEffect, useState } from 'react';
+import Query, { QueryHeader } from './Query';
 
 export interface ISState {
     style: {
@@ -41,7 +39,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
     };
     /** State requirments for this component */
     useEffect(() => {
-        /** once the projects have loadend and a project has been selected, send the query to get queres for the project */
         setListOfQueries(rawQueries);
     }, [rawQueries]);
 
@@ -124,14 +121,13 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
     };
 
     return (
-        <>
+        <div>
             <div className="loggerSortButtonsWrapper">
                 <div className="loggerSortButtons">
                     <div
                         aria-hidden="true"
                         className={`loggerBtn${style.time ? ' active' : ''}`}
                         onClick={() => {
-                            // sortByTime();
                             let sortOrder: SortOrder;
                             if (arrow.timestamp === '' || arrow.timestamp === '↓') {
                                 sortOrder = '↑';
@@ -149,7 +145,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                         aria-hidden="true"
                         className={`loggerBtn${style.depth ? ' active' : ''}`}
                         onClick={() => {
-                            // sortByDepth();
                             let sortOrder: SortOrder;
                             if (arrow.depth === '' || arrow.depth === '↓') {
                                 sortOrder = '↑';
@@ -166,7 +161,6 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
                         aria-hidden="true"
                         className={`loggerBtn${arrow.complexity ? ' active' : ''}`}
                         onClick={() => {
-                            // sortByComplexity();
                             let sortOrder: SortOrder;
                             if (arrow.complexity === '' || arrow.complexity === '↓') {
                                 sortOrder = '↑';
@@ -183,21 +177,22 @@ const Queries: React.FC<IProps> = ({ rawQueries }) => {
             </div>
             <div className="loggerGUI">
                 <div className="space" />
-                <div id="loggerBtnWrapper">
+                <div id="queryGrid">
+                    <QueryHeader />
                     {list?.map((query: ProjectQuery) => (
-                        <Query query={query} />
+                        <Query query={query} key={query.id} />
                     ))}
                 </div>
                 {hasMore ? (
                     // eslint-disable-next-line react/button-has-type
-                    <button className="loadMoreBtn" onClick={handleLoadMore}>
+                    <button className="loadMoreBtn panelButton" onClick={handleLoadMore}>
                         Load More
                     </button>
                 ) : (
                     <p>No more results</p>
                 )}
             </div>
-        </>
+        </div>
     );
 };
 
