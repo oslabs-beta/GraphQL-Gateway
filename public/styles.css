@@ -77,12 +77,13 @@ section#pageOne {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    top: 730px;
+    top: 645px;
     background-color: #fff;
-    width: 70%;
-    height: 620px;
+    /* width: 70%; */
+    height: 570px;
     box-shadow: 0px 0px 20px #00259e;
     max-width: 794px;
+    min-width: 600px;
 }
 
 #loading {
@@ -98,8 +99,9 @@ section#pageOne {
 #demoCardWrapper {
     position: absolute;
     top: 0;
-    /* height: 300px; */
+    height: 500px;
     display: flex;
+    margin: 30px auto;
 }
 
 .algorithmCard {
@@ -971,7 +973,7 @@ section#pageThree {
 }
 @media (max-width: 850px) {
     #demoCardWrapper img {
-        width: 500px;
+        width: 100%;
     }
     .algorithmCard {
         display: none;
@@ -984,6 +986,7 @@ section#pageThree {
         width: 100%;
     }
 }
+
 @media (max-width: 640px) {
     .loggerBox {
         border-radius: 0px;
@@ -1045,8 +1048,6 @@ section#pageThree {
         display: none;
     }
     #demoCard {
-        top: 882px;
-        height: 481px;
         width: 100%;
     }
     #pageThreeRight {
