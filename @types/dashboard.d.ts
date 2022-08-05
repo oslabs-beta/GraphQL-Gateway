@@ -1,10 +1,10 @@
-export type SortOrder = '↑' | '↓' | '';
+type SortOrder = '↑' | '↓' | '';
 
-export interface SeriesData {
+interface SeriesData {
     readonly name: string;
     data: number[];
 }
-export interface ChartData {
+interface ChartData {
     options: {
         readonly chart: {
             id: string;
@@ -15,3 +15,21 @@ export interface ChartData {
     };
     series: SeriesData[];
 }
+
+type ChartSelectionDays = 1 | 7 | 30 | 365;
+interface ProjectPaneProps {
+    projects: Project[] | undefined;
+    setSelectedProject: React.Dispatch<React.SetStateAction<Project | undefined>>;
+    projectLoading: boolean;
+    getUserData: any;
+}
+
+interface SettingsPaneProps {
+    rateLimiterConfig: RateLimiterConfig;
+    rateLimiterLoading: boolean;
+    setRateLimiterConfig: (config: RateLimiterConfig, saveConfig: boolean) => void;
+    onRawQueriesClick: () => void;
+    showSettings: boolean;
+}
+
+type ToolbarProps = ProjePaneProps & SettingsPaneProps;
