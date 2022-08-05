@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-const querySchema = new Schema({
+const querySchema = new mongoose.Schema({
     userID: { type: String, required: true },
     projectID: { type: String, required: true },
     requestIP: { type: String, required: true },
