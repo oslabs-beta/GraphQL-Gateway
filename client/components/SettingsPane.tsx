@@ -114,6 +114,7 @@ export default function SettingsPane({
         setWindowSize(
             rateLimiterConfig?.options?.windowSize ? rateLimiterConfig.options.windowSize / 1000 : 1
         );
+        setRateLimiterType(rateLimiterConfig?.type || 'None');
     };
 
     return (
