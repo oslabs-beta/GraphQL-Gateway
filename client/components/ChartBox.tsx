@@ -48,7 +48,7 @@ export interface ISState {
 
 export interface IProps {
     queries: ProjectQuery[];
-    setNumberOfDaysToView: React.Dispatch<React.SetStateAction<ChartSelectionDays>>;
+    setNumberOfDaysToView: (days: ChartSelectionDays) => void;
     numberOfDaysToView: ChartSelectionDays;
 }
 
@@ -67,7 +67,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setNumberOfDaysToView, numberOfDa
     /** useEffect will create the chart data to display form the query data */
     useMemo(() => {
         /** create storage for the */
-        // y-akis data
+        // y-axis data
         const depthArray: number[] = [];
         const complexityArray: number[] = [];
         const tokenArray: number[] = [];
@@ -297,7 +297,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setNumberOfDaysToView, numberOfDa
                     Last 24 h
                 </button>
                 <button onClick={() => setNumberOfDaysToView(7)} className="chartBtn" type="button">
-                    Last Week
+                    7 days
                 </button>
                 <button
                     onClick={() => setNumberOfDaysToView(30)}
@@ -361,7 +361,7 @@ const ChartBox: React.FC<IProps> = ({ queries, setNumberOfDaysToView, numberOfDa
                     Volume
                 </button>
                 <button onClick={() => chartSixFn()} className="chartBtn" type="button">
-                    Combined
+                    All
                 </button>
             </div>
         </div>

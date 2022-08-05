@@ -1,53 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import settings from '../public/settings.png';
 import intime from '../public/intime.png';
 import data from '../public/data.png';
 import barchart from '../public/barchart.png';
-import gear from '../public/gear.png';
+import snippet from '../public/code-snippet.png';
 import '../public/styles.css';
 
 export default function HomePage() {
-    // todo: query to check auth status
-
-    // FIXME: navbar show only on scroll up, not down
-    // const [show, setShow] = useState('block');
-    // const controlNavbar = () => {
-    //     if (window.scrollY > 100) {
-    //         setShow('none');
-    //     } else {
-    //         setShow('block');
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     window.addEventListener('scroll', controlNavbar);
-    //     return () => {
-    //         window.removeEventListener('scroll', controlNavbar);
-    //     };
-    // }, []);
-
     return (
         <div>
-            {/* <div id="navbar" style={{ display: show }}>
-                <Link to="/" type="submit" className="linkBtn">
-                    Home
-                </Link>
-                <Link to="/demo" type="submit" className="linkBtn">
-                    Demo
-                </Link>
-                <Link to="/about" type="submit" className="linkBtn">
-                    About
-                </Link>
-            </div>
-            <div id="side-navbar" style={{ display: show }}>
-                <Link to="/login" type="submit" className="linkBtn">
-                    Login
-                </Link>
-                <Link to="/signup" type="submit" className="linkBtn">
-                    Signup
-                </Link>
-            </div> */}
             <div className="container">
                 <section id="pageOne">
                     <div className="blue-filter" />
@@ -62,37 +23,24 @@ export default function HomePage() {
                         />
                     </div>
                     <div id="pageOneTextBox">
-                        <h1>Graph QL Rate Limiter</h1>
-                        <h2>Gateway visualisation tool</h2>
+                        <h1>GraphQLGate</h1>
+                        <h2>
+                            An Open Source GraphQL rate-limiter with query complexity analysis for
+                            Node.js and Express
+                        </h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
+                            Estimate the upper bound of the response size before resolving the query
+                            and optionally log query data to our Gateway Developer Portal to monitor
+                            and tune rate limiting settings.
                         </p>
                     </div>
                 </section>
                 <section id="demoCard">
                     <div id="demoCardWrapper">
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Token Bucket</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Sliding Window</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Leacky Bucket</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="demoCardImg" />
+                        <img src={snippet} alt="settings" />
                     </div>
                 </section>
-                <section id="pageTwo" />
+                <section style={{ height: '555px' }} id="pageTwo" />
                 <div className="centeredSentence">
                     <h1>What makes us different?</h1>
                 </div>
