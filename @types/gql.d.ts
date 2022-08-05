@@ -61,6 +61,7 @@ type ProjectQuery = {
     id: string;
     userID: string;
     projectID: string;
+    requestIP: string;
     number: number;
     depth: number;
     complexity: number;
@@ -79,6 +80,7 @@ type Context = {
 type CreateProjectQueryArgs = {
     projectQuery: {
         projectID: string;
+        requestIP: string;
         number: string;
         complexity: number;
         depth: number;

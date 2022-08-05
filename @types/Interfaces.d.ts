@@ -2,6 +2,7 @@ export interface ProjectQuery {
     id: string;
     number: number;
     projectID: string;
+    requestIP: string;
     depth: number;
     complexity: number;
     timestamp: number;
