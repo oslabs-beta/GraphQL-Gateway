@@ -62,14 +62,22 @@ export default function HomePage() {
                         />
                     </div>
                     <div id="pageOneTextBox">
-                        <h1>Graph QL Rate Limiter</h1>
-                        <h2>Gateway visualisation tool</h2>
+                        <h1>GraphQL Rate Limiter</h1>
+                        <h2>GraphQL Gateway developer portal</h2>
+
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
+                            GraphQL Gateway developer portal is designed for offering a
+                            visualization of how your GraphQL API endpoints is secured using rate
+                            limits and depth limits. With this visulaization tool, users can:
                         </p>
+                        <span>
+                            <li>
+                                Visualize API call data and facilitate a tuning of rate limiting
+                                algorithm settings
+                            </li>
+                            <li> Seek for query resolution optimizations for GraphQL APIs </li>
+                            <li>View cached performance metrics</li>
+                        </span>
                     </div>
                 </section>
                 <section id="demoCard">
@@ -86,7 +94,7 @@ export default function HomePage() {
                         </div>
                         <div className="algorithmCard">
                             <h3>Alghorhitm</h3>
-                            <h1>Leacky Bucket</h1>
+                            <h1>Fixed Window</h1>
                             <img src={gear} alt="settings" />
                         </div>
                         <div className="demoCardImg" />
