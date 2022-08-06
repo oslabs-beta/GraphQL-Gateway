@@ -12,20 +12,20 @@ export default function Footer() {
             style={{
                 backgroundColor:
                     pathname === '/signup'
+                        ? '#2785d7ca'
+                        : pathname === '/login'
+                            ? '#2785d7ca'
+                            : pathname === '/dashboard'
+                                ? '#fff'
+                                : '#2785d7ca',
+                color:
+                    // eslint-disable-next-line no-nested-ternary
+                    pathname === '/signup'
                         ? '#fff'
                         : pathname === '/login'
                             ? '#fff'
                             : pathname === '/dashboard'
-                                ? '#fff'
-                                : '#092173',
-                color:
-                    // eslint-disable-next-line no-nested-ternary
-                    pathname === '/signup'
-                        ? '#092173'
-                        : pathname === '/login'
-                            ? '#092173'
-                            : pathname === '/dashboard'
-                                ? '#092173'
+                                ? '#2785d7ca'
                                 : '#fff',
             }}
         >

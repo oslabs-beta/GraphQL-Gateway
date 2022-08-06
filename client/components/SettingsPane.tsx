@@ -74,7 +74,7 @@ export default function SettingsPane({
 
     // Window size in seconds
     const [windowSize, setWindowSize]: [number, React.Dispatch<number>] = useState(
-        (rateLimiterConfig.options.windowSize || 1000) / 1000
+        (rateLimiterConfig?.options?.windowSize || 1000) / 1000
     );
 
     const onCapacityChange = (e: React.ChangeEvent<HTMLInputElement>) => {

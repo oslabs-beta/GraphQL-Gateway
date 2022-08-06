@@ -18,19 +18,6 @@ export default function Navbar() {
     };
 
     useEffect(() => {
-        const controlNavbar = () => {
-            if (window.scrollY > scrollPos.current) {
-                setShow('none');
-            } else {
-                setShow('flex');
-            }
-            scrollPos.current = window.scrollY;
-        };
-        window.addEventListener('scroll', controlNavbar);
-        return () => window.removeEventListener('scroll', controlNavbar);
-    }, []);
-
-    useEffect(() => {
         const url = window.location.href.split('/');
         const target = url[url.length - 1].toLowerCase();
         const element = document.getElementById(target);
@@ -61,7 +48,7 @@ export default function Navbar() {
                     type="submit"
                     className="linkBtn"
                     onClick={() => {
-                        const hero = document.getElementById('demoCard');
+                        const hero = document.getElementById('pageTwo');
                         if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
@@ -77,6 +64,9 @@ export default function Navbar() {
                     }}
                 >
                     About
+                </Link>
+                <Link to="/team" type="submit" className="linkBtn">
+                    Team
                 </Link>
                 <div id="side-navbar" style={{ display: show }}>
                     {loading === false &&
