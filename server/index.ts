@@ -7,12 +7,20 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
+import lodash from 'lodash';
+
+import { fileURLToPath } from 'url';
+import typeDefs from './schema/TypeDefs';
+import ProjectResolvers from './schema/ProjectResolvers';
+import UserResolvers from './schema/UserResolvers';
+import ProjectQueryResolvers from './schema/ProjectQueryResolvers';
+import RateLimiterConfigResolvers from './schema/RateLimiterConfigResolvers';
 
 import connectDB from './db';
-import typeDefs from './schema/TypeDefs';
-import resolvers from './schema/Resolvers';
 import ProjectDB from './models/Project';
 import session from './utilities/sessions';
+
+import rateLimiterAnalysis from './utilities/rateLimiterAnalysis';
 
 connectDB();
 
@@ -21,7 +29,12 @@ const PORT: number | string = process.env.PORT || 3000;
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: lodash.merge(
+        ProjectResolvers,
+        UserResolvers,
+        ProjectQueryResolvers,
+        RateLimiterConfigResolvers
+    ),
     persistedQueries: false,
     context: async ({ req }) => {
         const authHeader = req.headers.authorization || null;
@@ -41,40 +54,35 @@ app.use(cookieParser());
 app.use(compression());
 app.use(bodyParser.json());
 
+const filename = fileURLToPath(import.meta.url);
+
 if (process.env.NODE_ENV?.trim() === 'production') {
     app.use(express.static(path.join(__dirname, '../../build')));
 } else {
-    app.use(express.static(path.join(__dirname, '../client/')));
+    app.use(express.static(path.join(path.dirname(filename), '../client/')));
 }
 
 // localhost:3000/gql -> graphQL sandbox
 server.start().then((): void => {
     server.applyMiddleware({ app, path: '/gql' });
 
+    app.post('/api/projects/rateLimit/:projectId', rateLimiterAnalysis, (req, res) =>
+        // Send back re-analyzed data
+        res.json(res.locals)
+    );
+
     // for logger to cross reference project DB api key to request auth header
-    app.get('/auth/:projectID', async (req, res) => {
-        const projectResult = await ProjectDB.findById(req.params.projectID).catch(
-            (err) => new Error(`Project not found: ${err}`)
+    app.get('/key/:projectID', async (req, res) => {
+        const project = await ProjectDB.findById(req.params.projectID).catch((err) =>
+            res.status(404).send(new Error(`Project not found: ${err}`))
         );
 
-        let apiKey = null;
+        const apiKey = { project };
 
-        if (projectResult && !(projectResult instanceof Error)) apiKey = projectResult.apiKey;
-
-        return res.json(apiKey);
+        if (project && apiKey) return res.json(apiKey);
+        if (project) return res.status(500).send('Error: Project in DB does not contain API key');
+        return res.status(500).send('DB returned project as null');
     });
-
-    // ! this is not serving the homepage in production or development
-    // serve homepage
-    // app.all('/', (req, res) =>
-    //     res
-    //         .setHeader('Content-Type', 'text/html')
-    //         .sendFile(
-    //             process.env.NODE_ENV?.trim() === 'production'
-    //                 ? path.join(__dirname, '../../public/index.html')
-    //                 : path.join(__dirname, '../public/index.html')
-    //         )
-    // );
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console

@@ -1,12 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-// import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { render } from 'react-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
-// import Dashboard from './components/Dashboard';
 import Dashboard from './components/Dashboard';
 import { AuthProvider } from './auth/AuthProvider';
 import Navbar from './components/Navbar';
@@ -52,11 +50,11 @@ render(
                             path="/dashboard"
                             element={
                                 <RequireAuth>
-                                    {/**  <Dashboard /> */}
                                     <Dashboard />
                                 </RequireAuth>
                             }
                         />
+                        <Route path="/*" element={<App />} />
                     </Routes>
                     <Footer />
                 </BrowserRouter>

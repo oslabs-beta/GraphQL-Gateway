@@ -30,7 +30,7 @@ export default function Footer() {
             }}
         >
             <div>
-                <h4>Copyright © Team Cat-Snake 2022</h4>
+                <h4>GraphQLGateway</h4>
             </div>
         </div>
     );
