@@ -48,13 +48,14 @@ const max = 600000; // 1min
 const min = 15000; // 15s
 
 let number = 10000;
-
+const PROJECT_ID = '62cce5cf4bb3340a30ad3428';
+const USER_ID = '62cce5a24bb3340a30ad3420';
 async function runScript() {
     await connectDB();
     while (time < currentTime) {
         console.log('timeleft: ', currentTime - time);
         new QueryDB({
-            projectID: '62cce5cf4bb3340a30ad3428',
+            projectID: PROJECT_ID,
             complexity: Math.floor(Math.random() * (50 - 5 + 1) + 5),
             depth: Math.floor(Math.random() * (7 - 2 + 1) + 2),
             tokens: Math.floor(Math.random() * (30 - 5 + 1) + 5),
@@ -62,7 +63,7 @@ async function runScript() {
             timestamp: time,
             loggedOn: time + 200,
             latency: Math.floor(Math.random() * (300 - 30 + 1) + 30),
-            userID: '62cce5a24bb3340a30ad3420',
+            userID: USER_ID,
             number: number++,
         })
             .save()
