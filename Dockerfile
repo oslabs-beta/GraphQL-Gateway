@@ -14,11 +14,11 @@ COPY . .
 
 RUN npm run build
 
-RUN cd server
-
 RUN tsc
 
-RUN cd ..
+RUN cd ts-build
+
+RUN rm -rf client/
 
 EXPOSE 3000
 

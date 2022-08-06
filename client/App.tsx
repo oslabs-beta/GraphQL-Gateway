@@ -42,7 +42,7 @@ export default function HomePage() {
                 </section>
                 <section style={{ height: '555px' }} id="pageTwo" />
                 <div className="centeredSentence">
-                    <h1>What makes us different?</h1>
+                    <h1>Core Capabilities</h1>
                 </div>
                 <section id="pageThree">
                     <div id="pageThreeWrapper">
@@ -50,15 +50,19 @@ export default function HomePage() {
                             <div className="icon">
                                 <img className="iconImg" src={settings} alt="settings-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Gain insight to your GraphQL API with the Gateway Developer
+                                    Portal which allows you to visualize query data to identify
+                                    trends over the long term.
                                 </p>
                             </div>
                             <div className="icon">
                                 <img className="iconImg" src={barchart} alt="barchart-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Analyses query request data such as
+                                    <i> complexity, depth and tokens </i>
+                                    with different rate limiting settings applied to see “what would
+                                    have happened” to tune your API rate-limits and better protect
+                                    your application.
                                 </p>
                             </div>
                         </div>
@@ -66,15 +70,18 @@ export default function HomePage() {
                             <div className="icon">
                                 <img className="iconImg" src={intime} alt="intime-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Accurately measure the complexity of a GraphQL query before
+                                    executing it to throttle queries by complexity and depth before
+                                    they reach your GraphQL API.
                                 </p>
                             </div>
                             <div className="icon">
                                 <img className="iconImg" src={data} alt="data-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Customize your rate-limiting logic with popular algorithms like
+                                    token-bucket, fixed-window, sliding-window-counter and
+                                    sliding-window-log, and assign custom type weights to your
+                                    fields to tailor the solution to your needs.
                                 </p>
                             </div>
                         </div>
