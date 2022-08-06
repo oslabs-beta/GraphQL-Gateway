@@ -18,6 +18,7 @@ async function getProjectQueries(id) {
             id
             userID
             projectID
+            requestUuid
             number
             complexity
             depth
@@ -58,7 +59,7 @@ getProjectQueries(projectId).then(async (queries) => {
         // only the middleware is throttled in this way.
         // eslint-disable-next-line no-await-in-loop
         const response = await limiter.processRequest(
-            query.userID,
+            query.requestUuid,
             query.timestamp,
             query.complexity
         );

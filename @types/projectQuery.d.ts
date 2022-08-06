@@ -1,6 +1,7 @@
 type ProjectQuery = {
     id: string;
     userID: string; // FIXME: Why do we need this? gql specific
+    requestUuid: string;
     projectID: string;
     number: number;
     depth: number;
@@ -22,6 +23,7 @@ type ProjectQuery = {
 //     tokens: number;
 //     // latency: number;
 //     success: boolean;
+//     requestId: string;
 // }
 
 type CreateProjectQueryArgs = {
