@@ -42,7 +42,7 @@ app.use(compression());
 app.use(bodyParser.json());
 
 if (process.env.NODE_ENV?.trim() === 'production') {
-    app.use(express.static(path.join(__dirname, '../build')));
+    app.use(express.static(path.join(__dirname, '../../build')));
 } else {
     app.use(express.static(path.join(__dirname, '../client/')));
 }
