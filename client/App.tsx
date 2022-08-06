@@ -1,53 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import settings from '../public/settings.png';
 import intime from '../public/intime.png';
 import data from '../public/data.png';
 import barchart from '../public/barchart.png';
-import gear from '../public/gear.png';
+import snippet from '../public/code-snippet.png';
 import '../public/styles.css';
 
 export default function HomePage() {
-    // todo: query to check auth status
-
-    // FIXME: navbar show only on scroll up, not down
-    // const [show, setShow] = useState('block');
-    // const controlNavbar = () => {
-    //     if (window.scrollY > 100) {
-    //         setShow('none');
-    //     } else {
-    //         setShow('block');
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     window.addEventListener('scroll', controlNavbar);
-    //     return () => {
-    //         window.removeEventListener('scroll', controlNavbar);
-    //     };
-    // }, []);
-
     return (
         <div>
-            {/* <div id="navbar" style={{ display: show }}>
-                <Link to="/" type="submit" className="linkBtn">
-                    Home
-                </Link>
-                <Link to="/demo" type="submit" className="linkBtn">
-                    Demo
-                </Link>
-                <Link to="/about" type="submit" className="linkBtn">
-                    About
-                </Link>
-            </div>
-            <div id="side-navbar" style={{ display: show }}>
-                <Link to="/login" type="submit" className="linkBtn">
-                    Login
-                </Link>
-                <Link to="/signup" type="submit" className="linkBtn">
-                    Signup
-                </Link>
-            </div> */}
             <div className="container">
                 <section id="pageOne">
                     <div className="blue-filter" />
@@ -62,47 +23,26 @@ export default function HomePage() {
                         />
                     </div>
                     <div id="pageOneTextBox">
-                        <h1>GraphQL Rate Limiter</h1>
-                        <h2>GraphQL Gateway developer portal</h2>
-
+                        <h1>GraphQLGate</h1>
+                        <h2>
+                            An Open Source GraphQL rate-limiter with query complexity analysis for
+                            Node.js and Express
+                        </h2>
                         <p>
-                            GraphQL Gateway developer portal is designed for offering a
-                            visualization of how your GraphQL API endpoints is secured using rate
-                            limits and depth limits. With this visulaization tool, users can:
+                            Estimate the upper bound of the response size before resolving the query
+                            and optionally log query data to our Gateway Developer Portal to monitor
+                            and tune rate limiting settings.
                         </p>
-                        <span>
-                            <li>
-                                Visualize API call data and facilitate a tuning of rate limiting
-                                algorithm settings
-                            </li>
-                            <li> Seek for query resolution optimizations for GraphQL APIs </li>
-                            <li>View cached performance metrics</li>
-                        </span>
                     </div>
                 </section>
                 <section id="demoCard">
                     <div id="demoCardWrapper">
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Token Bucket</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Sliding Window</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="algorithmCard">
-                            <h3>Alghorhitm</h3>
-                            <h1>Fixed Window</h1>
-                            <img src={gear} alt="settings" />
-                        </div>
-                        <div className="demoCardImg" />
+                        <img src={snippet} alt="settings" />
                     </div>
                 </section>
-                <section id="pageTwo" />
+                <section style={{ height: '555px' }} id="pageTwo" />
                 <div className="centeredSentence">
-                    <h1>What makes us different?</h1>
+                    <h1>Core Capabilities</h1>
                 </div>
                 <section id="pageThree">
                     <div id="pageThreeWrapper">
@@ -110,15 +50,19 @@ export default function HomePage() {
                             <div className="icon">
                                 <img className="iconImg" src={settings} alt="settings-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Gain insight to your GraphQL API with the Gateway Developer
+                                    Portal which allows you to visualize query data to identify
+                                    trends over the long term.
                                 </p>
                             </div>
                             <div className="icon">
                                 <img className="iconImg" src={barchart} alt="barchart-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Analyses query request data such as
+                                    <i> complexity, depth and tokens </i>
+                                    with different rate limiting settings applied to see “what would
+                                    have happened” to tune your API rate-limits and better protect
+                                    your application.
                                 </p>
                             </div>
                         </div>
@@ -126,15 +70,18 @@ export default function HomePage() {
                             <div className="icon">
                                 <img className="iconImg" src={intime} alt="intime-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Accurately measure the complexity of a GraphQL query before
+                                    executing it to throttle queries by complexity and depth before
+                                    they reach your GraphQL API.
                                 </p>
                             </div>
                             <div className="icon">
                                 <img className="iconImg" src={data} alt="data-icon" />
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Customize your rate-limiting logic with popular algorithms like
+                                    token-bucket, fixed-window, sliding-window-counter and
+                                    sliding-window-log, and assign custom type weights to your
+                                    fields to tailor the solution to your needs.
                                 </p>
                             </div>
                         </div>

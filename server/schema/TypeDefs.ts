@@ -6,7 +6,7 @@ const typeDefs = gql`
         email: String!
         password: String!
         projects: [Project]!
-        project: Project
+        # project: Project
         token: String
     }
 
@@ -15,8 +15,9 @@ const typeDefs = gql`
         userID: String!
         name: String!
         queries: [ProjectQuery]!
-        query: ProjectQuery
+        # query: ProjectQuery
         apiKey: String
+        rateLimiterConfig: RateLimiterConfig
     }
 
     type ProjectQuery {
@@ -33,6 +34,23 @@ const typeDefs = gql`
         latency: Int
     }
 
+    type BucketOptions {
+        refillRate: Int!
+        capacity: Int!
+    }
+
+    type WindowOptions {
+        windowSize: Int!
+        capacity: Int!
+    }
+
+    union RateLimiterOptions = BucketOptions | WindowOptions
+
+    type RateLimiterConfig {
+        type: String!
+        options: RateLimiterOptions!
+    }
+
     type Query {
         users: [User!]!
         user(id: String!): User
@@ -40,7 +58,7 @@ const typeDefs = gql`
         projects: [Project]!
         project(id: String!): Project
 
-        projectQueries(id: String, date: Float, offset: Float): [ProjectQuery]!
+        projectQueries(id: String, minDate: Float, maxDate: Float): [ProjectQuery]!
         projectQuery(id: String!): ProjectQuery
     }
 
@@ -51,7 +69,7 @@ const typeDefs = gql`
         deleteUser(id: String!): User
 
         createProject(project: CreateProjectInput!): Project
-        updateProject(project: UpdateProjectInput!): Project
+        updateProject(id: String!, name: String, rateLimiterConfig: RateLimiterConfigInput): Project
         deleteProject(id: String!): Project
 
         createProjectQuery(projectQuery: CreateProjectQueryInput!): ProjectQuery
@@ -77,6 +95,18 @@ const typeDefs = gql`
     input UpdateProjectInput {
         id: String!
         name: String
+        rateLimiterConfig: RateLimiterConfigInput
+    }
+
+    input RateLimiterConfigInput {
+        type: String!
+        options: RateLimiterOptionsInput
+    }
+
+    input RateLimiterOptionsInput {
+        capacity: Int!
+        refillRate: Int
+        windowSize: Int
     }
 
     input CreateProjectQueryInput {

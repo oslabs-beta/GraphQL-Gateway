@@ -10,6 +10,8 @@ branches:
 
 script:
     - 'npm run lint'
+    - 'npm run build'
+    - 'npm run start:dockerTS'
     - python3 -VV
     - pip install --upgrade pip
     - pip -V
