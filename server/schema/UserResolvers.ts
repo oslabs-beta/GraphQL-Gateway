@@ -8,7 +8,6 @@ import ProjectDB from '../models/Project';
 import QueryDB from '../models/Query';
 import sessions from '../utilities/sessions';
 import { WrongCredentialsError } from './errors';
-import { MongoProject, MongoUser } from '../../@types/resolver';
 
 const resolvers: IResolvers = {
     /*
@@ -19,7 +18,7 @@ const resolvers: IResolvers = {
             const { authenticated } = context;
             if (authenticated === false) return new Error('Unauthorized to make this request');
             return ProjectDB.find({ userID: parent.id })
-                .then((projects: MongoProject[]): Project[] => projects)
+                .then((projects: any[]): Project[] => projects)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
 
@@ -45,7 +44,7 @@ const resolvers: IResolvers = {
         checkAuth: (parent, args, context): Promise<User | Error> | null => {
             if (context.authenticated) {
                 return UserDB.findOne({ _id: context.user.id })
-                    .then((user: MongoUser): User => {
+                    .then((user: any): User => {
                         if (!user) throw new Error('User does not exist');
                         return user;
                     })
@@ -57,7 +56,7 @@ const resolvers: IResolvers = {
             const { authenticated } = context;
             if (authenticated === false) return new Error('Unauthorized to make this request');
             return UserDB.find()
-                .then((users: MongoUser[]): User[] => users)
+                .then((users: any[]): User[] => users)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         user: (
@@ -70,7 +69,7 @@ const resolvers: IResolvers = {
             const { id } = args;
 
             return UserDB.findOne({ _id: id })
-                .then((user: MongoUser): User => {
+                .then((user: any): User => {
                     if (!user) throw new Error('User does not exist');
                     return user;
                 })
@@ -85,7 +84,7 @@ const resolvers: IResolvers = {
         login: async (parent: undefined, args: GetUserArgs): Promise<AuthUser | Error> => {
             const { email, password } = args.user;
             return UserDB.findOne({ email })
-                .then(async (user: MongoUser): Promise<AuthUser> => {
+                .then(async (user: any): Promise<AuthUser> => {
                     if (!user) throw new WrongCredentialsError();
                     const verifyPassword: boolean = await bcrypt.compare(password, user.password);
                     if (!verifyPassword) {
@@ -108,7 +107,7 @@ const resolvers: IResolvers = {
             const { email, password } = args.user;
             const hash: string = await bcrypt.hash(password, 11);
             return UserDB.findOne({ email })
-                .then(async (user: MongoUser): Promise<AuthUser> => {
+                .then(async (user: any): Promise<AuthUser> => {
                     if (user) throw new Error('User already exists');
                     const newUser = new UserDB({
                         email,
@@ -147,7 +146,7 @@ const resolvers: IResolvers = {
             }
 
             return UserDB.findByIdAndUpdate(id, updateBody, { new: true })
-                .then((user: MongoUser): User => {
+                .then((user: any): User => {
                     if (!user) throw new Error('User not found');
                     return user;
                 })
@@ -174,7 +173,7 @@ const resolvers: IResolvers = {
 
             // deletes user from DB and returns user object
             return UserDB.findByIdAndRemove(id)
-                .then((user: MongoUser): User => user)
+                .then((user: any): User => user)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
     },
