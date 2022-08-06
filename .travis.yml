@@ -15,7 +15,7 @@ script:
     - pip install --upgrade pip
     - pip -V
 
-    before_deploy:
+before_deploy:
     # install the aws cli
     - python3 -m pip install --user awscli
     # install the elastic beanstalk cli
