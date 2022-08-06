@@ -1,7 +1,7 @@
 type ProjectQuery = {
     id: string;
     userID: string; // FIXME: Why do we need this? gql specific
-    requestIP: string;
+    requestUuid: string;
     projectID: string;
     number: number;
     depth: number;
@@ -23,7 +23,7 @@ type ProjectQuery = {
 //     tokens: number;
 //     // latency: number;
 //     success: boolean;
-//     requestIP: string;
+//     requestId: string;
 // }
 
 type CreateProjectQueryArgs = {

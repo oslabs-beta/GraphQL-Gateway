@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const querySchema = new mongoose.Schema({
     userID: { type: String, required: true },
     projectID: { type: String, required: true },
-    requestIP: { type: String, required: true },
+    requestUuid: { type: String, required: true },
     number: { type: Number, unique: true, required: true },
     depth: { type: Number, required: false },
     complexity: { type: Number, required: false },
