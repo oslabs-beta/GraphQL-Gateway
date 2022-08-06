@@ -2,7 +2,6 @@ import { IResolvers } from '@graphql-tools/utils';
 
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
-import { MongoProjectQuery } from '../../@types/resolver';
 
 const resolvers: IResolvers = {
     Query: {
@@ -16,7 +15,7 @@ const resolvers: IResolvers = {
             if (authenticated === false) return new Error('Unauthorized to make this request');
             const { id, minDate, maxDate } = args;
             return QueryDB.find({ projectID: id, timestamp: { $gte: minDate, $lt: maxDate } })
-                .then((queries: MongoProjectQuery[]): ProjectQuery[] => queries)
+                .then((queries: any): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         projectQuery: (
@@ -29,7 +28,7 @@ const resolvers: IResolvers = {
             if (authenticated === false) return new Error('Unauthorized to make this request');
 
             return QueryDB.findOne({ _id: id })
-                .then((query: MongoProjectQuery): ProjectQuery => {
+                .then((query: any): ProjectQuery => {
                     if (!query) throw new Error('Query does not exist');
                     return query;
                 })
@@ -59,13 +58,13 @@ const resolvers: IResolvers = {
              * throws error if not
              */
             const userID: string | Error = await ProjectDB.findById(projectID)
-                .then((project: MongoProjectQuery): string => {
+                .then((project: any): string => {
                     if (!project) throw new Error('Project does not exist');
                     return project?.userID;
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
-            const queries: string | MongoProjectQuery[] = await QueryDB.find({ projectID }).catch(
+            const queries: string | any[] = await QueryDB.find({ projectID }).catch(
                 (err: Error) => `DB query failed: ${err}`
             );
             const newNumber: number = queries.length + 1;
@@ -76,7 +75,7 @@ const resolvers: IResolvers = {
                 number: newNumber,
             })
                 .save()
-                .then((res: MongoProjectQuery): ProjectQuery => res)
+                .then((res: any): ProjectQuery => res)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
 
             return newQuery;
@@ -90,7 +89,7 @@ const resolvers: IResolvers = {
             const { authenticated } = context;
             if (authenticated === false) return new Error('Unauthorized to make this request');
             return QueryDB.findByIdAndRemove(id)
-                .then(async (query: MongoProjectQuery): Promise<ProjectQuery | Error> => query)
+                .then(async (query: any): Promise<ProjectQuery | Error> => query)
                 .catch((err: Error): Error => new Error(`Query deletion failed: ${err}`));
         },
     },
