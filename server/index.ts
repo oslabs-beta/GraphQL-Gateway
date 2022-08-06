@@ -57,7 +57,7 @@ app.use(bodyParser.json());
 const filename = fileURLToPath(import.meta.url);
 
 if (process.env.NODE_ENV?.trim() === 'production') {
-    app.use(express.static(path.join(path.dirname(filename), '../build')));
+    app.use(express.static(path.join(path.dirname(filename), '../../build')));
 } else {
     app.use(express.static(path.join(path.dirname(filename), '../client/')));
 }
