@@ -1,6 +1,6 @@
 {
     "name": "graphql-gateway",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A developer portal for GraphQL-Gate providing charts of allowed/blocked queries and their data as well as a multitude of configurable rate limiters to choose from.",
     "main": "build/bundle.js",
     "type": "module",
