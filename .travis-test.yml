@@ -1,3 +1,8 @@
+# FOR DEPLOYMENT TESTING PURPOSES
+
+# Make a draft PR from feature branch to deploy branch
+# Every commit will run necessary scripts
+
 language: node_js
 
 node_js:
@@ -7,26 +12,20 @@ branches:
     only:
         - dev
         - main
+        - deploy
 
 script:
     - 'npm run lint'
-    - 'npm run build'
     - python3 -VV
     - pip install --upgrade pip
     - pip -V
 
-before_deploy:
     # install the aws cli
     - python3 -m pip install --user awscli
     # install the elastic beanstalk cli
     - python3 -m pip install --user awsebcli
     # Append exe location to our PATH
     - export PATH=$PATH:$HOME/.local/bin
+    - sh $TRAVIS_BUILD_DIR/scripts/deploy.sh
 
 env: PATH=/opt/python/3.7.1/bin:$PATH
-deploy:
-    provider: script
-    skip_cleanup: true
-    on:
-        branch: main
-    script: sh $TRAVIS_BUILD_DIR/scripts/deploy.sh
