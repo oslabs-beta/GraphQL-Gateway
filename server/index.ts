@@ -57,7 +57,7 @@ app.use(bodyParser.json());
 const filename = fileURLToPath(import.meta.url);
 
 if (process.env.NODE_ENV?.trim() === 'production') {
-    app.use(express.static(path.join(path.dirname(filename), '../build')));
+    app.use(express.static(path.join(path.dirname(filename), '../../build')));
 } else {
     app.use(express.static(path.join(path.dirname(filename), '../client/')));
 }
@@ -72,29 +72,17 @@ server.start().then((): void => {
     );
 
     // for logger to cross reference project DB api key to request auth header
-    app.get('/auth/:projectID', async (req, res) => {
-        const projectResult = await ProjectDB.findById(req.params.projectID).catch(
-            (err) => new Error(`Project not found: ${err}`)
+    app.get('/key/:projectID', async (req, res) => {
+        const project = await ProjectDB.findById(req.params.projectID).catch((err) =>
+            res.status(404).send(new Error(`Project not found: ${err}`))
         );
 
-        let apiKey = null;
+        const apiKey = { project };
 
-        if (projectResult && !(projectResult instanceof Error)) apiKey = projectResult.apiKey;
-
-        return res.json(apiKey);
+        if (project && apiKey) return res.json(apiKey);
+        if (project) return res.status(500).send('Error: Project in DB does not contain API key');
+        return res.status(500).send('DB returned project as null');
     });
-
-    // ! this is not serving the homepage in production or development
-    // serve homepage
-    // app.all('/', (req, res) =>
-    //     res
-    //         .setHeader('Content-Type', 'text/html')
-    //         .sendFile(
-    //             process.env.NODE_ENV?.trim() === 'production'
-    //                 ? path.join(__dirname, '../../public/index.html')
-    //                 : path.join(__dirname, '../public/index.html')
-    //         )
-    // );
 
     app.listen(typeof PORT === 'string' ? Number(PORT) : PORT, () =>
         // eslint-disable-next-line no-console

@@ -5,7 +5,7 @@ export default class RedisMock {
     }
 
     get(key) {
-        return this.store[key] || '[]';
+        return this.store[key] || null;
     }
 
     setex(key, value) {

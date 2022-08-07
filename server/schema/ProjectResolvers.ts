@@ -6,7 +6,6 @@ import { Document } from 'mongoose';
 import UserDB from '../models/User';
 import QueryDB from '../models/Query';
 import ProjectDB from '../models/Project';
-import { MongoProject, MongoProjectQuery, MongoUser } from '../../@types/resolver';
 
 function isBucketLimiter(rateLimiter: RateLimiterType): rateLimiter is BucketType {
     return ['TOKEN_BUCKET', 'LEAKY_BUCKET'].includes(rateLimiter as BucketType);
@@ -31,7 +30,7 @@ const resolvers: IResolvers = {
             const { authenticated } = context;
             if (authenticated === false) return new Error('Unauthorized to make this request');
             return QueryDB.find({ projectID: parent.id })
-                .then((queries: MongoProjectQuery[]): ProjectQuery[] => queries)
+                .then((queries: any[]): ProjectQuery[] => queries)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         rateLimiterConfig: (parent: Project): RateLimiterConfig => parent.rateLimiterConfig,
@@ -55,7 +54,7 @@ const resolvers: IResolvers = {
             const { authenticated } = context;
             if (authenticated === false) return new Error('Unauthorized to make this request');
             return ProjectDB.find()
-                .then((projects: MongoProject[]): Project[] => projects)
+                .then((projects: any[]): Project[] => projects)
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
         },
         project: (
@@ -68,7 +67,7 @@ const resolvers: IResolvers = {
             const { id } = args;
 
             return ProjectDB.findOne({ _id: id })
-                .then((project: MongoProject): Project => {
+                .then((project: any): Project => {
                     if (!project) throw new Error('Project does not exist');
                     return project;
                 })
@@ -84,16 +83,16 @@ const resolvers: IResolvers = {
             parent: undefined,
             args: CreateProjectArgs,
             context: Context
-        ): Promise<Project | Error> => {
+        ): Promise<any> => {
             const { userID, name } = args.project;
             const { authenticated } = context;
-            if (authenticated === false) return new Error('Unauthorized to make this request');
+            if (authenticated === false) throw new Error('Unauthorized to make this request');
 
             /* checks if user exists given the userID,
              * throws error otherwise
              */
             await UserDB.findById(userID)
-                .then((user: MongoUser): void => {
+                .then((user: any): void => {
                     if (!user) throw new Error('User does not exist');
                 })
                 .catch((err: Error): Error => new Error(`DB query failed: ${err}`));
@@ -102,31 +101,27 @@ const resolvers: IResolvers = {
              * Checks if this project already exists under specified user, if not
              * creates a new project based on the mongoose model and saves it.
              */
-            return ProjectDB.findOne({ userID, name }).then(
-                async (project: MongoProject): Promise<Project> => {
-                    if (project) throw new Error('Project already exists');
 
-                    // random 10-char string generated and stored in projectDB
-                    // gate-logger library will cross-reference projects collection
-                    // to validate API call entered by user with auth key in header "log_key"
-                    const apiKey = randomString.generate(10);
+            const project = await ProjectDB.findOne({ userID, name });
+            if (project) throw new Error('Project already exists');
 
-                    // save to DB
-                    const newProject = new ProjectDB({
-                        userID,
-                        name,
-                        apiKey,
-                    });
+            // random 10-char string generated and stored in projectDB
+            // gate-logger library will cross-reference projects collection
+            // to validate API call entered by user with auth key in header "log_key"
+            const apiKey = randomString.generate(10);
 
-                    // save project
-                    return newProject
-                        .save()
-                        .catch(
-                            (err: Error): Error =>
-                                new Error(`Saving project/receiving new ID from DB failed: ${err}`)
-                        );
-                }
-            );
+            // save to DB
+            try {
+                const newProject = await new ProjectDB({
+                    userID,
+                    name,
+                    apiKey,
+                }).save();
+
+                return newProject;
+            } catch (err) {
+                throw new Error(`Saving project/receiving new ID from DB failed: ${err}`);
+            }
         },
         /*
          *   updates project name or rate limiter config
@@ -189,7 +184,7 @@ const resolvers: IResolvers = {
             await QueryDB.deleteMany({ projectID: id });
 
             return ProjectDB.findByIdAndRemove(id)
-                .then(async (project: MongoProject): Promise<Project> => project)
+                .then(async (project: any): Promise<Project> => project)
                 .catch((err: Error): Error => new Error(`Project deletion failed: ${err}`));
         },
     },
