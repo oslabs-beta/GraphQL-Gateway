@@ -52,15 +52,40 @@ section {
 
 section#pageOne {
     color: #408fd4ca;
-    text-align: center;
+    margin-top: -70px;
+    justify-content: space-evenly;
+    text-align: left;
     position: relative;
     background-color: #fff;
     overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    column-gap: 50px;
 }
 
+#pageOne h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+#pageOne h2 {
+    margin: 10px 0 50px 0;
+}
+
+#pageOne p {
+    color: rgb(104, 108, 111);
+}
+
+#pageOneTextBox {
+    margin: 125px 0 0 50px;
+    width: 650px;
+    position: relative;
+    z-index: 10;
+}
 #pageOne img {
     animation: updown 3s linear infinite;
-    margin-right: 10%;
+    width: 350px;
+    margin-top: 100px;
 }
 
 @keyframes updown {
@@ -158,25 +183,6 @@ section#pageOne {
     width: 100%;
     margin-top: 200px;
 } */
-#pageOne h1 {
-    font-size: 60px;
-    margin-bottom: 10px;
-}
-
-#pageOne h2 {
-    margin: 10px 0 50px 0;
-}
-
-#pageOne p {
-    color: rgb(104, 108, 111);
-}
-
-#pageOneTextBox {
-    margin-top: -100px;
-    width: 650px;
-    position: absolute;
-    z-index: 10;
-}
 
 section#pageTwo {
     align-items: center;
@@ -310,7 +316,11 @@ section#pageThree {
     width: 30%;
     border-bottom: 1px solid #2785d7ca;
 }
-
+.logoImg {
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
 #footer {
     color: #fff;
     text-align: center;
@@ -334,17 +344,17 @@ section#pageThree {
 }
 
 #aboutSection h1 {
-    font-size: 60px;
+    font-size: 40px;
     margin-bottom: 10px;
     color: #2785d7ca;
 }
 #aboutSection p {
-    font-size: 24px;
+    font-size: 18px;
     color: #414141;
 }
 
 #aboutSection span {
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .form-wrapper {
@@ -461,7 +471,11 @@ section#pageThree {
 .dashboard {
     width: 100%;
 }
-
+.chartBox {
+    width: 55%;
+    min-width: 715px;
+    box-shadow: 0px 0px 20px #2785d7ca;
+}
 #chartBoxInside canvas {
     max-height: 450px;
 }
@@ -483,12 +497,12 @@ section#pageThree {
     width: 380px;
     top: 0px;
     left: 0;
-    color: #324da6;
-    background-color: #fff;
+    color: #2785d7ca;
     margin-top: 64px;
-    border-bottom: 1px solid #324da6;
     transition: all 0.2s ease-out;
     z-index: 1;
+    background-color: #fff;
+    max-height: 680px;
 }
 
 .toolBar.closed {
@@ -499,12 +513,16 @@ section#pageThree {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0px 50px 0px 50px;
+    padding: 25px 50px 0px 50px;
     transition: all 1s ease;
 
     flex-grow: 1;
 }
-
+.settingsTab {
+    position: absolute;
+    top: 0px;
+    left: 76px;
+}
 #box {
     position: fixed;
     background: #00000050;
@@ -537,7 +555,8 @@ section#pageThree {
 #boxInside input {
     width: 80%;
     border-radius: 4px;
-    color: #324da6;
+    color: #2785d7ca;
+    border: 1px solid #2785d7ca;
 }
 
 .close {
@@ -559,15 +578,14 @@ section#pageThree {
 .projectButton {
     border: none;
     background: none;
-    font-size: 20px;
-    color: #324da6;
+    color: #2785d7ca;
     margin: 10px 0px;
     cursor: pointer;
 }
 
 .projectButton:hover {
     cursor: pointer;
-    color: #1134a7;
+    color: #2785d7ca;
 }
 
 .projectContent {
@@ -588,9 +606,9 @@ section#pageThree {
 }
 
 .panelDropdown {
-    border: 1px solid #324da6;
+    border: 1px solid #2785d7ca;
     border-radius: 5px;
-    color: #324da6;
+    color: #2785d7ca;
     font-size: 15px;
     margin: 10px 0;
     padding: 5px 20px;
@@ -611,11 +629,11 @@ section#pageThree {
 
 .panelButton {
     background: none;
-    border: 1px solid #324da6;
+    border: 1px solid #2785d7ca;
     /* width: 100px; */
     margin: 10px 0;
     padding: 5px;
-    color: #324da6;
+    color: #2785d7ca;
     font-size: 15px;
     transition: all 0.5s ease;
     border-radius: 5px;
@@ -623,7 +641,7 @@ section#pageThree {
 }
 
 .panelButton:hover {
-    background: #324da6;
+    background: #2785d7ca;
     color: #fff;
     cursor: pointer;
 }
@@ -637,13 +655,13 @@ section#pageThree {
 } */
 
 .fa-gear {
-    align-self: end;
+    position: absolute;
+    top: 19px;
+    left: 39px;
     padding: 10px;
     border: none;
     background: none;
-    margin-top: 75px;
-    margin-right: -6px;
-    color: #324da6;
+    color: #2785d7ca;
     cursor: pointer;
 }
 
@@ -655,7 +673,7 @@ section#pageThree {
 
 .arrow {
     background: none;
-    border: solid #324da6;
+    border: solid #2785d7ca;
     border-width: 0 6px 6px 0;
     display: inline-block;
     padding: 15px;
@@ -674,7 +692,6 @@ section#pageThree {
 .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
-    right: 0px;
 }
 
 .chartBox {
@@ -682,8 +699,6 @@ section#pageThree {
     border-radius: 2px;
     flex: 50%;
     background-color: rgba(255, 255, 255, 0.7);
-    height: 580px;
-    min-width: 900px;
 }
 
 .loggerBox {
@@ -693,11 +708,12 @@ section#pageThree {
     border-radius: 2px;
     margin-right: 5px;
     background-color: rgba(255, 255, 255, 0.7);
-    height: 580px;
     overflow: scroll;
     flex: 50%;
     min-width: 410px;
     max-width: 410px;
+    padding: 0 5px;
+    box-shadow: 0px 0px 20px #2785d7ca;
 }
 
 .loggerSortButtonsWrapper {
@@ -709,15 +725,14 @@ section#pageThree {
 
 .loggerSortButtons {
     text-align: center;
-    background-color: #b6bcd6;
+    background-color: #fff;
     height: 60px;
-    border-bottom: 1px solid #092173;
     max-width: 410px;
 }
 
 .chartBtn {
     width: 100px;
-    color: #353535;
+    color: #2785d7ca;
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
@@ -732,10 +747,10 @@ section#pageThree {
     display: inline-block;
     font-size: 12px;
     text-align: center;
-    width: 70px;
-    color: #353535;
+    width: 85px;
+    color: #fff;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #2785d7ca;
     border: none;
     padding: 5px;
     margin-top: 20px;
@@ -747,11 +762,11 @@ section#pageThree {
 }
 
 .loggerBtn:hover {
-    background-color: #a496e3;
+    background-color: #1b5b94ca;
 }
 
 .active {
-    background-color: #a496e3;
+    background-color: #1b5b94ca;
 }
 
 .projectSelector {
@@ -762,7 +777,7 @@ section#pageThree {
 }
 
 .chartBtn:hover {
-    background-color: #a496e3;
+    background-color: #1b5b94ca;
 }
 
 .h4chart {
@@ -798,18 +813,18 @@ section#pageThree {
 }
 
 .label {
+    color: #2785d7ca;
     font-size: 12px;
     font-weight: bold;
     padding: 10px 0px;
     text-align: center;
-    border-right: solid 1pt #092173;
-    border-bottom: solid 1pt #092173;
+    /* border-right: solid 1pt #2785d7ca;
+    border-bottom: solid 1pt #2785d7ca; */
 }
 
 .value {
     font-size: 10px;
     text-align: center;
-    border-right: solid 1pt #092173;
 }
 
 #queryGrid {
@@ -819,7 +834,6 @@ section#pageThree {
 
 .queryProps {
     display: inline-block;
-    border-bottom: 1px solid #092173;
     padding: 10px;
     background-color: #b6bcd6;
     transition: 0.5s;
@@ -828,11 +842,12 @@ section#pageThree {
 }
 
 .blocked {
-    color: red;
+    color: rgb(220, 82, 82);
 }
 
 .loggerGUI {
     text-align: center;
+    max-height: 500px;
 }
 
 .loadMoreBtn {
@@ -946,7 +961,51 @@ section#pageThree {
     }
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1100px) {
+    .arrow {
+        top: 35px;
+        right: -30px;
+    }
+
+    .toolBar.closed {
+        left: -380px;
+    }
+    .chartBox {
+        width: 100%;
+        margin: 50px auto;
+        border-radius: 2px;
+        min-width: 457px;
+    }
+
+    .chartBtn {
+        width: 40px;
+        cursor: pointer;
+        border: none;
+        padding: 5px 1px;
+        border-radius: 5px;
+        transition: 0.5s;
+        font-size: 9px;
+    }
+
+    .loggerSortButtons {
+        min-width: 100px;
+        width: 100%;
+    }
+    #dashWrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        min-width: 550px;
+        margin-top: 100px;
+    }
+    .loggerBox {
+        border-radius: 0px;
+        background-color: rgba(255, 255, 255, 0.7);
+        max-height: 580px;
+        margin: 25px auto;
+        margin-bottom: 80px;
+        width: 100%;
+    }
     #demoCardBox img {
         width: 300px;
     }
@@ -995,26 +1054,13 @@ section#pageThree {
     #pageThreeRight {
         width: 100%;
     }
+
+    #pageOne img {
+        display: none;
+    }
 }
 
 @media (max-width: 640px) {
-    .loggerBox {
-        border-radius: 0px;
-        background-color: rgba(255, 255, 255, 0.7);
-        max-height: 580px;
-        margin: 25px auto;
-        margin-bottom: 80px;
-        width: 100%;
-    }
-
-    #dashWrapper {
-        display: flex;
-        flex-direction: column-reverse;
-        width: 100%;
-        min-width: 550px;
-        margin-top: 100px;
-    }
-
     #side-navbar {
         min-width: 191px;
     }
@@ -1022,30 +1068,6 @@ section#pageThree {
     #navbar {
         display: block;
         min-width: 327px;
-    }
-
-    .chartBox {
-        width: 100%;
-        margin: 50px auto;
-        border-radius: 2px;
-        min-width: 457px;
-    }
-
-    .chartBtn {
-        width: 40px;
-        color: #353535;
-        cursor: pointer;
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        padding: 5px 1px;
-        border-radius: 5px;
-        transition: 0.5s;
-        font-size: 9px;
-    }
-
-    .loggerSortButtons {
-        min-width: 100px;
-        width: 100%;
     }
 
     #pageOneTextBox {
@@ -1108,14 +1130,5 @@ section#pageThree {
     }
     .container {
         min-width: 554px;
-    }
-
-    .arrow {
-        top: 35px;
-        right: -30px;
-    }
-
-    .toolBar.closed {
-        left: -380px;
     }
 }

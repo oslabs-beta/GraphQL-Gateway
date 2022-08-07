@@ -16,7 +16,7 @@ export default function Footer() {
                         : pathname === '/login'
                             ? '#2785d7ca'
                             : pathname === '/dashboard'
-                                ? '#fff'
+                                ? '#2785d7ca'
                                 : '#2785d7ca',
                 color:
                     // eslint-disable-next-line no-nested-ternary
@@ -25,7 +25,7 @@ export default function Footer() {
                         : pathname === '/login'
                             ? '#fff'
                             : pathname === '/dashboard'
-                                ? '#2785d7ca'
+                                ? '#fff'
                                 : '#fff',
             }}
         >

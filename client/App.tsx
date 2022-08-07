@@ -4,6 +4,7 @@ import intime from '../public/intime.png';
 import data from '../public/data.png';
 import barchart from '../public/barchart.png';
 import snippet from '../public/code-snippet.png';
+import logo from '../public/logo.png';
 import '../public/styles.css';
 
 export default function HomePage() {
@@ -120,6 +121,9 @@ export default function HomePage() {
                         >
                             Learn more →
                         </button>
+                    </div>
+                    <div>
+                        <img src={logo} alt={logo} />
                     </div>
                 </section>
                 <section id="pageTwo">

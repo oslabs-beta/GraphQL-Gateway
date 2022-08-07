@@ -78,8 +78,7 @@ export default function ToolBar({
             {showSettings && (
                 <div id="toolBarButtons">
                     <button
-                        id="projectGear"
-                        className="fa-solid fa-gear fa-2xl fa-bars"
+                        className="fa-solid fa-gear fa-xl"
                         type="button"
                         aria-label="switch"
                         onClick={() => {
@@ -91,6 +90,7 @@ export default function ToolBar({
                             }
                         }}
                     />
+                    <h3 className="settingsTab">Settings:</h3>
                 </div>
             )}
             <div id="toolBarMenu">{projectLoading ? <Loading /> : selectedPane}</div>
