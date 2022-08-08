@@ -13,7 +13,7 @@ export default function HomePage() {
     const [text, setText] = useState('');
     const [delta, setDelta] = useState(300 - Math.random() * 100);
     const [index, setIndex] = useState(1);
-    const toRotate = ['GraphQL Gateway developer portal'];
+    const toRotate = ['Developer Portal'];
     const period = 500;
     const [isCopied, setIsCopied] = useState(false);
 
@@ -94,7 +94,7 @@ export default function HomePage() {
             <div className="container">
                 <section id="pageOne">
                     <div id="pageOneTextBox">
-                        <h1>GraphQL Gate</h1>
+                        <h1>GraphQLGate</h1>
                         <h2>
                             <span
                                 className="txt-rotate"

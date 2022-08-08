@@ -90,7 +90,6 @@ export default function ToolBar({
                             }
                         }}
                     />
-                    <h3 className="settingsTab">Settings:</h3>
                 </div>
             )}
             <div id="toolBarMenu">{projectLoading ? <Loading /> : selectedPane}</div>

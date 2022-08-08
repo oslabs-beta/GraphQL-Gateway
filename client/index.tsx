@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';

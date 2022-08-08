@@ -22,7 +22,7 @@
 html {
     background-color: #fff;
     font-family: 'Roboto', sans-serif;
-    min-width: 600px;
+    min-width: 400px;
     /* background-color: red; */
 }
 
@@ -37,7 +37,7 @@ a:link {
 
 .container {
     height: 100%;
-    min-width: 457px;
+    min-width: 400px;
 }
 
 section {
@@ -46,7 +46,7 @@ section {
     align-items: center;
     width: 100%;
     height: 100vh;
-    min-width: 457px;
+    min-width: 400px;
     background-color: #fff;
 }
 
@@ -211,7 +211,7 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.337);
     position: absolute;
     width: 100%;
-    height: 55%;
+    height: 60%;
 }
 .centeredSentence {
     text-align: center;
@@ -324,10 +324,11 @@ section#pageThree {
 #footer {
     color: #fff;
     text-align: center;
+    background-color: #2785d7ca;
     padding: 20px 0;
     bottom: 0px;
     width: 100%;
-    min-width: 550px;
+    min-width: 400px;
 }
 
 #aboutSection {
@@ -338,7 +339,7 @@ section#pageThree {
 }
 #aboutDiv {
     margin-top: -100px;
-    width: 70%;
+    width: 50%;
     position: absolute;
     z-index: 10;
 }
@@ -473,7 +474,7 @@ section#pageThree {
 }
 .chartBox {
     width: 55%;
-    min-width: 715px;
+    min-width: 400px;
     box-shadow: 0px 0px 20px #2785d7ca;
 }
 #chartBoxInside canvas {
@@ -710,14 +711,14 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.7);
     overflow: scroll;
     flex: 50%;
-    min-width: 410px;
-    max-width: 410px;
+    min-width: 400px;
+    max-width: 400px;
     padding: 0 5px;
     box-shadow: 0px 0px 20px #2785d7ca;
 }
 
 .loggerSortButtonsWrapper {
-    width: 410px;
+    width: 400px;
     order: 3;
     position: absolute;
     height: 33px;
@@ -727,7 +728,7 @@ section#pageThree {
     text-align: center;
     background-color: #fff;
     height: 60px;
-    max-width: 410px;
+    max-width: 400px;
 }
 
 .chartBtn {
@@ -743,6 +744,11 @@ section#pageThree {
     transition: 0.5s;
 }
 
+.chartBtn:hover {
+    background-color: #2785d7ca;
+    color: #fff;
+}
+
 .loggerBtn {
     display: inline-block;
     font-size: 12px;
@@ -755,8 +761,8 @@ section#pageThree {
     padding: 5px;
     margin-top: 20px;
     margin-bottom: 5px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 5px;
     transition: 0.5s;
 }
@@ -771,7 +777,7 @@ section#pageThree {
 
 .projectSelector {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -861,7 +867,7 @@ section#pageThree {
 
 .space {
     height: 60px;
-    border-bottom: 1px solid #092173;
+    border-bottom: 1px solid #2785d7ca;
 }
 
 .queryProps:hover {
@@ -962,6 +968,10 @@ section#pageThree {
 }
 
 @media (max-width: 1100px) {
+    #aboutDiv {
+        width: 90%;
+    }
+
     .arrow {
         top: 35px;
         right: -30px;
@@ -974,17 +984,17 @@ section#pageThree {
         width: 100%;
         margin: 50px auto;
         border-radius: 2px;
-        min-width: 457px;
+        min-width: 400px;
     }
 
     .chartBtn {
-        width: 40px;
+        width: 60px;
         cursor: pointer;
         border: none;
         padding: 5px 1px;
         border-radius: 5px;
         transition: 0.5s;
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .loggerSortButtons {
@@ -995,7 +1005,7 @@ section#pageThree {
         display: flex;
         flex-direction: column-reverse;
         width: 100%;
-        min-width: 550px;
+        min-width: 400px;
         margin-top: 100px;
     }
     .loggerBox {
@@ -1038,6 +1048,11 @@ section#pageThree {
 }
 
 @media (max-width: 850px) {
+    #pageOneTextBox {
+        width: 435px;
+        margin-top: 100px;
+        text-align: center;
+    }
     .gif {
         display: none;
     }
@@ -1061,6 +1076,22 @@ section#pageThree {
 }
 
 @media (max-width: 640px) {
+    #aboutSection h1 {
+        font-size: 30px;
+        margin-bottom: 10px;
+        color: #2785d7ca;
+    }
+    #aboutSection p {
+        font-size: 14px;
+    }
+
+    #aboutSection span {
+        font-size: 14px;
+    }
+    .linkBtn {
+        font-size: 12px;
+        padding: 1.5em 0.7em;
+    }
     #side-navbar {
         min-width: 191px;
     }
@@ -1068,23 +1099,6 @@ section#pageThree {
     #navbar {
         display: block;
         min-width: 327px;
-    }
-
-    #pageOneTextBox {
-        width: 435px;
-        margin-top: 0px;
-    }
-
-    #pageOneTextBox h1 {
-        font-size: 40px;
-    }
-
-    #pageOneTextBox h2 {
-        font-size: 30px;
-    }
-
-    #pageOneTextBox p {
-        font-size: 25px;
     }
 
     .algorithmCard {
@@ -1129,6 +1143,6 @@ section#pageThree {
         width: 60px;
     }
     .container {
-        min-width: 554px;
+        min-width: 400px;
     }
 }
