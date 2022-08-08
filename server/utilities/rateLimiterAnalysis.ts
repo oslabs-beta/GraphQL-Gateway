@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'path';
 import { Worker } from 'worker_threads';
 import { Request, Response, NextFunction } from 'express';

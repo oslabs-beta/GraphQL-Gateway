@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { workerData, parentPort, SHARE_ENV } from 'worker_threads';
+import { workerData, parentPort } from 'worker_threads';
 
 import nodeFetch from 'node-fetch';
 import * as RateLimiter from 'graphql-limiter';

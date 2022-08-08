@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Loading from './Loading';
@@ -32,7 +34,7 @@ export default function ProjectsPane({
     const { user } = useAuth();
 
     const [createProjectMutation] = useMutation(CREATE_PROJECT, {
-        onCompleted: (data: any) => {
+        onCompleted: () => {
             getUserData({
                 variables: {
                     userId: user?.id,

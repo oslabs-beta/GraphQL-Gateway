@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-underscore-dangle */
 import { IResolvers } from '@graphql-tools/utils';
 import bcrypt from 'bcrypt';

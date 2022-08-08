@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, gql, useMutation } from '@apollo/client';
 import ToolBar from './ToolBar';

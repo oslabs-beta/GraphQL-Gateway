@@ -7,9 +7,6 @@ export default function Navbar() {
     const navigate = useNavigate();
     const { user, setUser, loading } = useAuth();
 
-    const [show, setShow] = useState('flex');
-    const scrollPos = useRef(window.scrollY);
-
     const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setUser(null);
@@ -29,7 +26,7 @@ export default function Navbar() {
             <div
                 id="navbar"
                 style={{
-                    display: show,
+                    display: 'flex',
                 }}
             >
                 <Link
@@ -68,7 +65,7 @@ export default function Navbar() {
                 <Link to="/team" type="submit" className="linkBtn">
                     Team
                 </Link>
-                <div id="side-navbar" style={{ display: show }}>
+                <div id="side-navbar" style={{ display: 'flex' }}>
                     {loading === false &&
                         (user === null ? (
                             <>
