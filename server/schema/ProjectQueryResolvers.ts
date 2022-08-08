@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IResolvers } from '@graphql-tools/utils';
 
 import QueryDB from '../models/Query';

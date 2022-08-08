@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { workerData, parentPort } from 'worker_threads';
 
 import nodeFetch from 'node-fetch';

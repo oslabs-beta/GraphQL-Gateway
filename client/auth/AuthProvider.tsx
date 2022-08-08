@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 

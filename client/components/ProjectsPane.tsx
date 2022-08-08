@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Loading from './Loading';
