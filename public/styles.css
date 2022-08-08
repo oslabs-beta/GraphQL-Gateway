@@ -474,7 +474,7 @@ section#pageThree {
 }
 .chartBox {
     width: 55%;
-    min-width: 400px;
+    min-width: 650px;
     box-shadow: 0px 0px 20px #2785d7ca;
 }
 #chartBoxInside canvas {
@@ -711,14 +711,14 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.7);
     overflow: scroll;
     flex: 50%;
-    min-width: 400px;
-    max-width: 400px;
+    min-width: 350px;
+    max-width: 350px;
     padding: 0 5px;
     box-shadow: 0px 0px 20px #2785d7ca;
 }
 
 .loggerSortButtonsWrapper {
-    width: 400px;
+    width: 350px;
     order: 3;
     position: absolute;
     height: 33px;
@@ -728,7 +728,6 @@ section#pageThree {
     text-align: center;
     background-color: #fff;
     height: 60px;
-    max-width: 400px;
 }
 
 .chartBtn {
@@ -981,10 +980,9 @@ section#pageThree {
         left: -380px;
     }
     .chartBox {
-        width: 100%;
+        width: 95%;
         margin: 50px auto;
         border-radius: 2px;
-        min-width: 400px;
     }
 
     .chartBtn {
@@ -996,10 +994,12 @@ section#pageThree {
         transition: 0.5s;
         font-size: 12px;
     }
-
+    .loggerSortButtonsWrapper {
+        width: 400px;
+    }
     .loggerSortButtons {
         min-width: 100px;
-        width: 100%;
+        width: 400px;
     }
     #dashWrapper {
         display: flex;
@@ -1009,6 +1009,8 @@ section#pageThree {
         margin-top: 100px;
     }
     .loggerBox {
+        min-width: 400px;
+        max-width: 400px;
         border-radius: 0px;
         background-color: rgba(255, 255, 255, 0.7);
         max-height: 580px;
@@ -1076,6 +1078,9 @@ section#pageThree {
 }
 
 @media (max-width: 640px) {
+    .chartBox {
+        min-width: 426px;
+    }
     #aboutSection h1 {
         font-size: 30px;
         margin-bottom: 10px;
