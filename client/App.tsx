@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import settings from '../public/settings.png';
 import intime from '../public/intime.png';
@@ -12,10 +11,7 @@ export default function HomePage() {
     const [loopNum, setLoopNum] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [text, setText] = useState('');
-    const [delta, setDelta] = useState(300 - Math.random() * 100);
-    const [index, setIndex] = useState(1);
     const toRotate = ['Developer Portal'];
-    const period = 500;
     const [isCopied, setIsCopied] = useState(false);
 
     const tick = () => {
@@ -27,28 +23,18 @@ export default function HomePage() {
 
         setText(updatedText);
 
-        if (isDeleting) {
-            setDelta((prevDelta) => prevDelta / 2);
-        }
-
         if (!isDeleting && updatedText === fullText) {
             setIsDeleting(true);
-            setIndex((prevIndex) => prevIndex - 1);
-            setDelta(period);
         } else if (isDeleting && updatedText === '') {
             setIsDeleting(false);
             setLoopNum(loopNum + 1);
-            setIndex(1);
-            setDelta(500);
-        } else {
-            setIndex((prevIndex) => prevIndex + 1);
         }
     };
 
     useEffect(() => {
         const ticker = setInterval(() => {
             tick();
-        }, delta);
+        }, 400);
 
         return () => {
             clearInterval(ticker);
