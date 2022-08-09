@@ -1,5 +1,5 @@
 import path from 'path';
-import { Worker } from 'worker_threads';
+import { Worker, SHARE_ENV } from 'worker_threads';
 import { Request, Response, NextFunction } from 'express';
 import { fileURLToPath } from 'url';
 
@@ -25,6 +25,7 @@ class RateLimiterWorker {
                 config,
                 authorization,
             },
+            env: SHARE_ENV,
         });
     }
 

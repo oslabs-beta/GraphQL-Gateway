@@ -32,7 +32,7 @@ export default function ProjectsPane({
     const { user } = useAuth();
 
     const [createProjectMutation] = useMutation(CREATE_PROJECT, {
-        onCompleted: (data: any) => {
+        onCompleted: () => {
             getUserData({
                 variables: {
                     userId: user?.id,

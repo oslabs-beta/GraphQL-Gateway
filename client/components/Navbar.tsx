@@ -7,28 +7,12 @@ export default function Navbar() {
     const navigate = useNavigate();
     const { user, setUser, loading } = useAuth();
 
-    const [show, setShow] = useState('flex');
-    const scrollPos = useRef(window.scrollY);
-
     const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setUser(null);
         localStorage.removeItem('session-token');
         navigate('/');
     };
-
-    useEffect(() => {
-        const controlNavbar = () => {
-            if (window.scrollY > scrollPos.current) {
-                setShow('none');
-            } else {
-                setShow('flex');
-            }
-            scrollPos.current = window.scrollY;
-        };
-        window.addEventListener('scroll', controlNavbar);
-        return () => window.removeEventListener('scroll', controlNavbar);
-    }, []);
 
     useEffect(() => {
         const url = window.location.href.split('/');
@@ -42,7 +26,7 @@ export default function Navbar() {
             <div
                 id="navbar"
                 style={{
-                    display: show,
+                    display: 'flex',
                 }}
             >
                 <Link
@@ -61,7 +45,7 @@ export default function Navbar() {
                     type="submit"
                     className="linkBtn"
                     onClick={() => {
-                        const hero = document.getElementById('demoCard');
+                        const hero = document.getElementById('pageTwo');
                         if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
                 >
@@ -78,7 +62,10 @@ export default function Navbar() {
                 >
                     About
                 </Link>
-                <div id="side-navbar" style={{ display: show }}>
+                <Link to="/team" type="submit" className="linkBtn">
+                    Team
+                </Link>
+                <div id="side-navbar" style={{ display: 'flex' }}>
                     {loading === false &&
                         (user === null ? (
                             <>
