@@ -207,7 +207,6 @@ export default function ProjectView({
                         </div>
                     )}
                 </div>
-                ;
             </div>
         );
     if (queriesLoading || !visibleQueries)
