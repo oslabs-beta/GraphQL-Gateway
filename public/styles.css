@@ -211,7 +211,7 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.337);
     position: absolute;
     width: 100%;
-    height: 60%;
+    height: 500px;
 }
 .centeredSentence {
     text-align: center;
@@ -397,11 +397,10 @@ section#pageThree {
 }
 
 .box {
-    margin: 150px auto;
+    margin: 200px auto;
     text-align: center;
-    width: 450px;
+    width: 400px;
     border-radius: 5px;
-    padding: 50px;
     color: #2785d7ca;
 }
 .box h1 {
@@ -1017,6 +1016,7 @@ section#pageThree {
         margin: 25px auto;
         margin-bottom: 80px;
         width: 100%;
+        padding: 0;
     }
     #demoCardBox img {
         width: 300px;
@@ -1079,7 +1079,7 @@ section#pageThree {
 
 @media (max-width: 640px) {
     .chartBox {
-        min-width: 426px;
+        min-width: 400px;
     }
     #aboutSection h1 {
         font-size: 30px;
