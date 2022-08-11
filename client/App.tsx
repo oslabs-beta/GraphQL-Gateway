@@ -5,6 +5,7 @@ import data from '../public/data.png';
 import barchart from '../public/barchart.png';
 import snippet from '../public/code-snippet.png';
 import logo from '../public/logo.png';
+import project from '../public/demogif3.gif';
 import '../public/styles.css';
 
 export default function HomePage() {
@@ -123,7 +124,7 @@ export default function HomePage() {
                         </h3>
                         <img src={snippet} alt="settings" />
                     </div>
-                    <img className="gif" src="./demogif3.gif" alt="./project.gif" />
+                    <img className="gif" src={project} alt="./project.gif" />
                 </section>
                 <div className="centeredSentence">
                     <h1>Core Capabilities</h1>
