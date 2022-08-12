@@ -22,7 +22,7 @@
 html {
     background-color: #fff;
     font-family: 'Roboto', sans-serif;
-    min-width: 400px;
+    min-width: 350px;
     /* background-color: red; */
 }
 
@@ -37,7 +37,7 @@ a:link {
 
 .container {
     height: 100%;
-    min-width: 400px;
+    min-width: 350px;
 }
 
 section {
@@ -46,25 +46,24 @@ section {
     align-items: center;
     width: 100%;
     height: 100vh;
-    min-width: 400px;
+    min-width: 350px;
     background-color: #fff;
 }
 
 section#pageOne {
     color: #408fd4ca;
     margin-top: -70px;
-    justify-content: space-evenly;
+    justify-content: center;
     text-align: left;
-    position: relative;
     background-color: #fff;
     overflow: hidden;
     display: flex;
     flex-direction: row;
-    column-gap: 50px;
+    /* column-gap: 50px; */
 }
 
 #pageOne h1 {
-    font-size: 60px;
+    font-size: 50px;
     margin-bottom: 10px;
 }
 
@@ -77,7 +76,7 @@ section#pageOne {
 }
 
 #pageOneTextBox {
-    margin: 125px 0 0 50px;
+    margin: 125px 0;
     width: 650px;
     position: relative;
     z-index: 10;
@@ -211,7 +210,8 @@ section#pageThree {
     background-color: rgba(255, 255, 255, 0.337);
     position: absolute;
     width: 100%;
-    height: 60%;
+    min-width: 350px;
+    height: 500px;
 }
 .centeredSentence {
     text-align: center;
@@ -328,7 +328,7 @@ section#pageThree {
     padding: 20px 0;
     bottom: 0px;
     width: 100%;
-    min-width: 400px;
+    min-width: 350px;
 }
 
 #aboutSection {
@@ -397,11 +397,10 @@ section#pageThree {
 }
 
 .box {
-    margin: 150px auto;
+    margin: 200px auto;
     text-align: center;
-    width: 450px;
+    width: 350px;
     border-radius: 5px;
-    padding: 50px;
     color: #2785d7ca;
 }
 .box h1 {
@@ -995,21 +994,21 @@ section#pageThree {
         font-size: 12px;
     }
     .loggerSortButtonsWrapper {
-        width: 400px;
+        width: 350px;
     }
     .loggerSortButtons {
         min-width: 100px;
-        width: 400px;
+        width: 350px;
     }
     #dashWrapper {
         display: flex;
         flex-direction: column-reverse;
         width: 100%;
-        min-width: 400px;
+        min-width: 350px;
         margin-top: 100px;
     }
     .loggerBox {
-        min-width: 400px;
+        min-width: 350px;
         max-width: 400px;
         border-radius: 0px;
         background-color: rgba(255, 255, 255, 0.7);
@@ -1017,6 +1016,7 @@ section#pageThree {
         margin: 25px auto;
         margin-bottom: 80px;
         width: 100%;
+        padding: 0;
     }
     #demoCardBox img {
         width: 300px;
@@ -1051,8 +1051,8 @@ section#pageThree {
 
 @media (max-width: 850px) {
     #pageOneTextBox {
-        width: 435px;
-        margin-top: 100px;
+        width: 350px;
+        margin-top: 300px;
         text-align: center;
     }
     .gif {
@@ -1079,7 +1079,7 @@ section#pageThree {
 
 @media (max-width: 640px) {
     .chartBox {
-        min-width: 426px;
+        min-width: 350px;
     }
     #aboutSection h1 {
         font-size: 30px;
@@ -1098,7 +1098,7 @@ section#pageThree {
         padding: 1.5em 0.7em;
     }
     #side-navbar {
-        min-width: 191px;
+        min-width: 150px;
     }
 
     #navbar {
@@ -1148,6 +1148,6 @@ section#pageThree {
         width: 60px;
     }
     .container {
-        min-width: 400px;
+        min-width: 350px;
     }
 }
