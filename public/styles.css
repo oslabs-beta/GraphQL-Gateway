@@ -655,7 +655,7 @@ section#pageThree {
 
 .fa-gear {
     position: absolute;
-    top: 19px;
+    top: 14px;
     left: 39px;
     padding: 10px;
     border: none;
@@ -970,7 +970,7 @@ section#pageThree {
     }
 
     .arrow {
-        top: 35px;
+        top: 25px;
         right: -30px;
     }
 
@@ -1149,5 +1149,8 @@ section#pageThree {
     }
     .container {
         min-width: 350px;
+    }
+    .arrow {
+        top: 15px;
     }
 }
