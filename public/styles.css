@@ -79,11 +79,12 @@ section#pageOne {
     width: 650px;
     position: relative;
     z-index: 10;
+    padding: 0 20px;
 }
 #pageOne img {
     animation: updown 3s linear infinite;
     width: 350px;
-    margin-top: 100px;
+    margin-top: 30px;
 }
 
 @keyframes updown {
@@ -449,7 +450,6 @@ section#pageThree {
     outline: none;
     border: none;
     cursor: pointer;
-    /* text-align: left; */
     transition: all 0.2s linear;
     font-size: 15px;
 }
@@ -1053,6 +1053,7 @@ section#pageThree {
         width: 350px;
         margin-top: 300px;
         text-align: center;
+        padding: 0 5px;
     }
     .gif {
         display: none;
