@@ -52,7 +52,6 @@ section {
 
 section#pageOne {
     color: #408fd4ca;
-    margin-top: -70px;
     justify-content: center;
     text-align: left;
     background-color: #fff;
@@ -80,11 +79,12 @@ section#pageOne {
     width: 650px;
     position: relative;
     z-index: 10;
+    padding: 0 20px;
 }
 #pageOne img {
     animation: updown 3s linear infinite;
     width: 350px;
-    margin-top: 100px;
+    margin-top: 30px;
 }
 
 @keyframes updown {
@@ -450,7 +450,6 @@ section#pageThree {
     outline: none;
     border: none;
     cursor: pointer;
-    /* text-align: left; */
     transition: all 0.2s linear;
     font-size: 15px;
 }
@@ -656,7 +655,7 @@ section#pageThree {
 
 .fa-gear {
     position: absolute;
-    top: 19px;
+    top: 14px;
     left: 39px;
     padding: 10px;
     border: none;
@@ -971,7 +970,7 @@ section#pageThree {
     }
 
     .arrow {
-        top: 35px;
+        top: 25px;
         right: -30px;
     }
 
@@ -1054,6 +1053,7 @@ section#pageThree {
         width: 350px;
         margin-top: 300px;
         text-align: center;
+        padding: 0 5px;
     }
     .gif {
         display: none;
@@ -1149,5 +1149,8 @@ section#pageThree {
     }
     .container {
         min-width: 350px;
+    }
+    .arrow {
+        top: 15px;
     }
 }
