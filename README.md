@@ -24,7 +24,7 @@ GGDP is designed for offering a visualization of how your GraphQL API endpoints 
 
 ## <a name="prerequisites"></a> 📖 Prerequisites
 
-1. Signup/login to the [Gateway developer portal](graphqlgate.io).
+1. Signup/login to the [Gateway developer portal](http://graphqlgate.io/).
 
 2. Create a new project to recieve a project ID and API key.
 
